@@ -20,6 +20,7 @@ export function Header() {
               width={140}
               height={36}
               priority
+              className="sm:w-[140px] sm:h-[36px] w-[90px] h-[24px]"
             />
           </Link>
         </div>

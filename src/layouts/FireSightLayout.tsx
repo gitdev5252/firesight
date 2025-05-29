@@ -3,6 +3,7 @@ import { Header } from "./Header";
 import RootLayout from "@/app/layout";
 import { usePathname } from "next/navigation";
 import "./layout.scss";
+import FireSightFooter from "./FireSightFooter";
 
 export default function FireSightLayout({
   children,
@@ -13,8 +14,8 @@ export default function FireSightLayout({
 
   return (
     <RootLayout>
-      <div className="flex flex-col min-h-screen firesight-banner-bg">
-        <div className="flex flex-col mx-[58.5px]">
+      <div className="min-h-screen firesight-banner-bg">
+        <div className="flex flex-col justify-center items-center md:mx-[58.5px] mx-[15px]">
           <Header />
           {pathname === "/" && (
             <div className="banner-bg">
@@ -23,6 +24,7 @@ export default function FireSightLayout({
             </div>
           )}
           <main className="flex-1">{children}</main>
+          <FireSightFooter />
         </div>
       </div>
     </RootLayout>
