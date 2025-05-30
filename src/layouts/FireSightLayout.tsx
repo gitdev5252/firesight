@@ -15,7 +15,7 @@ export default function FireSightLayout({
   return (
     <RootLayout>
       <div className="min-h-screen firesight-banner-bg">
-        <div className="flex flex-col justify-center items-center md:mx-[58.5px] mx-[15px]">
+        <div className="flex flex-col justify-center items-center ">
           <Header />
           {pathname === "/" && (
             <div className="banner-bg">
@@ -23,7 +23,9 @@ export default function FireSightLayout({
               {/* Example: <img src="/banner.jpg" alt="Banner" className="w-full" /> */}
             </div>
           )}
-          <main className="flex-1">{children}</main>
+          <main className="flex flex-col w-full justify-center items-center">
+            {children}
+          </main>
           <FireSightFooter />
         </div>
       </div>

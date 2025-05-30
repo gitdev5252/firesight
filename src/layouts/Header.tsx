@@ -10,8 +10,8 @@ import {
 
 export function Header() {
   return (
-    <header className="sticky top-0 w-full mt-[36px] text-white ">
-      <div className="flex h-14 items-center">
+    <header className="sticky top-0 w-full mt-[36px] text-white z-[1000] md:mx-[58.5px] mx-[15px]">
+      <div className="flex h-[90px] items-center">
         <div className="mr-4 flex items-center">
           <Link href="/" className="mr-6 flex items-center space-x-2">
             <Image
