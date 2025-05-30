@@ -1,7 +1,7 @@
 "use client";
 import { Header } from "./Header";
 import RootLayout from "@/app/layout";
-import "./layout.scss";
+import "./layout.css";
 import FireSightFooter from "./FireSightFooter";
 
 export default function FireSightLayout({

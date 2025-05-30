@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import FireSightLayout from "@/layouts/FireSightLayout";
-import "./page.scss";
+import "./page.css";
 export default function Home() {
   return (
     <FireSightLayout>
