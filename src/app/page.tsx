@@ -2,7 +2,50 @@ import Link from "next/link";
 import Image from "next/image";
 import FireSightLayout from "@/layouts/FireSightLayout";
 import "./page.css";
+import { Button } from "@/components/ui/button";
+
 export default function Home() {
+  const pulseSectionCardInfo: {
+    title: string;
+    content: string;
+    feature: string;
+  }[] = [
+    {
+      title: "Report",
+      content: "Your hub for workflows, insights, and productivity.",
+      feature: "",
+    },
+    {
+      title: "News",
+      content:
+        "AI-filtered media feed—monitor topics, brands, and trends in real time.",
+      feature: "",
+    },
+    {
+      title: "Intelligence",
+      content:
+        "Personalised intelligence compiled from internal and external information.",
+      feature: "",
+    },
+    {
+      title: "Signals",
+      content:
+        "State-of-the-Art keyword, phase and narrative tracking technology.",
+      feature: "(coming soon)",
+    },
+    {
+      title: "Spotlight",
+      content:
+        "Discover what’s trending, loved, or hated - by location, sector, or time period.",
+      feature: "(coming soon)",
+    },
+    {
+      title: "Surveillance",
+      content:
+        "self-guided media intelligence driving deeper comprehension of current events.",
+      feature: "(coming soon)",
+    },
+  ];
   return (
     <FireSightLayout>
       <Link href="/" className="flex items-center">
@@ -53,10 +96,10 @@ export default function Home() {
           more efficient workday.
         </p>
       </section>
-      <div className="w-full h-[450px] backdrop-blur-lg absolute mt-[200px]"></div>
+      <div className="w-full h-[414px] backdrop-blur-lg backdrop-brightness-150 absolute mt-[-1000px]"></div>
       {/* Pulse section */}
-      <div className="w-full h-[1000px] pulse-bg absolute mt-[1600px]"></div>
-      <section className="relative w-full flex flex-col items-center justify-center mt-[250px]">
+      <div className="w-full h-[1000px] pulse-bg absolute mt-[900px]"></div>
+      <section className="relative w-[92%] mx-auto flex flex-col items-center justify-center mt-[150px]">
         <div className="flex w-[556px] text-white items-center justify-around ">
           <Image
             src="/images/logo.svg"
@@ -65,9 +108,58 @@ export default function Home() {
             height={53}
             priority
             className="md:mt-[70px] mt-[60px] sm:w-[214px] sm:h-[53px] w-[141px] h-[35px] mb-20"
-          />{" "}
+          />
           <span className="text-[35px]">|</span>
           <span className="text-[65px] font-extrabold">Pulse</span>
+        </div>
+        <Image
+          src="/images/news.svg"
+          alt="News"
+          width={962}
+          height={671}
+          className="border-[43px] rounded-4xl border-[#080B16] border-solid outline-2 outline-[#121721]"
+        />
+
+        <div className="w-full main-body text-white absolute mt-[-210px] !p-14">
+          <div className="flex flex-wrap w-full">
+            <div className="md:w-2/5 w-full mb-[50px]">
+              <h2 className="text-[43.8px] font-extrabold uppercase leading-11">
+                Media, market & Business intelligence platform
+              </h2>
+              <Button
+                variant="outline"
+                className="cursor-pointer gradient-border-btn text-[16px] mt-[20px] bg-transparent rounded-full px-8 py-5 text-white hover:text-white"
+              >
+                Explorer <span className="font-bold">Platform</span>
+              </Button>
+            </div>
+            <div className="text-[18px] md:w-3/5 w-full">
+              A media, market & business intelligence platform that seamlessly
+              merges your proprietary data with real-time news, social, and
+              market signals. By unifying internal and external intelligence
+              into a single vantage point, this connected intelligence
+              technology reveals new opportunities faster, forecasts outcomes
+              more accurately, and empowers you to act with confidence.
+            </div>
+          </div>
+          <div className="flex flex-wrap w-full gap-13 justify-between items-center">
+            {pulseSectionCardInfo.map((item, index) => (
+              <div
+                className="main-body md:!w-[30%] !w-full relative cursor-pointer"
+                key={index}
+              >
+                <div className="color-pattern-bg p-6 opacity-80  h-[150px]">
+                  <div className="flex items-center">
+                    <h3 className="text-[30px] font-extrabold">{item.title}</h3>
+                    <span className="text-[15px] italic ml-2">
+                      {item.feature}
+                    </span>
+                  </div>
+                  <p className="text-[15px]">{item.content}</p>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
     </FireSightLayout>

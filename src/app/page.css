@@ -6,3 +6,111 @@
   max-height: 100vh;
   width: 100%;
 }
+
+.color-pattern-bg {
+  background-image: url("/images/color pattern - small.svg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  max-height: 100vh;
+  width: 100%;
+  border-radius: 20px;
+}
+
+.gradient-border-btn {
+  position: relative;
+  z-index: 0;
+  border-radius: 9999px;
+  background: transparent;
+  border: 1px solid transparent;
+}
+
+.gradient-border-btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  padding: 1px; /* border thickness */
+  background: linear-gradient(180deg, #00ffe0, #bcefff);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.custom-cornered-bg {
+  border: 2px solid #232323; /* Border color */
+  background-color: #181818; /* Background color */
+  border-top-right-radius: 24px; /* Only top-right corner rounded */
+  border-top-left-radius: 0;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+  width: 400px; /* Adjust as needed */
+  height: 400px; /* Adjust as needed */
+}
+
+.main-body {
+  background: rgba(255, 255, 255, 0.01) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px) !important;
+  border-radius: 20px;
+  padding: 1px;
+  width: 100%;
+  position: relative;
+  clip-path: polygon(
+    0 0,
+    calc(100% - 36px) 0,
+    calc(100% - 34px) 0.5px,
+    calc(100% - 32px) 1px,
+    calc(100% - 30px) 2px,
+    calc(100% - 2px) 30px,
+    calc(100% - 1px) 32px,
+    calc(100% - 0.5px) 34px,
+    100% 36px,
+    100% 100%,
+    0 100%
+  );
+}
+
+.main-body::before {
+  content: "";
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: -2;
+  border-radius: 20px;
+  clip-path: polygon(
+    0 0,
+    calc(100% - 36px) 0,
+    calc(100% - 34px) 0.5px,
+    calc(100% - 32px) 1px,
+    calc(100% - 30px) 2px,
+    calc(100% - 2px) 30px,
+    calc(100% - 1px) 32px,
+    calc(100% - 0.5px) 34px,
+    100% 36px,
+    100% 100%,
+    0 100%
+  );
+}
+
+.main-body::after {
+  content: "";
+  position: absolute;
+  width: 32px;
+  height: 32px;
+  top: 0;
+  right: 0;
+  background: linear-gradient(
+      45deg,
+      transparent 50%,
+      rgba(255, 255, 255, 0.1) 50%,
+      rgba(255, 255, 255, 0.1) 51%,
+      transparent 51%
+    ),
+    transparent;
+}
