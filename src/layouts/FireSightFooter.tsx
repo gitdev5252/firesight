@@ -3,7 +3,7 @@ import Image from "next/image";
 
 export default function FireSightFooter() {
   return (
-    <footer className="w-full ">
+    <footer className="w-full">
       <div
         className="w-full rounded-2xl border border-[#23263A] bg-gradient-to-br from-[#101522] to-[#0B101C] p-6 md:p-10 relative overflow-hidden"
         style={{ borderTopRightRadius: "48px" }}
@@ -227,7 +227,7 @@ export default function FireSightFooter() {
               width={18}
               height={18}
             />
-            <span>Crafted by D'Vinci</span>
+            <span>Crafted by D&apos;Vinci</span>
           </div>
           <div className="flex gap-4 underline">
             <Link href="/terms">Terms & Conditions</Link>

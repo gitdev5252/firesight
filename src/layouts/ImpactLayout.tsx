@@ -1,4 +1,3 @@
-import { Header } from "./Header";
 import RootLayout from "@/app/layout";
 
 export default function ImpactLayout({
