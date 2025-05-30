@@ -287,9 +287,10 @@ export default function Home() {
                 className="main-body md:!w-[30%] !w-full relative cursor-pointer"
                 key={index}
               >
-                <div className="color-pattern-bg p-6 opacity-80  h-[150px]">
+                <div className="p-6 opacity-80 h-[150px]">
                   <h3 className="text-[30px] font-extrabold">{item.title}</h3>
                   <p className="text-[15px]">{item.content}</p>
+                  <div className="green-polygon-piece absolute bottom-0 right-0 w-[150px] h-[150px] pointer-events-none" />
                 </div>
               </div>
             ))}
@@ -348,7 +349,7 @@ export default function Home() {
                 className="main-body md:!w-[30%] !w-full relative cursor-pointer"
                 key={index}
               >
-                <div className="color-pattern-bg p-6 opacity-80  h-[130px]">
+                <div className="p-6 opacity-80  h-[130px]">
                   <div className="flex items-center justify-between w-full">
                     <h3 className="text-[30px] font-extrabold">{item.title}</h3>
                     <Image
@@ -360,6 +361,7 @@ export default function Home() {
                     />
                   </div>
                   <p className="text-[15px]">{item.content}</p>
+                  <div className="red-polygon-piece absolute bottom-0 right-0 w-[150px] h-[150px] pointer-events-none" />
                 </div>
               </div>
             ))}

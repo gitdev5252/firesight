@@ -17,6 +17,34 @@
   border-radius: 20px;
 }
 
+.green-polygon-piece {
+  background-image: url("/images/green polygon piece.svg");
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: bottom right;
+  width: 120px; /* Adjust as needed */
+  height: 100px; /* Adjust as needed */
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.red-polygon-piece {
+  background-image: url("/images/red polygon piece.svg");
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: bottom right;
+  width: 120px; /* Adjust as needed */
+  height: 100px; /* Adjust as needed */
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
 .gradient-border-btn {
   position: relative;
   z-index: 0;
