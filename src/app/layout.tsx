@@ -17,7 +17,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={clsx(lekton.className, "bg-[#080B16]")}>{children}</body>
+      <body className={clsx(lekton.className, "bg-[#080B16] relative")}>
+        {children}
+      </body>
     </html>
   );
 }

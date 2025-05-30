@@ -11,8 +11,8 @@ export default function FireSightLayout({
 }) {
   return (
     <RootLayout>
-      <div className="min-h-screen firesight-banner-bg">
-        <div className="flex flex-col justify-center items-center ">
+      <div className="min-h-screen firesight-banner-bg relative">
+        <div className="flex flex-col justify-center items-center">
           <Header />
           <main className="flex flex-col w-full justify-center items-center">
             {children}

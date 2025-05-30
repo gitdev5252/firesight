@@ -53,26 +53,22 @@ export default function Home() {
           more efficient workday.
         </p>
       </section>
-      <div className="w-full h-[450px] mx-auto backdrop-blur-lg shadow-xl absolute mt-[-50px]"></div>
+      <div className="w-full h-[520px] backdrop-blur-lg absolute mt-[400px]"></div>
       {/* Pulse section */}
-      <section className="relative w-full flex flex-col items-center justify-center z-50 mt-[400px] pulse-bg">
-        <h2 className="text-[64px] font-extrabold text-white text-center">
-          FIRESIGHT | PULSE
-        </h2>
-        <p
-          className="mt-6 text-gray-300 text-center mx-auto"
-          style={{
-            width: "970px", // Adjust until it fits 3 lines
-            fontSize: "18px", // Adjust as needed
-            lineHeight: "1.6", // Adjust as needed
-            letterSpacing: "0.01em", // Optional: tweak for best fit
-          }}
-        >
-          Firesight | Pulse is your AI-native productivity hub, seamlessly
-          integrating with your favorite tools. From task management to
-          intelligent scheduling, Pulse transforms how you work, making every
-          minute count.
-        </p>
+      {/* <div className="w-full h-[450px] pulse-bg absolute mt-[]"></div> */}
+      <section className="relative w-full flex flex-col items-center justify-center z-50 ">
+        <div className="flex w-[556px] text-white items-center justify-around ">
+          <Image
+            src="/images/logo.svg"
+            alt="Logo"
+            width={214}
+            height={53}
+            priority
+            className="md:mt-[70px] mt-[60px] sm:w-[214px] sm:h-[53px] w-[141px] h-[35px] mb-20"
+          />{" "}
+          <span className="text-[35px]">|</span>
+          <span className="text-[65px] font-extrabold">Pulse</span>
+        </div>
       </section>
     </FireSightLayout>
   );
