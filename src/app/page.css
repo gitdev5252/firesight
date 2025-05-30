@@ -1,8 +1,8 @@
-.pulse-bg{
-  background-image: url('/images/color pattern.svg');
+.pulse-bg {
+  background-image: url("/images/color pattern.svg");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
-  max-height: 20vh;
+  max-height: 100vh;
   width: 100%;
 }

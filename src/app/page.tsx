@@ -53,10 +53,10 @@ export default function Home() {
           more efficient workday.
         </p>
       </section>
-      <div className="w-full h-[520px] backdrop-blur-lg absolute mt-[400px]"></div>
+      <div className="w-full h-[450px] backdrop-blur-lg absolute mt-[200px]"></div>
       {/* Pulse section */}
-      {/* <div className="w-full h-[450px] pulse-bg absolute mt-[]"></div> */}
-      <section className="relative w-full flex flex-col items-center justify-center z-50 ">
+      <div className="w-full h-[1000px] pulse-bg absolute mt-[1600px]"></div>
+      <section className="relative w-full flex flex-col items-center justify-center mt-[250px]">
         <div className="flex w-[556px] text-white items-center justify-around ">
           <Image
             src="/images/logo.svg"
