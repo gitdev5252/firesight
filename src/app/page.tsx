@@ -119,6 +119,7 @@ export default function Home() {
   ];
   return (
     <FireSightLayout>
+      <div className="shineBg_body_top_left"></div>
       <Link href="/" className="flex items-center">
         <Image
           src="/images/logo.svg"
@@ -152,7 +153,7 @@ export default function Home() {
         </h1>
         {/* Description */}
         <p
-          className="mt-6 md:text-[18px] text-[12px] text-gray-300 text-center mx-auto "
+          className="mt-6 md:text-[18px] text-[12px] text-gray-300 text-center mx-auto md:w-[800px] w-full"
           style={{
             lineHeight: "1.6", // Adjust as needed
             letterSpacing: "0.01em", // Optional: tweak for best fit
@@ -164,14 +165,13 @@ export default function Home() {
           transforms how you collaborate. Firesight is your gateway to a better,
           more efficient workday.
         </p>
+        <div className="w-full h-[414px] backdrop-blur-3xl backdrop-brightness-150 absolute bottom-[-100px] -z-20"></div>
       </section>
 
-      <div className="w-full h-[414px] backdrop-blur-lg backdrop-brightness-150 absolute mt-[-3950px]"></div>
-
       {/* Pulse section */}
-      <div className="w-full h-[1000px] pulse-bg absolute mt-[-2600px]"></div>
-      <section className="relative w-[92%] mx-auto flex flex-col items-center justify-center mt-[150px]">
-        <div className="flex md:w-[556px] w-[243px] text-white items-center justify-around ">
+      <div className="w-full h-[1000px] pulse-bg absolute mt-[-2800px]"></div>
+      <section className="relative w-[92%] mx-auto flex flex-col items-center justify-center">
+        <div className="flex md:w-[556px] w-[243px] text-white items-center justify-around mt-[150px] md:mb-[70px]">
           <Image
             src="/images/logo.svg"
             alt="Logo"
@@ -235,8 +235,12 @@ export default function Home() {
       </section>
 
       {/* Session section */}
-      <div className="w-full h-[700px] session-bg absolute mt-[200px]"></div>
-      <section className="relative w-[92%] mx-auto flex flex-col items-center justify-center mt-[30px]">
+      <div className="w-full h-[400px] session-bg absolute mt-[400px]"></div>
+      <div className="green-shine-session"></div>
+      <section className="relative w-[92%] mx-auto flex flex-col items-center justify-center mt-[50px]">
+        <div className="green-shine-session !top-0"></div>
+        <div className="green-shine-session-small"></div>
+        <div className="green-shine-session-2nd-small"></div>
         <div className="flex w-[600px] text-white items-center justify-between ">
           <Image
             src="/images/logo.svg"
@@ -244,7 +248,7 @@ export default function Home() {
             width={214}
             height={53}
             priority
-            className="md:mt-[70px] mt-[60px] sm:w-[214px] sm:h-[53px] w-[141px] h-[35px] mb-20"
+            className="md:mt-[70px] mt-[60px] sm:w-[214px] sm:h-[53px] w-[141px] h-[35px] mb-14"
           />
           <span className="text-[35px]">|</span>
           <span className="text-[65px] font-extrabold">Sessions</span>
@@ -298,8 +302,9 @@ export default function Home() {
       </section>
 
       {/* Platform section */}
-      <div className="w-full h-[900px] platform-bg absolute mt-[3300px]"></div>
-      <section className="relative w-[92%] mx-auto flex flex-col items-center justify-center mt-[50px] mb-[73px]">
+      <div className="w-full h-[900px] platform-bg absolute mt-[3500px]"></div>
+      <div className="red-purple-shine-session"></div>
+      <section className="relative w-[92%] mx-auto flex flex-col items-center justify-center mt-[150px] mb-[73px]">
         <div className="flex w-[650px] text-white items-center justify-between ">
           <Image
             src="/images/logo.svg"
@@ -319,7 +324,7 @@ export default function Home() {
           height={866}
         />
 
-        <div className="w-full main-body text-white absolute mt-[-590px] !p-14 !backdrop-blur-3xl">
+        <div className="w-full main-body text-white absolute mt-[-590px] !p-14 !backdrop-blur-3xl backdrop-brightness-75">
           <div className="flex flex-wrap w-full">
             <div className="md:w-2/5 w-full mb-[50px]">
               <h2 className="text-[43.8px] font-extrabold uppercase leading-11">

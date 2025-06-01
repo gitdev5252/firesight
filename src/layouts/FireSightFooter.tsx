@@ -9,7 +9,7 @@ export default function FireSightFooter() {
       style={{ borderTopRightRadius: "48px" }}
     >
       {/* Top Section */}
-      <div className="flex flex-col md:flex-row md:justify-between pb-8 border-b border-[#23263A] text-white md:mx-10">
+      <div className="flex flex-col md:flex-row md:justify-between pb-8 border-b border-[#23263A] text-white md:mx-10 text-[14px]">
         {/* Logo & Social */}
         {/* Nav Columns */}
         <div className="flex flex-col items-center md:items-start gap-4 min-w-[200px]">
@@ -54,10 +54,21 @@ export default function FireSightFooter() {
         <div className="vertical-divider  !h-[111px]"></div>
         {/* Firesight | PULSE */}
         <div>
-          <div className="font-bold mb-2">
-            Firesight <span className="text-[#2DE0A7]">| PULSE</span>
+          <div className="font-bold mb-[12px]">
+            Firesight |
+            <span
+              className="ml-2"
+              style={{
+                background:
+                  "linear-gradient(180deg, rgba(0,255,224,0.55) 0%, rgba(188,239,255,0.62) 100%)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+              }}
+            >
+              PULSE
+            </span>
           </div>
-          <ul className="space-y-1">
+          <ul className="space-y-[12px]">
             <li>
               <Link href="/overview" className="hover:underline">
                 Overview
@@ -80,10 +91,10 @@ export default function FireSightFooter() {
             </li>
           </ul>
         </div>
-        <div className="vertical-divider  !h-[111px]"></div>
+        <div className="vertical-divider !h-[111px]"></div>
         {/* Main Nav */}
         <div>
-          <ul className="space-y-1 mt-6 md:mt-0">
+          <ul className="space-y-[12px] ">
             <li>
               <Link href="/" className="hover:underline font-bold">
                 Home
@@ -112,8 +123,19 @@ export default function FireSightFooter() {
         <div className="vertical-divider !h-[111px]"></div>
         {/* Firesight | SESSIONS */}
         <div>
-          <div className="font-bold mb-2">
-            Firesight <span className="text-[#2DE0A7]">| SESSIONS</span>
+          <div className="font-bold mb-2 ">
+            Firesight |
+            <span
+              className="ml-2"
+              style={{
+                background:
+                  "linear-gradient(180deg, rgba(20, 255, 0, 0.55) 0%, rgba(0, 240, 255, 0.62) 100%)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+              }}
+            >
+              SESSIONS
+            </span>
           </div>
           <ul className="space-y-1">
             <li>
@@ -122,8 +144,17 @@ export default function FireSightFooter() {
               </Link>
             </li>
           </ul>
+          <div className="border-b border-[#23263A] mt-[25px]"></div>
           <div className="font-bold mt-6 mb-2">
-            Firesight <span className="text-[#FF4B4B]">| PLATFORM</span>
+            Firesight |
+            <span
+              className="ml-2"
+              style={{
+                color: "#E93249",
+              }}
+            >
+              PLATFORM
+            </span>
           </div>
           <ul className="space-y-1">
             <li>
