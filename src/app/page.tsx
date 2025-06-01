@@ -134,7 +134,7 @@ export default function Home() {
 
         {/* Headings */}
         <h1
-          className="text-[110px] font-extrabold"
+          className="md:text-[110px] text-[50px] font-extrabold"
           style={{
             background: "linear-gradient(180deg, #14FF00 0%, #00F0FF 100%)",
             WebkitBackgroundClip: "text",
@@ -145,17 +145,15 @@ export default function Home() {
         >
           AI NATIVE
         </h1>
-        <h1 className="text-[110px] font-extrabold text-white text-center leading-[100%]">
+        <h1 className="md:text-[110px] text-[50px] font-extrabold text-white text-center leading-[100%]">
           PRODUCT
           <br />
           ECOSYSTEM
         </h1>
         {/* Description */}
         <p
-          className="mt-6 text-gray-300 text-center mx-auto "
+          className="mt-6 md:text-[18px] text-[12px] text-gray-300 text-center mx-auto "
           style={{
-            width: "970px", // Adjust until it fits 3 lines
-            fontSize: "18px", // Adjust as needed
             lineHeight: "1.6", // Adjust as needed
             letterSpacing: "0.01em", // Optional: tweak for best fit
           }}
@@ -173,14 +171,14 @@ export default function Home() {
       {/* Pulse section */}
       <div className="w-full h-[1000px] pulse-bg absolute mt-[-2600px]"></div>
       <section className="relative w-[92%] mx-auto flex flex-col items-center justify-center mt-[150px]">
-        <div className="flex w-[556px] text-white items-center justify-around ">
+        <div className="flex md:w-[556px] w-[243px] text-white items-center justify-around ">
           <Image
             src="/images/logo.svg"
             alt="Logo"
             width={214}
             height={53}
             priority
-            className="md:mt-[70px] mt-[60px] sm:w-[214px] sm:h-[53px] w-[141px] h-[35px] mb-20"
+            className="md:mt-[70px] mt-[60px] sm:w-[214px] sm:h-[53px] w-[124px] h-[30px] mb-20"
           />
           <span className="text-[35px]">|</span>
           <span className="text-[65px] font-extrabold">Pulse</span>
@@ -237,6 +235,7 @@ export default function Home() {
       </section>
 
       {/* Session section */}
+      <div className="w-full h-[700px] session-bg absolute mt-[200px]"></div>
       <section className="relative w-[92%] mx-auto flex flex-col items-center justify-center mt-[30px]">
         <div className="flex w-[600px] text-white items-center justify-between ">
           <Image
@@ -257,15 +256,15 @@ export default function Home() {
           height={866}
         />
 
-        <div className="w-full main-body text-white absolute mt-[-300px] !p-14">
+        <div className="w-full main-body text-white absolute mt-[-300px] !p-14 !backdrop-blur-3xl">
           <div className="flex flex-wrap w-full">
             <div className="md:w-2/5 w-full mb-[50px]">
               <h2 className="text-[43.8px] font-extrabold uppercase leading-11">
                 Next-Gen COnference Technology
               </h2>
               <Button
-                variant="outline"
-                className="cursor-pointer gradient-border-btn text-[16px] mt-[20px] bg-transparent rounded-full px-8 py-5 text-white hover:text-white"
+                variant="ghost"
+                className="cursor-pointer green-btn-bg text-[16px] mt-[20px] bg-transparent border-0 px-8 py-5 text-white hover:text-black"
               >
                 Explorer <span className="font-bold">Platform</span>
               </Button>
@@ -299,7 +298,8 @@ export default function Home() {
       </section>
 
       {/* Platform section */}
-      <section className="relative w-[92%] mx-auto flex flex-col items-center justify-center mt-[30px] mb-[60px]">
+      <div className="w-full h-[900px] platform-bg absolute mt-[3300px]"></div>
+      <section className="relative w-[92%] mx-auto flex flex-col items-center justify-center mt-[50px] mb-[73px]">
         <div className="flex w-[650px] text-white items-center justify-between ">
           <Image
             src="/images/logo.svg"
@@ -319,7 +319,7 @@ export default function Home() {
           height={866}
         />
 
-        <div className="w-full main-body text-white absolute mt-[-590px] !p-14">
+        <div className="w-full main-body text-white absolute mt-[-590px] !p-14 !backdrop-blur-3xl">
           <div className="flex flex-wrap w-full">
             <div className="md:w-2/5 w-full mb-[50px]">
               <h2 className="text-[43.8px] font-extrabold uppercase leading-11">
@@ -327,7 +327,7 @@ export default function Home() {
               </h2>
               <Button
                 variant="outline"
-                className="cursor-pointer gradient-border-btn text-[16px] mt-[20px] bg-transparent rounded-full px-8 py-5 text-white hover:text-white"
+                className="cursor-pointer red-btn-bg text-[16px] mt-[20px] bg-transparent border-0 px-8 py-5 text-white hover:text-black"
               >
                 Explorer <span className="font-bold">Platform</span>
               </Button>

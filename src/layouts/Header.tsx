@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -9,8 +10,10 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 export function Header() {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
   return (
-    <header className="sticky top-0 w-full mt-[36px] text-white z-[1000]">
+    <header className="sticky top-0 w-full mt-[36px] text-white z-[1000] bg-transparent">
       <div className="flex h-16 items-center md:mx-[58.5px] mx-[15px]">
         <div className="mr-4 flex items-center">
           <Link href="/" className="mr-6 flex items-center space-x-2">
@@ -24,8 +27,8 @@ export function Header() {
             />
           </Link>
         </div>
-        <nav className="flex flex-1 items-center justify-end space-x-20 font-medium !text-[18px]">
-          {/* PRODUCTS Dropdown */}
+        {/* Desktop Nav */}
+        <nav className="hidden md:flex flex-1 items-center justify-end space-x-20 font-medium !text-[18px]">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" className="px-2 text-white !text-[18px]">
@@ -35,25 +38,24 @@ export function Header() {
             <DropdownMenuContent className="bg-transparent border-none shadow-lg min-w-[220px] ">
               <DropdownMenuItem
                 asChild
-                className=" text-white cursor-pointer !text-[18px]"
+                className="text-white cursor-pointer !text-[18px]"
               >
                 <Link href="/products/sessions">FIRESIGHT | SESSIONS</Link>
               </DropdownMenuItem>
               <DropdownMenuItem
                 asChild
-                className=" text-white cursor-pointer !text-[18px]"
+                className="text-white cursor-pointer !text-[18px]"
               >
                 <Link href="/products/platform">FIRESIGHT | PLATFORM</Link>
               </DropdownMenuItem>
               <DropdownMenuItem
                 asChild
-                className=" text-white cursor-pointer !text-[18px]"
+                className="text-white cursor-pointer !text-[18px]"
               >
                 <Link href="/products/pulse">FIRESIGHT | PULSE</Link>
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
-          {/* Other nav items */}
           <Link href="/about-us" className="text-[#86878D]">
             ABOUT US
           </Link>
@@ -64,7 +66,66 @@ export function Header() {
             BLOG
           </Link>
         </nav>
+        {/* Hamburger Icon for Mobile */}
+        <button
+          className="md:hidden ml-auto"
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          aria-label="Open menu"
+        >
+          <Image
+            src="/images/icons/hamburger.svg"
+            alt="Menu"
+            width={24}
+            height={16}
+          />
+        </button>
       </div>
+      {/* Mobile Menu */}
+      {mobileMenuOpen && (
+        <div className="md:hidden absolute top-16 left-0 w-full bg-[#080B16] z-[1100] border-t border-[#23263A]">
+          <nav className="flex flex-col items-start px-6 py-4 space-y-4">
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button
+                  variant="ghost"
+                  className="px-2 text-white !text-[18px] w-full justify-start"
+                >
+                  PRODUCTS
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="bg-[#101522] border-none shadow-lg min-w-[220px]">
+                <DropdownMenuItem
+                  asChild
+                  className="text-white cursor-pointer !text-[18px]"
+                >
+                  <Link href="/products/sessions">FIRESIGHT | SESSIONS</Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  asChild
+                  className="text-white cursor-pointer !text-[18px]"
+                >
+                  <Link href="/products/platform">FIRESIGHT | PLATFORM</Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  asChild
+                  className="text-white cursor-pointer !text-[18px]"
+                >
+                  <Link href="/products/pulse">FIRESIGHT | PULSE</Link>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+            <Link href="/about-us" className="text-[#86878D] w-full">
+              ABOUT US
+            </Link>
+            <Link href="/ai-impact-index" className="text-[#86878D] w-full">
+              AI IMPACT INDEX
+            </Link>
+            <Link href="/blog" className="text-[#86878D] w-full">
+              BLOG
+            </Link>
+          </nav>
+        </div>
+      )}
     </header>
   );
 }
