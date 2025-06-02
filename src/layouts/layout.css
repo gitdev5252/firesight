@@ -25,3 +25,13 @@
   margin: 0 16px; /* Optional: horizontal spacing */
   display: inline-block;
 }
+
+/* Mobile: Use hero.svg for small screens */
+@media (max-width: 425px) {
+  .firesight-banner-bg::before {
+    background-image: url("/images/mobile/hero.svg");
+    background-size: contain;
+    background-position: center top;
+    opacity: unset;
+  }
+}
