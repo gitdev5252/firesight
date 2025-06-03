@@ -170,9 +170,9 @@ export default function Home() {
       </section>
 
       {/* Pulse section */}
-      <div className="w-full h-[1000px] pulse-bg absolute mt-[-2800px]"></div>
+      <div className="w-full h-[1000px] pulse-bg absolute mt-[-2950px]"></div>
       <section className="relative mt-auto mx-auto flex flex-col items-center justify-center md:px-14 px-5">
-        <div className="flex gap-11 text-white items-center justify-around mt-[172px] mb-30">
+        <div className="flex gap-11 text-white items-center justify-around mt-[172px] mb-20">
           <Image
             src="/images/logo.svg"
             alt="Logo"
@@ -189,8 +189,8 @@ export default function Home() {
         <Image
           src="/images/news.svg"
           alt="News"
-          width={962}
-          height={671}
+          width={1048}
+          height={857}
           className="border-[43px] rounded-4xl border-[#080B16] border-solid outline-2 outline-[#121721]"
         />
 
