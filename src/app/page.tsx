@@ -127,7 +127,7 @@ export default function Home() {
           width={214}
           height={53}
           priority
-          className="md:mt-[70px] mt-[60px] sm:w-[214px] sm:h-[53px] w-[141px] h-[35px] mb-20"
+          className="md:mt-18 mt-[60px] sm:w-[214px] sm:h-[53px] w-[141px] h-[35px] mb-20"
         />
       </Link>
       <section className="relative w-full flex flex-col items-center justify-center z-50">
@@ -137,7 +137,7 @@ export default function Home() {
         <h1
           className="md:text-[110px] text-[50px] font-extrabold"
           style={{
-            background: "linear-gradient(180deg, #14FF00 0%, #00F0FF 100%)",
+            background: "linear-gradient(180deg, rgba(20, 255, 0, 0.55) 0%, rgba(0, 240, 255, 0.62) 100%)",
             WebkitBackgroundClip: "text",
             WebkitTextFillColor: "transparent",
             backgroundClip: "text",
@@ -153,9 +153,9 @@ export default function Home() {
         </h1>
         {/* Description */}
         <p
-          className="mt-[15px] md:text-[18px] text-[12px] text-gray-300 text-center mx-auto md:w-[800px] w-full p-[16px]"
+          className="mt-[15px] md:text-[18px] text-[12px] text-gray-300 text-center mx-auto md:max-w-[1000px] w-full p-4"
           style={{
-            lineHeight: "1.6", // Adjust as needed
+            lineHeight: "1.5", // Adjust as needed
             letterSpacing: "0.01em", // Optional: tweak for best fit
           }}
         >
@@ -165,13 +165,13 @@ export default function Home() {
           transforms how you collaborate. Firesight is your gateway to a better,
           more efficient workday.
         </p>
-        <div className="w-full md:h-[414px] h-[260px] md:rounded-none rounded-2xl backdrop-blur-3xl backdrop-brightness-150 absolute md:bottom-[-70px] bottom-[-10px] -z-20"></div>
+        <div className="w-full md:h-[414px] h-[260px] md:rounded-none rounded-2xl absolute md:bottom-[-116px] bottom-[-10px] -z-20 bg-[rgba(255, 255, 255, 0.02)] border-y-[rgba(255, 255, 255, 0.10)] backdrop-blur-[32px]"></div>
       </section>
 
       {/* Pulse section */}
       <div className="w-full h-[1000px] pulse-bg absolute mt-[-2800px]"></div>
-      <section className="relative w-[92%] mx-auto flex flex-col items-center justify-center">
-        <div className="flex md:w-[556px] w-[243px] text-white items-center justify-around mt-[100px] md:mb-[70px]">
+      <section className="relative mt-auto mx-auto flex flex-col items-center justify-center md:px-14 px-5">
+        <div className="flex md:w-[556px] w-[243px] text-white items-center justify-around mt-[222px] md:mb-40">
           <Image
             src="/images/logo.svg"
             alt="Logo"
@@ -180,8 +180,8 @@ export default function Home() {
             priority
             className="mt-[70px] sm:w-[214px] sm:h-[53px] w-[124px] h-[30px] mb-20"
           />
-          <span className="md:text-[35px] text-[30px]">|</span>
-          <span className="md:text-[65px] text-[30px] font-extrabold">
+          <span className="md:text-[35px] text-[20px]">|</span>
+          <span className="md:text-[60px] text-[30px] font-black font-publica-play">
             Pulse
           </span>
         </div>
@@ -193,20 +193,20 @@ export default function Home() {
           className="border-[43px] rounded-4xl border-[#080B16] border-solid outline-2 outline-[#121721]"
         />
 
-        <div className="w-full main-body text-white absolute mt-[-210px] md:!p-14 !p-[16px]">
-          <div className="flex flex-wrap w-full">
-            <div className="md:w-2/5 w-full mb-[50px]">
+        <div className="w-full main-body text-white absolute mt-[-210px] md:!p-15 md:!pl-22 !p-[16px]">
+          <div className="flex flex-wrap w-full md:mb-16 mb-[50px] gap-5">
+            <div className="lg:flex-2 w-full">
               <h2 className="md:text-[43.8px] text-[28px] font-extrabold uppercase leading-11">
                 Media, market & Business intelligence platform
               </h2>
               <Button
                 variant="outline"
-                className="cursor-pointer gradient-border-btn text-[16px] mt-[20px] bg-transparent rounded-full px-8 py-5 text-white hover:text-white"
+                className="cursor-pointer gradient-border-btn text-[16px] mt-6 bg-transparent rounded-full px-8 py-5 text-white hover:text-white"
               >
                 Explorer <span className="font-bold">Platform</span>
               </Button>
             </div>
-            <div className="md:text-[18px] text-[12px] md:w-3/5 w-full">
+            <div className="md:text-[18px] text-[12px] lg:flex-3 w-full">
               A media, market & business intelligence platform that seamlessly
               merges your proprietary data with real-time news, social, and
               market signals. By unifying internal and external intelligence
@@ -215,10 +215,10 @@ export default function Home() {
               more accurately, and empowers you to act with confidence.
             </div>
           </div>
-          <div className="flex flex-wrap w-full md:gap-13 gap-[12px] justify-between items-center">
+          <div className="flex flex-wrap w-full justify-between lg:gap-y-16 md:gap-y-10 gap-y-3 items-stretch">
             {pulseSectionCardInfo.map((item, index) => (
               <div
-                className="main-body md:!w-[30%] !w-full relative cursor-pointer"
+                className="main-small-body md:!w-[30%] !w-full relative cursor-pointer"
                 key={index}
               >
                 <div className="color-pattern-bg md:p-6 p-[20px] opacity-80 md:h-[150px] h-[108px]">
@@ -241,7 +241,7 @@ export default function Home() {
       {/* Session section */}
       <div className="w-full h-[450px] session-bg absolute mt-[400px]"></div>
       <div className="green-shine-session md:block hidden"></div>
-      <section className="relative w-[92%] mx-auto flex flex-col items-center justify-center mt-[50px]">
+      <section className="relative mx-14 flex flex-col items-center justify-center mt-25">
         <div className="green-shine-session !top-0  md:block hidden"></div>
         <div className="green-shine-session-small  md:block hidden"></div>
         <div className="green-shine-session-2nd-small  md:block hidden"></div>
@@ -252,10 +252,10 @@ export default function Home() {
             width={214}
             height={53}
             priority
-            className="md:mt-[50px] mt-[50px] sm:w-[214px] sm:h-[53px] w-[124px] h-[38px] mb-14"
+            className="my-14 sm:w-[214px] sm:h-[53px] w-[124px] h-[38px]"
           />
           <span className="md:text-[35px] text-[20px]">|</span>
-          <span className="md:text-[65px] text-[30px] font-extrabold">
+          <span className="md:text-[60px] text-[30px] font-publica-play">
             Sessions
           </span>
         </div>
@@ -266,10 +266,10 @@ export default function Home() {
           height={866}
         />
 
-        <div className="w-full main-body text-white absolute mt-[-300px] md:!p-14 !p-[16px] !backdrop-blur-3xl">
-          <div className="flex flex-wrap w-full">
-            <div className="md:w-2/5 w-full mb-[50px]">
-              <h2 className="md:text-[43.8px] text-[28px] font-extrabold uppercase leading-11">
+        <div className="w-full main-body text-white absolute mt-[-300px] md:!p-15 !p-[16px] !backdrop-blur-3xl">
+          <div className="flex flex-wrap w-full md:mb-16 mb-[50px] gap-5">
+            <div className="lg:flex-2 w-full">
+                  <h2 className="md:text-[43.8px] text-[28px] font-extrabold uppercase leading-11">
                 Next-Gen COnference Technology
               </h2>
               <Button
@@ -279,7 +279,7 @@ export default function Home() {
                 Explorer <span className="font-bold">Platform</span>
               </Button>
             </div>
-            <div className="md:text-[18px] text-[12px] md:w-3/5 w-full">
+            <div className="md:text-[18px] text-[12px] lg:flex-3 w-full">
               Sessions is a next-generation browser-based conferencing solution.
               Seamlessly integrating with platforms like Zoom and Google Meets,
               Sessions also delivers the power to host your meetings directly.
@@ -290,13 +290,13 @@ export default function Home() {
               with Sessions.
             </div>
           </div>
-          <div className="flex flex-wrap w-full md:gap-13 gap-[12px] justify-between items-center">
+          <div className="flex flex-wrap w-full justify-between lg:gap-y-16 md:gap-y-10 gap-y-3 gap-x-0 items-stretch">
             {sessionSectionCardInfo.map((item, index) => (
               <div
-                className="main-body md:!w-[30%] !w-full relative cursor-pointer"
+                className="main-small-body md:!w-[30%] !w-full relative cursor-pointer"
                 key={index}
               >
-                <div className="md:p-6 p-[16px] opacity-80 md:h-[150px] h-[108px]">
+                <div className="md:p-6 p-[16px] opacity-80">
                   <h3 className="md:text-[30px] text-[20px] font-extrabold">
                     {item.title}
                   </h3>
@@ -312,7 +312,7 @@ export default function Home() {
       {/* Platform section */}
       <div className="w-full h-[900px] platform-bg absolute mt-[3500px]"></div>
       <div className="red-purple-shine-session md:block hidden"></div>
-      <section className="relative w-[92%] mx-auto flex flex-col items-center justify-center mt-[150px] mb-[73px]">
+      <section className="relative mx-14 flex flex-col items-center justify-center mt-[165px] mb-[73px]">
         <div className="flex md:w-[650px] w-[287px] text-white items-center justify-between ">
           <Image
             src="/images/logo.svg"
@@ -322,9 +322,9 @@ export default function Home() {
             priority
             className="md:mt-[70px] sm:w-[214px] sm:h-[53px] w-[124px] h-[30px] mb-20"
           />
-          <span className="md:text-[35px] text-[20]">|</span>
-          <span className="md:text-[65px] text-[30px] font-extrabold">
-            Platforms
+          <span className="md:text-[35px] text-[20px]">|</span>
+          <span className="md:text-[60px] text-[30px] font-publica-play">
+            Platform
           </span>
         </div>
         <Image
@@ -334,9 +334,9 @@ export default function Home() {
           height={866}
         />
 
-        <div className="w-full main-body text-white absolute mt-[-590px] md:!p-14 !p-[16px] !backdrop-blur-3xl backdrop-brightness-75">
-          <div className="flex flex-wrap w-full">
-            <div className="md:w-2/5 w-full mb-[50px]">
+        <div className="w-full main-body text-white absolute mt-[-590px] md:!p-15 md:!pl-22 !p-[16px] !backdrop-blur-3xl backdrop-brightness-75">
+          <div className="flex flex-wrap w-full mb-16 gap-5">
+            <div className="lg:flex-2 w-full">
               <h2 className="md:text-[43.8px] text-[28px] font-extrabold uppercase leading-11">
                 Unified intelligence platform
               </h2>
@@ -347,7 +347,7 @@ export default function Home() {
                 Explorer <span className="font-bold">Platform</span>
               </Button>
             </div>
-            <div className="md:text-[18px] text-[12px] md:w-3/5 w-full">
+            <div className="md:text-[18px] text-[12px] lg:flex-3 w-full">
               SaaS solution designed to centralize and optimize workflows for
               independent professionals. Tailored for freelancers, solopreneurs,
               and consultants in cognitive labor fields, it delivers an
@@ -358,13 +358,13 @@ export default function Home() {
               intuitive space
             </div>
           </div>
-          <div className="flex flex-wrap w-full md:gap-13 gap-[12px] justify-between items-center">
+          <div className="flex flex-wrap w-full justify-between lg:gap-y-16 md:gap-y-10 gap-y-3 gap-x-0 items-stretch">
             {platformSectionCardInfo.map((item, index) => (
               <div
-                className="main-body md:!w-[30%] !w-full relative cursor-pointer"
+                className="main-small-body lg:!w-[30%] md:!w-[46%] !w-full relative cursor-pointer"
                 key={index}
               >
-                <div className="md:p-6 p-[16px] opacity-80 md:h-[130px] h-[108px]">
+                <div className="md:p-6 p-[16px] opacity-80">
                   <div className="flex items-center justify-between w-full">
                     <h3 className="md:text-[30px] text-[20px] font-extrabold">
                       {item.title}
