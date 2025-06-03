@@ -137,7 +137,7 @@ export default function Home() {
         <h1
           className="md:text-[110px] text-[50px] font-extrabold"
           style={{
-            background: "linear-gradient(180deg, #14FF00 0%, #00F0FF 100%)",
+            background: "linear-gradient(180deg, rgba(20, 255, 0, 0.55) 0%, rgba(0, 240, 255, 0.62) 100%)",
             WebkitBackgroundClip: "text",
             WebkitTextFillColor: "transparent",
             backgroundClip: "text",
@@ -180,8 +180,8 @@ export default function Home() {
             priority
             className="mt-[70px] sm:w-[214px] sm:h-[53px] w-[124px] h-[30px] mb-20"
           />
-          <span className="md:text-[35px] text-[30px]">|</span>
-          <span className="md:text-[65px] text-[30px] font-extrabold">
+          <span className="md:text-[35px] text-[20px]">|</span>
+          <span className="md:text-[60px] text-[30px] font-black font-publica-play">
             Pulse
           </span>
         </div>
@@ -195,7 +195,7 @@ export default function Home() {
 
         <div className="w-full main-body text-white absolute mt-[-210px] md:!p-14 !p-[16px]">
           <div className="flex flex-wrap w-full">
-            <div className="md:w-2/5 w-full mb-[50px]">
+            <div className="md:w-2/5 w-full mb-[50px] pr-5">
               <h2 className="md:text-[43.8px] text-[28px] font-extrabold uppercase leading-11">
                 Media, market & Business intelligence platform
               </h2>
@@ -218,7 +218,7 @@ export default function Home() {
           <div className="flex flex-wrap w-full md:gap-13 gap-[12px] justify-between items-center">
             {pulseSectionCardInfo.map((item, index) => (
               <div
-                className="main-body md:!w-[30%] !w-full relative cursor-pointer"
+                className="main-small-body md:!w-[30%] !w-full relative cursor-pointer"
                 key={index}
               >
                 <div className="color-pattern-bg md:p-6 p-[20px] opacity-80 md:h-[150px] h-[108px]">
@@ -255,7 +255,7 @@ export default function Home() {
             className="md:mt-[50px] mt-[50px] sm:w-[214px] sm:h-[53px] w-[124px] h-[38px] mb-14"
           />
           <span className="md:text-[35px] text-[20px]">|</span>
-          <span className="md:text-[65px] text-[30px] font-extrabold">
+          <span className="md:text-[60px] text-[30px] font-publica-play">
             Sessions
           </span>
         </div>
@@ -268,7 +268,7 @@ export default function Home() {
 
         <div className="w-full main-body text-white absolute mt-[-300px] md:!p-14 !p-[16px] !backdrop-blur-3xl">
           <div className="flex flex-wrap w-full">
-            <div className="md:w-2/5 w-full mb-[50px]">
+            <div className="md:w-2/5 w-full mb-[50px] pr-5">
               <h2 className="md:text-[43.8px] text-[28px] font-extrabold uppercase leading-11">
                 Next-Gen COnference Technology
               </h2>
@@ -293,7 +293,7 @@ export default function Home() {
           <div className="flex flex-wrap w-full md:gap-13 gap-[12px] justify-between items-center">
             {sessionSectionCardInfo.map((item, index) => (
               <div
-                className="main-body md:!w-[30%] !w-full relative cursor-pointer"
+                className="main-small-body md:!w-[30%] !w-full relative cursor-pointer"
                 key={index}
               >
                 <div className="md:p-6 p-[16px] opacity-80 md:h-[150px] h-[108px]">
@@ -322,9 +322,9 @@ export default function Home() {
             priority
             className="md:mt-[70px] sm:w-[214px] sm:h-[53px] w-[124px] h-[30px] mb-20"
           />
-          <span className="md:text-[35px] text-[20]">|</span>
-          <span className="md:text-[65px] text-[30px] font-extrabold">
-            Platforms
+          <span className="md:text-[35px] text-[20px]">|</span>
+          <span className="md:text-[60px] text-[30px] font-publica-play">
+            Platform
           </span>
         </div>
         <Image
@@ -336,7 +336,7 @@ export default function Home() {
 
         <div className="w-full main-body text-white absolute mt-[-590px] md:!p-14 !p-[16px] !backdrop-blur-3xl backdrop-brightness-75">
           <div className="flex flex-wrap w-full">
-            <div className="md:w-2/5 w-full mb-[50px]">
+            <div className="md:w-2/5 w-full mb-[50px] pr-5">
               <h2 className="md:text-[43.8px] text-[28px] font-extrabold uppercase leading-11">
                 Unified intelligence platform
               </h2>
@@ -361,7 +361,7 @@ export default function Home() {
           <div className="flex flex-wrap w-full md:gap-13 gap-[12px] justify-between items-center">
             {platformSectionCardInfo.map((item, index) => (
               <div
-                className="main-body md:!w-[30%] !w-full relative cursor-pointer"
+                className="main-small-body md:!w-[30%] !w-full relative cursor-pointer"
                 key={index}
               >
                 <div className="md:p-6 p-[16px] opacity-80 md:h-[130px] h-[108px]">

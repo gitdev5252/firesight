@@ -5,23 +5,23 @@ import "./layout.css";
 export default function FireSightFooter() {
   return (
     <div
-      className="main-body md:!w-[92%] md:!pt-[93px] !pt-[40px] md:!px-[40px] !px-[24px] md:!pb-[24px] !pb-[49px] relative overflow-hidden md:mb-[56px] mb-0"
+      className="main-body md:!w-[92%] md:!pt-[93px] !pt-[40px] md:!pb-[24px] !pb-[49px] relative overflow-hidden md:mb-[56px] mb-0"
       style={{ borderTopRightRadius: "48px" }}
     >
       {/* Top Section */}
-      <div className="relative flex flex-col md:flex-row md:justify-between pb-8 border-b border-[#23263A] text-white md:mx-10 text-[14px]">
+      <div className="relative flex flex-col md:flex-row md:justify-between pb-8 border-b border-[#23263A] text-white text-[14px] md:!pr-[67px] md:!pl-[56px] !px-[24px]">
         {/* Logo & Social */}
         {/* Nav Columns */}
-        <div className="flex flex-col items-center md:items-start gap-4 min-w-[200px]">
+        <div className="flex flex-col items-center md:items-start gap-4 min-w-[150px]">
           <Image
             src="/images/footer-logo.svg"
             alt="firesight.ai"
-            width={110}
-            height={118}
-            className="md:h-[118px] h-[88px]"
+            width={120}
+            height={120}
+            className="pl-6 md:h-[118px] h-[88px]"
           />
 
-          <div className="flex gap-3 mt-2 md:relative absolute bottom-0">
+          <div className="flex gap-[5px] mt-2 md:relative absolute bottom-0">
             {/* Replace with your actual social icons */}
             <a href="#" aria-label="LinkedIn">
               <Image
@@ -97,24 +97,24 @@ export default function FireSightFooter() {
         <div>
           <ul className="space-y-[12px] ">
             <li>
-              <Link href="/" className="hover:underline font-bold">
+              <Link href="/" className="hover:underline">
                 Home
               </Link>
             </li>
             <li>
-              <Link href="/about-us" className="hover:underline font-bold">
+              <Link href="/about-us" className="hover:underline">
                 About Us
               </Link>
             </li>
             <li>
-              <Link href="/blog" className="hover:underline font-bold">
+              <Link href="/blog" className="hover:underline">
                 Blog
               </Link>
             </li>
             <li>
               <Link
                 href="/ai-impact-index"
-                className="hover:underline font-bold"
+                className="hover:underline"
               >
                 AI Impact Index
               </Link>
@@ -167,8 +167,8 @@ export default function FireSightFooter() {
         </div>
       </div>
       {/* Locations & Partner */}
-      <div className="flex flex-col md:flex-row justify-between items-center gap-8 py-6 border-b border-[#23263A]">
-        <div className="flex w-full flex-wrap md:justify-between justify-center items-start gap-6 md:gap-8 text-white">
+      <div className="flex flex-col md:flex-row justify-between items-center gap-8 py-8 border-b border-[#23263A] h-full md:!px-[41px] !px-[24px]">
+        <div className="flex w-full flex-wrap md:justify-between justify-center items-center gap-6 md:gap-8 text-white h-full">
           <div className="flex items-start">
             <Image
               src="/images/icons/location.svg"
@@ -191,7 +191,7 @@ export default function FireSightFooter() {
               </div>
             </div>
           </div>
-          <div className="vertical-divider md:!block !hidden"></div>
+          <div className="vertical-divider md:!block !hidden !h-[60px]"></div>
           {/* Canberra */}
           <div className="flex items-start">
             <Image
@@ -213,7 +213,7 @@ export default function FireSightFooter() {
               </div>
             </div>
           </div>
-          <div className="vertical-divider md:!block !hidden"></div>
+          <div className="vertical-divider md:!block !hidden !h-[60px]"></div>
           {/* Miami */}
           <div className="flex items-start">
             <Image
@@ -235,7 +235,7 @@ export default function FireSightFooter() {
               </div>
             </div>
           </div>
-          <div className="vertical-divider md:!block !hidden"></div>
+          <div className="vertical-divider md:!block !hidden !h-[60px]"></div>
           <div className="flex flex-col items-center md:items-end gap-2">
             <Image
               src="/images/D vinci.svg"
@@ -248,23 +248,23 @@ export default function FireSightFooter() {
         {/* Partner */}
       </div>
       {/* Bottom Bar */}
-      <div className="flex flex-col md:flex-row justify-between items-center pt-6 text-xs text-[#A0AEC0]">
-        <div className="flex items-center gap-2 mb-2 md:mb-0">
+      <div className="flex flex-col md:flex-row justify-between items-center pt-6 text-xs text-[#A0AEC0] md:!px-[41px] !px-[24px]">
+        <div className="flex items-center mb-2 md:mb-0 min-w-[135px]">
           <Image
             src="/images/icons/dvinci.svg"
             alt="D'VINCI"
-            width={18}
-            height={18}
+            width={17}
+            height={17}
           />
-          <span>Crafted by D&apos;Vinci</span>
+          <span className="text-[10px] font-bold border-l-2 border-l-white pl-3 ml-3">Crafted by D&apos;Vinci</span>
         </div>
-        <div className="flex flex-wrap w-full justify-around gap-4 underline md:text-[12px] text-[8px]">
+        <div className="flex flex-wrap w-full justify-center gap-[34px] underline md:text-[12px] text-[8px] font-bold">
           <Link href="/terms">Terms & Conditions</Link>
           <Link href="/privacy">Privacy Policy</Link>
           <span>Firesight Ltd 2025. All Rights Reserved.</span>
         </div>
-        <div>
-          Contact Us:
+        <div className="text-[13px] min-w-[238px]">
+          Contact Us:{' '}
           <a href="mailto:hello@firesight.ai" className="font-bold text-white">
             hello@firesight.ai
           </a>

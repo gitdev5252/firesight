@@ -1,3 +1,13 @@
+@font-face {
+  font-family: 'Publica Play';
+  src: url('/fonts/publica-play-bold.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+.font-publica-play {
+  font-family: 'Publica Play';
+}
+
 .firesight-banner-bg {
   position: relative;
   width: 100%;
@@ -20,7 +30,7 @@
 
 .vertical-divider {
   width: 1px;
-  height: 40px; /* Adjust height as needed */
+  height:40px; /* Adjust height as needed */
   background-color: rgba(255, 255, 255, 0.1); /* Or any color you want */
   margin: 0 16px; /* Optional: horizontal spacing */
   display: inline-block;
