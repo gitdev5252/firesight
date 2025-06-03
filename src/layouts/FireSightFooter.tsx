@@ -4,8 +4,9 @@ import "./layout.css";
 
 export default function FireSightFooter() {
   return (
+    <div className="px-14 pb-14 w-full">
     <div
-      className="main-body md:!w-[92%] md:!pt-[93px] !pt-[40px] md:!pb-[24px] !pb-[49px] relative overflow-hidden md:mb-[56px] mb-0"
+      className="main-body md:!pt-[93px] !pt-[40px] md:!pb-[24px] !pb-[49px] relative overflow-hidden"
       style={{ borderTopRightRadius: "48px" }}
     >
       {/* Top Section */}
@@ -270,6 +271,7 @@ export default function FireSightFooter() {
           </a>
         </div>
       </div>
+    </div>
     </div>
   );
 }

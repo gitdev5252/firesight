@@ -11,12 +11,12 @@ export default function FireSightLayout({
 }) {
   return (
     <RootLayout>
-      <div className="min-h-screen firesight-banner-bg relative">
-        <div className="flex flex-col justify-center items-center relative">
-          <Header />
-          <main className="flex flex-col w-full justify-center items-center">
+      <div className="min-h-screen firesight-banner-bg max-h-full">
+        <div className="flex flex-col justify-center items-center relative h-full">
+          {/* <Header /> */}
+          <div className="flex flex-col w-full justify-center items-center">
             {children}
-          </main>
+          </div>
           <FireSightFooter />
         </div>
       </div>
