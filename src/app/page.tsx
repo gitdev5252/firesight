@@ -165,22 +165,22 @@ export default function Home() {
           transforms how you collaborate. Firesight is your gateway to a better,
           more efficient workday.
         </p>
-        <div className="w-full md:h-[414px] h-[260px] md:rounded-none rounded-2xl absolute md:bottom-[-116px] bottom-[-10px] -z-20 bg-[rgba(255, 255, 255, 0.02)] border-y-[1px] border-y-[rgba(255, 255, 255, 0.10)] backdrop-blur-[32px]"></div>
+        <div className="w-full md:h-[414px] h-[260px] md:rounded-none rounded-2xl absolute md:bottom-[-116px] bottom-[-10px] -z-20 bg-[rgba(255, 255, 255, 0.02)] border-y-[1px] border-y-[rgba(255,255,255,0.1)] backdrop-blur-[32px]"></div>
       </section>
 
       {/* Pulse section */}
       <div className="w-full h-[1000px] pulse-bg absolute mt-[-2800px]"></div>
       <section className="relative mt-auto mx-auto flex flex-col items-center justify-center md:px-14 px-5">
-        <div className="flex md:w-[556px] w-[243px] text-white items-center justify-around mt-[222px] md:mb-40">
+        <div className="flex md:w-[556px] w-[243px] text-white items-center justify-around mt-[172px] mb-30">
           <Image
             src="/images/logo.svg"
             alt="Logo"
             width={214}
             height={53}
             priority
-            className="mt-[70px] sm:w-[214px] sm:h-[53px] w-[124px] h-[30px] mb-20"
+            className="mt-[70px] sm:w-[263px] sm:h-[64px] w-[124px] h-[30px] mb-20"
           />
-          <span className="md:text-[35px] text-[20px]">|</span>
+          <span className="md:text-[45px] text-[20px]">|</span>
           <span className="md:text-[60px] text-[30px] font-black font-publica-play">
             Pulse
           </span>
@@ -245,16 +245,16 @@ export default function Home() {
         <div className="green-shine-session !top-0  md:block hidden"></div>
         <div className="green-shine-session-small  md:block hidden"></div>
         <div className="green-shine-session-2nd-small  md:block hidden"></div>
-        <div className="flex md:w-[600px] w-[293px] text-white items-center justify-between ">
+        <div className="flex md:w-[600px] w-[293px] text-white items-center justify-between">
           <Image
             src="/images/logo.svg"
             alt="Logo"
             width={214}
             height={53}
             priority
-            className="my-14 sm:w-[214px] sm:h-[53px] w-[124px] h-[38px]"
+            className="my-14 sm:w-[234px] sm:h-[63px] w-[124px] h-[38px]"
           />
-          <span className="md:text-[35px] text-[20px]">|</span>
+          <span className="md:text-[45px] text-[20px]">|</span>
           <span className="md:text-[60px] text-[30px] font-publica-play">
             Sessions
           </span>
@@ -310,19 +310,19 @@ export default function Home() {
       </section>
 
       {/* Platform section */}
-      <div className="w-full h-[900px] platform-bg absolute mt-[3500px]"></div>
-      <div className="red-purple-shine-session md:block hidden"></div>
-      <section className="relative mx-14 flex flex-col items-center justify-center mt-[165px] mb-[73px]">
-        <div className="flex md:w-[650px] w-[287px] text-white items-center justify-between ">
+      <div className="w-full h-[900px] absolute mt-[3500px]"></div>
+      <div className="mt-[450px] red-purple-shine-session md:block hidden"></div>
+      <section className="relative mx-14 flex flex-col items-center justify-center mt-[100px] mb-[73px]">
+        <div className="flex md:w-[650px] w-[287px] text-white items-center justify-between py-8">
           <Image
             src="/images/logo.svg"
             alt="Logo"
             width={214}
             height={53}
             priority
-            className="md:mt-[70px] sm:w-[214px] sm:h-[53px] w-[124px] h-[30px] mb-20"
+            className="md:mt-[70px] sm:w-[234px] sm:h-[63px] w-[124px] h-[30px] mb-20"
           />
-          <span className="md:text-[35px] text-[20px]">|</span>
+          <span className="md:text-[45px] text-[20px]">|</span>
           <span className="md:text-[60px] text-[30px] font-publica-play">
             Platform
           </span>
