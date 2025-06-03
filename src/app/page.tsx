@@ -170,16 +170,16 @@ export default function Home() {
       </section>
 
       {/* Pulse section */}
-      <div className="w-full h-[1000px] pulse-bg absolute mt-[-2800px]"></div>
+      <div className="w-full h-[1000px] pulse-bg absolute mt-[-2950px]"></div>
       <section className="relative mt-auto mx-auto flex flex-col items-center justify-center md:px-14 px-5">
-        <div className="flex md:w-[556px] w-[243px] text-white items-center justify-around mt-[172px] mb-30">
+        <div className="flex gap-11 text-white items-center justify-around mt-[172px] mb-20">
           <Image
             src="/images/logo.svg"
             alt="Logo"
             width={214}
             height={53}
             priority
-            className="mt-[70px] sm:w-[263px] sm:h-[64px] w-[124px] h-[30px] mb-20"
+            className="mt-[70px] sm:w-[264px] sm:h-[64px] w-[124px] h-[30px] mb-20"
           />
           <span className="md:text-[45px] text-[20px]">|</span>
           <span className="md:text-[60px] text-[30px] font-black font-publica-play">
@@ -189,8 +189,8 @@ export default function Home() {
         <Image
           src="/images/news.svg"
           alt="News"
-          width={962}
-          height={671}
+          width={1048}
+          height={857}
           className="border-[43px] rounded-4xl border-[#080B16] border-solid outline-2 outline-[#121721]"
         />
 
@@ -246,14 +246,14 @@ export default function Home() {
         <div className="green-shine-session !top-0  md:block hidden"></div>
         <div className="green-shine-session-small  md:block hidden"></div>
         <div className="green-shine-session-2nd-small  md:block hidden"></div>
-        <div className="flex md:w-[600px] w-[293px] text-white items-center justify-between">
+        <div className="flex gap-11 text-white items-center justify-between">
           <Image
             src="/images/logo.svg"
             alt="Logo"
             width={214}
             height={53}
             priority
-            className="my-14 sm:w-[234px] sm:h-[63px] w-[124px] h-[38px]"
+            className="my-14 sm:w-[264px] sm:h-[64px] w-[124px] h-[38px]"
           />
           <span className="md:text-[45px] text-[20px]">|</span>
           <span className="md:text-[60px] text-[30px] font-publica-play">
@@ -314,14 +314,14 @@ export default function Home() {
       <div className="w-full h-[900px] absolute mt-[3500px]"></div>
       <div className="mt-[450px] red-purple-shine-session md:block hidden"></div>
       <section className="relative mx-14 flex flex-col items-center justify-center mt-[100px] mb-[73px]">
-        <div className="flex md:w-[650px] w-[287px] text-white items-center justify-between py-8">
+        <div className="flex gap-11 text-white items-center justify-between py-8">
           <Image
             src="/images/logo.svg"
             alt="Logo"
             width={214}
             height={53}
             priority
-            className="md:mt-[70px] sm:w-[234px] sm:h-[63px] w-[124px] h-[30px] mb-20"
+            className="md:mt-[70px] sm:w-[264px] sm:h-[64px] w-[124px] h-[30px] mb-20"
           />
           <span className="md:text-[45px] text-[20px]">|</span>
           <span className="md:text-[60px] text-[30px] font-publica-play">
