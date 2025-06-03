@@ -13,8 +13,8 @@ export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <header className="sticky top-[15px] w-full mt-[20px] text-white z-[1000] bg-transparent">
-      <div className="flex h-16 items-center md:mx-[58.5px] mx-[15px]">
+    <header className="sticky top-4 w-full text-white z-[1000] bg-transparent">
+      <div className="flex h-16 items-center md:mx-14 mx-[15px]">
         <div className="mr-4 flex items-center">
           <Link href="/" className="mr-6 flex items-center space-x-2">
             <Image
