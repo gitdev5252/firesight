@@ -165,7 +165,7 @@ export default function Home() {
           transforms how you collaborate. Firesight is your gateway to a better,
           more efficient workday.
         </p>
-        <div className="w-full md:h-[414px] h-[260px] md:rounded-none rounded-2xl absolute md:bottom-[-116px] bottom-[-10px] -z-20 bg-[rgba(255, 255, 255, 0.02)] border-y-[1px] !border-y-[rgba(255, 255, 255, 0.10)] backdrop-blur-[32px]"></div>
+        <div className="w-full md:h-[414px] h-[260px] md:rounded-none rounded-2xl absolute md:bottom-[-116px] bottom-[-10px] -z-20 bg-[rgba(255, 255, 255, 0.02)] border-y-[rgba(255, 255, 255, 0.10)] backdrop-blur-[32px]"></div>
       </section>
 
       {/* Pulse section */}
