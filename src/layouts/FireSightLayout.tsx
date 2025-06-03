@@ -1,5 +1,4 @@
 "use client";
-import { Header } from "./Header";
 import RootLayout from "@/app/layout";
 import "./layout.css";
 import FireSightFooter from "./FireSightFooter";
