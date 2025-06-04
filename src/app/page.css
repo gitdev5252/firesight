@@ -14,7 +14,7 @@
   background-position: center;
   height: 450px;
   width: 100%;
-  top: 360px;
+  top: 500px;
   left: 0;
   position: absolute;
 }
@@ -161,13 +161,13 @@
 
 .green-shine-middle-right {
   position: absolute;
-  top: 465px;
+  top: 0px;
   right: 0px;
-  width: 602px;
-  height: 602px;
+  width: 700px;
+  height: 1500px;
   z-index: -1;
   background-image: url("/images/red-shine-middle-right.svg");
-  background-size: contain;
+  background-size: cover;
   background-repeat: no-repeat;
 }
 
