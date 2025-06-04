@@ -119,14 +119,14 @@ export default function Home() {
   return (
     <>
       <div className="shineBg_body_top_left"></div>
-      <Link href="/" className="flex items-center">
+      <Link href="/" className="flex items-center mt-43 mb-20">
         <Image
           src="/images/logo.svg"
           alt="Logo"
           width={214}
           height={53}
           priority
-          className="md:mt-18 mt-[60px] sm:w-[214px] sm:h-[53px] w-[141px] h-[35px] mb-20"
+          className="sm:w-[214px] sm:h-[53px] w-[141px] h-[35px]"
         />
       </Link>
       <section className="relative w-full flex flex-col items-center justify-center z-50 pb-32">

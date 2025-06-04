@@ -1,15 +1,72 @@
+"use client";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+
 export default function PulseLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return (<div>
-    <TabBar/>
-    {children}</div>);
+  return (
+    <div className="w-full">
+      <div className="bg-[url('/images/pulse-bg-top.png')] bg-cover w-full h-[970px] absolute z-[-10000]"></div>
+      <TabBar />
+      {children}
+    </div>
+  );
 }
 
 function TabBar() {
-    return (
-    <div className="w-full h-30 px-14 border-b-[1px] border-b-[#ffffff]">
-    </div>);
+  const pathname = usePathname();
+  const tabItems = [
+    {
+      label: "Overview",
+      href: "/pulse/overview",
+    },
+    {
+      label: "News",
+      href: "/pulse/news",
+    },
+    {
+      label: "Report",
+      href: "/pulse/report",
+    },
+    {
+      label: "Intelligence",
+      href: "/pulse/intelligence",
+    },
+    {
+      label: "Pricing",
+      href: "/pulse/pricing",
+    },
+    {
+      label: "Network Brands",
+      href: "/pulse/network-brands",
+    },
+  ];
+  return (
+    <div className="h-16 border-b-[1px] border-b-[#ffffff33] flex flex-wrap justify-evenly mt-[150px] mx-14 px-[3.5vw]">
+      {tabItems.map((ele) => (
+        <Link
+          key={ele.label}
+          href={ele.href}
+          className={
+            (pathname === ele.href
+              ? "text-white font-bold "
+              : "text-[#86878D] ") +
+            "text-[18px] pt-4 flex flex-col items-center gap-4"
+          }
+        >
+          <span className="text-center w-full">{ele.label}</span>
+          <div
+            className={
+              pathname === ele.href
+                ? "w-full h-1 bg-[linear-gradient(180deg,rgba(0,255,224,0.55)0%,rgba(188,239,255,0.62)100%)]"
+                : ""
+            }
+          ></div>
+        </Link>
+      ))}
+    </div>
+  );
 }
