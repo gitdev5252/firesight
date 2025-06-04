@@ -240,11 +240,11 @@ export default function Overview() {
       {/* Platform section */}
       <section
         id="platform"
-        className="relative mt-auto flex items-center justify-between w-full px-17 pt-[164px]"
+        className="relative mt-auto flex items-center justify-between w-full px-17 pt-[164px] pb-16"
       >
         <div className="flex flex-col w-full gap-6 max-w-[47.08%]">
           <p className="sub-header-title">PLATFORM</p>
-          <h2 className="md:text-[80px] text-[28px] text-white font-extrabold uppercase leading-[50px]">
+          <h2 className="md:text-[80px] text-[28px] text-white font-extrabold uppercase leading-[100%]">
             WHAT IS CONNECTED INTELLIGENCE?
           </h2>
 
