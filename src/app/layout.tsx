@@ -18,7 +18,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={clsx(lekton.className, "bg-[#080B16] relative")}>
+      <body className={clsx(lekton.className, "bg-[#080B16] relative m-0")}>
         <FireSightLayout>{children}</FireSightLayout>
       </body>
     </html>

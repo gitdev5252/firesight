@@ -4,7 +4,7 @@ import "./layout.css";
 
 export default function FireSightFooter() {
   return (
-    <div className="px-14 pb-14 pt-18 w-full relative">
+    <div className="px-14 pb-8 w-full relative m-0">
       <div className="green-shine-footer-small  md:block hidden z-[-2342]"></div>
       <div className="green-shine-footer-2nd-small  md:block hidden z-[-2342]"></div>
       <div

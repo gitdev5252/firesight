@@ -1,0 +1,67 @@
+.main-box {
+  background: rgba(255, 255, 255, 0.01) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(32px) !important;
+  border-radius: 20px;
+  padding: 1px;
+  width: 100%;
+  position: relative;
+}
+
+.main-small-box {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 1px;
+  width: 100%;
+  position: relative;
+}
+
+.color-pattern-bg {
+  background-image: url("/images/color pattern - small.svg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  max-height: 100vh;
+  width: 100%;
+  border-radius: 20px;
+}
+
+.sub-header-title {
+  font-family: Lekton;
+  font-size: 24px;
+  vertical-align: middle;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 24px;
+  text-transform: uppercase;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 255, 224, 0.55) 0%,
+    rgba(188, 239, 255, 0.62) 100%
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.gradient-border-btn {
+  position: relative;
+  z-index: 0;
+  border-radius: 9999px;
+  background: transparent;
+  border: 1px solid transparent;
+}
+
+.gradient-border-btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  padding: 1px; /* border thickness */
+  background: linear-gradient(180deg, #00ffe0, #bcefff);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  z-index: -1;
+  pointer-events: none;
+}

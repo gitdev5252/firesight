@@ -14,7 +14,6 @@ export default function FireSightLayout({
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 50);
-      console.log(window.scrollY);
     };
 
     window.addEventListener("scroll", handleScroll);

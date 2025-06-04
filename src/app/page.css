@@ -263,37 +263,3 @@
   left: -8.264vw;
   bottom: -22.917vw;
 }
-
-.green-shine-footer-small {
-  border-radius: 41.8vw;
-  opacity: 0.22;
-  background: linear-gradient(
-    180deg,
-    rgba(0, 144, 255, 0.28) 0%,
-    rgba(134, 160, 216, 0.31) 100%
-  );
-  filter: blur(139px);
-  width: 41.8vw;
-  height: 41.8vw;
-  flex-shrink: 0;
-  position: absolute;
-  top: -11.11vw;
-  left: -16.67vw;
-}
-
-.green-shine-footer-2nd-small {
-  border-radius: 41.8vw;
-  opacity: 0.09;
-  background: linear-gradient(
-    180deg,
-    rgba(63, 104, 250, 0.55) 0%,
-    rgba(188, 239, 255, 0.62) 100%
-  );
-  filter: blur(139px);
-  width: 41.8vw;
-  height: 41.8vw;
-  flex-shrink: 0;
-  position: absolute;
-  top: -6.8vw;
-  right: 19.3vw;
-}
