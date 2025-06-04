@@ -1,6 +1,5 @@
 import Link from "next/link";
 import Image from "next/image";
-import FireSightLayout from "@/layouts/FireSightLayout";
 import "./page.css";
 import { Button } from "@/components/ui/button";
 
@@ -118,7 +117,7 @@ export default function Home() {
     },
   ];
   return (
-    <FireSightLayout>
+    <>
       <div className="shineBg_body_top_left"></div>
       <Link href="/" className="flex items-center">
         <Image
@@ -413,6 +412,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-    </FireSightLayout>
+    </>
   );
 }

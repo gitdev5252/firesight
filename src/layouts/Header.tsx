@@ -1,7 +1,7 @@
-'use client';
+"use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import './header.css';
+import "./header.css";
 import Image from "next/image";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -40,52 +40,72 @@ export function Header() {
         {/* Desktop Nav */}
         <nav className="hidden md:flex flex-1 items-center justify-end space-x-20 font-medium !text-[18px]">
           <div className="relative">
-            <img src="/images/GreenBlurPolygon.svg" className={pathname === "/about-us" ? "inline mr-[-48px]" : "hidden "}/>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="px-2 text-white !text-[18px]">
-                PRODUCTS
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="14"
-                  height="15"
-                  viewBox="0 0 14 15"
-                  fill="none"
+            <Image
+              src="/images/GreenBlurPolygon.svg"
+              alt=" "
+              width={116}
+              height={116}
+              className={
+                pathname === "/pulse" ? "inline mr-[-48px]" : "hidden"
+              }
+            />
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button
+                  variant="ghost"
+                  className="px-2 text-white !text-[18px] !bg-transparent hover:text-white"
                 >
-                  <path
-                    d="M2.37914 5.72075L6.18247 9.52409C6.63164 9.97325 7.36664 9.97325 7.81581 9.52409L11.6191 5.72075"
-                    stroke="currentColor"
-                    stroke-width="1.75"
-                    stroke-miterlimit="10"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
-                </svg>
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent className="bg-transparent border-none shadow-lg min-w-[220px] z-[1002]">
-              <DropdownMenuItem
-                asChild
-                className="text-white cursor-pointer !text-[18px]"
-              >
-                <Link href="/products/sessions">FIRESIGHT | SESSIONS <small>(Comming Soon)</small></Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem
-                asChild
-                className="text-white cursor-pointer !text-[18px]"
-              >
-                <Link href="/products/platform">FIRESIGHT | PLATFORM <small>(Comming Soon)</small></Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem
-                asChild
-                className="text-white cursor-pointer !text-[18px]"
-              >
-                <Link href="/products/pulse">FIRESIGHT | PULSE</Link>
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+                  PRODUCTS
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="14"
+                    height="15"
+                    viewBox="0 0 14 15"
+                    fill="none"
+                  >
+                    <path
+                      d="M2.37914 5.72075L6.18247 9.52409C6.63164 9.97325 7.36664 9.97325 7.81581 9.52409L11.6191 5.72075"
+                      stroke="currentColor"
+                      stroke-width="1.75"
+                      stroke-miterlimit="10"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="bg-transparent border-none shadow-lg min-w-[220px] z-[1002]">
+                <DropdownMenuItem
+                  asChild
+                  className="text-white hover:!text-gray-300 hover:!bg-transparent cursor-pointer !text-[18px]"
+                >
+                  <Link href="/sessions">
+                    FIRESIGHT | SESSIONS <small>(Comming Soon)</small>
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  asChild
+                  className="text-white hover:!text-gray-300 hover:!bg-transparent cursor-pointer !text-[18px]"
+                >
+                  <Link href="/platform">
+                    FIRESIGHT | PLATFORM <small>(Comming Soon)</small>
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  asChild
+                  className="text-white hover:!text-gray-300 hover:!bg-transparent cursor-pointer !text-[18px]"
+                >
+                  <Link href="/pulse">FIRESIGHT | PULSE</Link>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
-          <Link href="/about-us" className={pathname === "/about-us" ? "nav-item active" : "nav-item"}>
+          <Link
+            href="/about-us"
+            className={
+              pathname === "/about-us" ? "nav-item active" : "nav-item"
+            }
+          >
             <svg
               className="mr-4 hidden"
               xmlns="http://www.w3.org/2000/svg"
@@ -131,7 +151,12 @@ export function Header() {
             </svg>
             ABOUT US
           </Link>
-          <Link href="/ai-impact-index" className={pathname === "/ai-impact-index" ? "nav-item active" : "nav-item"}>
+          <Link
+            href="/ai-impact-index"
+            className={
+              pathname === "/ai-impact-index" ? "nav-item active" : "nav-item"
+            }
+          >
             <svg
               className="mr-4 hidden"
               xmlns="http://www.w3.org/2000/svg"
@@ -177,7 +202,10 @@ export function Header() {
             </svg>
             AI IMPACT INDEX
           </Link>
-          <Link href="/blog" className={pathname === "/blog" ? "nav-item active" : "nav-item"}>
+          <Link
+            href="/blog"
+            className={pathname === "/blog" ? "nav-item active" : "nav-item"}
+          >
             <svg
               className="mr-4 hidden"
               width="22"
@@ -255,19 +283,19 @@ export function Header() {
                   asChild
                   className="text-white cursor-pointer !text-[18px]"
                 >
-                  <Link href="/products/sessions">FIRESIGHT | SESSIONS</Link>
+                  <Link href="/sessions">FIRESIGHT | SESSIONS</Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem
                   asChild
                   className="text-white cursor-pointer !text-[18px]"
                 >
-                  <Link href="/products/platform">FIRESIGHT | PLATFORM</Link>
+                  <Link href="/platform">FIRESIGHT | PLATFORM</Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem
                   asChild
                   className="text-white cursor-pointer !text-[18px]"
                 >
-                  <Link href="/products/pulse">FIRESIGHT | PULSE</Link>
+                  <Link href="/pulse">FIRESIGHT | PULSE</Link>
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>

@@ -1,6 +1,5 @@
 "use client";
 import { Header } from "./Header";
-import RootLayout from "@/app/layout";
 import "./layout.css";
 import FireSightFooter from "./FireSightFooter";
 
@@ -10,7 +9,6 @@ export default function FireSightLayout({
   children: React.ReactNode;
 }) {
   return (
-    <RootLayout>
       <div className="min-h-screen overflow-y-auto overflow-x-hidden relative w-full h-[100vh]">
         <div className="flex flex-col justify-center items-center relative">
           <Header />
@@ -20,6 +18,5 @@ export default function FireSightLayout({
           <FireSightFooter />
         </div>
       </div>
-    </RootLayout>
   );
 }

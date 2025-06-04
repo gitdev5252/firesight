@@ -5,10 +5,10 @@ import "./layout.css";
 export default function FireSightFooter() {
   return (
     <div className="px-14 pb-14 pt-18 w-full relative">
-        <div className="green-shine-footer-small  md:block hidden"></div>
-        <div className="green-shine-footer-2nd-small  md:block hidden"></div>
+      <div className="green-shine-footer-small  md:block hidden"></div>
+      <div className="green-shine-footer-2nd-small  md:block hidden"></div>
       <div
-        className="main-box md:!pt-[93px] !pt-[40px] md:!pb-[24px] !pb-[49px] relative overflow-hidden"
+        className="footer-box md:!pt-[93px] !pt-[40px] md:!pb-[24px] !pb-[49px] relative overflow-hidden"
         style={{ borderTopRightRadius: "48px" }}
       >
         {/* Top Section */}

@@ -45,3 +45,13 @@
     opacity: unset;
   }
 }
+
+.footer-box {
+  background: rgba(255, 255, 255, 0.01) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px) !important;
+  border-radius: 20px;
+  padding: 1px;
+  width: 100%;
+  position: relative;
+}
