@@ -171,10 +171,7 @@ export default function Home() {
 
       {/* Pulse section */}
       <section className="relative mt-auto flex flex-col items-center justify-center w-full px-14">
-        <div
-          className="w-full top-0 h-[910px] left-0 bg-[url('/images/colorpattern.svg')] absolute z-[-10000] bg-no-repeat"
-          style={{ backgroundSize: "cover" }}
-        ></div>
+        <div className="w-full top-[-54px] h-[63.2vw] left-0 bg-[url('/images/colorpattern.svg')] absolute z-[-10000] bg-no-repeat bg-cover"></div>
         <div className="flex gap-11 text-white items-center justify-around h-16 mt-28 mb-40">
           <Image
             src="/images/logo.svg"

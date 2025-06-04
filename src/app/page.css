@@ -1,3 +1,12 @@
+.pulse-bg {
+  background-image: url("/images/color pattern.svg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  max-height: 100000vh;
+  width: 100%;
+}
+
 .session-bg {
   background-image: url("/images/color pattern - session.svg");
   background-repeat: no-repeat;
@@ -123,7 +132,7 @@
 .main-box {
   background: rgba(255, 255, 255, 0.01) !important;
   border: 1px solid rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(20px) !important;
+  backdrop-filter: blur(32px) !important;
   border-radius: 20px;
   padding: 1px;
   width: 100%;
@@ -148,6 +157,34 @@
   background-image: url("/images/red-shine-top-left.svg");
   background-size: contain;
   background-repeat: no-repeat;
+}
+
+.green-shine-middle-right {
+  position: absolute;
+  top: 465px;
+  right: 0px;
+  width: 602px;
+  height: 602px;
+  z-index: -1;
+  background-image: url("/images/red-shine-middle-right.svg");
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.green-shine-session {
+  border-radius: 873px;
+  opacity: 0.12;
+  background: linear-gradient(
+    180deg,
+    rgba(20, 255, 0, 0.55) 0%,
+    rgba(0, 240, 255, 0.62) 100%
+  );
+  filter: blur(139px);
+  position: absolute;
+  width: 873px;
+  height: 873px;
+  left: -200px;
+  top: 3200px;
 }
 
 .red-purple-shine-session {
