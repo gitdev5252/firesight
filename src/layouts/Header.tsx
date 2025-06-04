@@ -18,7 +18,7 @@ export function Header() {
 
   return (
     <header
-      className="sticky top-0 pt-4 w-full h-[130px] text-white z-[1001]"
+      className="sticky top-0 pt-4 w-full h-[100px] text-white z-[1001]"
       style={{
         background:
           "linear-gradient(180deg, #080B16 0%, rgba(8, 11, 22, 0.95) 35.39%, rgba(8, 11, 22, 0.85) 60.89%, rgba(8, 11, 22, 0.30) 82.39%, rgba(8, 11, 22, 0.00) 100%)",
@@ -45,9 +45,7 @@ export function Header() {
               alt=" "
               width={116}
               height={116}
-              className={
-                pathname === "/pulse" ? "inline mr-[-48px]" : "hidden"
-              }
+              className={pathname === "/pulse" ? "inline mr-[-48px]" : "hidden"}
             />
             <DropdownMenu>
               <DropdownMenuTrigger asChild>

@@ -161,10 +161,10 @@
 
 .green-shine-middle-right {
   position: absolute;
-  top: 0px;
+  top: 200px;
   right: 0px;
-  width: 700px;
-  height: 1500px;
+  width: 602px;
+  height: 950px;
   z-index: -1;
   background-image: url("/images/red-shine-middle-right.svg");
   background-size: cover;

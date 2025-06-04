@@ -6,7 +6,7 @@ export default function Page() {
     <div className="w-full">
       <div className="shineBg_body_top_left !top-0"></div>
       <div className="green-shine-middle-right"></div>
-      <div className="bg-[rgba(255,255,255,0.02)] rounded-[20px] border border-[rgba(255,255,255,0.1)] backdrop-blur-[32px] pt-[82px] pl-[81px] pb-[100px] pr-[117px] md:mx-[56px] mt-[16px]">
+      <div className="bg-[rgba(255,255,255,0.02)] rounded-[20px] border border-[rgba(255,255,255,0.1)] backdrop-blur-[32px] pt-[82px] pl-[81px] pb-[100px] pr-[117px] md:mx-[56px]">
         <h3 className="text-[#E93249] text-[32px] font-extrabold uppercase leading-[120%]">
           about us
         </h3>
