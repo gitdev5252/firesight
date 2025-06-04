@@ -21,7 +21,7 @@
   inset: 0;
   background-image: url("/images/hero.png");
   background-repeat: no-repeat;
-  background-size: 100% 100%;
+  background-size:auto;
   background-position: center top -150px;
   opacity: 0.15;
   z-index: 0;

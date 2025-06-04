@@ -130,14 +130,16 @@ export default function Home() {
           className="md:mt-18 mt-[60px] sm:w-[214px] sm:h-[53px] w-[141px] h-[35px] mb-20"
         />
       </Link>
-      <section className="relative w-full flex flex-col items-center justify-center z-50">
+      <section className="relative w-full flex flex-col items-center justify-center z-50 pb-32">
+        <div className="bg-[url('/images/banner.svg')] w-full h-[662px] bg-cover absolute top-[-390px] z-[-10000]"></div>
         {/* Blur Panel */}
 
         {/* Headings */}
         <h1
           className="md:text-[110px] text-[50px] font-extrabold"
           style={{
-            background: "linear-gradient(180deg, rgba(20, 255, 0, 0.55) 0%, rgba(0, 240, 255, 0.62) 100%)",
+            background:
+              "linear-gradient(180deg, rgba(20, 255, 0, 0.55) 0%, rgba(0, 240, 255, 0.62) 100%)",
             WebkitBackgroundClip: "text",
             WebkitTextFillColor: "transparent",
             backgroundClip: "text",
@@ -165,36 +167,39 @@ export default function Home() {
           transforms how you collaborate. Firesight is your gateway to a better,
           more efficient workday.
         </p>
-        <div className="w-full md:h-[414px] h-[260px] md:rounded-none rounded-2xl absolute md:bottom-[-116px] bottom-[-10px] -z-20 bg-[rgba(255, 255, 255, 0.02)] border-y-[1px] border-y-[rgba(255,255,255,0.1)] backdrop-blur-[32px]"></div>
-
+        <div className="w-full md:rounded-none rounded-2xl absolute top-[160px] bottom-[0px] -z-20 bg-[rgba(255, 255, 255, 0.02)] border-y-[1px] border-y-[rgba(255,255,255,0.1)] backdrop-blur-[32px]"></div>
       </section>
 
       {/* Pulse section */}
-      <div className="w-full h-[1000px] pulse-bg absolute mt-[-2950px]"></div>
-      <section className="relative mt-auto mx-auto flex flex-col items-center justify-center md:px-14 px-5">
-        <div className="flex gap-11 text-white items-center justify-around mt-[172px] mb-20">
+      <section className="relative mt-auto flex flex-col items-center justify-center w-full px-14">
+        <div
+          className="w-full top-0 h-[910px] left-0 bg-[url('/images/colorpattern.svg')] absolute z-[-10000] bg-no-repeat"
+          style={{ backgroundSize: "100% 100%" }}
+        ></div>
+        <div className="flex gap-11 text-white items-center justify-around h-16 mt-28 mb-40">
           <Image
             src="/images/logo.svg"
             alt="Logo"
             width={214}
             height={53}
             priority
-            className="mt-[70px] sm:w-[264px] sm:h-[64px] w-[124px] h-[30px] mb-20"
+            className="sm:w-[264px] sm:h-[64px] w-[124px] h-[30px]"
           />
           <span className="md:text-[45px] text-[20px]">|</span>
-          <span className="md:text-[60px] text-[30px] font-black font-publica-play">
+          <span className="md:text-[65px] text-[30px] font-black font-publica-play">
             Pulse
           </span>
         </div>
-        <Image
-          src="/images/news.svg"
-          alt="News"
-          width={1048}
-          height={857}
-          className="border-[43px] rounded-4xl border-[#080B16] border-solid outline-2 outline-[#121721]"
-        />
 
-        <div className="w-full main-body text-white absolute mt-[-210px] md:!p-15 md:!pl-22 !p-[16px]">
+        <div
+          style={{
+            background: 'url("/images/news.svg")',
+            backgroundSize: "cover",
+          }}
+          className="border-[43px] rounded-4xl border-[#080B16] border-solid outline-2 outline-[#121721] w-[72.7777vw] h-[59.51388vw]"
+        ></div>
+
+        <div className="main-box text-white absolute mt-[-14.5833vw] md:!p-15 md:!pl-22 !p-[16px]">
           <div className="flex flex-wrap w-full md:mb-16 mb-[50px] gap-5">
             <div className="lg:flex-2 w-full">
               <h2 className="md:text-[43.8px] text-[28px] font-extrabold uppercase leading-11">
@@ -204,7 +209,7 @@ export default function Home() {
                 variant="outline"
                 className="cursor-pointer gradient-border-btn text-[16px] mt-6 bg-transparent rounded-full px-8 py-5 text-white hover:text-white"
               >
-                Explorer <span className="font-bold">Platform</span>
+                Explore <span className="font-bold">Pulse</span>
               </Button>
             </div>
             <div className="md:text-[18px] text-[12px] lg:flex-3 w-full">
@@ -219,7 +224,7 @@ export default function Home() {
           <div className="flex flex-wrap w-full justify-between lg:gap-y-16 md:gap-y-10 gap-y-3 items-stretch">
             {pulseSectionCardInfo.map((item, index) => (
               <div
-                className="main-small-body md:!w-[30%] !w-full relative cursor-pointer"
+                className="main-small-box md:!w-[30%] !w-full relative cursor-pointer"
                 key={index}
               >
                 <div className="color-pattern-bg md:p-6 p-[20px] opacity-80 md:h-[150px] h-[108px]">
@@ -240,44 +245,56 @@ export default function Home() {
       </section>
 
       {/* Session section */}
-      <div className="w-full h-[450px] session-bg absolute mt-[400px]"></div>
-      <div className="green-shine-session md:block hidden"></div>
-      <section className="relative mx-14 flex flex-col items-center justify-center mt-25">
-        <div className="green-shine-session !top-0  md:block hidden"></div>
-        <div className="green-shine-session-small  md:block hidden"></div>
-        <div className="green-shine-session-2nd-small  md:block hidden"></div>
-        <div className="flex gap-11 text-white items-center justify-between">
+      <section className="relative px-14 flex flex-col items-center justify-center">
+        <div className="session-bg z-[-100]"></div>
+        <div className="green-shine-session md:block hidden"></div>
+        <div className="green-shine-session-small md:block hidden"></div>
+        <div className="green-shine-session-2nd-small md:block hidden"></div>
+        <div className="green-shine-session-3rd-small md:block hidden"></div>
+        <div className="flex gap-11 text-white items-center justify-between mt-39 mb-15">
           <Image
             src="/images/logo.svg"
             alt="Logo"
             width={214}
             height={53}
             priority
-            className="my-14 sm:w-[264px] sm:h-[64px] w-[124px] h-[38px]"
+            className="sm:w-[264px] sm:h-[64px] w-[124px] h-[38px]"
           />
           <span className="md:text-[45px] text-[20px]">|</span>
-          <span className="md:text-[60px] text-[30px] font-publica-play">
+          <span className="md:text-[65px] text-[30px] font-publica-play">
             Sessions
           </span>
         </div>
-        <Image
-          src="/images/sessions.svg"
-          alt="News"
-          width={1045}
-          height={866}
-        />
 
-        <div className="w-full main-body text-white absolute mt-[-300px] md:!p-15 !p-[16px] !backdrop-blur-3xl">
+        <div
+          style={{
+            background: 'url("/images/sessions.svg")',
+            backgroundSize: "cover",
+            width: "72.57vw",
+            height: "60.14vw",
+          }}
+        >
+          <div
+            style={{
+              background:
+                "linear-gradient(180deg, rgba(8, 11, 22, 0.00) 31.41%, rgba(8, 11, 22, 0.93) 80.91%, #080B16 100%)",
+              width: "100%",
+              height: "100%",
+            }}
+          ></div>
+        </div>
+
+        <div className="w-full main-box text-white absolute mt-[-20.83vw] md:!p-15 !p-[16px] !backdrop-blur-3xl">
           <div className="flex flex-wrap w-full md:mb-16 mb-[50px] gap-5">
             <div className="lg:flex-2 w-full">
-                  <h2 className="md:text-[43.8px] text-[28px] font-extrabold uppercase leading-11">
+              <h2 className="md:text-[43.8px] text-[28px] font-extrabold uppercase leading-11">
                 Next-Gen COnference Technology
               </h2>
               <Button
                 variant="ghost"
-                className="cursor-pointer green-btn-bg text-[16px] mt-[20px] bg-transparent border-0 px-8 py-5 text-white hover:text-black"
+                className="cursor-pointer green-btn-bg text-[16px] mt-[20px] bg-transparent border-0 px-8 py-5 text-white hover:text-black font-bold"
               >
-                Explorer <span className="font-bold">Platform</span>
+                Explore Session
               </Button>
             </div>
             <div className="md:text-[18px] text-[12px] lg:flex-3 w-full">
@@ -294,7 +311,7 @@ export default function Home() {
           <div className="flex flex-wrap w-full justify-between lg:gap-y-16 md:gap-y-10 gap-y-3 gap-x-0 items-stretch">
             {sessionSectionCardInfo.map((item, index) => (
               <div
-                className="main-small-body md:!w-[30%] !w-full relative cursor-pointer"
+                className="main-small-box md:!w-[30%] !w-full relative cursor-pointer"
                 key={index}
               >
                 <div className="md:p-6 p-[16px] opacity-80">
@@ -311,31 +328,41 @@ export default function Home() {
       </section>
 
       {/* Platform section */}
-      <div className="w-full h-[900px] absolute mt-[3500px]"></div>
-      <div className="mt-[450px] red-purple-shine-session md:block hidden"></div>
-      <section className="relative mx-14 flex flex-col items-center justify-center mt-[100px] mb-[73px]">
-        <div className="flex gap-11 text-white items-center justify-between py-8">
+      <section className="relative mx-14 flex flex-col items-center justify-center">
+        <div className="red-purple-shine-session md:block hidden z-[-100000]"></div>
+        <div className="flex gap-11 text-white items-center justify-between mt-59 mb-29">
           <Image
             src="/images/logo.svg"
             alt="Logo"
             width={214}
             height={53}
             priority
-            className="md:mt-[70px] sm:w-[264px] sm:h-[64px] w-[124px] h-[30px] mb-20"
+            className="sm:w-[264px] sm:h-[64px] w-[124px] h-[30px]"
           />
           <span className="md:text-[45px] text-[20px]">|</span>
           <span className="md:text-[60px] text-[30px] font-publica-play">
             Platform
           </span>
         </div>
-        <Image
-          src="/images/platforms.svg"
-          alt="News"
-          width={1045}
-          height={866}
-        />
+        <div
+          style={{
+            background: 'url("/images/platforms.svg") no-repeat',
+            backgroundSize: "cover",
+            width: "72.57vw",
+            height: "60.14vw",
+          }}
+        >
+          <div
+            style={{
+              background:
+                "linear-gradient(180deg, rgba(8, 11, 22, 0.00) 31.41%, rgba(8, 11, 22, 0.93) 80.91%, #080B16 100%)",
+              width: "100%",
+              height: "100%",
+            }}
+          ></div>
+        </div>
 
-        <div className="w-full main-body text-white absolute mt-[-590px] md:!p-15 md:!pl-22 !p-[16px] !backdrop-blur-3xl backdrop-brightness-75">
+        <div className="w-full main-box text-white absolute mt-[-21.4583vw] md:!p-15 md:!pl-22 !p-[16px] !backdrop-blur-3xl backdrop-brightness-75">
           <div className="flex flex-wrap w-full mb-16 gap-5">
             <div className="lg:flex-2 w-full">
               <h2 className="md:text-[43.8px] text-[28px] font-extrabold uppercase leading-11">
@@ -343,9 +370,9 @@ export default function Home() {
               </h2>
               <Button
                 variant="outline"
-                className="cursor-pointer red-btn-bg text-[16px] mt-[20px] bg-transparent border-0 px-8 py-5 text-white hover:text-black"
+                className="cursor-pointer red-btn-bg text-[16px] mt-[20px] bg-transparent border-0 px-8 py-5 text-white hover:text-black font-bold"
               >
-                Explorer <span className="font-bold">Platform</span>
+                Explore Platform
               </Button>
             </div>
             <div className="md:text-[18px] text-[12px] lg:flex-3 w-full">
@@ -362,7 +389,7 @@ export default function Home() {
           <div className="flex flex-wrap w-full justify-between lg:gap-y-16 md:gap-y-10 gap-y-3 gap-x-0 items-stretch">
             {platformSectionCardInfo.map((item, index) => (
               <div
-                className="main-small-body lg:!w-[30%] md:!w-[46%] !w-full relative cursor-pointer"
+                className="main-small-box lg:!w-[30%] md:!w-[46%] !w-full relative cursor-pointer"
                 key={index}
               >
                 <div className="md:p-6 p-[16px] opacity-80">

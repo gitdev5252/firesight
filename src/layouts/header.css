@@ -1,0 +1,19 @@
+.nav-item {
+  color: var(--firesight-pulse-light-grey, #86878d);
+  font-feature-settings: "liga" off, "clig" off;
+  font-family: Lekton;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 150%; /* 27px */
+  text-transform: uppercase;
+}
+
+.nav-item.active {
+  font-weight: bold;
+  color: white;
+}
+
+.nav-item.active svg {
+  display: inline;
+}
