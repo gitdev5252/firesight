@@ -1,4 +1,3 @@
-
 .pulse-bg {
   background-image: url("/images/color pattern.svg");
   background-repeat: no-repeat;
@@ -265,6 +264,18 @@
   height: 500px;
   z-index: -1;
   background-image: url("/images/red-shine-top-left.svg");
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.green-shine-middle-right {
+  position: absolute;
+  top: 465px;
+  right: 0px;
+  width: 602px;
+  height: 602px;
+  z-index: -1;
+  background-image: url("/images/red-shine-middle-right.svg");
   background-size: contain;
   background-repeat: no-repeat;
 }
