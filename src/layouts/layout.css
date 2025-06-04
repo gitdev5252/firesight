@@ -21,7 +21,7 @@
   inset: 0;
   background-image: url("/images/hero.png");
   background-repeat: no-repeat;
-  background-size: 100% 100%;
+  background-size:auto;
   background-position: center top -150px;
   opacity: 0.15;
   z-index: 0;
@@ -44,4 +44,14 @@
     background-position: center top;
     opacity: unset;
   }
+}
+
+.footer-box {
+  background: rgba(255, 255, 255, 0.01) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px) !important;
+  border-radius: 20px;
+  padding: 1px;
+  width: 100%;
+  position: relative;
 }

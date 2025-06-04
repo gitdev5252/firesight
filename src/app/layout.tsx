@@ -2,6 +2,7 @@
 import { Lekton } from "next/font/google";
 import "./globals.css";
 import clsx from "clsx";
+import FireSightLayout from "@/layouts/FireSightLayout";
 const lekton = Lekton({
   weight: ["400", "700"],
   subsets: ["latin"],
@@ -17,8 +18,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={clsx(lekton.className, "bg-[#080B16] relative overflow-hidden")}>
-        {children}
+      <body
+        className={clsx(
+          lekton.className,
+          "bg-[#080B16] relative overflow-hidden"
+        )}
+      >
+        <FireSightLayout>{children}</FireSightLayout>
       </body>
     </html>
   );
