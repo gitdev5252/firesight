@@ -1,5 +1,5 @@
 .nav-item {
-  color: var(--firesight-pulse-light-grey, #86878d);
+  color: #86878d;
   font-feature-settings: "liga" off, "clig" off;
   font-family: Lekton;
   font-size: 18px;

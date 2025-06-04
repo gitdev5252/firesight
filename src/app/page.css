@@ -1,7 +1,7 @@
 .session-bg {
   background-image: url("/images/color pattern - session.svg");
   background-repeat: no-repeat;
-  background-size: fit;
+  background-size: cover;
   background-position: center;
   height: 450px;
   width: 100%;
@@ -165,13 +165,10 @@
 .green-shine-session {
   border-radius: 60.07vw;
   opacity: 0.12;
-  background: var(
-    --firesight-platform-cyberpunk-green-stroke,
-    linear-gradient(
-      180deg,
-      rgba(20, 255, 0, 0.55) 0%,
-      rgba(0, 240, 255, 0.62) 100%
-    )
+  background: linear-gradient(
+    180deg,
+    rgba(20, 255, 0, 0.55) 0%,
+    rgba(0, 240, 255, 0.62) 100%
   );
   filter: blur(139px);
   position: absolute;
@@ -183,13 +180,10 @@
 .green-shine-session-small {
   border-radius: 31.458vw;
   opacity: 0.12;
-  background: var(
-    --firesight-platform-cyberpunk-green-stroke,
-    linear-gradient(
-      180deg,
-      rgba(20, 255, 0, 0.55) 0%,
-      rgba(0, 240, 255, 0.62) 100%
-    )
+  background: linear-gradient(
+    180deg,
+    rgba(20, 255, 0, 0.55) 0%,
+    rgba(0, 240, 255, 0.62) 100%
   );
   filter: blur(139px);
   top: 0px;
@@ -203,13 +197,10 @@
 .green-shine-session-2nd-small {
   border-radius: 41.8vw;
   opacity: 0.12;
-  background: var(
-    --firesight-platform-cyberpunk-green-stroke,
-    linear-gradient(
-      180deg,
-      rgba(20, 255, 0, 0.55) 0%,
-      rgba(0, 240, 255, 0.62) 100%
-    )
+  background: linear-gradient(
+    180deg,
+    rgba(20, 255, 0, 0.55) 0%,
+    rgba(0, 240, 255, 0.62) 100%
   );
   filter: blur(139px);
   width: 41.8vw;
@@ -239,13 +230,10 @@
 .green-shine-footer-small {
   border-radius: 41.8vw;
   opacity: 0.22;
-  background: var(
-    --firesight-pulse-pulse-fill,
-    linear-gradient(
-      180deg,
-      rgba(0, 144, 255, 0.28) 0%,
-      rgba(134, 160, 216, 0.31) 100%
-    )
+  background: linear-gradient(
+    180deg,
+    rgba(0, 144, 255, 0.28) 0%,
+    rgba(134, 160, 216, 0.31) 100%
   );
   filter: blur(139px);
   width: 41.8vw;
@@ -259,13 +247,10 @@
 .green-shine-footer-2nd-small {
   border-radius: 41.8vw;
   opacity: 0.09;
-  background: var(
-    --firesight-pulse-pulse-circle-glow,
-    linear-gradient(
-      180deg,
-      rgba(63, 104, 250, 0.55) 0%,
-      rgba(188, 239, 255, 0.62) 100%
-    )
+  background: linear-gradient(
+    180deg,
+    rgba(63, 104, 250, 0.55) 0%,
+    rgba(188, 239, 255, 0.62) 100%
   );
   filter: blur(139px);
   width: 41.8vw;
