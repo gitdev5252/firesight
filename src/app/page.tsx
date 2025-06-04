@@ -176,8 +176,8 @@ export default function Home() {
           <Image
             src="/images/logo.svg"
             alt="Logo"
-            width={214}
-            height={53}
+            width={264}
+            height={64}
             priority
             className="sm:w-[264px] sm:h-[64px] w-[124px] h-[30px]"
           />
@@ -190,12 +190,12 @@ export default function Home() {
         <div
           style={{
             background: 'url("/images/news.svg")',
-            backgroundSize: "cover",
+            backgroundSize: "contain",
           }}
-          className="border-[43px] rounded-4xl border-[#080B16] border-solid outline-2 outline-[#121721] w-[72.7777vw] h-[59.51388vw]"
+          className="border-[43px] rounded-4xl border-[#080B16] border-solid outline-2 outline-[#121721] w-[72.7777vw] h-[59.51388vw] bg-no-repeat"
         ></div>
 
-        <div className="main-box text-white absolute mt-[-14.5833vw] md:!p-15 md:!pl-22 !p-[16px]">
+        <div className="main-box text-white absolute mt-[-19.5vw] md:!p-15 md:!pl-22 !p-[16px]">
           <div className="flex flex-wrap w-full md:mb-16 mb-[50px] gap-5">
             <div className="lg:flex-2 w-full">
               <h2 className="md:text-[43.8px] text-[28px] font-extrabold uppercase leading-11">
@@ -280,7 +280,7 @@ export default function Home() {
           ></div>
         </div>
 
-        <div className="w-full main-box text-white absolute mt-[-20.83vw] md:!p-15 !p-[16px] !backdrop-blur-3xl">
+        <div className="w-full main-box text-white absolute mt-[-20.83vw] md:!p-15 !p-[16px]">
           <div className="flex flex-wrap w-full md:mb-16 mb-[50px] gap-5">
             <div className="lg:flex-2 w-full">
               <h2 className="md:text-[43.8px] text-[28px] font-extrabold uppercase leading-11">
@@ -324,7 +324,7 @@ export default function Home() {
       </section>
 
       {/* Platform section */}
-      <section className="relative mx-14 flex flex-col items-center justify-center">
+      <section className="relative mx-14 flex flex-col items-center justify-center mb-[73px]">
         <div className="red-purple-shine-session md:block hidden z-[-100000]"></div>
         <div className="flex gap-11 text-white items-center justify-between mt-59 mb-29">
           <Image
@@ -358,7 +358,7 @@ export default function Home() {
           ></div>
         </div>
 
-        <div className="w-full main-box text-white absolute mt-[-21.4583vw] md:!p-15 md:!pl-22 !p-[16px] !backdrop-blur-3xl backdrop-brightness-75">
+        <div className="w-full main-box text-white absolute mt-[-21.4583vw] md:!p-15 md:!pl-22 !p-[16px]">
           <div className="flex flex-wrap w-full mb-16 gap-5">
             <div className="lg:flex-2 w-full">
               <h2 className="md:text-[43.8px] text-[28px] font-extrabold uppercase leading-11">
