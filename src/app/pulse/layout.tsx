@@ -8,7 +8,8 @@ export default function PulseLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="w-full mx-14">
+    <div className="w-full">
+      <div className="bg-[url('/images/pulse-bg-top.png')] bg-cover w-full h-[970px] absolute z-[-10000]"></div>
       <TabBar />
       {children}
     </div>
@@ -44,18 +45,26 @@ function TabBar() {
     },
   ];
   return (
-    <div className="w-full border-b-[1px] border-b-[#ffffff05] flex flex-wrap justify-evenly items-center">
+    <div className="h-16 border-b-[1px] border-b-[#ffffff33] flex flex-wrap justify-evenly mt-[150px] mx-14 px-[3.5vw]">
       {tabItems.map((ele) => (
         <Link
+          key={ele.label}
           href={ele.href}
           className={
             (pathname === ele.href
-              ? "border-b-4 border-b-[linear-gradient(180deg,rgba(0, 255, 224, 0.55) 0%,rgba(188,239,255,0.62) 100%)] text-white font-bold "
+              ? "text-white font-bold "
               : "text-[#86878D] ") +
-            "w-18 h-full text-[18px] py-4 flex items-center"
+            "text-[18px] pt-4 flex flex-col items-center gap-4"
           }
         >
           <span className="text-center w-full">{ele.label}</span>
+          <div
+            className={
+              pathname === ele.href
+                ? "w-full h-1 bg-[linear-gradient(180deg,rgba(0,255,224,0.55)0%,rgba(188,239,255,0.62)100%)]"
+                : ""
+            }
+          ></div>
         </Link>
       ))}
     </div>

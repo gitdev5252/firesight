@@ -2,21 +2,31 @@
 import { Header } from "./Header";
 import "./layout.css";
 import FireSightFooter from "./FireSightFooter";
+import { useEffect, useState } from "react";
 
 export default function FireSightLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 50);
+      console.log(window.scrollY);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+  }, []);
+
   return (
-      <div className="min-h-screen overflow-y-auto overflow-x-hidden relative w-full h-[100vh]">
-        <div className="flex flex-col justify-center items-center relative">
-          <Header />
-          <main className="flex flex-col w-full justify-center items-center">
-            {children}
-          </main>
-          <FireSightFooter />
-        </div>
-      </div>
+    <>
+      <Header scrolled={scrolled} />
+      <main className="flex flex-col w-full overflow-x-hidden justify-center items-center">
+        {children}
+      </main>
+      <FireSightFooter />
+    </>
   );
 }

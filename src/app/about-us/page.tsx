@@ -1,7 +1,5 @@
 "use client";
 
-import { Header } from "@/layouts/Header";
-import FireSightFooter from "@/layouts/FireSightFooter";
 import "../page.css";
 export default function Page() {
   return (
