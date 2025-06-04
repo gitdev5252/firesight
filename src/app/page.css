@@ -10,7 +10,7 @@
 .session-bg {
   background-image: url("/images/color pattern - session.svg");
   background-repeat: no-repeat;
-  background-size: fit;
+  background-size: cover;
   background-position: center;
   height: 450px;
   width: 100%;
@@ -132,7 +132,7 @@
 .main-box {
   background: rgba(255, 255, 255, 0.01) !important;
   border: 1px solid rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(20px) !important;
+  backdrop-filter: blur(32px) !important;
   border-radius: 20px;
   padding: 1px;
   width: 100%;
@@ -161,10 +161,10 @@
 
 .green-shine-middle-right {
   position: absolute;
-  top: 350px;
+  top: 465px;
   right: 0px;
-  width: 560px;
-  height: 1000px;
+  width: 602px;
+  height: 602px;
   z-index: -1;
   background-image: url("/images/red-shine-middle-right.svg");
   background-size: contain;
@@ -202,13 +202,10 @@
 .green-shine-session {
   border-radius: 60.07vw;
   opacity: 0.12;
-  background: var(
-    --firesight-platform-cyberpunk-green-stroke,
-    linear-gradient(
-      180deg,
-      rgba(20, 255, 0, 0.55) 0%,
-      rgba(0, 240, 255, 0.62) 100%
-    )
+  background: linear-gradient(
+    180deg,
+    rgba(20, 255, 0, 0.55) 0%,
+    rgba(0, 240, 255, 0.62) 100%
   );
   filter: blur(139px);
   position: absolute;
@@ -220,13 +217,10 @@
 .green-shine-session-small {
   border-radius: 31.458vw;
   opacity: 0.12;
-  background: var(
-    --firesight-platform-cyberpunk-green-stroke,
-    linear-gradient(
-      180deg,
-      rgba(20, 255, 0, 0.55) 0%,
-      rgba(0, 240, 255, 0.62) 100%
-    )
+  background: linear-gradient(
+    180deg,
+    rgba(20, 255, 0, 0.55) 0%,
+    rgba(0, 240, 255, 0.62) 100%
   );
   filter: blur(139px);
   top: 0px;
@@ -240,13 +234,10 @@
 .green-shine-session-2nd-small {
   border-radius: 41.8vw;
   opacity: 0.12;
-  background: var(
-    --firesight-platform-cyberpunk-green-stroke,
-    linear-gradient(
-      180deg,
-      rgba(20, 255, 0, 0.55) 0%,
-      rgba(0, 240, 255, 0.62) 100%
-    )
+  background: linear-gradient(
+    180deg,
+    rgba(20, 255, 0, 0.55) 0%,
+    rgba(0, 240, 255, 0.62) 100%
   );
   filter: blur(139px);
   width: 41.8vw;
@@ -276,13 +267,10 @@
 .green-shine-footer-small {
   border-radius: 41.8vw;
   opacity: 0.22;
-  background: var(
-    --firesight-pulse-pulse-fill,
-    linear-gradient(
-      180deg,
-      rgba(0, 144, 255, 0.28) 0%,
-      rgba(134, 160, 216, 0.31) 100%
-    )
+  background: linear-gradient(
+    180deg,
+    rgba(0, 144, 255, 0.28) 0%,
+    rgba(134, 160, 216, 0.31) 100%
   );
   filter: blur(139px);
   width: 41.8vw;
@@ -296,13 +284,10 @@
 .green-shine-footer-2nd-small {
   border-radius: 41.8vw;
   opacity: 0.09;
-  background: var(
-    --firesight-pulse-pulse-circle-glow,
-    linear-gradient(
-      180deg,
-      rgba(63, 104, 250, 0.55) 0%,
-      rgba(188, 239, 255, 0.62) 100%
-    )
+  background: linear-gradient(
+    180deg,
+    rgba(63, 104, 250, 0.55) 0%,
+    rgba(188, 239, 255, 0.62) 100%
   );
   filter: blur(139px);
   width: 41.8vw;
