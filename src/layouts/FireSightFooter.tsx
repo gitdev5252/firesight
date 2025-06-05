@@ -1,3 +1,5 @@
+// TODO: remove bottom padding when the footer is not at the bottom of the page
+
 import Link from "next/link";
 import Image from "next/image";
 import "./layout.css";

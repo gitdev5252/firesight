@@ -3,7 +3,7 @@
 import "../page.css";
 export default function Page() {
   return (
-    <div className="w-full mt-[96px]">
+    <div className="w-full mt-[96px] mb-[58px]">
       <div className="shineBg_body_top_left !top-0"></div>
       <div className="green-shine-middle-right"></div>
       <div className="bg-[rgba(255,255,255,0.02)] rounded-[20px] border border-[rgba(255,255,255,0.1)] backdrop-blur-[32px] pt-[82px] pl-[81px] pb-[100px] pr-[117px] md:mx-[56px]">

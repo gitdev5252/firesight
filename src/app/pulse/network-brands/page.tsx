@@ -5,7 +5,7 @@ import "../../page.css";
 
 export default function Page() {
   return (
-    <div className="flex flex-wrap flex-col justify-center items-center w-full">
+    <div className="flex flex-wrap flex-col justify-center items-center w-full mb-[30px]">
       <h4 className="uppercase mt-[107px] mb-[47px] text-center font-extrabold text-[24px] leading-[150%] text-[rgba(0,255,224,0.6)]">
         network brands
       </h4>
@@ -32,14 +32,30 @@ export default function Page() {
         </Button>
       </div>
       <div className="flex flex-wrap justify-around mx-[58px] text-white gap-[30px]">
-        <div className="lg:w-[48.5%] w-full backdrop-blur-[34.5px] bg-[rgba(255,255,255,0.02)] border-[rgba(255,255,255,0.1)] border p-[64px] text-center rounded-[20px]">
-          <h5 className="uppercase bg-linear-[180deg, rgba(0, 255, 224, 0.55)_0%, rgba(188, 239, 255, 0.62)_100%)]">
+        <div className="flex justify-center items-center flex-col lg:w-[48.5%] w-full backdrop-blur-[34.5px] bg-[rgba(255,255,255,0.02)] border-[rgba(255,255,255,0.1)] border p-[64px] text-center rounded-[20px]">
+          <img
+            src="/images/icons/bevera.svg"
+            height={65}
+            width={65}
+            alt="bevera"
+            className="mb-[20px]"
+          />
+          <h5
+            className="mb-[20px] leading-[100%] uppercase text-[24px] font-extrabold bg-clip-text text-transparent"
+            style={{
+              background:
+                "linear-gradient(180deg, rgba(0,255,224,0.55) 0%, rgba(188,239,255,0.62) 100%)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+            }}
+          >
             bevera
           </h5>
-          <h3 className="text-[26px] italic">
-            Craft Beverage Intelligence Reimagined
+          <h3 className="text-[26px] italic mb-[30px]">
+            Craft Beverage <br />
+            Intelligence Reimagined
           </h3>
-          <p className="text-[16px]">
+          <p className="text-[16px] mb-[40px]">
             Bevera.ai is a Firesight-powered platform designed exclusively for
             professionals in the beverage industry. From sustainability signals
             to market trend forecasting, Bevera delivers real-time insight to
@@ -48,14 +64,33 @@ export default function Page() {
           </p>
           <Button
             variant="outline"
-            className="cursor-pointer gradient-border-btn text-[16px] mt-[35px] bg-transparent rounded-full px-[50px] py-[20px] text-white hover:text-white"
+            className="cursor-pointer gradient-border-btn text-[16px] bg-transparent rounded-full px-[50px] py-[20px] text-white hover:text-white"
           >
             bevera.ai
           </Button>
         </div>
-        <div className="lg:w-[48.5%] w-full backdrop-blur-[34.5px] bg-[rgba(255,255,255,0.02)] border-[rgba(255,255,255,0.1)] border p-[64px] text-center rounded-[20px]">
-          <h3 className="text-[26px] italic">
-            Sports Media Intelligence for the Sports Business Landscape
+        <div className="flex justify-center items-center flex-col lg:w-[48.5%] w-full backdrop-blur-[34.5px] bg-[rgba(255,255,255,0.02)] border-[rgba(255,255,255,0.1)] border p-[64px] text-center rounded-[20px]">
+          <img
+            src="/images/icons/stadium.svg"
+            height={65}
+            width={65}
+            alt="bevera"
+            className="mb-[20px]"
+          />
+          <h5
+            className="mb-[20px] leading-[100%] uppercase text-[24px] font-extrabold bg-clip-text text-transparent"
+            style={{
+              background:
+                "linear-gradient(180deg, rgba(0,255,224,0.55) 0%, rgba(188,239,255,0.62) 100%)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+            }}
+          >
+            stadium | enterprise
+          </h5>
+          <h3 className="text-[26px] italic mb-[30px]">
+            Sports Media Intelligence
+            <br /> for the Sports Business Landscape
           </h3>
           <p className="text-[16px]">
             STADIUUM | Enterprise is a verticalized Pulse deployment tailored
