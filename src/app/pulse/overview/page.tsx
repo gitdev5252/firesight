@@ -193,6 +193,8 @@ export default function Overview() {
         id="explore"
         className="relative mt-auto flex flex-col items-center justify-center w-full px-14"
       >
+        <div className="top-25 absolute bg-[url('/images/pulse-bg-2.png')] bg-no-repeat bg-cover w-full h-[580px]"></div>
+
         <p className="sub-header-title mt-[104px] mb-[50px]">EXPLORE</p>
         <h2 className="text-white md:text-[43.8px] text-[28px] font-extrabold uppercase leading-[50px] !m-0 max-w-[640px] text-center">
           FIND OUT HOW <b className="text-[#219A98]">Pulse</b> CAN TRANSFORM
@@ -240,30 +242,63 @@ export default function Overview() {
       {/* Platform section */}
       <section
         id="platform"
-        className="relative mt-auto flex items-center justify-between w-full px-17 pt-[164px] pb-16"
+        className="relative mt-auto w-full px-17 pt-[164px] pb-16"
       >
-        <div className="flex flex-col w-full gap-6 max-w-[47.08%]">
-          <p className="sub-header-title">PLATFORM</p>
-          <h2 className="md:text-[80px] text-[28px] text-white font-extrabold uppercase leading-[100%]">
-            WHAT IS CONNECTED INTELLIGENCE?
-          </h2>
+        <div className="top-30 absolute bg-[url('/images/pulse-bg-3.png')] bg-no-repeat bg-cover w-full h-[419px]"></div>
+        <div className="flex items-center justify-between w-full">
+          <div className="flex flex-col w-full gap-6 max-w-[47.08%]">
+            <p className="sub-header-title">PLATFORM</p>
+            <h2 className="md:text-[80px] text-[28px] text-white font-extrabold uppercase leading-[100%]">
+              WHAT IS CONNECTED INTELLIGENCE?
+            </h2>
 
-          <Button
-            variant="outline"
-            className="cursor-pointer gradient-border-btn text-[16px] mt-2 bg-transparent rounded-full px-8 py-5 text-white hover:text-white"
-          >
-            14 Day Trial | <span className="font-bold">Start Now</span>
-          </Button>
+            <Button
+              variant="outline"
+              className="cursor-pointer gradient-border-btn text-[16px] mt-2 bg-transparent rounded-full px-8 py-5 text-white hover:text-white"
+            >
+              14 Day Trial | <span className="font-bold">Start Now</span>
+            </Button>
+          </div>
+          <div className="w-[1px] h-[123px] opacity-30 bg-white"></div>
+          <p className="text-white text-[16px] leading-normal max-w-[32.64%]">
+            Connected intelligence is the fusion of your personal context with
+            real-time media, market, and business signals—delivered in a way
+            that works how you work. Firesight learns from your onboarding
+            inputs to tailor insights, automate tasks, and support your daily
+            decisions. It becomes your second brain in the cloud—offering
+            smarter, faster, and more strategic clarity every step of the way.
+          </p>
         </div>
-        <div className="w-[1px] h-[123px] opacity-30 bg-white"></div>
-        <p className="text-white text-[16px] leading-normal max-w-[32.64%]">
-          Connected intelligence is the fusion of your personal context with
-          real-time media, market, and business signals—delivered in a way that
-          works how you work. Firesight learns from your onboarding inputs to
-          tailor insights, automate tasks, and support your daily decisions. It
-          becomes your second brain in the cloud—offering smarter, faster, and
-          more strategic clarity every step of the way.
-        </p>
+        <div className="flex flex-wrap justify-between gap-y-26 items-stretch px-2">
+          <div className="w-[27.9%]">
+            <div className="flex w-full"></div>
+            <p className="text-[15px] leading-[140%] tracking-[0.3px]">
+              Tailor your experience with <b>intelligent onboarding</b> that adapts to
+              your workflows, goals, and working style—no matter your role or
+              industry.
+            </p>
+          </div>
+        </div>
+      </section>
+      {/* Explore1 section */}
+      <section
+        id="explore1"
+        className="relative flex flex-col items-center justify-center w-full px-14"
+      >
+        <div className="top-12 absolute bg-[url('/images/pulse-bg-4.png')] bg-no-repeat bg-cover w-full h-[555px]"></div>
+
+        <p className="sub-header-title mt-[104px] mb-[50px]">EXPLORE</p>
+        <h2 className="text-white md:text-[43.8px] text-[28px] font-extrabold uppercase leading-[50px] !m-0 max-w-[640px] text-center">
+          FIND OUT HOW <b className="text-[#219A98]">Pulse</b> CAN TRANSFORM
+          YOUR WORKDAY
+        </h2>
+
+        <Button
+          variant="outline"
+          className="cursor-pointer gradient-border-btn text-[16px] my-9 bg-transparent rounded-full px-8 py-5 text-white hover:text-white"
+        >
+          14 Day Trial | <span className="font-bold">Start</span>
+        </Button>
       </section>
     </div>
   );
