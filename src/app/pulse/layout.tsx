@@ -8,8 +8,8 @@ export default function PulseLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="w-full">
-      <div className="bg-[url('/images/pulse-bg-top.png')] bg-cover w-full h-[970px] absolute z-[-10000] opacity-70"></div>
+    <div className="w-full relative">
+      <div className="bg-[url('/images/pulse-bg-top.svg')] bg-cover w-full h-[1627px] absolute z-[-10000] opacity-50"></div>
       <TabBar />
       {children}
     </div>
