@@ -6,6 +6,7 @@ import "../../page.css";
 export default function Page() {
   return (
     <div className="flex flex-wrap flex-col justify-center items-center w-full mb-[30px]">
+      <div className="bg-[url('/images/color-pattern-network-brands.svg')] bg-cover w-full h-[1970px] top-[170px] absolute z-[-10000] opacity-70"></div>
       <h4 className="uppercase mt-[107px] mb-[47px] text-center font-extrabold text-[24px] leading-[150%] text-[rgba(0,255,224,0.6)]">
         network brands
       </h4>
@@ -32,7 +33,7 @@ export default function Page() {
         </Button>
       </div>
       <div className="flex flex-wrap justify-around mx-[58px] text-white gap-[30px]">
-        <div className="flex justify-center items-center flex-col lg:w-[48.5%] w-full backdrop-blur-[34.5px] bg-[rgba(255,255,255,0.02)] border-[rgba(255,255,255,0.1)] border p-[64px] text-center rounded-[20px]">
+        <div className="flex justify-center items-center flex-col lg:w-[49%] md:w-[47%] w-full backdrop-blur-[34.5px] bg-[rgba(255,255,255,0.02)] border-[rgba(255,255,255,0.1)] border p-[64px] text-center rounded-[20px]">
           <img
             src="/images/icons/bevera.svg"
             height={65}
