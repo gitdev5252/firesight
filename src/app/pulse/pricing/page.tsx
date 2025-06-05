@@ -329,3 +329,5 @@ export default function Page() {
     </>
   );
 }
+
+// background: linear-gradient(180deg, rgba(0, 144, 255, 0.28) 0%, rgba(134, 160, 216, 0.31) 100%);

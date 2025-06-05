@@ -345,10 +345,12 @@ export default function Overview() {
                     and regulatory changes)
                   </i>{" "}
                   into a seamless flow. By fusing
-                  <b className="text-[rgba(0,255,224,0.60)]">internal</b> and{" "}
-                  <b className="text-[rgba(0,255,224,0.60)]">external</b> insights, Pulse
-                  amplifies the value of every source—creating a unified
-                  perspective that reveals emerging trends, pinpoints
+                  <b className="text-[rgba(0,255,224,0.60)]">
+                    internal
+                  </b> and{" "}
+                  <b className="text-[rgba(0,255,224,0.60)]">external</b>{" "}
+                  insights, Pulse amplifies the value of every source—creating a
+                  unified perspective that reveals emerging trends, pinpoints
                   competitive threats, and helps you strategize with clarity.
                   <br />
                   <br />
@@ -504,7 +506,7 @@ export default function Overview() {
         </div>
         <div className="flex flex-wrap justify-between gap-y-26 items-stretch px-2 w-full mt-[213px]">
           {platformSectionCardInfo.map((ele, index) => (
-            <div className="w-[27.9%] flex flex-col gap-[26px]">
+            <div className="w-[27.9%] flex flex-col gap-[26px]" key={index}>
               <div className="flex w-full gap-4">
                 {ele.svg}
                 <div className="w-[1px] h-[20px] bg-[#86878D]"></div>

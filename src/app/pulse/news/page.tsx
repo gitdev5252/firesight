@@ -69,14 +69,14 @@ export default function News() {
                 <b>aggregated intelligence feed of actionable signals</b>.
                 <br />
                 <br />
-                But it doesn’t stop there. Pulse goes beyond aggregation. Using{" "}
-                <b>Natural Language AI</b> and
+                But it doesn&apos;t stop there. Pulse goes beyond aggregation.
+                Using <b>Natural Language AI</b> and
                 <b>personalised onboarding data</b>, each story is processed,
                 stripped of bias, and contextually ranked for relevance to your
-                role, company, sector, and focus. Whether you're a startup
+                role, company, sector, and focus. Whether you&apos;re a startup
                 founder monitoring investor trends, an SME watching industry
                 regulation, or a strategist scanning for geopolitical impact,
-                News ensures your feed is not just current—it’s personally
+                News ensures your feed is not just current—it&apos;s personally
                 relevant.
                 <br />
                 <br />
