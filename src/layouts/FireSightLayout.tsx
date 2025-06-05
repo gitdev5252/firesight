@@ -24,8 +24,8 @@ export default function FireSightLayout({
       <Header scrolled={scrolled} />
       <main className="flex flex-col w-full overflow-x-hidden justify-center items-center">
         {children}
-      </main>
       <FireSightFooter />
+      </main>
     </>
   );
 }
