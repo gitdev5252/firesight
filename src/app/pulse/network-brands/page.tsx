@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import "../../page.css";
+import Image from "next/image";
 
 export default function Page() {
   return (
@@ -34,7 +35,7 @@ export default function Page() {
       </div>
       <div className="flex flex-wrap justify-around mx-[58px] text-white gap-[30px]">
         <div className="flex justify-center items-center flex-col lg:w-[49%] md:w-[47%] w-full backdrop-blur-[34.5px] bg-[rgba(255,255,255,0.02)] border-[rgba(255,255,255,0.1)] border p-[64px] text-center rounded-[20px]">
-          <img
+          <Image
             src="/images/icons/bevera.svg"
             height={65}
             width={65}
@@ -71,7 +72,7 @@ export default function Page() {
           </Button>
         </div>
         <div className="flex justify-center items-center flex-col lg:w-[48.5%] w-full backdrop-blur-[34.5px] bg-[rgba(255,255,255,0.02)] border-[rgba(255,255,255,0.1)] border p-[64px] text-center rounded-[20px]">
-          <img
+          <Image
             src="/images/icons/stadium.svg"
             height={65}
             width={65}
