@@ -299,7 +299,7 @@ export default function Overview() {
 
         <div
           style={{
-            background: 'url("/images/pulse-overview-show.png")',
+            background: 'url("/images/pulse-overview-show.svg")',
             backgroundSize: "cover",
           }}
           className="rounded-4xl w-[72.7777vw] h-[60.07vw] bg-no-repeat"
@@ -424,7 +424,7 @@ export default function Overview() {
         id="explore"
         className="relative mt-auto flex flex-col items-center justify-center w-full px-14"
       >
-        <div className="top-25 absolute bg-[url('/images/pulse-bg-2.svg')] bg-no-repeat bg-cover w-full h-[580px]"></div>
+        <div className="top-25 absolute bg-[url('/images/pulse-bg-2.svg')] bg-no-repeat bg-cover w-full h-[40.2778vw]"></div>
 
         <p className="sub-header-title mt-[104px] mb-[50px]">EXPLORE</p>
         <h2 className="text-white md:text-[43.8px] text-[28px] font-extrabold uppercase leading-[50px] !m-0 max-w-[640px] text-center">
@@ -477,7 +477,7 @@ export default function Overview() {
         className="relative mt-auto w-full px-17 pt-[164px] pb-16"
       >
         <div className="blue-shine-pulse-overview top-[170px] left-[calc(50vw-250px)]"></div>
-        <div className="top-30 absolute bg-[url('/images/pulse-bg-3.svg')] bg-no-repeat bg-cover w-full h-[419px]"></div>
+        <div className="top-30 absolute bg-[url('/images/pulse-bg-3.svg')] bg-no-repeat bg-cover w-full h-[29.097vw]"></div>
         <div className="flex items-center justify-between w-full">
           <div className="flex flex-col w-full gap-6 max-w-[47.08%] items-start">
             <p className="sub-header-title">PLATFORM</p>
@@ -529,7 +529,7 @@ export default function Overview() {
         id="explore1"
         className="relative flex flex-col items-center justify-center w-full px-14 pb-[115px]"
       >
-        <div className="top-8 absolute bg-[url('/images/pulse-bg-4.svg')] bg-no-repeat bg-cover w-full h-[555px]"></div>
+        <div className="top-8 absolute bg-[url('/images/pulse-bg-4.svg')] bg-no-repeat bg-cover w-full h-[38.5417vw]"></div>
 
         <p className="sub-header-title mt-[90px] mb-[50px]">EXPLORE</p>
         <h2 className="text-white md:text-[43.8px] text-[28px] font-extrabold uppercase leading-[50px] !m-0 max-w-[640px] text-center">

@@ -6,13 +6,13 @@ import "../../page.css";
 export default function Page() {
   return (
     <div className="flex flex-wrap flex-col justify-center items-center w-full">
-      <h4 className="uppercase mt-[107px] mb-[47px] text-center font-extrabold text-[24px] leading-[150%] text-[rgba(0,255,224,0.6)]">
+      <h4 className="uppercase mt-[107px] mb-[47px] text-center sub-header-title">
         network brands
       </h4>
-      <h1 className="mx-[203px] text-center mb-[81px] text-[80px] font-extrabold uppercase text-white leading-[100%]">
+      <h1 className="text-center mb-[81px] text-[80px] font-extrabold uppercase text-white leading-[100%] max-w-[1034px]">
         Connected Intelligence Deployed at Scale
       </h1>
-      <div className="mx-[58px] backdrop-blur-[34.5px] bg-[rgba(255,255,255,0.02)] border-[rgba(255,255,255,0.1)] border text-white text-center lg:px-[140px] lg:pt-[105px] lg:pb-[85.67px] p-[40px] mb-[30px] rounded-[20px] lg:text-[35px] text-[25px]">
+      <div className="mx-14 backdrop-blur-[34.5px] bg-[rgba(255,255,255,0.02)] border-[rgba(255,255,255,0.1)] border text-white text-center lg:px-[140px] lg:pt-[105px] lg:pb-[85.67px] p-[40px] mb-[30px] rounded-[20px] lg:text-[35px] text-[25px]">
         <h3>
           <span className="font-bold">Firesight | Pulse</span> powers a growing
           network of intelligence-driven platforms. From craft beverage to
@@ -31,7 +31,7 @@ export default function Page() {
           Contact Us
         </Button>
       </div>
-      <div className="flex flex-wrap justify-around mx-[58px] text-white gap-[30px]">
+      <div className="flex flex-wrap justify-around mx-14 text-white gap-[30px]">
         <div className="lg:w-[48.5%] w-full backdrop-blur-[34.5px] bg-[rgba(255,255,255,0.02)] border-[rgba(255,255,255,0.1)] border p-[64px] text-center rounded-[20px]">
           <h5 className="uppercase bg-linear-[180deg, rgba(0, 255, 224, 0.55)_0%, rgba(188, 239, 255, 0.62)_100%)]">
             bevera
