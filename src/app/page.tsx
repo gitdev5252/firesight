@@ -120,7 +120,7 @@ export default function Home() {
   return (
     <>
       <div className="shineBg_body_top_left"></div>
-      <Link href="/" className="flex items-center mt-43 mb-20">
+      <Link href="/" className="flex items-center mt-43 mb-20 z-[100]">
         <Image
           src="/images/logo.svg"
           alt="Logo"
@@ -131,7 +131,7 @@ export default function Home() {
         />
       </Link>
       <section className="relative w-full flex flex-col items-center justify-center z-50 pb-32">
-        <div className="bg-[url('/images/banner.svg')] w-full h-[662px] bg-cover absolute top-[-390px] z-[-10000]"></div>
+        <div className="bg-[url('/images/hero.png')] w-full h-[662px] bg-cover absolute top-[-390px] z-[-10000] opacity-10"></div>
         {/* Blur Panel */}
 
         {/* Headings */}
@@ -174,14 +174,16 @@ export default function Home() {
       <section className="relative mt-auto flex flex-col items-center justify-center w-full px-14">
         <div className="w-full top-[-54px] h-[63.2vw] left-0 bg-[url('/images/colorpattern.svg')] absolute z-[-10000] bg-no-repeat bg-cover"></div>
         <div className="flex gap-11 text-white items-center justify-around h-16 mt-28 mb-40">
-          <Image
-            src="/images/logo.svg"
-            alt="Logo"
-            width={264}
-            height={64}
-            priority
-            className="sm:w-[264px] sm:h-[64px] w-[124px] h-[30px]"
-          />
+          <Link href="/">
+            <Image
+              src="/images/logo.svg"
+              alt="Logo"
+              width={264}
+              height={64}
+              priority
+              className="sm:w-[264px] sm:h-[64px] w-[124px] h-[30px]"
+            />
+          </Link>
           <span className="md:text-[45px] text-[20px]">|</span>
           <span className="md:text-[65px] text-[30px] font-black font-publica-play">
             Pulse
@@ -249,14 +251,16 @@ export default function Home() {
         <div className="green-shine-session-2nd-small md:block hidden"></div>
         <div className="green-shine-session-3rd-small md:block hidden"></div>
         <div className="flex gap-11 text-white items-center justify-between mt-39 mb-15">
-          <Image
-            src="/images/logo.svg"
-            alt="Logo"
-            width={214}
-            height={53}
-            priority
-            className="sm:w-[264px] sm:h-[64px] w-[124px] h-[38px]"
-          />
+          <Link href="/">
+            <Image
+              src="/images/logo.svg"
+              alt="Logo"
+              width={214}
+              height={53}
+              priority
+              className="sm:w-[264px] sm:h-[64px] w-[124px] h-[38px]"
+            />
+          </Link>
           <span className="md:text-[45px] text-[20px]">|</span>
           <span className="md:text-[65px] text-[30px] font-publica-play">
             Sessions
@@ -328,14 +332,16 @@ export default function Home() {
       <section className="relative mx-14 flex flex-col items-center justify-center mb-[73px]">
         <div className="red-purple-shine-session md:block hidden z-[-100000]"></div>
         <div className="flex gap-11 text-white items-center justify-between mt-59 mb-29">
-          <Image
-            src="/images/logo.svg"
-            alt="Logo"
-            width={214}
-            height={53}
-            priority
-            className="sm:w-[264px] sm:h-[64px] w-[124px] h-[30px]"
-          />
+          <Link href="/">
+            <Image
+              src="/images/logo.svg"
+              alt="Logo"
+              width={214}
+              height={53}
+              priority
+              className="sm:w-[264px] sm:h-[64px] w-[124px] h-[30px]"
+            />
+          </Link>
           <span className="md:text-[45px] text-[20px]">|</span>
           <span className="md:text-[60px] text-[30px] font-publica-play">
             Platform

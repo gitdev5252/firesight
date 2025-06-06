@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import "./page.css";
 import FireSightFooter from "@/layouts/FireSightFooter";
+import Link from "next/link";
 
 export default function Overview() {
   const pulseSectionCardInfo: {
@@ -284,14 +285,16 @@ export default function Overview() {
       >
         <div className="blue-shine-pulse-overview bottom-[-212px] left-[-140px]"></div>
         <div className="flex gap-11 text-white items-center justify-around h-16 mt-28 mb-[77px]">
-          <Image
-            src="/images/logo.svg"
-            alt="Logo"
-            width={264}
-            height={64}
-            priority
-            className="sm:w-[264px] sm:h-[64px] w-[124px] h-[30px]"
-          />
+          <Link href="/">
+            <Image
+              src="/images/logo.svg"
+              alt="Logo"
+              width={264}
+              height={64}
+              priority
+              className="sm:w-[264px] sm:h-[64px] w-[124px] h-[30px]"
+            />
+          </Link>
           <span className="md:text-[45px] text-[20px]">|</span>
           <span className="md:text-[65px] text-[30px] font-black font-publica-play">
             Pulse
