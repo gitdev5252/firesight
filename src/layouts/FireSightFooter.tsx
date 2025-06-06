@@ -3,8 +3,9 @@
 import Link from "next/link";
 import Image from "next/image";
 import "./layout.css";
+import { ReactNode } from "react";
 
-export default function FireSightFooter({children} : {children: ReactNode}) {
+export default function FireSightFooter({children} : {children: ReactNode | null}) {
   return (
     <div className="px-14 pb-14 w-full relative m-0 overflow-hidden">
       {children}
