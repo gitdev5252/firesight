@@ -5,7 +5,11 @@ import Image from "next/image";
 import "./layout.css";
 import { ReactNode } from "react";
 
-export default function FireSightFooter({children} : {children: ReactNode | null}) {
+export default function FireSightFooter({
+  children,
+}: {
+  children: ReactNode | null;
+}) {
   return (
     <div className="px-14 pb-14 w-full relative m-0 overflow-hidden">
       {children}
@@ -18,48 +22,50 @@ export default function FireSightFooter({children} : {children: ReactNode | null
           {/* Logo & Social */}
           {/* Nav Columns */}
           <div className="flex flex-col items-center md:items-start gap-4 min-w-[150px]">
-            <Image
-              src="/images/footer-logo.svg"
-              alt="firesight.ai"
-              width={120}
-              height={120}
-              className="pl-6 md:h-[118px] h-[88px]"
-            />
+            <Link href="/">
+              <Image
+                src="/images/footer-logo.svg"
+                alt="firesight.ai"
+                width={120}
+                height={120}
+                className="pl-6 md:h-[118px] h-[88px]"
+              />
+            </Link>
 
             <div className="flex gap-[5px] mt-2 md:relative absolute bottom-0">
               {/* Replace with your actual social icons */}
-              <a href="#" aria-label="LinkedIn">
+              <Link href="https://www.linkedin.com/company/firesightai/about/?viewAsMember=true" aria-label="LinkedIn">
                 <Image
                   src="/images/icons/linkedin.svg"
                   alt="LinkedIn"
                   width={30}
                   height={30}
                 />
-              </a>
-              <a href="#" aria-label="cb">
+              </Link>
+              <Link href="/" aria-label="cb">
                 <Image
                   src="/images/icons/cb.svg"
                   alt="cb"
                   width={30}
                   height={30}
                 />
-              </a>
-              <a href="#" aria-label="X">
+              </Link>
+              <Link href="https://twitter.com/FiresightAi/" aria-label="Twitter">
                 <Image
                   src="/images/icons/x.svg"
                   alt="X"
                   width={30}
                   height={30}
                 />
-              </a>
-              <a href="#" aria-label="Game">
+              </Link>
+              <Link href="https://www.discord.com/" aria-label="Discord">
                 <Image
                   src="/images/icons/discord.svg"
                   alt="Game"
                   width={30}
                   height={30}
                 />
-              </a>
+              </Link>
             </div>
           </div>
           <div className="vertical-divider !h-[111px] md:!block !hidden"></div>
@@ -81,22 +87,25 @@ export default function FireSightFooter({children} : {children: ReactNode | null
             </div>
             <ul className="space-y-[12px]">
               <li>
-                <Link href="/overview" className="hover:underline">
+                <Link href="/pulse/overview" className="hover:underline">
                   Overview
                 </Link>
               </li>
               <li>
-                <Link href="/platform" className="hover:underline">
+                <Link href="/pulse/platform" className="hover:underline">
                   Platform
                 </Link>
               </li>
               <li>
-                <Link href="/pricing" className="hover:underline">
+                <Link href="/pulse/pricing" className="hover:underline">
                   Pricing
                 </Link>
               </li>
               <li>
-                <Link href="/network-partners" className="hover:underline">
+                <Link
+                  href="/pulse/network-brands"
+                  className="hover:underline"
+                >
                   Network Partners
                 </Link>
               </li>
@@ -117,12 +126,18 @@ export default function FireSightFooter({children} : {children: ReactNode | null
                 </Link>
               </li>
               <li>
-                <Link href="/blog" className="hover:underline">
+                <Link
+                  href="https://blog.firesight.ai/"
+                  className="hover:underline"
+                >
                   Blog
                 </Link>
               </li>
               <li>
-                <Link href="/ai-impact-index" className="hover:underline">
+                <Link
+                  href="https://impact.firesight.ai/"
+                  className="hover:underline"
+                >
                   AI Impact Index
                 </Link>
               </li>
@@ -248,12 +263,14 @@ export default function FireSightFooter({children} : {children: ReactNode | null
             </div>
             <div className="vertical-divider md:!block !hidden !h-[60px]"></div>
             <div className="flex flex-col items-center md:items-end gap-2">
-              <Image
-                src="/images/D vinci.svg"
-                alt="D'VINCI GROUP"
-                width={198}
-                height={67}
-              />
+              <Link href="http://dvincigroup.com/">
+                <Image
+                  src="/images/D vinci.svg"
+                  alt="D'VINCI GROUP"
+                  width={198}
+                  height={67}
+                />
+              </Link>
             </div>
           </div>
           {/* Partner */}
@@ -261,12 +278,14 @@ export default function FireSightFooter({children} : {children: ReactNode | null
         {/* Bottom Bar */}
         <div className="flex flex-col md:flex-row justify-between items-center pt-6 text-xs text-[#A0AEC0] md:!px-[41px] !px-[24px]">
           <div className="flex items-center mb-2 md:mb-0 min-w-[135px]">
-            <Image
-              src="/images/icons/dvinci.svg"
-              alt="D'VINCI"
-              width={17}
-              height={17}
-            />
+            <Link href="http://dvincigroup.com/">
+              <Image
+                src="/images/icons/dvinci.svg"
+                alt="D'VINCI"
+                width={17}
+                height={17}
+              />
+            </Link>
             <span className="text-[10px] font-bold border-l-2 border-l-white pl-3 ml-3">
               Crafted by D&apos;Vinci
             </span>
@@ -278,12 +297,12 @@ export default function FireSightFooter({children} : {children: ReactNode | null
           </div>
           <div className="text-[13px] min-w-[238px]">
             Contact Us:{" "}
-            <a
+            <Link
               href="mailto:hello@firesight.ai"
               className="font-bold text-white"
             >
               hello@firesight.ai
-            </a>
+            </Link>
           </div>
         </div>
       </div>

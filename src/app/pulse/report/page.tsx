@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import "./page.css";
 import FireSightFooter from "@/layouts/FireSightFooter";
+import Link from "next/link";
 
 export default function Report() {
   return (
@@ -16,14 +17,16 @@ export default function Report() {
         <div className="bottom-[-190px] absolute bg-[url('/images/pulse-bg-2.svg')] bg-no-repeat bg-cover w-full h-[40.2778vw] opacity-50"></div>
 
         <div className="flex gap-11 text-white items-center justify-around h-16 mt-28 mb-[77px]">
-          <Image
-            src="/images/logo.svg"
-            alt="Logo"
-            width={264}
-            height={64}
-            priority
-            className="sm:w-[264px] sm:h-[64px] w-[124px] h-[30px]"
-          />
+          <Link href="/">
+            <Image
+              src="/images/logo.svg"
+              alt="Logo"
+              width={264}
+              height={64}
+              priority
+              className="sm:w-[264px] sm:h-[64px] w-[124px] h-[30px]"
+            />
+          </Link>
           <span className="md:text-[45px] text-[20px]">|</span>
           <span className="md:text-[65px] text-[30px] font-black font-publica-play">
             Pulse
@@ -132,9 +135,9 @@ export default function Report() {
               - distilled into clear, useful narratives.
               <br />
               <br />
-              Each report is tuned to your industry and role. Whether you&apos;re in
-              marketing, real estate, SaaS, finance, healthcare, or consulting,
-              Pulse Reports adapt to your category. For{" "}
+              Each report is tuned to your industry and role. Whether
+              you&apos;re in marketing, real estate, SaaS, finance, healthcare,
+              or consulting, Pulse Reports adapt to your category. For{" "}
               <b>freelancers, independent professionals, SMEs,</b>
               and <b>growing businesses</b>, Reports turn information into
               forward momentum—clear, fast, and formatted for the way modern
