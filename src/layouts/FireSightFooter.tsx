@@ -42,30 +42,30 @@ export default function FireSightFooter({
                   height={30}
                 />
               </Link>
-              <a href="/" aria-label="cb">
+              <Link href="/" aria-label="cb">
                 <Image
                   src="/images/icons/cb.svg"
                   alt="cb"
                   width={30}
                   height={30}
                 />
-              </a>
-              <a href="https://twitter.com/FiresightAi/" aria-label="Twitter">
+              </Link>
+              <Link href="https://twitter.com/FiresightAi/" aria-label="Twitter">
                 <Image
                   src="/images/icons/x.svg"
                   alt="X"
                   width={30}
                   height={30}
                 />
-              </a>
-              <a href="https://www.discord.com/" aria-label="Discord">
+              </Link>
+              <Link href="https://www.discord.com/" aria-label="Discord">
                 <Image
                   src="/images/icons/discord.svg"
                   alt="Game"
                   width={30}
                   height={30}
                 />
-              </a>
+              </Link>
             </div>
           </div>
           <div className="vertical-divider !h-[111px] md:!block !hidden"></div>
@@ -297,12 +297,12 @@ export default function FireSightFooter({
           </div>
           <div className="text-[13px] min-w-[238px]">
             Contact Us:{" "}
-            <a
+            <Link
               href="mailto:hello@firesight.ai"
               className="font-bold text-white"
             >
               hello@firesight.ai
-            </a>
+            </Link>
           </div>
         </div>
       </div>
