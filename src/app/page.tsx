@@ -417,7 +417,7 @@ export default function Home() {
         </div>
       </section>
 
-      <FireSightFooter />
+      <FireSightFooter>{<> </>}</FireSightFooter>
       <div className="green-shine-footer-small md:block hidden z-[-2342]"></div>
       <div className="green-shine-footer-2nd-small md:block hidden z-[-2342]"></div>
     </>
