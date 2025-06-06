@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import "./page.css";
+import FireSightFooter from "@/layouts/FireSightFooter";
 
 export default function Report() {
   return (
@@ -60,7 +61,7 @@ export default function Report() {
                 news, competitor moves, social sentiment, economic shifts, and
                 regulatory developments—distilled into focused, professionally
                 relevant insight. Each report explores a mission-critical topic
-                within your professional domain—whether you're operating in
+                within your professional domain—whether you&apos;re operating in
                 finance, marketing, IT, real estate, healthcare, consulting, or
                 creative industries. From consumer trends and regulatory
                 insights to competitive dynamics and regional market shifts,
@@ -131,7 +132,7 @@ export default function Report() {
               - distilled into clear, useful narratives.
               <br />
               <br />
-              Each report is tuned to your industry and role. Whether you're in
+              Each report is tuned to your industry and role. Whether you&apos;re in
               marketing, real estate, SaaS, finance, healthcare, or consulting,
               Pulse Reports adapt to your category. For{" "}
               <b>freelancers, independent professionals, SMEs,</b>
@@ -176,6 +177,12 @@ export default function Report() {
           14 Day Trial | <span className="font-bold">Start Now</span>
         </Button>
       </section>
+
+      <FireSightFooter>
+        <div className="blue-shine-pulse-overview bottom-[6.8vw] right-[24.653vw] w-[min(602px, 41.8vw)] h-[min(602px, 41.8vw)]"></div>
+        <div className="blue-shine-pulse-overview bottom-[-16.25vw] right-[-20.277vw] w-[min(602px, 41.8vw)] h-[min(602px, 41.8vw)]"></div>
+        <div className="blue-shine-pulse-overview bottom-[-23.542vw] left-[-16.666vw] w-[min(602px, 41.8vw)] h-[min(602px, 41.8vw)]"></div>
+      </FireSightFooter>
     </>
   );
 }

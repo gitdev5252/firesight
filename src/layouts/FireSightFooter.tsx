@@ -4,11 +4,10 @@ import Link from "next/link";
 import Image from "next/image";
 import "./layout.css";
 
-export default function FireSightFooter() {
+export default function FireSightFooter({children} : {children: ReactNode}) {
   return (
-    <div className="px-14 pb-8 w-full relative m-0">
-      <div className="green-shine-footer-small  md:block hidden z-[-2342]"></div>
-      <div className="green-shine-footer-2nd-small  md:block hidden z-[-2342]"></div>
+    <div className="px-14 pb-14 w-full relative m-0 overflow-hidden">
+      {children}
       <div
         className="footer-box md:!pt-[93px] !pt-[40px] md:!pb-[24px] !pb-[49px] relative overflow-hidden"
         style={{ borderTopRightRadius: "48px" }}

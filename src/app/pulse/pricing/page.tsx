@@ -2,10 +2,17 @@
 
 import "./page.css";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import Image from "next/image";
+import { useEffect, useRef, useState } from "react";
+import { motion } from "framer-motion";
+import FireSightFooter from "@/layouts/FireSightFooter";
 
 export default function Page() {
   const [period, setPeriod] = useState(0);
+
+  const containerRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
+  const [constraints, setConstraints] = useState({ left: 0, right: 0 });
   const pricingTiers = [
     {
       plan: "solo",
@@ -126,26 +133,100 @@ export default function Page() {
       ],
     },
     {
-      plan: "",
+      plan: "Enterprise",
       price: {
         monthly: 99,
-        annual: 99,
+        annual: 999,
       },
-      cta: "",
+      priceDes: "Contact Us",
+      cta: {
+        normal: "",
+        bold: "Enquire Now",
+      },
       description: {
-        title: "",
-        content: "",
+        title: "Large Organisations & Knowledge Teams",
+        content:
+          "Designed for larger teams with complex needs. Includes Custom Mode Grouping, Advanced Signal Routing, and admin controls to better manage intelligence at scale.",
       },
       features: [
         {
-          name: "",
-          des: "",
+          name: "Multi-Mode Team Support",
+          des: "- Each seat activates its own Mode (e.g., Policy Strategist, Market Researcher). Access intelligence pre-curated to an occupation.",
+        },
+        {
+          name: "Personalised Intelligence Reports",
+          des: "- Role-aware signals with smart consolidation across your team’s domains.",
+        },
+        {
+          name: "AI Journalism",
+          des: "(Human-in-the-Loop) — Editorial content crafted by AI and reviewed by subject-matter experts for every role in your team’s plan.",
+        },
+        {
+          name: "Smart News Feed",
+          des: "- Aggregated News Headlines, carefully assembled & relevant to your organizations sector and every memebr of your squad.",
+        },
+        {
+          name: "News Briefing Technology",
+          des: "- State-of-the-art personalized news summaries – absorb critical stories fast with concise, context-rich summaries, tailored for every team member and delivered to platform or 3rd party apps (e.g. Slack or Teams)",
+        },
+        {
+          name: "Use-Case Aligned Briefings",
+          des: "- Custom intelligence briefings by Mode (e.g., Sales Mode, Finance Mode, Creative Mode).",
+        },
+        {
+          name: "Predictive Intelligence & Forecasting",
+          des: "- Understand future shifts in each domain your team touches.",
+        },
+        {
+          name: "Deep-Dive Intelligence Reports",
+          des: "- Access high-context, sector-specific analysis & insights and research mapped to business goals.",
+        },
+        {
+          name: "User-Tailored Onboarding",
+          des: "- Smart onboarding for every team member, tailored by role, team size, and sector.",
+        },
+        {
+          name: "Shared Intelligence Workspace",
+          des: "- Unified dashboards with alert routing, easy sharing, priority pinning, and annotation tools.",
+        },
+        {
+          name: "Workflow Integrations",
+          des: "- Slack, Notion, Google Workspace, and more - FastTrack Pulse intelligence integration into your business to make better decisions faster.",
         },
       ],
     },
   ];
+
+  useEffect(() => {
+    const updateConstraints = () => {
+      const container = containerRef.current;
+      const content = contentRef.current;
+
+      if (container && content) {
+        const containerWidth = container.offsetWidth;
+        const contentWidth = content.scrollWidth;
+
+        const maxDrag = contentWidth - containerWidth;
+
+        if (maxDrag > 0) {
+          setConstraints({ left: -maxDrag, right: 0 });
+        } else {
+          setConstraints({ left: 0, right: 0 });
+        }
+      }
+    };
+
+    updateConstraints();
+    window.addEventListener("resize", updateConstraints);
+
+    return () => window.removeEventListener("resize", updateConstraints);
+  }, []);
   return (
     <>
+      <div className="blue-shine-pulse-overview w-[41.8vw] h-[41.8vw] top-[-6.25vw] right-[-9.722vw] z-[-2000]"></div>
+      <div className="blue-shine-pulse-overview w-[46.6vw] h-[46.6vw] top-[57vw] left-[-1.875vw] z-[-2000]"></div>
+      <div className="blue-shine-pulse-overview w-[47.36vw] h-[47.36vw] bottom-[635px] right-[-20.97vw] z-[-2000]"></div>
+
       <div className="flex flex-wrap flex-col justify-center items-center w-ful">
         <h4 className="uppercase mt-[107px] mb-[47px] text-center sub-header-title">
           Pricing
@@ -156,7 +237,7 @@ export default function Page() {
         </h1>
         <div className="flex items-center justify-center gap-[30px] mb-[81px]">
           <span className="text-[22px] text-white">Monthly</span>
-          <Button
+          <div
             className="w-[51px] h-[31px]"
             onClick={() => setPeriod((period + 1) % 2)}
           >
@@ -175,7 +256,10 @@ export default function Page() {
                 fillOpacity="0.5"
                 stroke="url(#paint1_linear_2002_30469)"
               />
-              <g filter="url(#filter0_dd_2002_30469)">
+              <g
+                filter="url(#filter0_dd_2002_30469)"
+                transform={period == 0 ? "translate(-20, 0)" : ""}
+              >
                 <path
                   fillRule="evenodd"
                   clipRule="evenodd"
@@ -193,7 +277,7 @@ export default function Page() {
                   filterUnits="userSpaceOnUse"
                   colorInterpolationFilters="sRGB"
                 >
-                  <feFlood flood-opacity="0" result="BackgroundImageFix" />
+                  <feFlood floodOpacity="0" result="BackgroundImageFix" />
                   <feColorMatrix
                     in="SourceAlpha"
                     type="matrix"
@@ -207,11 +291,6 @@ export default function Page() {
                     values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.06 0"
                   />
                   <feBlend
-                    mode="normal"
-                    in2="BackgroundImageFix"
-                    result="effect1_dropShadow_2002_30469"
-                  />
-                  <feColorMatrix
                     in="SourceAlpha"
                     type="matrix"
                     values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
@@ -259,73 +338,108 @@ export default function Page() {
                 </linearGradient>
               </defs>
             </svg>
-          </Button>
+          </div>
           <span className="text-[22px] text-white font-bold">Annual</span>
         </div>
       </div>
+      <div className="top-[170px] absolute bg-[url('/images/pulse-bg-5.svg')] bg-no-repeat bg-cover w-full bottom-0 opacity-70 z-[-1000]"></div>
+      <div ref={containerRef} className="overflow-x-hidden w-full relative">
+        <Image
+          src="blue-shine-ellipse.svg"
+          alt="ellipse"
+          width={1328}
+          height={230}
+          className="w-[92.22vw] h-[15.97vw] t-[35.8%] absolute"
+        ></Image>
+        <motion.div
+          ref={contentRef}
+          className="cursor-grab pb-14 w-full flex gap-14"
+          drag="x"
+          dragConstraints={constraints}
+          dragElastic={0.1}
+        >
+          {pricingTiers.map((tier, index) => (
+            <div key={index} className="main-box min-w-[40.9vw]">
+              <div className="my-9 mx-[50px] gap-9 flex flex-col items-center justify-start">
+                <p className="text-white text-[20px]">
+                  Firesight | <b>Pulse</b>
+                </p>
+                <p className="uppercase sub-header-title text-[36px] font-bold">
+                  {tier.plan}
+                </p>
+                <p className="text-white font-bold text-center">
+                  {tier.priceDes == "Contact Us" ? (
+                    <span className="text-[40px] leading-loose">
+                      Contact Us
+                    </span>
+                  ) : (
+                    <>
+                      <span className="text-[55px] leading-none">
+                        ${period ? tier.price.annual : tier.price.monthly}
+                      </span>
+                      <br />
+                      <span className="text-[18px] leading-none">
+                        {tier.priceDes}
+                      </span>
+                    </>
+                  )}
+                </p>
+                <Button
+                  variant="outline"
+                  className="cursor-pointer gradient-border-btn text-[16px] g-transparent rounded-full px-8 py-5 text-white hover:text-white"
+                >
+                  {tier.cta && tier.cta.normal}{" "}
+                  <span className="font-bold">
+                    {" "}
+                    {tier.cta && tier.cta.bold}
+                  </span>
+                </Button>
 
-      <div className="flex flex-nowrap gap-14 w-full max-w-full">
-        {pricingTiers.map((tier) => (
-          <div className="main-box">
-          <div className="my-9 mx-[50px] gap-9 flex flex-col items-center justify-start">
-            <p className="text-white text-[20px]">
-              Firesight | <b>Pulse</b>
-            </p>
-            <p className="uppercase sub-header-title text-[36px] font-bold">
-              {tier.plan}
-            </p>
-            <p className="text-white font-bold text-center">
-              <span className="text-[55px]">
-                ${period ? tier.price.annual : tier.price.monthly}
-              </span>
-              <br />
-              <span className="text-[18px]">{tier.priceDes}</span>
-            </p>
-            <Button
-              variant="outline"
-              className="cursor-pointer gradient-border-btn text-[16px] g-transparent rounded-full px-8 py-5 text-white hover:text-white"
-            >
-              {/* {tier.cta && tier.cta.normal}{" "}
-              <span className="font-bold"> {tier.cta && tier.cta.bold}</span> */}
-            </Button>
-
-            <div className="border-y-[rgba(255,255,255,0.1)] border-y-[1px] text-white flex flex-col items-center justify-center">
-              <p className="text-[16px] font-bold">
-                {tier.description && tier.description.title}
-              </p>
-              <p className="text-center text-[15px]">
-                {tier.description && tier.description.content}
-              </p>
-            </div>
-
-            <div className="flex flex-col gap-5 mt-8 mb-10">
-              {tier.features.map((feature) => (
-                <div className="flex items-center justify-between gap-4">
-                  <div>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="17"
-                      height="18"
-                      viewBox="0 0 17 18"
-                      fill="none"
-                    >
-                      <path
-                        d="M8.72656 0L16.7266 4.5V13.5L8.72656 18L0.726562 13.5V4.5L8.72656 0Z"
-                        fill="white"
-                      />
-                    </svg>
-                  </div>
-                  <p className="text-white">
-                    <b>{feature.name}</b>{' '}
-                    {feature.des}
+                <div className="border-y-[rgba(255,255,255,0.1)] border-y-[1px] text-white flex flex-col items-center justify-center py-[30px] px-[7px] gap-[30px]">
+                  <p className="text-center text-[16px] font-bold">
+                    {tier.description && tier.description.title}
+                  </p>
+                  <p className="text-center text-[15px]">
+                    {tier.description && tier.description.content}
                   </p>
                 </div>
-              ))}
+
+                <div className="flex flex-col gap-5 mt-8 mb-10">
+                  {tier.features.map((feature, index) => (
+                    <div
+                      key={index}
+                      className="flex items-center justify-between gap-4"
+                    >
+                      <div>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="17"
+                          height="18"
+                          viewBox="0 0 17 18"
+                          fill="none"
+                        >
+                          <path
+                            d="M8.72656 0L16.7266 4.5V13.5L8.72656 18L0.726562 13.5V4.5L8.72656 0Z"
+                            fill="white"
+                          />
+                        </svg>
+                      </div>
+                      <p className="text-white text-[16px]">
+                        <b>{feature.name}</b> {feature.des}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
-          </div>
-          </div>
-        ))}
+          ))}
+        </motion.div>
       </div>
+
+      <FireSightFooter>
+        <div className="blue-shine-pulse-overview bottom-[-10vw] right-[-20.97vw] min-w-[min(602px,41.8vw)] min-h-[min(602px,41.8vw)]"></div>
+        <div className="blue-shine-pulse-overview bottom-[-17.639vw] left-[-16.666vw] min-w-[min(602px,41.8vw)] min-h-[min(602px,41.8vw)]"></div>
+      </FireSightFooter>
     </>
   );
 }

@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import "./page.css";
+import FireSightFooter from "@/layouts/FireSightFooter";
 
 export default function News() {
   return (
@@ -183,6 +184,12 @@ export default function News() {
           14 Day Trial | <span className="font-bold">Start Now</span>
         </Button>
       </section>
+
+      <FireSightFooter>
+        <div className="blue-shine-pulse-overview bottom-[7.7vw] right-[19.3vw] w-[min(602px, 41.8vw)] h-[min(602px, 41.8vw)]"></div>
+        <div className="blue-shine-pulse-overview bottom-[-14.375vw] right-[-20.277vw] w-[min(602px, 41.8vw)] h-[min(602px, 41.8vw)]"></div>
+        <div className="blue-shine-pulse-overview bottom-[-21.667vw] left-[-16.666vw] w-[min(602px, 41.8vw)] h-[min(602px, 41.8vw)]"></div>
+      </FireSightFooter>
     </>
   );
 }
