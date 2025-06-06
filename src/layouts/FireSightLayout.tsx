@@ -1,7 +1,6 @@
 "use client";
 import { Header } from "./Header";
 import "./layout.css";
-import FireSightFooter from "./FireSightFooter";
 import { useEffect, useState } from "react";
 
 export default function FireSightLayout({
@@ -24,7 +23,6 @@ export default function FireSightLayout({
       <Header scrolled={scrolled} />
       <main className="flex flex-col w-full overflow-x-hidden justify-center items-center">
         {children}
-      <FireSightFooter />
       </main>
     </>
   );

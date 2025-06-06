@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import "./page.css";
+import FireSightFooter from "@/layouts/FireSightFooter";
 
 export default function News() {
   return (
@@ -12,7 +13,7 @@ export default function News() {
       >
         <div className="blue-shine-pulse-overview bottom-[-212px] left-[-140px]"></div>
 
-        <div className="bottom-[-164px] absolute bg-[url('/images/pulse-bg-2.svg')] bg-no-repeat bg-cover w-full h-[580px] opacity-50"></div>
+        <div className="bottom-[-164px] absolute bg-[url('/images/pulse-bg-2.svg')] bg-no-repeat bg-cover w-full h-[40.2778vw] opacity-50"></div>
 
         <div className="flex gap-11 text-white items-center justify-around h-16 mt-28 mb-[77px]">
           <Image
@@ -31,7 +32,7 @@ export default function News() {
 
         <div
           style={{
-            background: 'url("/images/pulse-news-show.png")',
+            background: 'url("/images/pulse-news-show.svg")',
             backgroundSize: "cover",
           }}
           className="rounded-4xl w-[72.7777vw] h-[60.07vw] bg-no-repeat"
@@ -154,7 +155,7 @@ export default function News() {
             </Button>
           </div>
           <Image
-            src="/images/pulse-news-ad.png"
+            src="/images/pulse-news-ad.svg"
             alt="news ad"
             width={650}
             height={684}
@@ -168,7 +169,7 @@ export default function News() {
         id="explore1"
         className="relative flex flex-col items-center justify-center w-full px-14 pb-[177px]"
       >
-        <div className="top-8 absolute bg-[url('/images/pulse-bg-4.svg')] bg-no-repeat bg-cover w-full h-[555px] opacity-50"></div>
+        <div className="top-8 absolute bg-[url('/images/pulse-bg-4.svg')] bg-no-repeat bg-cover w-full h-[38.5417vw] opacity-50"></div>
 
         <p className="sub-header-title mt-[90px] mb-[50px]">EXPLORE</p>
         <h2 className="text-white md:text-[43.8px] text-[28px] font-extrabold uppercase leading-[50px] !m-0 max-w-[640px] text-center">
@@ -178,11 +179,17 @@ export default function News() {
 
         <Button
           variant="outline"
-          className="cursor-pointer gradient-border-btn text-[22px] mt-9 bg-transparent rounded-full px-[50px] py-[20px] text-white leading-normal h-18 hover:text-white"
+          className="cursor-pointer gradient-border-btn text-[22px] bg-transparent rounded-full px-[50px] py-[20px] text-white leading-normal h-18 hover:text-white"
         >
           14 Day Trial | <span className="font-bold">Start Now</span>
         </Button>
       </section>
+
+      <FireSightFooter>
+        <div className="blue-shine-pulse-overview bottom-[7.7vw] right-[19.3vw] w-[min(602px, 41.8vw)] h-[min(602px, 41.8vw)]"></div>
+        <div className="blue-shine-pulse-overview bottom-[-14.375vw] right-[-20.277vw] w-[min(602px, 41.8vw)] h-[min(602px, 41.8vw)]"></div>
+        <div className="blue-shine-pulse-overview bottom-[-21.667vw] left-[-16.666vw] w-[min(602px, 41.8vw)] h-[min(602px, 41.8vw)]"></div>
+      </FireSightFooter>
     </>
   );
 }

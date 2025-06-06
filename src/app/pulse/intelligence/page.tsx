@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import "./page.css";
+import FireSightFooter from "@/layouts/FireSightFooter";
 
 export default function Intelligence() {
   return (
@@ -12,7 +13,7 @@ export default function Intelligence() {
       >
         <div className="blue-shine-pulse-overview bottom-[-212px] left-[-140px]"></div>
 
-        <div className="bottom-[-270px] absolute bg-[url('/images/pulse-bg-2.svg')] bg-no-repeat bg-cover w-full h-[580px] opacity-50"></div>
+        <div className="bottom-[-270px] absolute bg-[url('/images/pulse-bg-2.svg')] bg-no-repeat bg-cover w-full h-[40.2778vw] opacity-50"></div>
 
         <div className="flex gap-11 text-white items-center justify-around h-16 mt-28 mb-[77px]">
           <Image
@@ -31,7 +32,7 @@ export default function Intelligence() {
 
         <div
           style={{
-            background: 'url("/images/pulse-intelligence-show.png")',
+            background: 'url("/images/pulse-intelligence-show.svg")',
             backgroundSize: "cover",
           }}
           className="rounded-4xl w-[72.7777vw] h-[60.07vw] bg-no-repeat"
@@ -145,7 +146,7 @@ export default function Intelligence() {
             </Button>
           </div>
           <Image
-            src="/images/pulse-intelligence-ad.png"
+            src="/images/pulse-intelligence-ad.svg"
             alt="news ad"
             width={645}
             height={702}
@@ -153,15 +154,14 @@ export default function Intelligence() {
           ></Image>
         </div>
       </section>
-
-      {/* Explore1 section */}
+      {/* Explore section */}
       <section
-        id="explore1"
-        className="relative flex flex-col items-center justify-center w-full px-14 pb-[177px]"
+        id="explore"
+        className="relative flex flex-col items-center justify-center w-full px-14 pb-[115px]"
       >
-        <div className="top-8 absolute bg-[url('/images/pulse-bg-4.svg')] bg-no-repeat bg-cover w-full h-[555px] opacity-50"></div>
+        <div className="top-8 absolute bg-[url('/images/pulse-bg-4.svg')] bg-no-repeat bg-cover w-full h-[38.5417vw]"></div>
 
-        <p className="sub-header-title mt-[80px] mb-[50px]">EXPLORE</p>
+        <p className="sub-header-title mt-[90px] mb-[50px]">EXPLORE</p>
         <h2 className="text-white md:text-[43.8px] text-[28px] font-extrabold uppercase leading-[50px] !m-0 max-w-[640px] text-center">
           FIND OUT HOW <b className="text-[#219A98]">Pulse</b> CAN TRANSFORM
           YOUR WORKDAY
@@ -173,7 +173,13 @@ export default function Intelligence() {
         >
           14 Day Trial | <span className="font-bold">Start Now</span>
         </Button>
-      </section>
+      </section>s
+
+      <FireSightFooter>
+        <div className="blue-shine-pulse-overview bottom-[6.8vw] right-[24.653vw] w-[min(602px, 41.8vw)] h-[min(602px, 41.8vw)]"></div>
+        <div className="blue-shine-pulse-overview bottom-[-25vw] right-[-17.57vw] w-[min(602px, 41.8vw)] h-[min(602px, 41.8vw)]"></div>
+        <div className="blue-shine-pulse-overview bottom-[-32.85vw] left-[-16.666vw] w-[min(602px, 41.8vw)] h-[min(602px, 41.8vw)]"></div>
+      </FireSightFooter>
     </>
   );
 }
