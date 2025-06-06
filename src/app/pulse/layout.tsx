@@ -9,7 +9,7 @@ export default function PulseLayout({
 }>) {
   return (
     <div className="w-full relative overflow-x-hidden">
-      <div className="bg-[url('/images/pulse-bg-top.svg')] bg-cover w-full h-[112.986vw] absolute z-[-10000] opacity-40"></div>
+      <div className="bg-[url('/images/pulse-bg-top.svg')] bg-cover w-full h-[64vw] absolute z-[-10000] opacity-40"></div>
       <TabBar />
       {children}
     </div>

@@ -2,7 +2,6 @@
 
 import "./page.css";
 import { Button } from "@/components/ui/button";
-import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import FireSightFooter from "@/layouts/FireSightFooter";
@@ -223,10 +222,11 @@ export default function Page() {
   }, []);
   return (
     <>
-      <div className="blue-shine-pulse-overview w-[41.8vw] h-[41.8vw] top-[-6.25vw] right-[-9.722vw] z-[-2000]"></div>
-      <div className="blue-shine-pulse-overview w-[46.6vw] h-[46.6vw] top-[57vw] left-[-1.875vw] z-[-2000]"></div>
-      <div className="blue-shine-pulse-overview w-[47.36vw] h-[47.36vw] bottom-[635px] right-[-20.97vw] z-[-2000]"></div>
-
+      <div className="w-full relative">
+        <div className="blue-shine-pulse-overview w-[41.8vw] h-[41.8vw] top-[-6.25vw] right-[-9.722vw] z-[-2000]"></div>
+        <div className="blue-shine-pulse-overview w-[46.6vw] h-[46.6vw] top-[57vw] left-[-1.875vw] z-[-2000]"></div>
+        <div className="blue-shine-pulse-overview w-[47.36vw] h-[47.36vw] bottom-[635px] right-[-20.97vw] z-[-2000]"></div>
+      </div>
       <div className="flex flex-wrap flex-col justify-center items-center w-ful">
         <h4 className="uppercase mt-[107px] mb-[47px] text-center sub-header-title">
           Pricing
@@ -342,15 +342,8 @@ export default function Page() {
           <span className="text-[22px] text-white font-bold">Annual</span>
         </div>
       </div>
-      <div className="top-[170px] absolute bg-[url('/images/pulse-bg-5.svg')] bg-no-repeat bg-cover w-full bottom-0 opacity-70 z-[-1000]"></div>
+      <div className="top-[100px] absolute bg-[url('/images/pulse-bg-5.svg')] bg-no-repeat bg-cover w-full bottom-0 opacity-70 z-[-1000]"></div>
       <div ref={containerRef} className="overflow-x-hidden w-full relative">
-        <Image
-          src="blue-shine-ellipse.svg"
-          alt="ellipse"
-          width={1328}
-          height={230}
-          className="w-[92.22vw] h-[15.97vw] t-[35.8%] absolute"
-        ></Image>
         <motion.div
           ref={contentRef}
           className="cursor-grab pb-14 w-full flex gap-14"

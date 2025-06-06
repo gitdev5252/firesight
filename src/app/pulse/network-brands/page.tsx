@@ -8,9 +8,10 @@ import FireSightFooter from "@/layouts/FireSightFooter";
 export default function Page() {
   return (
     <>
-      <div className="blue-shine-pulse-overview w-[41.8vw] h-[41.8vw] top-[-6.46vw] right-[-9.514vw] z-[-2000]"></div>
-      <div className="bg-[url('/images/color-pattern-network-brands.svg')] bg-cover w-full h-[1970px] top-[170px] absolute z-[-10000] opacity-70"></div>
-
+      <div className="w-full relative">
+        <div className="blue-shine-pulse-overview w-[41.8vw] h-[41.8vw] top-[-6.46vw] right-[-9.514vw] z-[-2000]"></div>
+        <div className="bg-[url('/images/color-pattern-network-brands.svg')] bg-cover w-full h-[1970px] top-[0px] absolute z-[-10000] opacity-70"></div>
+      </div>
       <div className="flex flex-col items-center w-full">
         <h4 className="uppercase mt-[107px] mb-[47px] text-center font-extrabold text-[24px] leading-[150%] text-[rgba(0,255,224,0.6)]">
           network brands
@@ -20,7 +21,6 @@ export default function Page() {
         </h1>
       </div>
       <div className="mx-14 backdrop-blur-[34.5px] bg-[rgba(255,255,255,0.02)] border-[rgba(255,255,255,0.1)] border text-white text-center lg:px-[140px] lg:pt-[105px] lg:pb-[85.67px] p-[40px] mb-[30px] rounded-[20px] lg:text-[35px] text-[25px] relative">
-        
         <div className="blue-shine-pulse-overview top-[13.056vw] left-[-6.25vw] min-w-[min(602px,41.8vw)] min-h-[min(602px,41.8vw)]"></div>
         <h3>
           <span className="font-bold">Firesight | Pulse</span> powers a growing
@@ -41,7 +41,6 @@ export default function Page() {
         </Button>
       </div>
       <div className="flex flex-wrap justify-around mx-[58px] text-white gap-[30px] pb-[30px] relative">
-        
         <div className="blue-shine-pulse-overview bottom-[-24.583vw] right-[-13.47vw] min-w-[min(602px,41.8vw)] min-h-[min(602px,41.8vw)]"></div>
         <div className="flex justify-center items-center flex-col lg:w-[49%] md:w-[47%] w-full backdrop-blur-[34.5px] bg-[rgba(255,255,255,0.02)] border-[rgba(255,255,255,0.1)] border p-[64px] text-center rounded-[20px]">
           <Image
