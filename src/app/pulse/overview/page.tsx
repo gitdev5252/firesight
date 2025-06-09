@@ -744,7 +744,7 @@ export default function Overview() {
             </button>
           ))}
         </div>
-        <div className="relative w-full shadow h-140 rounded overflow-hidden sm:hidden block text-white pt-8">
+        <div className="relative w-full shadow h-160 rounded overflow-hidden sm:hidden block text-white pt-8">
           <AnimatePresence initial={false} custom={direction1}>
             <motion.div
               key={page1}
@@ -811,7 +811,7 @@ export default function Overview() {
       {/* Explore1 section */}
       <section
         id="explore1"
-        className="relative mt-auto flex flex-col items-center justify-center w-full md:px-14 px-4 pb-[115px]"
+        className="relative mt-auto flex flex-col items-center justify-center w-full md:px-14 px-4 md:pb-[115px] pb-15"
       >
         <div className="top-25 absolute bg-[url('/images/pulse-bg-2.svg')] bg-no-repeat bg-cover w-full h-[40.2778vw] opacity-50 md:block hidden"></div>
         <div className="top-10 absolute bg-[url('/images/mobile/pulse-bg-0-mobile.svg')] bg-no-repeat bg-cover w-full h-[66.66vw] opacity-50 md:hidden block"></div>
