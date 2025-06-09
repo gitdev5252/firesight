@@ -1,8 +1,27 @@
+"use client";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import "./page.css";
 import FireSightFooter from "@/layouts/FireSightFooter";
 import Link from "next/link";
+import { useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+
+const pages = [
+  [0, 3],
+  [3, 3],
+];
+
+const pages1 = [
+  [0, 3],
+  [3, 3],
+  [6, 3],
+];
+
+const swipeConfidenceThreshold = 100;
+const swipePower = (offset: number, velocity: number) => {
+  return Math.abs(offset) * velocity;
+};
 
 export default function Overview() {
   const pulseSectionCardInfo: {
@@ -276,15 +295,35 @@ export default function Overview() {
       ),
     },
   ];
+
+  const [[page, direction], setPage] = useState([0, 0]);
+
+  const paginate = (newDirection: number) => {
+    setPage(([prevPage]) => {
+      const newPage = (prevPage + newDirection + pages.length) % pages.length;
+      return [newPage, newDirection];
+    });
+  };
+
+  const [[page1, direction1], setPage1] = useState([0, 0]);
+
+  const paginate1 = (newDirection: number) => {
+    setPage1(([prevPage]) => {
+      const newPage = (prevPage + newDirection + pages1.length) % pages1.length;
+      return [newPage, newDirection];
+    });
+  };
+
   return (
     <>
       {/* Pulse section */}
       <section
         id="pulse"
-        className="relative mt-auto flex flex-col items-center justify-center w-full px-14"
+        className="relative mt-auto flex flex-col items-center justify-center w-full md:px-14 px-4"
       >
-        <div className="blue-shine-pulse-overview bottom-[-212px] left-[-140px]"></div>
-        <div className="flex gap-11 text-white items-center justify-around h-16 mt-28 mb-[77px]">
+        <div className="blue-shine-pulse-overview bottom-[-212px] left-[-140px] md:block hidden"></div>
+        <div className="blue-shine-pulse-overview-mobile top-[100px] left-[-105px] md:hidden block"></div>
+        <div className="flex md:gap-11 gap-3 text-white items-center justify-around md:h-16 h-[30px] md:mt-28 mt-20 md:mb-[77px] mb-0">
           <Link href="/">
             <Image
               src="/images/logo.svg"
@@ -292,7 +331,7 @@ export default function Overview() {
               width={264}
               height={64}
               priority
-              className="sm:w-[264px] sm:h-[64px] w-[124px] h-[30px]"
+              className="md:w-[264px] md:h-[64px] w-[124px] h-[30px]"
             />
           </Link>
           <span className="md:text-[45px] text-[20px]">|</span>
@@ -306,7 +345,7 @@ export default function Overview() {
             background: 'url("/images/pulse-overview-show.svg")',
             backgroundSize: "cover",
           }}
-          className="rounded-4xl w-[72.7777vw] h-[60.07vw] bg-no-repeat"
+          className="rounded-4xl w-[72.7777vw] h-[60.07vw] bg-no-repeat hidden md:block"
         >
           <div
             style={{
@@ -318,12 +357,22 @@ export default function Overview() {
           ></div>
         </div>
 
-        <div className="mt-[-23.5vw]">
-          <div className="flex justify-between">
-            <div className="main-box text-white max-w-[59.036%]">
-              <div className="flex flex-col w-full gap-6 items-center pt-[46px] pb-[39px] pl-[80px] pr-[69px]">
-                <p className="sub-header-title">ABOUT</p>
-                <h2 className="md:text-[43.8px] text-[28px] font-extrabold uppercase leading-[50px]">
+        <div
+          style={{
+            background: 'url("/images/mobile/pulse-overview-show-mobile.svg")',
+            backgroundSize: "cover",
+          }}
+          className="w-[100vw] h-[206.07vw] bg-no-repeat block md:hidden"
+        ></div>
+
+        <div className="md:mt-[-23.5vw] mt-[-95vw]">
+          <div className="flex justify-between md:flex-row flex-col md:gap-0 gap-6">
+            <div className="main-box text-white md:max-w-[59.036%] w-full">
+              <div className="flex flex-col w-full gap-6 items-center md:pt-[46px] md:pb-[39px] md:pl-[80px] md:pr-[69px] px-4 py-6">
+                <p className="sub-header-title md:text-[24px] text-[16px]">
+                  ABOUT
+                </p>
+                <h2 className="md:text-[43.8px] text-[28px] font-extrabold uppercase md:leading-[50px] leading-[120%] md:text-start text-center">
                   CONNECTED INTELLIGENCE PLATFORM
                 </h2>
                 <p className="text-center text-white text-[16px] leading-normal">
@@ -374,10 +423,12 @@ export default function Overview() {
                 </Button>
               </div>
             </div>
-            <div className="flex flex-col justify-between max-w-[38.1777%] gap-8">
+            <div className="flex flex-col justify-between md:max-w-[38.1777%] w-full md:gap-8 gap-6">
               <div className="main-box text-white">
-                <div className="flex flex-col mb-[44px] mt-[41px] mx-15 gap-6 items-center">
-                  <p className="sub-header-title">PRICING</p>
+                <div className="flex flex-col md:mb-[44px] md:mt-[41px] md:mx-15 gap-6 items-center mx-4 my-6">
+                  <p className="sub-header-title md:text-[24px] text-[16px]">
+                    PRICING
+                  </p>
                   <p className="text-center text-white text-[16px] leading-normal">
                     Firesight Pulse is a <b>subscription-based SaaS platform</b>{" "}
                     with simple, seat-based pricing for individuals or
@@ -397,8 +448,10 @@ export default function Overview() {
                 </div>
               </div>
               <div className="main-box text-white">
-                <div className="flex flex-col mb-[44px] mt-[41px] mx-19 gap-6 items-center">
-                  <p className="sub-header-title">USE CASES</p>
+                <div className="flex flex-col md:mb-[44px] md:mt-[41px] md:mx-15 gap-6 items-center mx-4 my-6">
+                  <p className="sub-header-title md:text-[24px] text-[16px]">
+                    USE CASES
+                  </p>
                   <p className="text-center text-white text-[16px] leading-normal">
                     <b>Trend & Market Sensing:</b> Forecast demand and act
                     before competitors.
@@ -428,19 +481,22 @@ export default function Overview() {
       {/* Explore section */}
       <section
         id="explore"
-        className="relative mt-auto flex flex-col items-center justify-center w-full px-14"
+        className="relative mt-auto flex flex-col items-center justify-center w-full md:px-14 px-4"
       >
-        <div className="top-25 absolute bg-[url('/images/pulse-bg-2.svg')] bg-no-repeat bg-cover w-full h-[40.2778vw]"></div>
+        <div className="top-25 absolute bg-[url('/images/pulse-bg-2.svg')] bg-no-repeat bg-cover w-full h-[40.2778vw] opacity-50 md:block hidden"></div>
+        <div className="top-10 absolute bg-[url('/images/mobile/pulse-bg-0-mobile.svg')] bg-no-repeat bg-cover w-full h-[66.66vw] opacity-50 md:hidden block"></div>
 
-        <p className="sub-header-title mt-[104px] mb-[50px]">EXPLORE</p>
-        <h2 className="text-white md:text-[43.8px] text-[28px] font-extrabold uppercase leading-[50px] !m-0 max-w-[640px] text-center">
-          FIND OUT HOW <b className="text-[#219A98]">Pulse</b> CAN TRANSFORM
-          YOUR WORKDAY
+        <p className="sub-header-title md:text-[24px] text-[16px] md:mt-[104px] mt-22 md:mb-[50px] mb-3">
+          EXPLORE
+        </p>
+        <h2 className="text-white md:text-[43.8px] text-[28px] font-extrabold uppercase md:leading-[50px] leading-[120%] !m-0 md:max-w-[640px] max-w-[266px] text-center">
+          FIND OUT HOW <br className="md:hidden block" />{" "}
+          <b className="text-[#219A98]">Pulse</b> CAN TRANSFORM YOUR WORKDAY
         </h2>
 
         <Button
           variant="outline"
-          className="cursor-pointer gradient-border-btn text-[22px] mt-9 bg-transparent rounded-full px-[50px] py-[20px] text-white leading-normal h-18 hover:text-white"
+          className="cursor-pointer gradient-border-btn md:text-[22px] text-[14px] md:mt-9 mt-6 bg-transparent rounded-full md:px-[50px] px-9 md:py-[20px] py-3 text-white leading-normal md:h-18 h-11 hover:text-white"
         >
           14 Day Trial | <span className="font-bold">Start Now</span>
         </Button>
@@ -449,17 +505,19 @@ export default function Overview() {
       {/* Feature section */}
       <section
         id="features"
-        className="relative flex flex-col justify-center w-full px-14 pt-[102px] gap-11"
+        className="relative flex flex-col justify-center w-full md:px-14 px-4 pt-[102px] gap-11"
       >
-        <div className="blue-shine-pulse-overview top-18 right-[-175px]"></div>
-        <p className="sub-header-title mb-[6px]">FEATURES</p>
-        <h2 className="text-white md:text-[43.8px] text-[28px] font-extrabold uppercase leading-[50px] !m-0 max-w-[615px]">
+        <div className="blue-shine-pulse-overview top-18 right-[-175px] md:block hidden"></div>
+        <p className="sub-header-title md:text-[24px] text-[16px] md:mb-[6px] mb-[-32px]">
+          FEATURES
+        </p>
+        <h2 className="text-white md:text-[43.8px] text-[28px] font-extrabold uppercase md:leading-[50px] leading-[120%] !m-0 md:max-w-[615px] max-w-[310px]">
           Media, Market & Business intelligence Offering
         </h2>
-        <div className="flex flex-wrap w-full justify-between lg:gap-y-16 md:gap-y-10 gap-y-3 items-stretch text-white">
+        <div className="sm:flex hidden flex-wrap w-full justify-between lg:gap-y-16 md:gap-y-10 gap-y-3 items-stretch text-white">
           {pulseSectionCardInfo.map((item, index) => (
             <div
-              className="main-small-box md:!w-[30%] !w-full relative cursor-pointer"
+              className="main-small-box lg:!w-[30%] sm:!w-[46%] !w-full relative cursor-pointer"
               key={index}
             >
               <div className="color-pattern-bg md:p-6 p-[20px] opacity-80 md:h-[150px] h-[108px]">
@@ -476,30 +534,141 @@ export default function Overview() {
             </div>
           ))}
         </div>
+
+        <div className="relative w-full shadow h-84 rounded overflow-hidden sm:hidden block text-white">
+          <AnimatePresence initial={false} custom={direction}>
+            <motion.div
+              key={page}
+              custom={direction}
+              drag="x"
+              dragConstraints={{ left: 0, right: 0 }}
+              onDragEnd={(e, { offset, velocity }) => {
+                const swipe = swipePower(offset.x, velocity.x);
+                if (swipe < -swipeConfidenceThreshold) paginate(1);
+                else if (swipe > swipeConfidenceThreshold) paginate(-1);
+              }}
+              variants={{
+                enter: (dir: number) => ({
+                  x: dir > 0 ? 300 : -300,
+                  opacity: 0,
+                }),
+                center: {
+                  x: 0,
+                  opacity: 1,
+                },
+                exit: (dir: number) => ({
+                  x: dir < 0 ? 300 : -300,
+                  opacity: 0,
+                }),
+              }}
+              initial="enter"
+              animate="center"
+              exit="exit"
+              transition={{ duration: 0.5 }}
+              className="absolute w-full h-full flex items-center justify-stretch"
+            >
+              <div className="flex flex-col w-full h-full justify-stretch gap-3 items-stretch">
+                {pulseSectionCardInfo
+                  .splice(pages[page][0], pages[page][1])
+                  .map((item, index) => (
+                    <div
+                      className="main-small-box !w-full relative cursor-pointer"
+                      key={index}
+                    >
+                      <div className="color-pattern-bg p-[20px] opacity-80">
+                        <div className="flex items-center">
+                          <h3 className="text-[20px] font-extrabold">
+                            {item.title}
+                          </h3>
+                          <span className="text-[12px] italic ml-2">
+                            {item.feature}
+                          </span>
+                        </div>
+                        <p className="text-[12px]">{item.content}</p>
+                      </div>
+                    </div>
+                  ))}
+              </div>
+            </motion.div>
+          </AnimatePresence>
+        </div>
+        <div className="flex justify-center gap-2 mt-5 sm:hidden">
+          {pages.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => paginate(index - page)}
+              className={`${
+                page === index
+                  ? "h-[8.66px] w-[26px]"
+                  : "w-[10px] h-[10px] opacity-50"
+              }`}
+            >
+              {page === index ? (
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="26"
+                  height="10"
+                  viewBox="0 0 26 10"
+                  fill="none"
+                >
+                  <path
+                    d="M25.5275 4.21311C25.8175 4.69611 25.8124 5.30088 25.5143 5.77894L23.7404 8.62384C23.4665 9.06317 22.9853 9.33018 22.4676 9.33018L3.44896 9.33018C2.92224 9.33018 2.43412 9.05391 2.16298 8.60234L0.463642 5.77221C0.178291 5.29698 0.178291 4.70312 0.463642 4.22788L2.16298 1.39776C2.43412 0.946186 2.92225 0.669921 3.44897 0.669921L22.551 0.669922C23.0778 0.669922 23.5659 0.946188 23.837 1.39776L25.5275 4.21311Z"
+                    fill="white"
+                  />
+                </svg>
+              ) : (
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="10"
+                  height="10"
+                  viewBox="0 0 10 10"
+                  fill="none"
+                >
+                  <path
+                    opacity="0.5"
+                    d="M9.56699 4.25C9.83494 4.7141 9.83494 5.2859 9.56699 5.75L7.93301 8.58013C7.66506 9.04423 7.16987 9.33013 6.63397 9.33013L3.36603 9.33013C2.83013 9.33013 2.33494 9.04423 2.06699 8.58013L0.433013 5.75C0.165064 5.2859 0.165064 4.7141 0.433013 4.25L2.06699 1.41987C2.33494 0.955771 2.83013 0.669872 3.36603 0.669872L6.63397 0.669873C7.16987 0.669873 7.66506 0.955771 7.93301 1.41987L9.56699 4.25Z"
+                    fill="white"
+                  />
+                </svg>
+              )}
+            </button>
+          ))}
+        </div>
       </section>
       {/* Platform section */}
       <section
         id="platform"
-        className="relative mt-auto w-full px-17 pt-[164px] pb-16"
+        className="relative mt-auto w-full md:pt-[164px] pt-19 pb-16"
       >
-        <div className="blue-shine-pulse-overview top-[170px] left-[calc(50vw-250px)]"></div>
-        <div className="top-30 absolute bg-[url('/images/pulse-bg-3.svg')] bg-no-repeat bg-cover w-full h-[29.097vw]"></div>
-        <div className="flex items-center justify-between w-full">
-          <div className="flex flex-col w-full gap-6 max-w-[47.08%] items-start">
-            <p className="sub-header-title">PLATFORM</p>
-            <h2 className="md:text-[80px] text-[28px] text-white font-extrabold uppercase leading-[100%]">
+        <div className="blue-shine-pulse-overview top-[170px] left-[calc(50vw-250px)] md:block hidden"></div>
+        <div className="top-30 absolute bg-[url('/images/pulse-bg-3.svg')] bg-no-repeat bg-cover w-full h-[29.097vw] opacity-50 md:block hidden"></div>
+        <div className="top-8 absolute bg-[url('/images/mobile/pulse-bg-1-mobile.svg')] bg-no-repeat bg-cover w-full h-[66.66vw] opacity-50 md:hidden block"></div>
+        <div className="flex items-center justify-between w-full md:flex-row flex-col md:px-17 px-4">
+          <div className="flex flex-col w-full gap-6 lg:max-w-[47.08%] md:max-w-[54%] md:items-start items-center">
+            <p className="sub-header-title md:text-[24px] text-[16px]">
+              PLATFORM
+            </p>
+            <h2 className="lg:text-[80px] md:text-[54px] text-[28px] text-white font-extrabold uppercase leading-[100%] md:text-start text-center">
               WHAT IS CONNECTED INTELLIGENCE?
             </h2>
+            <p className="text-white text-[16px] leading-normal md:hidden block md:text-start text-center">
+              Connected intelligence is the fusion of your personal context with
+              real-time media, market, and business signals—delivered in a way
+              that works how you work. Firesight learns from your onboarding
+              inputs to tailor insights, automate tasks, and support your daily
+              decisions. It becomes your second brain in the cloud—offering
+              smarter, faster, and more strategic clarity every step of the way.
+            </p>
 
             <Button
               variant="outline"
-              className="cursor-pointer gradient-border-btn text-[22px] mt-2 bg-transparent rounded-full px-[50px] py-[20px] text-white leading-normal h-18 hover:text-white"
+              className="cursor-pointer gradient-border-btn md:text-[22px] text-[14px] mt-2 bg-transparent rounded-full md:px-[50px] px-9 md:py-[20px] py-3 text-white leading-normal md:h-18 h-11 hover:text-white"
             >
               14 Day Trial | <span className="font-bold">Start Now</span>
             </Button>
           </div>
-          <div className="w-[1px] h-[123px] opacity-30 bg-white"></div>
-          <p className="text-white text-[16px] leading-normal max-w-[32.64%]">
+          <div className="w-[1px] h-[123px] opacity-30 bg-white md:block hidden"></div>
+          <p className="text-white text-[16px] leading-normal lg:max-w-[32.64%] md:max-w-[35%] md:block hidden">
             Connected intelligence is the fusion of your personal context with
             real-time media, market, and business signals—delivered in a way
             that works how you work. Firesight learns from your onboarding
@@ -508,9 +677,12 @@ export default function Overview() {
             smarter, faster, and more strategic clarity every step of the way.
           </p>
         </div>
-        <div className="flex flex-wrap justify-between gap-y-26 items-stretch px-2 w-full mt-[213px]">
+        <div className="sm:flex flex-wrap justify-between gap-y-26 items-stretch px-2 w-full mt-[213px] hidden">
           {platformSectionCardInfo.map((ele, index) => (
-            <div className="w-[27.9%] flex flex-col gap-[26px]" key={index}>
+            <div
+              className="md:w-[27.9%] sm:w-[45%] w-full flex flex-col gap-[26px]"
+              key={index}
+            >
               <div className="flex w-full gap-4">
                 {ele.svg}
                 <div className="w-[1px] h-[20px] bg-[#86878D]"></div>
@@ -529,31 +701,142 @@ export default function Overview() {
             </div>
           ))}
         </div>
+
+        <div className="flex justify-center gap-2 mt-15 sm:hidden">
+          {pages1.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => paginate1(index - page1)}
+              className={`${
+                page1 === index
+                  ? "h-[8.66px] w-[26px]"
+                  : "w-[10px] h-[10px] opacity-50"
+              }`}
+            >
+              {page1 === index ? (
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="26"
+                  height="10"
+                  viewBox="0 0 26 10"
+                  fill="none"
+                >
+                  <path
+                    d="M25.5275 4.21311C25.8175 4.69611 25.8124 5.30088 25.5143 5.77894L23.7404 8.62384C23.4665 9.06317 22.9853 9.33018 22.4676 9.33018L3.44896 9.33018C2.92224 9.33018 2.43412 9.05391 2.16298 8.60234L0.463642 5.77221C0.178291 5.29698 0.178291 4.70312 0.463642 4.22788L2.16298 1.39776C2.43412 0.946186 2.92225 0.669921 3.44897 0.669921L22.551 0.669922C23.0778 0.669922 23.5659 0.946188 23.837 1.39776L25.5275 4.21311Z"
+                    fill="white"
+                  />
+                </svg>
+              ) : (
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="10"
+                  height="10"
+                  viewBox="0 0 10 10"
+                  fill="none"
+                >
+                  <path
+                    opacity="0.5"
+                    d="M9.56699 4.25C9.83494 4.7141 9.83494 5.2859 9.56699 5.75L7.93301 8.58013C7.66506 9.04423 7.16987 9.33013 6.63397 9.33013L3.36603 9.33013C2.83013 9.33013 2.33494 9.04423 2.06699 8.58013L0.433013 5.75C0.165064 5.2859 0.165064 4.7141 0.433013 4.25L2.06699 1.41987C2.33494 0.955771 2.83013 0.669872 3.36603 0.669872L6.63397 0.669873C7.16987 0.669873 7.66506 0.955771 7.93301 1.41987L9.56699 4.25Z"
+                    fill="white"
+                  />
+                </svg>
+              )}
+            </button>
+          ))}
+        </div>
+        <div className="relative w-full shadow h-140 rounded overflow-hidden sm:hidden block text-white pt-8">
+          <AnimatePresence initial={false} custom={direction1}>
+            <motion.div
+              key={page1}
+              custom={direction1}
+              drag="x"
+              dragConstraints={{ left: 0, right: 0 }}
+              onDragEnd={(e, { offset, velocity }) => {
+                const swipe = swipePower(offset.x, velocity.x);
+                if (swipe < -swipeConfidenceThreshold) paginate1(1);
+                else if (swipe > swipeConfidenceThreshold) paginate1(-1);
+              }}
+              variants={{
+                enter: (dir: number) => ({
+                  x: dir > 0 ? 300 : -300,
+                  opacity: 0,
+                }),
+                center: {
+                  x: 0,
+                  opacity: 1,
+                },
+                exit: (dir: number) => ({
+                  x: dir < 0 ? 300 : -300,
+                  opacity: 0,
+                }),
+              }}
+              initial="enter"
+              animate="center"
+              exit="exit"
+              transition={{ duration: 0.5 }}
+              className="absolute w-full h-full flex items-center justify-stretch px-6"
+            >
+              <div className="flex flex-col w-full h-full justify-stretch gap-[30px] items-stretch">
+                {platformSectionCardInfo
+                  .splice(pages1[page1][0], pages1[page1][1])
+                  .map((ele, index) => (
+                    <div
+                      className="w-full flex flex-col gap-[26px] pb-[30px] border-b-[1px] border-b-[#ffffff19]"
+                      key={index}
+                    >
+                      <div className="flex w-full gap-4">
+                        {ele.svg}
+                        <div className="w-[1px] h-[20px] bg-[#86878D]"></div>
+                        <p
+                          className={`text-[22px] font-bold leading-normal`}
+                          style={{
+                            color:
+                              index % 2 == 0 ? "white" : "rgba(0,255,224,0.60)",
+                          }}
+                        >
+                          {ele.title}
+                        </p>
+                      </div>
+                      <div className="text-[15px] text-white leading-[140%] tracking-[0.3px]">
+                        {ele.content}
+                      </div>
+                    </div>
+                  ))}
+              </div>
+            </motion.div>
+          </AnimatePresence>
+        </div>
       </section>
+
       {/* Explore1 section */}
       <section
         id="explore1"
-        className="relative flex flex-col items-center justify-center w-full px-14 pb-[115px]"
+        className="relative mt-auto flex flex-col items-center justify-center w-full md:px-14 px-4 pb-[115px]"
       >
-        <div className="top-8 absolute bg-[url('/images/pulse-bg-4.svg')] bg-no-repeat bg-cover w-full h-[38.5417vw]"></div>
+        <div className="top-25 absolute bg-[url('/images/pulse-bg-2.svg')] bg-no-repeat bg-cover w-full h-[40.2778vw] opacity-50 md:block hidden"></div>
+        <div className="top-10 absolute bg-[url('/images/mobile/pulse-bg-0-mobile.svg')] bg-no-repeat bg-cover w-full h-[66.66vw] opacity-50 md:hidden block"></div>
 
-        <p className="sub-header-title mt-[90px] mb-[50px]">EXPLORE</p>
-        <h2 className="text-white md:text-[43.8px] text-[28px] font-extrabold uppercase leading-[50px] !m-0 max-w-[640px] text-center">
-          FIND OUT HOW <b className="text-[#219A98]">Pulse</b> CAN TRANSFORM
-          YOUR WORKDAY
+        <p className="sub-header-title md:text-[24px] text-[16px] md:mt-[104px] mt-8 md:mb-[50px] mb-3">
+          EXPLORE
+        </p>
+        <h2 className="text-white md:text-[43.8px] text-[28px] font-extrabold uppercase md:leading-[50px] leading-[120%] !m-0 md:max-w-[640px] max-w-[266px] text-center">
+          FIND OUT HOW <br className="md:hidden block" />{" "}
+          <b className="text-[#219A98]">Pulse</b> CAN TRANSFORM YOUR WORKDAY
         </h2>
 
         <Button
           variant="outline"
-          className="cursor-pointer gradient-border-btn text-[22px] mt-9 bg-transparent rounded-full px-[50px] py-[20px] text-white leading-normal h-18 hover:text-white"
+          className="cursor-pointer gradient-border-btn md:text-[22px] text-[14px] md:mt-9 mt-6 bg-transparent rounded-full md:px-[50px] px-9 md:py-[20px] py-3 text-white leading-normal md:h-18 h-11 hover:text-white"
         >
           14 Day Trial | <span className="font-bold">Start Now</span>
         </Button>
       </section>
+
       <FireSightFooter>
-        <div className="blue-shine-pulse-overview w-[min(602px, 41.8vw)] h-[min(602px, 41.8vw)] bottom-[7.7vw] right-[19.3vw]"></div>
-        <div className="blue-shine-pulse-overview bottom-[-25.555vw] right-[-20.277vw] w-[min(602px, 41.8vw)] h-[min(602px, 41.8vw)]"></div>
-        <div className="blue-shine-pulse-overview bottom-[-32.847vw] left-[-16.666vw] w-[min(602px, 41.8vw)] h-[min(602px, 41.8vw)]"></div>
+        <div className="green-shine-footer-mobile md:hidden block z-[-2342]"></div>
+        <div className="blue-shine-pulse-overview w-[min(602px, 41.8vw)] h-[min(602px, 41.8vw)] bottom-[7.7vw] right-[19.3vw] md:block hidden"></div>
+        <div className="blue-shine-pulse-overview bottom-[-25.555vw] right-[-20.277vw] w-[min(602px, 41.8vw)] h-[min(602px, 41.8vw)] md:block hidden"></div>
+        <div className="blue-shine-pulse-overview bottom-[-32.847vw] left-[-16.666vw] w-[min(602px, 41.8vw)] h-[min(602px, 41.8vw)] md:block hidden"></div>
       </FireSightFooter>
     </>
   );
