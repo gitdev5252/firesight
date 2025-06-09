@@ -31,9 +31,22 @@
   position: absolute;
 }
 
+.blue-shine-pulse-overview-mobile {
+  border-radius: 50%;
+  opacity: 0.12;
+  background: linear-gradient(180deg, rgba(63, 104, 250, 0.55) 0%, rgba(188, 239, 255, 0.62) 100%);
+  filter: blur(139px);
+  width: 336.6px;
+  min-width: 336.6px;
+  height: 336.6px;
+  min-height: 336.6px;
+  flex-shrink: 0;
+  position: absolute;
+}
+
+
 .sub-header-title {
   font-family: Lekton;
-  font-size: 24px;
   vertical-align: middle;
   font-style: normal;
   font-weight: 700;
@@ -69,4 +82,21 @@
   mask-composite: exclude;
   z-index: -1;
   pointer-events: none;
+}
+
+.green-shine-footer-mobile {
+  border-radius: 50%;
+  opacity: 0.12;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 144, 255, 0.28) 0%,
+    rgba(134, 160, 216, 0.31) 100%
+  );
+  filter: blur(139px);
+  width: 377px;
+  height: 377px;
+  flex-shrink: 0;
+  position: absolute;
+  bottom: 410px;
+  right: -164px;
 }

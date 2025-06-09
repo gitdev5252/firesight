@@ -13,7 +13,7 @@ export default function News() {
         className="relative mt-auto flex flex-col items-center justify-center w-full md:px-14 px-4"
       >
         <div className="blue-shine-pulse-overview bottom-[-212px] left-[-140px]"></div>
-
+        <div className="blue-shine-pulse-overview-mobile top-[100px] left-[-105px] md:hidden block"></div>
         <div className="bottom-[-164px] absolute bg-[url('/images/pulse-bg-2.svg')] bg-no-repeat bg-cover w-full h-[40.2778vw] opacity-50"></div>
 
         <div className="flex md:gap-11 gap-3 text-white items-center justify-around md:h-16 h-[30px] md:mt-28 mt-20 md:mb-[77px] mb-0">
@@ -38,7 +38,7 @@ export default function News() {
             background: 'url("/images/pulse-news-show.svg")',
             backgroundSize: "cover",
           }}
-          className="rounded-4xl w-[72.7777vw] h-[60.07vw] bg-no-repeat"
+          className="rounded-4xl w-[72.7777vw] h-[60.07vw] bg-no-repeat md:block hidden"
         >
           <div
             style={{
@@ -50,11 +50,21 @@ export default function News() {
           ></div>
         </div>
 
-        <div className="mt-[-23.5vw] px-[7.15vw]">
+        <div
+          style={{
+            background: 'url("/images/mobile/pulse-news-show-mobile.svg")',
+            backgroundSize: "cover",
+          }}
+          className="w-[100vw] h-[206.07vw] bg-no-repeat block md:hidden"
+        ></div>
+
+        <div className="md:mt-[-23.5vw] mt-[-95vw] px-0 w-full">
           <div className="main-box text-white">
-            <div className="flex flex-col w-full gap-6 items-center pt-[46px] pb-15 px-[50px]">
-              <p className="sub-header-title md:text-[24px] text-[16px]">MEWS</p>
-              <h2 className="md:text-[43.8px] text-[28px] text-center font-extrabold uppercase md:leading-[50px] leading-[120%]">
+            <div className="flex flex-col w-full gap-6 items-center md:pt-[46px] md:pb-15 md:px-[50px] py-6 px-4">
+              <p className="sub-header-title md:text-[24px] text-[16px]">
+                NEWS
+              </p>
+              <h2 className="md:text-[43.8px] text-[28px] text-center font-extrabold uppercase md:leading-[50px] leading-[140%]">
                 Stay ahead of the noise
                 <br />
                 Act on the{" "}
@@ -74,7 +84,7 @@ export default function News() {
                 <br />
                 <br />
                 But it doesn&apos;t stop there. Pulse goes beyond aggregation.
-                Using <b>Natural Language AI</b> and
+                Using <b>Natural Language AI</b> and{" "}
                 <b>personalised onboarding data</b>, each story is processed,
                 stripped of bias, and contextually ranked for relevance to your
                 role, company, sector, and focus. Whether you&apos;re a startup
@@ -98,9 +108,10 @@ export default function News() {
                 state-of-the-art experience that turns global signal into
                 personalised, decision-ready intelligence faster.
               </p>
+
               <Button
                 variant="outline"
-                className="cursor-pointer gradient-border-btn text-[22px] mt-6 bg-transparent rounded-full px-[50px] py-[20px] text-white leading-normal h-18 hover:text-white"
+                className="cursor-pointer gradient-border-btn md:text-[22px] text-[14px] md:mt-6 bg-transparent rounded-full md:px-[50px] px-9 md:py-[20px] py-3 text-white leading-normal md:h-18 h-11 hover:text-white"
               >
                 14 Day Trial | <span className="font-bold">Start Now</span>
               </Button>
@@ -112,19 +123,19 @@ export default function News() {
       {/* Feature section */}
       <section
         id="feature"
-        className="relative flex flex-col justify-center w-full md:px-14 px-4 pt-[140px] gap-11"
+        className="relative flex flex-col justify-center w-full md:px-14 px-4 md:pt-[140px] pt-[81px] gap-11"
       >
-        <div className="blue-shine-pulse-overview bottom-[-140px] right-[-175px]"></div>
-        <div className="flex justify-between items-center gap-[10vw] w-full">
-          <div className="flex flex-col gap-6 items-start">
-            <p className="sub-header-title md:text-[24px] text-[16px]">MEWS</p>
-            <h2 className="md:text-[43.8px] text-[28px] font-extrabold uppercase md:leading-[50px] leading-[120%] text-white">
+        <div className="blue-shine-pulse-overview md:block hidden bottom-[-140px] right-[-175px]"></div>
+        <div className="flex justify-between items-center gap-[10vw] w-full md:flex-row flex-col">
+          <div className="flex flex-col gap-6 md:items-start items-center">
+            <p className="sub-header-title md:text-[24px] text-[16px]">NEWS</p>
+            <h2 className="md:text-[43.8px] text-[28px] font-extrabold uppercase md:leading-[50px] leading-[120%] text-white md:text-start text-center">
               Editorial Intelligence That{" "}
               <span className="text-[rgba(0,255,224,0.60)]">
                 Thinks With You
               </span>
             </h2>
-            <p className="text-white text-[16px] leading-normal">
+            <p className="text-white text-[16px] leading-normal  md:text-start text-center">
               Beyond the daily flow of headlines, Editorial unlocks the full
               story behind the signal. News Editorial{" "}
               <b>fuses Natural Language AI with human-in-the-loop review</b>,
@@ -150,9 +161,10 @@ export default function News() {
               article is an intelligence brief, generated with AI, refined by
               experts, and delivered with precision.
             </p>
+
             <Button
               variant="outline"
-              className="cursor-pointer gradient-border-btn text-[22px] mt-[10px] bg-transparent rounded-full px-[50px] py-[20px] text-white leading-normal h-18 hover:text-white"
+              className="cursor-pointer gradient-border-btn md:text-[22px] text-[14px] mt-[10px] bg-transparent rounded-full md:px-[50px] px-9 md:py-[20px] py-3 text-white leading-normal md:h-18 h-11 hover:text-white"
             >
               14 Day Trial | <span className="font-bold">Start Now</span>
             </Button>
@@ -162,7 +174,7 @@ export default function News() {
             alt="news ad"
             width={650}
             height={684}
-            className="h-[47.5vw] w-[45.139vw]"
+            className="md:h-[47.5vw] md:w-[45.139vw]"
           ></Image>
         </div>
       </section>
@@ -170,28 +182,31 @@ export default function News() {
       {/* Explore1 section */}
       <section
         id="explore1"
-        className="relative flex flex-col items-center justify-center w-full md:px-14 px-4 pb-[177px]"
+        className="relative mt-auto flex flex-col items-center justify-center w-full md:px-14 px-4 md:pb-[115px] pb-15"
       >
-        <div className="top-8 absolute bg-[url('/images/pulse-bg-4.svg')] bg-no-repeat bg-cover w-full h-[38.5417vw] opacity-50"></div>
+        <div className="top-25 absolute bg-[url('/images/pulse-bg-2.svg')] bg-no-repeat bg-cover w-full h-[40.2778vw] opacity-50 md:block hidden"></div>
+        <div className="top-8 absolute bg-[url('/images/mobile/pulse-bg-0-mobile.svg')] bg-no-repeat bg-cover w-full h-[66.66vw] opacity-50 md:hidden block"></div>
 
-        <p className="sub-header-title md:text-[24px] text-[16px] mt-[90px] mb-[50px]">EXPLORE</p>
-        <h2 className="text-white md:text-[43.8px] text-[28px] font-extrabold uppercase md:leading-[50px] leading-[120%] !m-0 max-w-[640px] text-center">
-          FIND OUT HOW <b className="text-[#219A98]">Pulse</b> CAN TRANSFORM
-          YOUR WORKDAY
+        <p className="sub-header-title md:text-[24px] text-[16px] md:mt-[104px] mt-20 md:mb-[50px] mb-3">
+          EXPLORE
+        </p>
+        <h2 className="text-white md:text-[43.8px] text-[28px] font-extrabold uppercase md:leading-[50px] leading-[120%] !m-0 md:max-w-[640px] max-w-[266px] text-center">
+          FIND OUT HOW <br className="md:hidden block" />{" "}
+          <b className="text-[#219A98]">Pulse</b> CAN TRANSFORM YOUR WORKDAY
         </h2>
 
         <Button
           variant="outline"
-          className="cursor-pointer gradient-border-btn text-[22px] bg-transparent rounded-full px-[50px] py-[20px] text-white leading-normal h-18 hover:text-white"
+          className="cursor-pointer gradient-border-btn md:text-[22px] text-[14px] md:mt-9 mt-6 bg-transparent rounded-full md:px-[50px] px-9 md:py-[20px] py-3 text-white leading-normal md:h-18 h-11 hover:text-white"
         >
           14 Day Trial | <span className="font-bold">Start Now</span>
         </Button>
       </section>
-
       <FireSightFooter>
-        <div className="blue-shine-pulse-overview bottom-[7.7vw] right-[19.3vw] w-[min(602px, 41.8vw)] h-[min(602px, 41.8vw)]"></div>
-        <div className="blue-shine-pulse-overview bottom-[-14.375vw] right-[-20.277vw] w-[min(602px, 41.8vw)] h-[min(602px, 41.8vw)]"></div>
-        <div className="blue-shine-pulse-overview bottom-[-21.667vw] left-[-16.666vw] w-[min(602px, 41.8vw)] h-[min(602px, 41.8vw)]"></div>
+        <div className="green-shine-footer-mobile md:hidden block z-[-2342]"></div>
+        <div className="blue-shine-pulse-overview md:block hidden bottom-[7.7vw] right-[19.3vw] w-[min(602px, 41.8vw)] h-[min(602px, 41.8vw)]"></div>
+        <div className="blue-shine-pulse-overview md:block hidden bottom-[-14.375vw] right-[-20.277vw] w-[min(602px, 41.8vw)] h-[min(602px, 41.8vw)]"></div>
+        <div className="blue-shine-pulse-overview md:block hidden bottom-[-21.667vw] left-[-16.666vw] w-[min(602px, 41.8vw)] h-[min(602px, 41.8vw)]"></div>
       </FireSightFooter>
     </>
   );

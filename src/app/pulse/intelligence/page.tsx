@@ -13,7 +13,7 @@ export default function Intelligence() {
         className="relative mt-auto flex flex-col items-center justify-center w-full md:px-14 px-4"
       >
         <div className="blue-shine-pulse-overview bottom-[-212px] left-[-140px]"></div>
-
+        <div className="blue-shine-pulse-overview-mobile top-[100px] left-[-105px] md:hidden block"></div>
         <div className="bottom-[-270px] absolute bg-[url('/images/pulse-bg-2.svg')] bg-no-repeat bg-cover w-full h-[40.2778vw] opacity-50"></div>
 
         <div className="flex md:gap-11 gap-3 text-white items-center justify-around md:h-16 h-[30px] md:mt-28 mt-20 md:mb-[77px] mb-0">
@@ -38,23 +38,25 @@ export default function Intelligence() {
             background: 'url("/images/pulse-intelligence-show.svg")',
             backgroundSize: "cover",
           }}
-          className="rounded-4xl w-[72.7777vw] h-[60.07vw] bg-no-repeat"
-        >
-          {/* <div
-            style={{
-              background:
-                "linear-gradient(180deg, rgba(8, 11, 22, 0.00) 31.41%, rgba(8, 11, 22, 0.93) 80.91%, #080B16 100%)",
-              width: "100%",
-              height: "99.1%",
-            }}
-          ></div> */}
-        </div>
+          className="rounded-4xl w-[72.7777vw] h-[60.07vw] bg-no-repeat md:block hidden"
+        ></div>
 
-        <div className="mt-[-23.5vw] px-[7.15vw]">
+        <div
+          style={{
+            background:
+              'url("/images/mobile/pulse-intelligence-show-mobile.svg")',
+            backgroundSize: "cover",
+          }}
+          className="w-[100vw] h-[206.07vw] bg-no-repeat block md:hidden"
+        ></div>
+
+        <div className="md:mt-[-23.5vw] mt-[-95vw] w-full">
           <div className="main-box text-white">
-            <div className="flex flex-col w-full gap-6 items-center pt-[46px] pb-15 px-[50px]">
-              <p className="sub-header-title md:text-[24px] text-[16px]">INTELLIGENCE</p>
-              <h2 className="md:text-[43.8px] text-[28px] text-center font-extrabold uppercase md:leading-[50px] leading-[120%] max-w-[703px]">
+            <div className="flex flex-col w-full gap-6 items-center md:pt-[46px] md:pb-15 md:px-[50px] px-4 py-6">
+              <p className="sub-header-title md:text-[24px] text-[16px]">
+                INTELLIGENCE
+              </p>
+              <h2 className="md:text-[43.8px] text-[28px] text-center font-extrabold uppercase md:leading-[50px] leading-[140%] max-w-[703px]">
                 Intelligence Cards: Insights, Forecasts & Responses
               </h2>
               <p className="text-center text-white text-[16px] leading-normal">
@@ -87,9 +89,10 @@ export default function Intelligence() {
                 stripped of bias, and mapped to your current focus. It’s not a
                 stream of content — it’s a stream of clarity.
               </p>
+
               <Button
                 variant="outline"
-                className="cursor-pointer gradient-border-btn text-[22px] mt-10 bg-transparent rounded-full px-[50px] py-[20px] text-white leading-normal h-18 hover:text-white"
+                className="cursor-pointer gradient-border-btn md:text-[22px] text-[14px] md:mt-10 bg-transparent rounded-full md:px-[50px] px-9 md:py-[20px] py-3 text-white leading-normal md:h-18 h-11 hover:text-white"
               >
                 14 Day Trial | <span className="font-bold">Start Now</span>
               </Button>
@@ -100,16 +103,18 @@ export default function Intelligence() {
       {/* Feature section */}
       <section
         id="feature"
-        className="relative flex flex-col justify-center w-full md:px-14 px-4 pt-[140px] gap-11"
+        className="relative flex flex-col justify-center w-full md:px-14 px-4 md:pt-[140px] pt-[81px] gap-11"
       >
-        <div className="blue-shine-pulse-overview bottom-[-140px] right-[-175px]"></div>
-        <div className="flex justify-between items-center gap-[10vw] w-full">
-          <div className="flex flex-col gap-6 items-start">
-            <p className="sub-header-title md:text-[24px] text-[16px]">INTELLIGENCE</p>
-            <h2 className="md:text-[43.8px] text-[28px] font-extrabold uppercase md:leading-[50px] leading-[120%] text-white">
+        <div className="blue-shine-pulse-overview md:block hidden bottom-[-140px] right-[-175px]"></div>
+        <div className="flex justify-between items-center gap-[10vw] w-full md:flex-row flex-col">
+          <div className="flex flex-col gap-6 md:items-start items-center">
+            <p className="sub-header-title md:text-[24px] text-[16px]">
+              INTELLIGENCE
+            </p>
+            <h2 className="md:text-[43.8px] text-[28px] font-extrabold uppercase md:leading-[50px] leading-[120%] text-white md:text-start text-center">
               Intelligence Briefings: Your clarity stream
             </h2>
-            <p className="text-white text-[16px] leading-normal">
+            <p className="text-white text-[16px] leading-normal md:text-start text-center">
               In a landscape oversaturated with headlines, Pulse Briefings
               deliver only what matters—clean, relevant, and ready for action.{" "}
               <b className="text-[rgba(0,255,224,0.60)]">
@@ -142,7 +147,7 @@ export default function Intelligence() {
             </p>
             <Button
               variant="outline"
-              className="cursor-pointer gradient-border-btn text-[22px] mt-[10px] bg-transparent rounded-full px-[50px] py-[20px] text-white leading-normal h-18 hover:text-white"
+              className="cursor-pointer gradient-border-btn md:text-[22px] text-[14px] mt-[10px] bg-transparent rounded-full md:px-[50px] px-9 md:py-[20px] py-3 text-white leading-normal md:h-18 h-11 hover:text-white"
             >
               14 Day Trial | <span className="font-bold">Start Now</span>
             </Button>
@@ -152,35 +157,39 @@ export default function Intelligence() {
             alt="news ad"
             width={645}
             height={702}
-            className="h-[48.75vw] w-[44.8vw]"
+            className="md:h-[48.75vw] md:w-[44.8vw]"
           ></Image>
         </div>
       </section>
-      {/* Explore section */}
-      <section
-        id="explore"
-        className="relative flex flex-col items-center justify-center w-full md:px-14 px-4 pb-[115px]"
-      >
-        <div className="top-8 absolute bg-[url('/images/pulse-bg-4.svg')] bg-no-repeat bg-cover w-full h-[38.5417vw]"></div>
 
-        <p className="sub-header-title md:text-[24px] text-[16px] mt-[90px] mb-[50px]">EXPLORE</p>
-        <h2 className="text-white md:text-[43.8px] text-[28px] font-extrabold uppercase md:leading-[50px] leading-[120%] !m-0 max-w-[640px] text-center">
-          FIND OUT HOW <b className="text-[#219A98]">Pulse</b> CAN TRANSFORM
-          YOUR WORKDAY
+      {/* Explore1 section */}
+      <section
+        id="explore1"
+        className="relative mt-auto flex flex-col items-center justify-center w-full md:px-14 px-4 md:pb-[115px] pb-15"
+      >
+        <div className="top-25 absolute bg-[url('/images/pulse-bg-2.svg')] bg-no-repeat bg-cover w-full h-[40.2778vw] opacity-50 md:block hidden"></div>
+        <div className="top-8 absolute bg-[url('/images/mobile/pulse-bg-0-mobile.svg')] bg-no-repeat bg-cover w-full h-[66.66vw] opacity-50 md:hidden block"></div>
+
+        <p className="sub-header-title md:text-[24px] text-[16px] md:mt-[104px] mt-20 md:mb-[50px] mb-3">
+          EXPLORE
+        </p>
+        <h2 className="text-white md:text-[43.8px] text-[28px] font-extrabold uppercase md:leading-[50px] leading-[120%] !m-0 md:max-w-[640px] max-w-[266px] text-center">
+          FIND OUT HOW <br className="md:hidden block" />{" "}
+          <b className="text-[#219A98]">Pulse</b> CAN TRANSFORM YOUR WORKDAY
         </h2>
 
         <Button
           variant="outline"
-          className="cursor-pointer gradient-border-btn text-[22px] mt-9 bg-transparent rounded-full px-[50px] py-[20px] text-white leading-normal h-18 hover:text-white"
+          className="cursor-pointer gradient-border-btn md:text-[22px] text-[14px] md:mt-9 mt-6 bg-transparent rounded-full md:px-[50px] px-9 md:py-[20px] py-3 text-white leading-normal md:h-18 h-11 hover:text-white"
         >
           14 Day Trial | <span className="font-bold">Start Now</span>
         </Button>
       </section>
-      s
       <FireSightFooter>
-        <div className="blue-shine-pulse-overview bottom-[6.8vw] right-[24.653vw] w-[min(602px, 41.8vw)] h-[min(602px, 41.8vw)]"></div>
-        <div className="blue-shine-pulse-overview bottom-[-25vw] right-[-17.57vw] w-[min(602px, 41.8vw)] h-[min(602px, 41.8vw)]"></div>
-        <div className="blue-shine-pulse-overview bottom-[-32.85vw] left-[-16.666vw] w-[min(602px, 41.8vw)] h-[min(602px, 41.8vw)]"></div>
+        <div className="green-shine-footer-mobile md:hidden block z-[-2342]"></div>
+        <div className="blue-shine-pulse-overview md:block hidden bottom-[6.8vw] right-[24.653vw] w-[min(602px, 41.8vw)] h-[min(602px, 41.8vw)]"></div>
+        <div className="blue-shine-pulse-overview md:block hidden bottom-[-25vw] right-[-17.57vw] w-[min(602px, 41.8vw)] h-[min(602px, 41.8vw)]"></div>
+        <div className="blue-shine-pulse-overview md:block hidden bottom-[-32.85vw] left-[-16.666vw] w-[min(602px, 41.8vw)] h-[min(602px, 41.8vw)]"></div>
       </FireSightFooter>
     </>
   );
