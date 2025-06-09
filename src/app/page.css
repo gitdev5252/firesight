@@ -12,9 +12,7 @@
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
-  height: 450px;
   width: 100%;
-  top: 500px;
   left: 0;
   position: absolute;
 }
@@ -134,7 +132,6 @@
   border: 1px solid rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(32px) !important;
   border-radius: 20px;
-  padding: 1px;
   width: 100%;
   position: relative;
 }
@@ -142,7 +139,6 @@
 .main-small-box {
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 20px;
-  padding: 1px;
   width: 100%;
   position: relative;
 }
@@ -171,8 +167,8 @@
   background-repeat: no-repeat;
 }
 
-.green-shine-session {
-  border-radius: 873px;
+.green-shine-session-mobile {
+  border-radius: 50%;
   opacity: 0.12;
   background: linear-gradient(
     180deg,
@@ -181,22 +177,19 @@
   );
   filter: blur(139px);
   position: absolute;
-  width: 873px;
-  height: 873px;
-  left: -200px;
-  top: 3200px;
+  width: 437px;
+  height: 437px;
+  left: -187px;
+  top: 140px;
 }
 
 .red-purple-shine-session {
-  border-radius: 1160.835px;
+  border-radius: 50%;
   opacity: 0.3;
   background: linear-gradient(-268deg, #e93249 30.53%, #20f 103.22%);
   filter: blur(139px);
-  width: 1160.835px;
-  height: 1000px;
   flex-shrink: 0;
   position: absolute;
-  top: 16.666vw;
 }
 
 .green-shine-session {
@@ -212,7 +205,7 @@
   width: 60.07vw;
   height: 60.07vw;
   left: -20.347vw;
-  top: 20.653vw;
+  top: 297px;
 }
 .green-shine-session-small {
   border-radius: 31.458vw;
@@ -244,7 +237,7 @@
   height: 41.8vw;
   flex-shrink: 0;
   position: absolute;
-  top: 60.237vw;
+  top: 867px;
   right: -14.72vw;
 }
 
@@ -261,7 +254,7 @@
   width: 60.625vw;
   height: 60.625vw;
   left: -8.264vw;
-  bottom: -22.917vw;
+  bottom: -330px;
 }
 
 .green-shine-footer-small {
@@ -277,7 +270,7 @@
   height: min(602px, 41.8vw);
   flex-shrink: 0;
   position: absolute;
-  bottom: 12vw;
+  bottom: 173px;
   left: -16.67vw;
 }
 
@@ -294,6 +287,23 @@
   height: min(602px, 41.8vw);
   flex-shrink: 0;
   position: absolute;
-  bottom: 7.7vw;
+  bottom: 111px;
   right: 19.3vw;
+}
+
+.green-shine-footer-mobile {
+  border-radius: 50%;
+  opacity: 0.12;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 144, 255, 0.28) 0%,
+    rgba(134, 160, 216, 0.31) 100%
+  );
+  filter: blur(139px);
+  width: 377px;
+  height: 377px;
+  flex-shrink: 0;
+  position: absolute;
+  bottom: 410px;
+  right: -164px;
 }

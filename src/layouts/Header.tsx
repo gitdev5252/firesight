@@ -39,7 +39,15 @@ export function Header({ scrolled }: { scrolled: boolean }) {
           </Link>
         </div>
         {/* Desktop Nav */}
-        <nav className="hidden md:flex flex-1 items-center justify-end space-x-20 font-medium !text-[18px]">
+        <nav className="md:hidden flex flex-1 items-center justify-end">
+          <Image
+            src="/images/mobile/Menu.svg"
+            alt="menu"
+            width={24}
+            height={24}
+          />
+        </nav>
+        <nav className="hidden md:flex flex-1 items-center justify-end space-x-[5.56vw] font-medium !text-[18px]">
           <div className="relative">
             <Image
               src="/images/GreenBlurPolygon.svg"
@@ -48,7 +56,7 @@ export function Header({ scrolled }: { scrolled: boolean }) {
               height={116}
               className={
                 pathname.substring(0, 6) === "/pulse"
-                  ? "inline mr-[-48px]"
+                  ? "inline mx-[-48px]"
                   : "hidden"
               }
             />
@@ -108,7 +116,8 @@ export function Header({ scrolled }: { scrolled: boolean }) {
           <Link
             href="/about-us"
             className={
-              pathname === "/about-us" ? "nav-item active" : "nav-item"
+              (pathname === "/about-us" ? "nav-item active" : "nav-item") +
+              " lg:block hidden"
             }
           >
             <Image
@@ -123,7 +132,9 @@ export function Header({ scrolled }: { scrolled: boolean }) {
           <Link
             href="/ai-impact-index"
             className={
-              pathname === "/ai-impact-index" ? "nav-item active" : "nav-item"
+              (pathname === "/ai-impact-index"
+                ? "nav-item active"
+                : "nav-item") + " lg:block hidden"
             }
           >
             <Image
@@ -137,7 +148,10 @@ export function Header({ scrolled }: { scrolled: boolean }) {
           </Link>
           <Link
             href="/blog"
-            className={pathname === "/blog" ? "nav-item active" : "nav-item"}
+            className={
+              (pathname === "/blog" ? "nav-item active" : "nav-item") +
+              " lg:block hidden"
+            }
           >
             <Image
               className="mr-4 hidden"
