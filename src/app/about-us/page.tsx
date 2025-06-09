@@ -60,7 +60,9 @@ export default function Page() {
           </div>
         </div>
       </div>
-      <FireSightFooter/>
+      <FireSightFooter>
+        <div></div> {/* Provide valid children content */}
+      </FireSightFooter>
     </>
   );
 }
