@@ -3,8 +3,13 @@
 import "./page.css";
 import { Button } from "@/components/ui/button";
 import { useEffect, useRef, useState } from "react";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import FireSightFooter from "@/layouts/FireSightFooter";
+
+const swipeConfidenceThreshold = 100;
+const swipePower = (offset: number, velocity: number) => {
+  return Math.abs(offset) * velocity;
+};
 
 export default function Page() {
   const [period, setPeriod] = useState(0);
@@ -232,8 +237,18 @@ export default function Page() {
           des: "- Scales with your business, clients, and growth stage.",
         },
       ],
-    }
+    },
   ];
+
+  const [[page, direction], setPage] = useState([0, 0]);
+
+  const paginate = (newDirection: number) => {
+    setPage(([prevPage]) => {
+      const newPage =
+        (prevPage + newDirection + pricingTiers.length) % pricingTiers.length;
+      return [newPage, newDirection];
+    });
+  };
 
   useEffect(() => {
     const updateConstraints = () => {
@@ -271,7 +286,8 @@ export default function Page() {
           Pricing
         </h4>
         <h1 className="text-center md:mb-[76px] mb-10 lg:text-[80px] md:text-[54px] text-[28px] font-extrabold uppercase text-white md:leading-[100%] leading-[120%]">
-          Start Working<br/>
+          Start Working
+          <br />
           <span className="text-[rgba(0,255,224,0.60)]">Smarter</span> Today
         </h1>
         <div className="flex items-center justify-center md:gap-[30px] gap-5 md:mb-[81px] mb-[50px]">
@@ -378,11 +394,16 @@ export default function Page() {
               </defs>
             </svg>
           </div>
-          <span className="md:text-[22px] text-[16px] text-white font-bold">Annual</span>
+          <span className="md:text-[22px] text-[16px] text-white font-bold">
+            Annual
+          </span>
         </div>
       </div>
       <div className="top-[100px] absolute bg-[url('/images/pulse-bg-5.svg')] bg-no-repeat bg-cover w-full bottom-0 opacity-70 z-[-1000] md:block hidden"></div>
-      <div ref={containerRef} className="overflow-x-hidden w-full relative">
+      <div
+        ref={containerRef}
+        className="overflow-x-hidden w-full relative sm:block hidden"
+      >
         <motion.div
           ref={contentRef}
           className="cursor-grab pb-14 w-full flex lg:gap-14 sm:gap-9 gap-4"
@@ -391,7 +412,10 @@ export default function Page() {
           dragElastic={0.1}
         >
           {pricingTiers.map((tier, index) => (
-            <div key={index} className="main-box lg:min-w-[40.9vw] sm:min-w-[60vw] min-w-[84vw]">
+            <div
+              key={index}
+              className="main-box lg:min-w-[40.9vw] sm:min-w-[60vw] min-w-[84vw]"
+            >
               <div className="my-9 mx-[50px] gap-9 flex flex-col items-center justify-start">
                 <p className="text-white text-[20px]">
                   Firesight | <b>Pulse</b>
@@ -466,6 +490,165 @@ export default function Page() {
             </div>
           ))}
         </motion.div>
+      </div>
+      <div className="w-full sm:hidden">
+        <div className="relative w-full shadow rounded overflow-hidden text-white h-[calc(2164px-180vw)]">
+          <AnimatePresence initial={false} custom={direction}>
+            <motion.div
+              key={page}
+              custom={direction}
+              drag="x"
+              dragConstraints={{ left: 0, right: 0 }}
+              onDragEnd={(e, { offset, velocity }) => {
+                const swipe = swipePower(offset.x, velocity.x);
+                if (swipe < -swipeConfidenceThreshold) paginate(1);
+                else if (swipe > swipeConfidenceThreshold) paginate(-1);
+              }}
+              variants={{
+                enter: (dir: number) => ({
+                  x: dir > 0 ? 300 : -300,
+                  opacity: 0,
+                }),
+                center: {
+                  x: 0,
+                  opacity: 1,
+                },
+                exit: (dir: number) => ({
+                  x: dir < 0 ? 300 : -300,
+                  opacity: 0,
+                }),
+              }}
+              initial="enter"
+              animate="center"
+              exit="exit"
+              transition={{ duration: 0.5 }}
+              className={
+                "absolute w-full h-full flex items-center justify-stretch"
+              }
+            >
+              <div className="main-box lg:min-w-[40.9vw] sm:min-w-[60vw] min-w-[84vw] h-full mx-4 w-auto">
+                <div className="my-9 mx-4 gap-6 flex flex-col items-center justify-start h-full">
+                  <p className="text-white text-[14px]">
+                    Firesight | <b>Pulse</b>
+                  </p>
+                  <p className="uppercase text-center text-[30px] font-bold text-[rgba(0,255,224,0.60)]">
+                    {pricingTiers[page].plan}
+                  </p>
+                  <p className="text-white font-bold text-center">
+                    {pricingTiers[page].priceDes == "Contact Us" ? (
+                      <span className="text-[40px] leading-loose">
+                        Contact Us
+                      </span>
+                    ) : (
+                      <>
+                        <span className="text-[36px] leading-none">
+                          $
+                          {period
+                            ? pricingTiers[page].price.annual
+                            : pricingTiers[page].price.monthly}
+                        </span>
+                        <br />
+                        <span className="text-[14px] font-normal leading-none">
+                          {pricingTiers[page].priceDes}
+                        </span>
+                      </>
+                    )}
+                  </p>
+                  <Button
+                    variant="outline"
+                    className="cursor-pointer gradient-border-btn text-[16px] g-transparent h-11 mt-3 rounded-full px-9 py-3 text-white hover:text-white"
+                  >
+                    {pricingTiers[page].cta && pricingTiers[page].cta.normal}{" "}
+                    <span className="font-bold">
+                      {" "}
+                      {pricingTiers[page].cta && pricingTiers[page].cta.bold}
+                    </span>
+                  </Button>
+
+                  <div className="border-y-[rgba(255,255,255,0.1)] border-y-[1px] text-white flex flex-col items-center justify-center py-6 px-[7px] gap-6">
+                    <p className="text-center text-[12px] font-bold">
+                      {pricingTiers[page].description &&
+                        pricingTiers[page].description.title}
+                    </p>
+                    <p className="text-center text-[12px]">
+                      {pricingTiers[page].description &&
+                        pricingTiers[page].description.content}
+                    </p>
+                  </div>
+
+                  <div className="flex flex-col gap-5">
+                    {pricingTiers[page].features.map((feature, index) => (
+                      <div
+                        key={index}
+                        className="flex items-center justify-between gap-4"
+                      >
+                        <div>
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="14"
+                            height="17"
+                            viewBox="0 0 14 17"
+                            fill="none"
+                          >
+                            <path
+                              d="M7 0.5L14 4.5V12.5L7 16.5L0 12.5V4.5L7 0.5Z"
+                              fill="white"
+                            />
+                          </svg>
+                        </div>
+                        <p className="text-white text-[12px]">
+                          <b>{feature.name}</b> {feature.des}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </AnimatePresence>
+        </div>
+        <div className="flex justify-center gap-2 my-8 sm:hidden">
+          {pricingTiers.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => paginate(index - page)}
+              className={`${
+                page === index
+                  ? "h-[8.66px] w-[26px]"
+                  : "w-[10px] h-[10px] opacity-50"
+              }`}
+            >
+              {page === index ? (
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="26"
+                  height="10"
+                  viewBox="0 0 26 10"
+                  fill="none"
+                >
+                  <path
+                    d="M25.5275 4.21311C25.8175 4.69611 25.8124 5.30088 25.5143 5.77894L23.7404 8.62384C23.4665 9.06317 22.9853 9.33018 22.4676 9.33018L3.44896 9.33018C2.92224 9.33018 2.43412 9.05391 2.16298 8.60234L0.463642 5.77221C0.178291 5.29698 0.178291 4.70312 0.463642 4.22788L2.16298 1.39776C2.43412 0.946186 2.92225 0.669921 3.44897 0.669921L22.551 0.669922C23.0778 0.669922 23.5659 0.946188 23.837 1.39776L25.5275 4.21311Z"
+                    fill="white"
+                  />
+                </svg>
+              ) : (
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="10"
+                  height="10"
+                  viewBox="0 0 10 10"
+                  fill="none"
+                >
+                  <path
+                    opacity="0.5"
+                    d="M9.56699 4.25C9.83494 4.7141 9.83494 5.2859 9.56699 5.75L7.93301 8.58013C7.66506 9.04423 7.16987 9.33013 6.63397 9.33013L3.36603 9.33013C2.83013 9.33013 2.33494 9.04423 2.06699 8.58013L0.433013 5.75C0.165064 5.2859 0.165064 4.7141 0.433013 4.25L2.06699 1.41987C2.33494 0.955771 2.83013 0.669872 3.36603 0.669872L6.63397 0.669873C7.16987 0.669873 7.66506 0.955771 7.93301 1.41987L9.56699 4.25Z"
+                    fill="white"
+                  />
+                </svg>
+              )}
+            </button>
+          ))}
+        </div>
       </div>
 
       <FireSightFooter>
