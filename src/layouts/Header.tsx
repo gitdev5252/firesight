@@ -133,11 +133,9 @@ export function Header({ scrolled }: { scrolled: boolean }) {
             ABOUT US
           </Link>
           <Link
-            href="/ai-impact-index"
+            href="/ai-impact"
             className={
-              (pathname === "/ai-impact-index"
-                ? "nav-item active"
-                : "nav-item") + " lg:block hidden"
+              pathname === "/ai-impact" ? "nav-item active" : "nav-item"
             }
           >
             <Image

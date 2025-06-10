@@ -5,18 +5,18 @@ import "../page.css";
 export default function Page() {
   return (
     <>
-      <div className="w-full mt-[96px] mb-[58px]">
+      <div className="w-full mt-[96px] md:mb-[58px] mb-[24px]">
         <div className="shineBg_body_top_left !top-0"></div>
         <div className="green-shine-middle-right"></div>
-        <div className="bg-[rgba(255,255,255,0.02)] rounded-[20px] border border-[rgba(255,255,255,0.1)] backdrop-blur-[32px] pt-[82px] pl-[81px] pb-[100px] pr-[117px] md:mx-[56px]">
-          <h3 className="text-[#E93249] text-[32px] font-extrabold uppercase leading-[120%]">
-            about us
+        <div className="bg-[rgba(255,255,255,0.02)] rounded-[20px] border border-[rgba(255,255,255,0.1)] backdrop-blur-[32px] md:pt-[82px] pt-[32px] md:pl-[81px] pl-[16px] md:pb-[100px] pb-[42px] md:pr-[117px] pr-[16px] md:mx-[56px]">
+          <h3 className="text-[#E93249] md:text-[32px] text-[18px] font-extrabold md:uppercase leading-[120%]">
+            About us
           </h3>
-          <div className="pl-[40px] pt-[82px] text-center">
-            <h3 className="text-white text-[42px] font-extrabold uppercase leading-[80%]">
+          <div className="md:pl-[40px] pl-0 md:pt-[82px] pt-[42px] text-center">
+            <h3 className="text-white md:text-[42px] text-[28px] font-extrabold uppercase leading-[80%]">
               about us
             </h3>
-            <p className="text-white text-start mt-[47px] text-[17.6px]">
+            <p className="text-white text-start md:mt-[47px] mt-[42px] md:text-[17.6px] text-[12px]">
               Founded in February 2023, Firesight is a
               <span className="font-extrabold">horizon-driven AI project</span>{" "}
               exploring the productisation of natural language AI and advanced
@@ -26,7 +26,7 @@ export default function Page() {
               complex information landscape, streamline cognitive workflows, and
               help knowledge workers thrive amidst rapid technological change.
             </p>
-            <p className="text-white text-start mt-[20px] text-[17.6px]">
+            <p className="text-white text-start mt-[20px] md:text-[17.6px] text-[12px]">
               <span className="font-extrabold">
                 AI-native conferencing technology
               </span>
@@ -45,7 +45,7 @@ export default function Page() {
               that meet the evolving needs of modern professionals; irrespective
               of whether they reach it to the market.{" "}
             </p>
-            <p className="text-white text-start mt-[20px] text-[17.6px]">
+            <p className="text-white text-start mt-[20px] md:text-[17.6px] text-[12px]">
               At Firesight, we remain dedicated to carefully aligning
               technological exploration with meaningful real-world applications.
               As we design, prototype, iterate, and refine, our ultimate vision
