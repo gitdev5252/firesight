@@ -151,7 +151,7 @@
   height: 500px;
   z-index: -1;
   background-image: url("/images/red-shine-top-left.svg");
-  background-size: contain;
+  background-size: cover;
   background-repeat: no-repeat;
 }
 
