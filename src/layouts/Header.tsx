@@ -166,7 +166,7 @@ export function Header({ scrolled }: { scrolled: boolean }) {
         </nav>
         {/* Hamburger Icon for Mobile */}
         <button
-          className="md:hidden ml-auto w-6 h-6"
+          className="md:hidden block ml-auto w-6 h-6"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           aria-label="Open menu"
         >
