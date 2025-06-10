@@ -16,7 +16,6 @@ export default function FireSightFooter({
         {children}
         <div
           className="footer-box md:!pt-[93px] !pt-[40px] md:!pb-[24px] !pb-[49px] relative overflow-hidden"
-          style={{ borderTopRightRadius: "48px" }}
         >
           {/* Top Section */}
           <div className="relative flex flex-col md:flex-row md:justify-between pb-8 border-b border-[#23263A] text-white text-[14px] md:!pr-[67px] md:!pl-[56px] !px-[24px]">
@@ -319,10 +318,9 @@ export default function FireSightFooter({
         {children}
         <div
           className="footer-box !pb-[49px] relative overflow-hidden"
-          style={{ borderTopRightRadius: "48px" }}
         >
-          {/* Top Section */}
           <div className="relative flex flex-col text-white text-[12px] !px-6 items-center">
+            {/* Top Section */}
             <Link href="/">
               <Image
                 src="/images/footer-logo.svg"

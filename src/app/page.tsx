@@ -168,8 +168,10 @@ export default function Home() {
         />
       </Link>
       <section className="relative w-full flex flex-col items-center justify-center z-50 md:pb-32 pb-[34px]">
-        <div className="bg-[url('/images/hero.png')] w-full h-[662px] bg-cover absolute top-[-390px] z-[-10000] opacity-10"></div>
-        {/* Blur Panel */}
+        <div className="bg-[url('/images/hero.png')] w-full h-[662px] bg-cover absolute top-[-390px] z-[-10000] opacity-10 md:block hidden"></div>
+        <div className="overflow-hidden w-[200vw] h-[500px] absolute top-[-250px] z-[-10000]">
+          <div className="bg-[url('/images/hero.png')] bg-[length:100%_120%] w-[200vw] h-[602px] bg-no-repeat opacity-10 md:hidden block"></div>
+        </div>
 
         {/* Headings */}
         <h1
@@ -209,7 +211,7 @@ export default function Home() {
 
       {/* Pulse section */}
       <section className="relative mt-auto flex flex-col items-center justify-center w-full md:px-14 px-4">
-        <div className="md:hidden block w-full top-[calc(-4vw+73px)] h-[64vw] left-0 bg-[url('/images/pulse-bg-top.svg')] absolute z-[-10000] bg-no-repeat bg-cover opacity-40"></div>
+        <div className="md:hidden block top-[calc(-4vw+73px)]  rotate-6 bg-cover w-[170vw] left-[-18vw] h-[150vw]  bg-[url('/images/pulse-bg-top.svg')] absolute z-[-10000] bg-no-repeat opacity-40"></div>
         <div className="md:block hidden w-full top-[calc(-4vw+38px)] h-[63.2vw] left-0 bg-[url('/images/colorpattern.svg')] absolute z-[-10000] bg-no-repeat bg-cover"></div>
         <div className="flex md:gap-11 gap-3 text-white items-center justify-around md:h-16 h-[30px] md:mt-28 mt-20 md:mb-40 mb-0">
           <Link href="/">

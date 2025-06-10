@@ -744,7 +744,7 @@ export default function Overview() {
             </button>
           ))}
         </div>
-        <div className="relative w-full shadow h-160 rounded overflow-hidden sm:hidden block text-white pt-8">
+        <div className="relative w-full shadow h-[calc(860px-60vw)] rounded overflow-hidden sm:hidden block text-white pt-8">
           <AnimatePresence initial={false} custom={direction1}>
             <motion.div
               key={page1}

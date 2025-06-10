@@ -194,6 +194,45 @@ export default function Page() {
         },
       ],
     },
+    {
+      plan: "WHite Label",
+      price: {
+        monthly: 99,
+        annual: 999,
+      },
+      priceDes: "Contact Us",
+      cta: {
+        normal: "",
+        bold: "Enquire Now",
+      },
+      description: {
+        title: "Platforms, Media Groups & Intelligence Providers",
+        content:
+          "Deploy Firesight Pulse under your brand with full white-label control. Offer customers any combination of our connected intelligence product suite embedded in your platform. Powered by our engine, packaged as yours.",
+      },
+      features: [
+        {
+          name: "Custom Branding",
+          des: "- Full UI/UX white-label implementation with your identity.",
+        },
+        {
+          name: "Feature Licensing",
+          des: "- Modular access to Pulse intelligence across any or all Modes.",
+        },
+        {
+          name: "Enterprise Intelligence API",
+          des: "- Plug Pulse data into your existing SaaS stack.",
+        },
+        {
+          name: "Tailored Support & Integration",
+          des: "- We work with you to align features, onboarding, and integrations to your needs.",
+        },
+        {
+          name: "Flexible Licensing",
+          des: "- Scales with your business, clients, and growth stage.",
+        },
+      ],
+    }
   ];
 
   useEffect(() => {
@@ -223,20 +262,20 @@ export default function Page() {
   return (
     <>
       <div className="w-full relative">
-        <div className="blue-shine-pulse-overview w-[41.8vw] h-[41.8vw] top-[-6.25vw] right-[-9.722vw] z-[-2000]"></div>
-        <div className="blue-shine-pulse-overview w-[46.6vw] h-[46.6vw] top-[57vw] left-[-1.875vw] z-[-2000]"></div>
-        <div className="blue-shine-pulse-overview w-[47.36vw] h-[47.36vw] bottom-[635px] right-[-20.97vw] z-[-2000]"></div>
+        <div className="blue-shine-pulse-overview w-[41.8vw] h-[41.8vw] top-[-6.25vw] right-[-9.722vw] z-[-2000] md:block hidden"></div>
+        <div className="blue-shine-pulse-overview w-[46.6vw] h-[46.6vw] top-[57vw] left-[-1.875vw] z-[-2000] md:block hidden"></div>
+        <div className="blue-shine-pulse-overview w-[47.36vw] h-[47.36vw] bottom-[635px] right-[-20.97vw] z-[-2000] md:block hidden"></div>
       </div>
       <div className="flex flex-wrap flex-col justify-center items-center w-ful">
-        <h4 className="uppercase mt-[107px] mb-[47px] text-center sub-header-title">
+        <h4 className="uppercase md:mt-[107px] mt-20 md:mb-[47px] mb-3 text-center sub-header-title md:text-[24px] text-[16px]">
           Pricing
         </h4>
-        <h1 className="text-center mb-[76px] text-[80px] font-extrabold uppercase text-white leading-[100%] max-w-[648px]">
-          Start Working{" "}
+        <h1 className="text-center md:mb-[76px] mb-10 lg:text-[80px] md:text-[54px] text-[28px] font-extrabold uppercase text-white md:leading-[100%] leading-[120%]">
+          Start Working<br/>
           <span className="text-[rgba(0,255,224,0.60)]">Smarter</span> Today
         </h1>
-        <div className="flex items-center justify-center gap-[30px] mb-[81px]">
-          <span className="text-[22px] text-white">Monthly</span>
+        <div className="flex items-center justify-center md:gap-[30px] gap-5 md:mb-[81px] mb-[50px]">
+          <span className="md:text-[22px] text-[16px] text-white">Monthly</span>
           <div
             className="w-[51px] h-[31px]"
             onClick={() => setPeriod((period + 1) % 2)}
@@ -339,20 +378,20 @@ export default function Page() {
               </defs>
             </svg>
           </div>
-          <span className="text-[22px] text-white font-bold">Annual</span>
+          <span className="md:text-[22px] text-[16px] text-white font-bold">Annual</span>
         </div>
       </div>
-      <div className="top-[100px] absolute bg-[url('/images/pulse-bg-5.svg')] bg-no-repeat bg-cover w-full bottom-0 opacity-70 z-[-1000]"></div>
+      <div className="top-[100px] absolute bg-[url('/images/pulse-bg-5.svg')] bg-no-repeat bg-cover w-full bottom-0 opacity-70 z-[-1000] md:block hidden"></div>
       <div ref={containerRef} className="overflow-x-hidden w-full relative">
         <motion.div
           ref={contentRef}
-          className="cursor-grab pb-14 w-full flex gap-14"
+          className="cursor-grab pb-14 w-full flex lg:gap-14 sm:gap-9 gap-4"
           drag="x"
           dragConstraints={constraints}
           dragElastic={0.1}
         >
           {pricingTiers.map((tier, index) => (
-            <div key={index} className="main-box min-w-[40.9vw]">
+            <div key={index} className="main-box lg:min-w-[40.9vw] sm:min-w-[60vw] min-w-[84vw]">
               <div className="my-9 mx-[50px] gap-9 flex flex-col items-center justify-start">
                 <p className="text-white text-[20px]">
                   Firesight | <b>Pulse</b>
@@ -430,8 +469,8 @@ export default function Page() {
       </div>
 
       <FireSightFooter>
-        <div className="blue-shine-pulse-overview bottom-[-10vw] right-[-20.97vw] min-w-[min(602px,41.8vw)] min-h-[min(602px,41.8vw)]"></div>
-        <div className="blue-shine-pulse-overview bottom-[-17.639vw] left-[-16.666vw] min-w-[min(602px,41.8vw)] min-h-[min(602px,41.8vw)]"></div>
+        <div className="blue-shine-pulse-overview bottom-[-10vw] right-[-20.97vw] min-w-[min(602px,41.8vw)] min-h-[min(602px,41.8vw)] md:block hidden"></div>
+        <div className="blue-shine-pulse-overview bottom-[-17.639vw] left-[-16.666vw] min-w-[min(602px,41.8vw)] min-h-[min(602px,41.8vw)] md:block hidden"></div>
       </FireSightFooter>
     </>
   );

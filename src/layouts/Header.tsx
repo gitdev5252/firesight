@@ -3,7 +3,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import "./header.css";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -16,6 +16,9 @@ export function Header({ scrolled }: { scrolled: boolean }) {
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
+  useEffect(() => {
+    setMobileMenuOpen(false);
+  }, [pathname]);
   return (
     <header
       className="top-0 pt-4 w-full h-[100px] text-white z-[1001] fixed"
@@ -39,14 +42,14 @@ export function Header({ scrolled }: { scrolled: boolean }) {
           </Link>
         </div>
         {/* Desktop Nav */}
-        <nav className="md:hidden flex flex-1 items-center justify-end">
+        {/* <nav className="md:hidden flex flex-1 items-center justify-end">
           <Image
             src="/images/mobile/Menu.svg"
             alt="menu"
             width={24}
             height={24}
           />
-        </nav>
+        </nav> */}
         <nav className="hidden md:flex flex-1 items-center justify-end space-x-[5.56vw] font-medium !text-[18px]">
           <div className="relative">
             <Image
@@ -163,63 +166,222 @@ export function Header({ scrolled }: { scrolled: boolean }) {
         </nav>
         {/* Hamburger Icon for Mobile */}
         <button
-          className="md:hidden ml-auto"
+          className="md:hidden ml-auto w-6 h-6"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           aria-label="Open menu"
         >
           <Image
-            className="mr-4 hidden"
-            src="/images/icons/hamburger.svg"
+            src="/images/mobile/Menu.svg"
             alt="Menu"
             width={24}
-            height={16}
+            height={24}
           />
         </button>
       </div>
       {/* Mobile Menu */}
       {mobileMenuOpen && (
-        <div className="md:hidden absolute top-16 left-0 w-full bg-[#080B16] z-[1100] border-t border-[#23263A]">
-          <nav className="flex flex-col items-start px-6 py-4 space-y-4">
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button
-                  variant="ghost"
-                  className="px-2 text-white !text-[18px] w-full justify-start"
-                >
-                  PRODUCTS
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className="bg-[#101522] border-none shadow-lg min-w-[220px]">
-                <DropdownMenuItem
-                  asChild
-                  className="text-white cursor-pointer !text-[18px]"
-                >
-                  <Link href="/sessions">FIRESIGHT | SESSIONS</Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem
-                  asChild
-                  className="text-white cursor-pointer !text-[18px]"
-                >
-                  <Link href="/platform">FIRESIGHT | PLATFORM</Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem
-                  asChild
-                  className="text-white cursor-pointer !text-[18px]"
-                >
-                  <Link href="/pulse">FIRESIGHT | PULSE</Link>
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-            <Link href="/about-us" className="text-[#86878D] w-full">
-              ABOUT US
-            </Link>
-            <Link href="/ai-impact-index" className="text-[#86878D] w-full">
-              AI IMPACT INDEX
-            </Link>
-            <Link href="/blog" className="text-[#86878D] w-full">
-              BLOG
-            </Link>
-          </nav>
+        <div className="footer-box !p-6 pb-3 relative overflow-hidden">
+          <div className="flex w-full justify-end">
+            <Button
+              onClick={() => setMobileMenuOpen(false)}
+              variant="ghost"
+              className="p-0"
+            >
+              <Image
+                src="/images/mobile/menu-close.svg"
+                alt="Close"
+                width={24}
+                height={24}
+              />
+            </Button>
+          </div>
+          <div className="relative flex flex-col text-white text-[12px] items-center">
+            {/* Pulse */}
+            <div className="flex w-full justify-between pt-[35px] pb-[41px] gap-0 font-bold">
+              {/* Firesight | PULSE */}
+              <div className="flex flex-col flex-1 items-center gap-y-3">
+                <div>
+                  Firesight |
+                  <span
+                    className="ml-2"
+                    style={{
+                      background:
+                        "linear-gradient(180deg, rgba(0,255,224,0.55) 0%, rgba(188,239,255,0.62) 100%)",
+                      WebkitBackgroundClip: "text",
+                      WebkitTextFillColor: "transparent",
+                    }}
+                  >
+                    PULSE
+                  </span>
+                </div>
+                <div>
+                  <Link href="/pulse/overview" className="hover:underline">
+                    Overview
+                  </Link>
+                </div>
+                <div>
+                  <Link href="/pulse/platform" className="hover:underline">
+                    Platform
+                  </Link>
+                </div>
+                <div>
+                  <Link href="/pulse/pricing" className="hover:underline">
+                    Pricing
+                  </Link>
+                </div>
+                {/* <li>
+                    <Link
+                      href="/pulse/network-brands"
+                      className="hover:underline"
+                    >
+                      Network Partners
+                    </Link>
+                  </li> */}
+              </div>
+              <div className="vertical-divider !h-[105px]"></div>
+              {/* Main Nav */}
+              <div className="flex flex-col flex-1 items-center gap-y-3">
+                <div>
+                  <Link href="/" className="hover:underline">
+                    Home
+                  </Link>
+                </div>
+                <div>
+                  <Link href="/about-us" className="hover:underline">
+                    About Us
+                  </Link>
+                </div>
+                <div>
+                  <Link
+                    href="https://blog.firesight.ai/"
+                    className="hover:underline"
+                  >
+                    Blog
+                  </Link>
+                </div>
+                <div>
+                  <Link
+                    href="https://impact.firesight.ai/"
+                    className="hover:underline"
+                  >
+                    AI Impact Index
+                  </Link>
+                </div>
+              </div>
+            </div>
+
+            <div className="w-full h-[1px] bg-[#ffffff19]"></div>
+
+            {/* Platform | Sessions */}
+            <div className="flex w-full justify-between py-10 gap-0 font-bold">
+              <div className="flex flex-col flex-1 items-center gap-y-3">
+                <div>
+                  Firesight |
+                  <span
+                    className="ml-2"
+                    style={{
+                      color: "#E93249",
+                    }}
+                  >
+                    PLATFORM
+                  </span>
+                </div>
+                <Link href="/platform/about" className="hover:underline">
+                  About
+                </Link>
+              </div>
+              <div className="vertical-divider !h-[48px]"></div>
+              <div className="flex flex-col flex-1 items-center gap-y-3">
+                <div>
+                  Firesight |
+                  <span
+                    className="ml-2"
+                    style={{
+                      background:
+                        "linear-gradient(180deg, rgba(20, 255, 0, 0.55) 0%, rgba(0, 240, 255, 0.62) 100%)",
+                      WebkitBackgroundClip: "text",
+                      WebkitTextFillColor: "transparent",
+                    }}
+                  >
+                    SESSIONS
+                  </span>
+                </div>
+                <Link href="/sessions/about" className="hover:underline">
+                  About
+                </Link>
+              </div>
+            </div>
+
+            <div className="w-full h-[1px] bg-[#ffffff19]"></div>
+
+            {/* Contact & Social */}
+            <div className="py-5">
+              <Link
+                href="mailto:hello@firesight.ai"
+                className="font-normal text-white"
+              >
+                hello@firesight.ai
+              </Link>
+            </div>
+
+            <div className="w-full h-[1px] bg-[#ffffff19]"></div>
+
+            {/* Social Icons */}
+            <div className="flex gap-[5px] py-6">
+              {/* Replace with your actual social icons */}
+              <Link
+                href="https://www.linkedin.com/company/firesightai/about/?viewAsMember=true"
+                aria-label="LinkedIn"
+              >
+                <Image
+                  src="/images/icons/linkedin.svg"
+                  alt="LinkedIn"
+                  width={30}
+                  height={30}
+                />
+              </Link>
+              <Link href="/" aria-label="cb">
+                <Image
+                  src="/images/icons/cb.svg"
+                  alt="cb"
+                  width={30}
+                  height={30}
+                />
+              </Link>
+              <Link
+                href="https://twitter.com/FiresightAi/"
+                aria-label="Twitter"
+              >
+                <Image
+                  src="/images/icons/x.svg"
+                  alt="X"
+                  width={30}
+                  height={30}
+                />
+              </Link>
+              <Link href="https://www.discord.com/" aria-label="Discord">
+                <Image
+                  src="/images/icons/discord.svg"
+                  alt="Game"
+                  width={30}
+                  height={30}
+                />
+              </Link>
+            </div>
+
+            <div className="w-full h-[1px] bg-[#ffffff19]"></div>
+
+            <div className="flex items-center w-[239px] h-[39px] my-8">
+              <Link href="/">
+                <Image
+                  src="/images/mobile/menu-work-less.svg"
+                  alt="D'VINCI"
+                  width={239}
+                  height={39}
+                />
+              </Link>
+            </div>
+          </div>
         </div>
       )}
     </header>

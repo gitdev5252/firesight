@@ -9,6 +9,7 @@ export default function Page() {
   return (
     <>
       <div className="w-full relative">
+
         <div className="blue-shine-pulse-overview w-[41.8vw] h-[41.8vw] top-[-6.46vw] right-[-9.514vw] z-[-2000]"></div>
         <div className="bg-[url('/images/color-pattern-network-brands.svg')] bg-cover w-full h-[1970px] top-[0px] absolute z-[-10000] opacity-70 md:block hidden"></div>
       </div>
@@ -35,6 +36,7 @@ export default function Page() {
         </h3>
         <Button
           variant="outline"
+
           className="cursor-pointer gradient-border-btn text-[16px] md:mt-[35px] mt-[24px] bg-transparent rounded-full md:px-[50px] px-[36px] md:py-[20px] py-[12px] text-white hover:text-white"
         >
           Contact Us
