@@ -21,7 +21,7 @@ export function Header({ scrolled }: { scrolled: boolean }) {
   }, [pathname]);
   return (
     <header
-      className="top-0 pt-4 w-full h-[100px] text-white z-[1001] fixed"
+      className="top-0 pt-4 w-[100vw] h-[100px] text-white z-[1001] fixed"
       style={{
         background: scrolled
           ? "linear-gradient(180deg, #080B16 0%, rgba(8, 11, 22, 0.95) 35.39%, rgba(8, 11, 22, 0.85) 60.89%, rgba(8, 11, 22, 0.30) 82.39%, rgba(8, 11, 22, 0.00) 100%)"

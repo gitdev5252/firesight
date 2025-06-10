@@ -5,9 +5,11 @@ import "../page.css";
 export default function Page() {
   return (
     <>
-      <div className="w-full mt-[96px] md:mb-[58px] mb-[24px]">
-        <div className="shineBg_body_top_left !top-0"></div>
-        <div className="green-shine-middle-right"></div>
+      <div className="w-full mt-[96px] md:mb-[58px] mb-[24px] overflow-x-hidden">
+        <div className="shineBg_body_top_left !top-0 md:block hidden"></div>
+        <div className="shineBg_body_top_left !w-[400px] !h-[400px] !top-[-14px] !left-[-48px] md:hidden"></div>
+        <div className="green-shine-middle-right md:block hidden"></div>
+        <div className="green-shine-middle-right !w-[500px] !h-[500px] !right-[-50px] md:hidden"></div>
         <div className="bg-[rgba(255,255,255,0.02)] rounded-[20px] border border-[rgba(255,255,255,0.1)] backdrop-blur-[32px] md:pt-[82px] pt-[32px] md:pl-[81px] pl-[16px] md:pb-[100px] pb-[42px] md:pr-[117px] pr-[16px] md:mx-[56px]">
           <h3 className="text-[#E93249] md:text-[32px] text-[18px] font-extrabold md:uppercase leading-[120%]">
             About us

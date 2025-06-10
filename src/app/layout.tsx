@@ -39,7 +39,7 @@ export default function RootLayout({
         <main
           className={clsx(
             hideHeader ? "overflow-y-hidden" : "overflow-x-hidden ",
-            "flex flex-col w-full justify-center items-center"
+            "flex flex-col w-full justify-center items-center relative"
           )}
         >
           {children}
