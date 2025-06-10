@@ -14,7 +14,7 @@ export default function Intelligence() {
       >
         <div className="blue-shine-pulse-overview bottom-[-212px] left-[-140px]"></div>
         <div className="blue-shine-pulse-overview-mobile top-[100px] left-[-105px] md:hidden block"></div>
-        <div className="bottom-[-270px] absolute bg-[url('/images/pulse-bg-2.svg')] bg-no-repeat bg-cover w-full h-[40.2778vw] opacity-50"></div>
+        <div className="bottom-[-270px] absolute bg-[url('/images/pulse-bg-2.svg')] bg-no-repeat bg-cover w-full h-[40.2778vw] opacity-50 md:block hidden"></div>
 
         <div className="flex md:gap-11 gap-3 text-white items-center justify-around md:h-16 h-[30px] md:mt-28 mt-20 md:mb-[77px] mb-0">
           <Link href="/">
@@ -103,10 +103,12 @@ export default function Intelligence() {
       {/* Feature section */}
       <section
         id="feature"
-        className="relative flex flex-col justify-center w-full md:px-14 px-4 md:pt-[140px] pt-[81px] gap-11"
+        className="relative flex flex-col justify-center w-full md:pt-[140px] pt-[81px] gap-11"
       >
+        <div className="top-[30px] absolute bg-[url('/images/mobile/pulse-bg-1-mobile.svg')] bg-no-repeat bg-cover w-full h-[100vw] opacity-50 md:hidden block"></div>
+
         <div className="blue-shine-pulse-overview md:block hidden bottom-[-140px] right-[-175px]"></div>
-        <div className="flex justify-between items-center gap-[10vw] w-full md:flex-row flex-col">
+        <div className="flex justify-between items-center gap-[10vw] md:flex-row flex-col md:mx-14 mx-4">
           <div className="flex flex-col gap-6 md:items-start items-center">
             <p className="sub-header-title md:text-[24px] text-[16px]">
               INTELLIGENCE

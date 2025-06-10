@@ -9,19 +9,19 @@ export default function Page() {
   return (
     <>
       <div className="w-full relative">
-        <div className="blue-shine-pulse-overview w-[41.8vw] h-[41.8vw] top-[-6.46vw] right-[-9.514vw] z-[-2000]"></div>
+        <div className="blue-shine-pulse-overview w-[41.8vw] h-[41.8vw] top-[-6.46vw] right-[-9.514vw] z-[-2000] md:block hidden"></div>
         <div className="bg-[url('/images/color-pattern-network-brands.svg')] bg-cover w-full h-[1970px] top-[0px] absolute z-[-10000] opacity-70"></div>
       </div>
       <div className="flex flex-col items-center w-full">
-        <h4 className="uppercase mt-[107px] mb-[47px] text-center font-extrabold text-[24px] leading-[150%] text-[rgba(0,255,224,0.6)]">
+        <h4 className="uppercase md:mt-[107px] mt-20 md:mb-[47px] mb-3 text-center sub-header-title md:text-[24px] text-[16px]">
           network brands
         </h4>
-        <h1 className="text-center mb-[81px] text-[80px] font-extrabold uppercase text-white leading-[100%] max-w-[1034px]">
+        <h1 className="text-center md:mb-[81px] mb-10 lg:text-[80px] md:text-[54px] text-[28px] font-extrabold uppercase text-white leading-[100%] max-w-[1034px]">
           Connected Intelligence Deployed at Scale
         </h1>
       </div>
-      <div className="mx-14 backdrop-blur-[34.5px] bg-[rgba(255,255,255,0.02)] border-[rgba(255,255,255,0.1)] border text-white text-center lg:px-[140px] lg:pt-[105px] lg:pb-[85.67px] p-[40px] mb-[30px] rounded-[20px] lg:text-[35px] text-[25px] relative">
-        <div className="blue-shine-pulse-overview top-[13.056vw] left-[-6.25vw] min-w-[min(602px,41.8vw)] min-h-[min(602px,41.8vw)]"></div>
+      <div className="md:mx-14 mx-4 backdrop-blur-[34.5px] bg-[rgba(255,255,255,0.02)] border-[rgba(255,255,255,0.1)] border text-white text-center lg:px-[140px] lg:pt-[105px] lg:pb-[85.67px] md:p-[40px] px-4 py-9 mb-[30px] rounded-[20px] lg:text-[35px] md:text-[25px] text-[20px] relative">
+        <div className="blue-shine-pulse-overview top-[13.056vw] left-[-6.25vw] min-w-[min(602px,41.8vw)] min-h-[min(602px,41.8vw)] md:block hidden"></div>
         <h3>
           <span className="font-bold">Firesight | Pulse</span> powers a growing
           network of intelligence-driven platforms. From craft beverage to
@@ -35,7 +35,7 @@ export default function Page() {
         </h3>
         <Button
           variant="outline"
-          className="cursor-pointer gradient-border-btn text-[16px] mt-[35px] bg-transparent rounded-full px-[50px] py-[20px] text-white hover:text-white"
+          className="cursor-pointer gradient-border-btn text-[16px] md:mt-9 mt-6 bg-transparent rounded-full px-[50px] py-[20px] text-white hover:text-white"
         >
           Contact Us
         </Button>

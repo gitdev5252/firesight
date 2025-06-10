@@ -9,9 +9,15 @@ export default function PulseLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const pathname = usePathname();
   return (
     <div className="w-full relative overflow-x-hidden">
-      <div className="bg-[url('/images/pulse-bg-top.svg')] bg-cover w-full h-[64vw] absolute z-[-10000] opacity-40 md:top-0 top-54"></div>
+      <div className="bg-[url('/images/pulse-bg-top.svg')] bg-cover w-full h-[64vw] absolute z-[-10000] opacity-40 top-0 md:block hidden"></div>
+      {pathname == "/pulse/pricing" || pathname == "/pulse/network-brands" ? (
+        <div className="bg-[url('/images/pulse-bg-top.svg')] bg-cover w-[235vw] left-[-65vw] h-[200vw] absolute z-[-10000] opacity-40 top-54 md:hidden block"></div>
+      ) : (
+        <div className="bg-[url('/images/pulse-bg-top.svg')] rotate-6 bg-cover w-[170vw] left-[-18vw] h-[150vw] absolute z-[-10000] opacity-40 top-54 md:hidden block"></div>
+      )}
       <TabBar />
       {children}
     </div>
@@ -78,7 +84,7 @@ function TabBar() {
   return (
     <div
       ref={containerRef}
-      className="h-16 border-b-[1px] border-b-[#ffffff33] flex md:justify-evenly justify-between md:mt-[150px] mt-[100px] md:mx-14 md:px-[3.5vw] w-full overflow-x-hidden relative box-border"
+      className="h-16 border-b-[1px] border-b-[#ffffff33] flex md:justify-evenly justify-between md:mt-[150px] mt-[100px] md:mx-14 md:px-[3.5vw] w-auto overflow-x-hidden relative box-border"
     >
       <motion.div
         ref={contentRef}
