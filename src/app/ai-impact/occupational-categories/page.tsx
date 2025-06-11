@@ -9,12 +9,12 @@ import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 export default function Page() {
   const mainCardInfo = [
-    "Agriculture Forestry & Fishing",
-    "Engineering & Architecture",
-    "Art, Culture & Design",
-    "Aviation & Aerospace",
-    "Business Management & Administration",
-    "Construction, Mining & Trades",
+    "Carpenter",
+    "Carpenter",
+    "Carpenter",
+    "Copywriter",
+    "Mechanic",
+    "Carpenter",
   ];
   const [modalOpen, setModalOpen] = useState(false);
   const pathname = usePathname();
@@ -49,41 +49,47 @@ export default function Page() {
         </div>
         <div className="main-box lg:mt-[55px] md:mt-8 mt-4 lg:mb-[42px] mb-6 w-full lg:p-10 lg:pr-11 px-4 py-[30px]">
           {modalOpen && (
-          <div className="main-modal-box text-white !absolute lg:top-29 lg:left-9 lg:right-19 lg:py-10 lg:px-15 top-18 md:left-8 md:right-8 md:px-6 md:py-8 left-0 right-0 pt-7 pl-7 pr-8 pb-5 z-500">
-            <div className="flex justify-between items-center">
-              <p className="lg:text-2xl text-[16px]">Professional Development Hub</p>
-              <Button
-                onClick={() => setModalOpen(false)}
-                variant="ghost"
-                className="p-0"
-              >
-                <Image
-                  src="/images/mobile/menu-close.svg"
-                  alt="Close"
-                  width={24}
-                  height={24}
-                />
-              </Button>
+            <div className="main-modal-box text-white !absolute lg:top-29 lg:left-9 lg:right-19 lg:py-10 lg:px-15 top-18 md:left-8 md:right-8 md:px-6 md:py-8 left-0 right-0 pt-7 pl-7 pr-8 pb-5 z-500">
+              <div className="flex justify-between items-center">
+                <p className="lg:text-2xl text-[16px]">
+                  Professional Development Hub
+                </p>
+                <Button
+                  onClick={() => setModalOpen(false)}
+                  variant="ghost"
+                  className="p-0"
+                >
+                  <Image
+                    src="/images/mobile/menu-close.svg"
+                    alt="Close"
+                    width={24}
+                    height={24}
+                  />
+                </Button>
+              </div>
+              <div className="px-1">
+                <p className="lg:text-[18px] text-sm">
+                  What Purpose Does it Serve?
+                </p>
+                <p className="lg:text-[18px] text-xs">
+                  The Professional Development Hub stands as a cornerstone of
+                  the Firesight Platform. Your gateway to mastering the future
+                  of work. Our platform is designed to empower solopreneurs with
+                  the tools and knowledge needed to thrive in an ever-growing
+                  AI-driven job market. Dedicated to facilitating personalised
+                  and occupation-specific learning experiences, empowered by our
+                  cutting edge AI technology. By focusing on the tools and
+                  skills critical for today’s dynamic job landscape, the
+                  Professional Development Hub is your partner in adapting to
+                  and excelling in the era of AI-driven employment.
+                </p>
+              </div>
             </div>
-            <div className="px-1">
-              
-              <p className="lg:text-[18px] text-sm">What Purpose Does it Serve?</p>
-              <p className="lg:text-[18px] text-xs">
-                The Professional Development Hub stands as a cornerstone of the
-                Firesight Platform. Your gateway to mastering the future of
-                work. Our platform is designed to empower solopreneurs with the
-                tools and knowledge needed to thrive in an ever-growing
-                AI-driven job market. Dedicated to facilitating personalised and
-                occupation-specific learning experiences, empowered by our
-                cutting edge AI technology. By focusing on the tools and skills
-                critical for today’s dynamic job landscape, the Professional
-                Development Hub is your partner in adapting to and excelling in
-                the era of AI-driven employment.
-              </p>
-            </div>
-          </div>
           )}
-          <div className="w-full flex justify-start items-center gap-4 text-white" onClick={() => setModalOpen(!modalOpen)}>
+          <div
+            className="w-full flex justify-start items-center gap-4 text-white"
+            onClick={() => setModalOpen(!modalOpen)}
+          >
             <Image
               src="/images/icons/pro-hub.svg"
               alt="professional hub"
@@ -113,10 +119,21 @@ export default function Page() {
             placeholder="Search Occupations"
           ></input>
 
-          <div className="w-full lg:my-29 md:mt-9 mt-11 md:mb-13 mb-7">
+          {/* Back to AI Impact Home*/}
+          <div className="flex w-full justify-start items-center gap-2 h-6 lg:mt-15 lg:mb-12 md:mt-11 md:mb-9 mt-8 mb-10">
+            <Image
+              src="/images/icons/back-btn.svg"
+              alt="back-btn"
+              width={24}
+              height={24}
+            />
+            <p className="text-[16px] text-white">Back to AI Impact Index Homepage</p>
+          </div>
+
+          <div className="w-full my-0">
             <TabBar type={1} />
           </div>
-          {/* <p className="lg:text-[20px] mt-[50px] font-bold text-[#E93249] leading-[120%]">Engineering & Agriculture</p> */}
+          <p className="lg:text-[20px]  lg:mt-15 lg:mb-14 md:mt-12 md:mb-8 mt-15 mb-7 font-bold text-[#E93249] leading-[120%]">Engineering & Agriculture</p>
 
           {/* Main Panel */}
           <div className="flex flex-col sm:flex-row flex-wrap justify-between lg:gap-y-9 gap-y-4 text-white font-bold lg:text-2xl text-[16px] leading-normal">
