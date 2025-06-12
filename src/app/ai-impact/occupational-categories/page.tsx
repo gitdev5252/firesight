@@ -9,12 +9,12 @@ import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 export default function Page() {
   const mainCardInfo = [
-    "Carpenter",
-    "Carpenter",
-    "Carpenter",
-    "Copywriter",
-    "Mechanic",
-    "Carpenter",
+    { name: "Carpenter", number: 2890 },
+    { name: "Carpenter", number: 2890 },
+    { name: "Carpenter", number: 2890 },
+    { name: "Copywriter", number: 965 },
+    { name: "Mechanic", number: 1890 },
+    { name: "Carpenter", number: 3265 },
   ];
   const [modalOpen, setModalOpen] = useState(false);
   const pathname = usePathname();
@@ -127,13 +127,17 @@ export default function Page() {
               width={24}
               height={24}
             />
-            <p className="text-[16px] text-white">Back to AI Impact Index Homepage</p>
+            <p className="text-[16px] text-white">
+              Back to AI Impact Index Homepage
+            </p>
           </div>
 
           <div className="w-full my-0">
             <TabBar type={1} />
           </div>
-          <p className="lg:text-[20px]  lg:mt-15 lg:mb-14 md:mt-12 md:mb-8 mt-15 mb-7 font-bold text-[#E93249] leading-[120%]">Engineering & Agriculture</p>
+          <p className="lg:text-[20px]  lg:mt-15 lg:mb-14 md:mt-12 md:mb-8 mt-15 mb-7 font-bold text-[#E93249] leading-[120%]">
+            Engineering & Agriculture
+          </p>
 
           {/* Main Panel */}
           <div className="flex flex-col sm:flex-row flex-wrap justify-between lg:gap-y-9 gap-y-4 text-white font-bold lg:text-2xl text-[16px] leading-normal">
@@ -143,7 +147,18 @@ export default function Page() {
                 className="main-small-box flex items-center justify-center lg:h-90 md:h-54 h-79 md:w-[31%] sm:w-[48.5%] w-full"
               >
                 <div className="color-pattern-bg"></div>
-                <p className="text-center">{ele}</p>
+                <p className="text-center">{ele.name}</p>
+                <div
+                  className="absolute flex items-center justify-center lg:bottom-[21px] lg:right-[22px] md:bottom-3 md:right-3 right-5 bottom-4 lg:w-[102px] lg:h-[47px] w-[63px] h-[29px] bg-no-repeat"
+                  style={{
+                    background: `url(/images/tag-back-${Math.floor(
+                      ele.number / 1000
+                    )}.svg)`,
+                    backgroundSize: 'cover'
+                  }}
+                >
+                  #{ele.number}
+                </div>
               </div>
             ))}
           </div>
