@@ -21,9 +21,9 @@ export default function Page() {
           <Link
             key={index}
             href="/ai-impact/home/category"
-            className="main-small-box flex items-center justify-center lg:h-90 md:h-54 h-79 md:w-[31%] sm:w-[48.5%] w-full"
+            className="main-small-box-1 flex items-center justify-center lg:h-90 md:h-54 h-79 md:!w-[31%] sm:!w-[48.5%] !w-full"
           >
-            <div className="color-pattern-bg"></div>
+            <div className="color-pattern-bg-1"></div>
             <p className="text-center">{ele}</p>
           </Link>
         ))}

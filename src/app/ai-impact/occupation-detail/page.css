@@ -1,4 +1,4 @@
-.main-box {
+.main-box-1 {
   background: rgba(255, 255, 255, 0.01) !important;
   border: 1px solid rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(32px) !important;
@@ -14,12 +14,12 @@
   position: relative;
 }
 
-.main-small-box {
+.main-small-box-1 {
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 20px;
   position: relative;
 }
-.color-pattern-bg {
+.color-pattern-bg-1 {
   background-image: url("/images/color pattern - red polygon.svg");
   background-repeat: no-repeat;
   background-size: cover;

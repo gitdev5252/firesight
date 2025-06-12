@@ -84,11 +84,11 @@ function TabBar() {
   return (
     <div
       ref={containerRef}
-      className="h-16 border-b-[1px] border-b-[#ffffff33] flex md:justify-evenly justify-between md:mt-[150px] mt-[100px] md:mx-14 md:px-[3.5vw] w-auto overflow-x-hidden relative box-border"
+      className="h-16 border-b-[1px] border-b-[#ffffff33] flex md:mt-[150px] mt-[100px] md:mx-14 w-auto overflow-x-hidden relative box-border"
     >
       <motion.div
         ref={contentRef}
-        className="cursor-grab flex gap-14 md:px-0 px-[3.5vw] box-border"
+        className="cursor-grab flex gap-14 md:px-[7vw] px-4 box-border w-full md:justify-evenly justify-between"
         drag="x"
         dragConstraints={constraints}
         dragElastic={0.1}
