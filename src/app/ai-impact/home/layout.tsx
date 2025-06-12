@@ -71,7 +71,7 @@ export default function Page({
         </div>
         <div
           id="main-container"
-          className="main-box lg:mt-[55px] md:mt-8 mt-4 lg:mb-[42px] mb-6 w-full lg:p-10 lg:pr-11 px-4 py-[30px]"
+          className="main-box-1 lg:mt-[55px] md:mt-8 mt-4 lg:mb-[42px] mb-6 w-full lg:p-10 lg:pr-11 px-4 py-[30px]"
           style={{
             background:
               curPath != "/ai-impact/home" ? "#0E111C !important" : "",

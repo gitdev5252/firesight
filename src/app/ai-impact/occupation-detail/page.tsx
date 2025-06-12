@@ -149,7 +149,7 @@ export default function Page() {
           </Link>
           <p className="text-[16px] text-white">Back to Platform</p>
         </div>
-        <div className="main-box lg:mt-[55px] md:mt-8 mt-4 lg:mb-[42px] mb-6 w-full lg:p-10 lg:pr-11 px-4 py-[30px] text-white">
+        <div className="main-box-1 lg:mt-[55px] md:mt-8 mt-4 lg:mb-[42px] mb-6 w-full lg:p-10 lg:pr-11 px-4 py-[30px] text-white">
           {modalOpen && (
             <div className="main-modal-box text-white !absolute lg:top-29 lg:left-9 lg:right-19 lg:py-10 lg:px-15 top-18 md:left-8 md:right-8 md:px-6 md:py-8 left-0 right-0 pt-7 pl-7 pr-8 pb-5 z-500">
               <div className="flex justify-between items-center">
@@ -789,9 +789,9 @@ export default function Page() {
                       .map((ele, index) => (
                         <div
                           key={index}
-                          className="main-small-box flex items-center justify-center lg:h-90 md:h-54 h-79 md:w-[31%] w-full"
+                          className="main-small-box-1 flex items-center justify-center lg:h-90 md:h-54 h-79 md:w-[31%] w-full"
                         >
-                          <div className="color-pattern-bg"></div>
+                          <div className="color-pattern-bg-1"></div>
                           <p className="text-center">{ele.name}</p>
                           <div
                             className="absolute flex items-center justify-center lg:bottom-[21px] lg:right-[22px] md:bottom-3 md:right-3 right-5 bottom-4 lg:w-[102px] lg:h-[47px] w-[63px] h-[29px] bg-no-repeat"
