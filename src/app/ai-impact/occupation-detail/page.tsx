@@ -113,24 +113,40 @@ export default function Page() {
         <div className="shineBg_body_red_circle lg:size-[602px] lg:right-[-270px] lg:top-[48.32%] md:w-[426px] md:h-[402px] md:right-[-172px] md:top-[42.47%] md:block hidden"></div>
         <div className="shineBg_body_red_circle lg:w-[904px] lg:h-[852px] lg:left-[-324px] lg:bottom-[260px] md:w-[426px] md:h-[402px] md:left-[-117px] md:bottom-[836px] md:block hidden"></div>
 
-        <div className="md:absolute md:mt-0 mt-2 lg:w-[calc(100vw-140px)] lg:px-5 md:w-[calc(100vw-32px)] w-full flex items-center justify-between top-[41px] h-[42px] z-10 gap-9">
-          <div className="h-[1px] flex-1 !bg-[#ffffff1a]"></div>
-          <Image
-            src="/images/icons/thline.svg"
-            alt="logo"
-            width={35}
-            height={42}
-            className="lg:w-[35px] lg:h-[42px] w-[28px] h-[32px] z-20"
-          />
-          <div className="h-[1px] flex-1 !bg-[#ffffff1a]"></div>
+        <div className="md:absolute md:mt-0 mt-2 lg:w-[calc(100vw-140px)] lg:px-1 md:w-[calc(100vw-32px)] w-full flex items-center justify-center top-[41px] h-[42px] z-[10] gap-9">
+          <div className="relative w-full flex items-center justify-center">
+            <div
+              className="h-[1px] md:left-[162px] left-0 right-[calc(50%+57px)] absolute opacity-10"
+              style={{
+                background:
+                  "linear-gradient(to left, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0.4) 50%, rgba(255,255,255,0) 100%)",
+              }}
+            ></div>
+            <Image
+              src="/images/icons/thline.svg"
+              alt="logo"
+              width={35}
+              height={42}
+              className="lg:w-[35px] lg:h-[42px] w-[28px] h-[32px] z-20"
+            />
+            <div
+              className="h-[1px] left-[calc(50%+57px)] right-0 absolute opacity-10"
+              style={{
+                background:
+                  "linear-gradient(to right, rgba(255, 255, 255, 0.7) 0%, rgba(255, 255, 255, 0.45) 47%, rgba(255, 255, 255, 0) 100%)",
+              }}
+            ></div>
+          </div>
         </div>
-        <div className="flex w-full justify-start items-center gap-2 h-6 md:mt-[50px] mt-[10px] md:p-0 pl-4 z-20">
-          <Image
-            src="/images/icons/back-btn.svg"
-            alt="back-btn"
-            width={24}
-            height={24}
-          />
+        <div className="flex w-full justify-start items-center gap-2 h-6 md:mt-[50px] mt-[10px] md:p-0 pl-4 z-[200]">
+          <Link href="/" className="z-[200]">
+            <Image
+              src="/images/icons/back-btn.svg"
+              alt="back-btn"
+              width={24}
+              height={24}
+            />
+          </Link>
           <p className="text-[16px] text-white">Back to Platform</p>
         </div>
         <div className="main-box lg:mt-[55px] md:mt-8 mt-4 lg:mb-[42px] mb-6 w-full lg:p-10 lg:pr-11 px-4 py-[30px] text-white">
@@ -150,32 +166,116 @@ export default function Page() {
                     alt="Close"
                     width={24}
                     height={24}
+                    className="lg:size-6 md:size-[18px] size-[20px]"
                   />
                 </Button>
               </div>
-              <div className="px-1">
-                <p className="lg:text-[18px] text-sm">
-                  What Purpose Does it Serve?
-                </p>
-                <p className="lg:text-[18px] text-xs">
-                  The Professional Development Hub stands as a cornerstone of
-                  the Firesight Platform. Your gateway to mastering the future
-                  of work. Our platform is designed to empower solopreneurs with
-                  the tools and knowledge needed to thrive in an ever-growing
-                  AI-driven job market. Dedicated to facilitating personalised
-                  and occupation-specific learning experiences, empowered by our
-                  cutting edge AI technology. By focusing on the tools and
-                  skills critical for today’s dynamic job landscape, the
-                  Professional Development Hub is your partner in adapting to
-                  and excelling in the era of AI-driven employment.
-                </p>
+              <div className="md:mt-8 mt-17 flex flex-col lg:gap-8 md:gap-7 gap-8">
+                <div className="flex flex-col gap-3">
+                  <div className="flex items-center gap-3">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="13"
+                      height="14"
+                      viewBox="0 0 13 14"
+                      fill="none"
+                    >
+                      <path
+                        d="M12.3623 3.78809V10.2109L6.7998 13.4229L1.2373 10.2109V3.78809L6.7998 0.576172L12.3623 3.78809Z"
+                        fill="white"
+                        stroke="white"
+                      />
+                    </svg>
+                    <p className="lg:text-[18px] text-sm md:font-normal font-bold">
+                      What Purpose Does it Serve?
+                    </p>
+                  </div>
+                  <p className="lg:text-[18px] text-xs">
+                    The Professional Development Hub stands as a cornerstone of
+                    the Firesight Platform. Your gateway to mastering the future
+                    of work. Our platform is designed to empower solopreneurs
+                    with the tools and knowledge needed to thrive in an
+                    ever-growing AI-driven job market. Dedicated to facilitating
+                    personalised and occupation-specific learning experiences,
+                    empowered by our cutting edge AI technology. By focusing on
+                    the tools and skills critical for today’s dynamic job
+                    landscape, the Professional Development Hub is your partner
+                    in adapting to and excelling in the era of AI-driven
+                    employment.
+                  </p>
+                </div>
+                <div className="flex flex-col gap-3">
+                  <div className="flex items-center gap-3">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="13"
+                      height="14"
+                      viewBox="0 0 13 14"
+                      fill="none"
+                    >
+                      <path
+                        d="M12.3623 3.78809V10.2109L6.7998 13.4229L1.2373 10.2109V3.78809L6.7998 0.576172L12.3623 3.78809Z"
+                        fill="white"
+                        stroke="white"
+                      />
+                    </svg>
+                    <p className="lg:text-[18px] text-sm md:font-normal font-bold">
+                      AI Impact Index
+                    </p>
+                  </div>
+                  <p className="lg:text-[18px] text-xs">
+                    Our pioneering feature of the hub, the AI Impact Index
+                    provides an exhaustive analysis of over 40,000 occupations,
+                    categorised into 4,000 interactive core occupations
+                    evaluating the potential risks and challenges posed by AI
+                    and automation. This index is a valuable resource for users,
+                    offering insights into how their roles might evolve, and
+                    guiding them towards making informed decisions about their
+                    career trajectories and reskilling opportunities.
+                  </p>
+                </div>
+                <div className="flex flex-col gap-3">
+                  <div className="flex items-center gap-3">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="13"
+                      height="14"
+                      viewBox="0 0 13 14"
+                      fill="none"
+                    >
+                      <path
+                        d="M12.3623 3.78809V10.2109L6.7998 13.4229L1.2373 10.2109V3.78809L6.7998 0.576172L12.3623 3.78809Z"
+                        fill="white"
+                        stroke="white"
+                      />
+                    </svg>
+                    <p className="lg:text-[18px] text-sm md:font-normal font-bold">
+                      Coming Soon Regions
+                    </p>
+                  </div>
+                  <p className="lg:text-[18px] text-xs">
+                    Personalised Learning Modules: Tailored to meet your unique
+                    career aspirations and learning needs, these modules will
+                    use advanced AI algorithms to recommend the most relevant
+                    and impactful learning paths for your professional growth.
+                    Resume Builder: Utilising a finely tuned Language Learning
+                    Model (LLM) with a comprehensive occupation-specific
+                    knowledge base, this module assists users in creating
+                    resumes that stand out Firesight Community: Join our
+                    dedicated Discord server for networking, peer support, and
+                    professional growth—a vibrant community ideal for
+                    freelancers and solopreneurs. Career Advisor Chatbot: Also
+                    powered by the advanced LLM, this chatbot offers real-time,
+                    personalized career guidance. This AI-driven counsellor
+                    supports users in navigating their career paths, providing
+                    advice on job searches, interview preparation, and career
+                    progression.
+                  </p>
+                </div>
               </div>
             </div>
           )}
-          <div
-            className="w-full flex justify-start items-center gap-4 text-white"
-            onClick={() => setModalOpen(!modalOpen)}
-          >
+          <div className="w-full flex justify-start items-center gap-4 text-white">
             <Image
               src="/images/icons/pro-hub.svg"
               alt="professional hub"
@@ -184,11 +284,13 @@ export default function Page() {
               className="lg:w-[49px] lg:h-[41px] md:w-[38px] md:h-[32px] w-[31px] h-[26px]"
             />
             <div className="w-[1px] h-[18px] bg-[#ffffff1a] md:block hidden"></div>
-            <p className="lg:text-[32px] md:text-2xl text-[18px] font-bold">
-              Professional Development Hub
-            </p>
+            <div onClick={() => setModalOpen(!modalOpen)}>
+              <p className="lg:text-[32px] md:text-2xl text-[18px] font-bold">
+                Professional Development Hub
+              </p>
+            </div>
             <Image
-              src="/images/icons/union.svg"
+              src={`/images/icons/union${modalOpen ? "-red" : ""}.svg`}
               alt="union"
               width={24}
               height={24}
@@ -352,7 +454,10 @@ export default function Page() {
                           : 2
                       )
                       .map((ele, index) => (
-                        <div key={index} className="flex items-center justify-center text-[16px] bg-[url(/images/const-card-back.svg)] bg-no-repeat bg-cover h-[47px] w-[165px]">
+                        <div
+                          key={index}
+                          className="flex items-center justify-center text-[16px] bg-[url(/images/const-card-back.svg)] bg-no-repeat bg-cover h-[47px] w-[165px]"
+                        >
                           {ele}
                         </div>
                       ))}
@@ -769,7 +874,7 @@ export default function Page() {
       </div>
 
       <AIImpactFooter>
-        <div className="w-[654px] h-[612px] bottom-0 right-0 overflow-hidden shineBg_body_red_circle bg-[length:138%_139%]"></div>
+        <div className="w-[904px] h-[852px] bottom-[-306px] right-[-246px] overflow-hidden shineBg_body_red_circle bg-[length:138%_139%] lg:block hidden"></div>
       </AIImpactFooter>
     </>
   );

@@ -7,6 +7,7 @@ import AIImpactFooter from "@/layouts/AIImpactFooter";
 import { motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
+import Link from "next/link";
 export default function Page() {
   const mainCardInfo = [
     { name: "Carpenter", number: 2890 },
@@ -39,12 +40,14 @@ export default function Page() {
           <div className="h-[1px] flex-1 !bg-[#ffffff1a]"></div>
         </div>
         <div className="flex w-full justify-start items-center gap-2 h-6 md:mt-[50px] mt-[10px] md:p-0 pl-4 z-20">
-          <Image
-            src="/images/icons/back-btn.svg"
-            alt="back-btn"
-            width={24}
-            height={24}
-          />
+          <Link href="/">
+            <Image
+              src="/images/icons/back-btn.svg"
+              alt="back-btn"
+              width={24}
+              height={24}
+            />
+          </Link>
           <p className="text-[16px] text-white">Back to Platform</p>
         </div>
         <div className="main-box lg:mt-[55px] md:mt-8 mt-4 lg:mb-[42px] mb-6 w-full lg:p-10 lg:pr-11 px-4 py-[30px]">
@@ -154,7 +157,7 @@ export default function Page() {
                     background: `url(/images/tag-back-${Math.floor(
                       ele.number / 1000
                     )}.svg)`,
-                    backgroundSize: 'cover'
+                    backgroundSize: "cover",
                   }}
                 >
                   #{ele.number}

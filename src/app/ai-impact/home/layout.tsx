@@ -7,6 +7,7 @@ import AIImpactFooter from "@/layouts/AIImpactFooter";
 import { motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
+import Link from "next/link";
 
 export default function Page({
   children,
@@ -32,24 +33,40 @@ export default function Page({
         <div className="shineBg_body_red_circle lg:size-[546px] lg:left-[-255px] lg:top-[-217px] md:size-[409px] md:left-[-121px] md:top-[-90px] size-[229px] left-[-48px] top-[-58px]"></div>
         <div className="shineBg_body_red_circle lg:size-[602px] lg:right-[-220px] lg:top-[465px] md:size-[352px] md:right-[-94px] md:top-[278px] md:block hidden"></div>
 
-        <div className="md:absolute md:mt-0 mt-2 lg:w-[calc(100vw-140px)] lg:px-5 md:w-[calc(100vw-32px)] w-full flex items-center justify-between top-[41px] h-[42px] z-10 gap-9">
-          <div className="h-[1px] flex-1 !bg-[#ffffff1a]"></div>
-          <Image
-            src="/images/icons/thline.svg"
-            alt="logo"
-            width={35}
-            height={42}
-            className="lg:w-[35px] lg:h-[42px] w-[28px] h-[32px] z-20"
-          />
-          <div className="h-[1px] flex-1 !bg-[#ffffff1a]"></div>
+        <div className="md:absolute md:mt-0 mt-2 lg:w-[calc(100vw-140px)] lg:px-1 md:w-[calc(100vw-32px)] w-full flex items-center justify-center top-[41px] h-[42px] z-[10] gap-9">
+          <div className="relative w-full flex items-center justify-center">
+            <div
+              className="h-[1px] md:left-[162px] left-0 right-[calc(50%+57px)] absolute opacity-10"
+              style={{
+                background:
+                  "linear-gradient(to left, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0.4) 50%, rgba(255,255,255,0) 100%)",
+              }}
+            ></div>
+            <Image
+              src="/images/icons/thline.svg"
+              alt="logo"
+              width={35}
+              height={42}
+              className="lg:w-[35px] lg:h-[42px] w-[28px] h-[32px] z-20"
+            />
+            <div
+              className="h-[1px] left-[calc(50%+57px)] right-0 absolute opacity-10"
+              style={{
+                background:
+                  "linear-gradient(to right, rgba(255, 255, 255, 0.7) 0%, rgba(255, 255, 255, 0.45) 47%, rgba(255, 255, 255, 0) 100%)",
+              }}
+            ></div>
+          </div>
         </div>
         <div className="flex w-full justify-start items-center gap-2 h-6 md:mt-[50px] mt-[10px] md:p-0 pl-4 z-20">
-          <Image
-            src="/images/icons/back-btn.svg"
-            alt="back-btn"
-            width={24}
-            height={24}
-          />
+          <Link href="/" className="z-[200]">
+            <Image
+              src="/images/icons/back-btn.svg"
+              alt="back-btn"
+              width={24}
+              height={24}
+            />
+          </Link>
           <p className="text-[16px] text-white">Back to Platform</p>
         </div>
         <div
@@ -225,7 +242,7 @@ export default function Page({
       </div>
 
       <AIImpactFooter>
-        <div className="w-[654px] h-[612px] bottom-0 right-0 overflow-hidden shineBg_body_red_circle bg-[length:138%_139%]"></div>
+        <div className="w-[904px] h-[852px] bottom-[-306px] right-[-246px] overflow-hidden shineBg_body_red_circle bg-[length:138%_139%] lg:block hidden"></div>
       </AIImpactFooter>
     </>
   );
