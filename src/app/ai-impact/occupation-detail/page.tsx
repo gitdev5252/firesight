@@ -89,6 +89,7 @@ export default function Page() {
   ];
 
   useEffect(() => {
+    setCurWindowWidth(window.innerWidth);
     const handleResize = () => {
       setCurWindowWidth(window.innerWidth);
     };
