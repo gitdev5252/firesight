@@ -352,7 +352,7 @@ export default function Overview() {
               background:
                 "linear-gradient(180deg, rgba(8, 11, 22, 0.00) 31.41%, rgba(8, 11, 22, 0.93) 80.91%, #080B16 100%)",
               width: "100%",
-              height: "99.1%",
+              height: "100%",
             }}
           ></div>
         </div>
