@@ -190,9 +190,9 @@ export default function Report() {
 
       <FireSightFooter>
         <div className="green-shine-footer-mobile md:hidden block z-[-2342]"></div>
-        <div className="blue-shine-pulse-overview md:block hidden bottom-[6.8vw] right-[24.653vw] w-[min(602px, 41.8vw)] h-[min(602px, 41.8vw)]"></div>
-        <div className="blue-shine-pulse-overview md:block hidden bottom-[-16.25vw] right-[-20.277vw] w-[min(602px, 41.8vw)] h-[min(602px, 41.8vw)]"></div>
-        <div className="blue-shine-pulse-overview md:block hidden bottom-[-23.542vw] left-[-16.666vw] w-[min(602px, 41.8vw)] h-[min(602px, 41.8vw)]"></div>
+        <div className="blue-shine-pulse-overview md:block hidden bottom-[6.8vw] right-[24.653vw] w-[min(602px,41.8vw)] h-[min(602px,41.8vw)]"></div>
+        <div className="blue-shine-pulse-overview md:block hidden bottom-[-16.25vw] right-[-20.277vw] w-[min(602px,41.8vw)] h-[min(602px,41.8vw)]"></div>
+        <div className="blue-shine-pulse-overview md:block hidden bottom-[-23.542vw] left-[-16.666vw] w-[min(602px,41.8vw)] h-[min(602px,41.8vw)]"></div>
       </FireSightFooter>
     </>
   );

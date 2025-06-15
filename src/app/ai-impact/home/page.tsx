@@ -24,7 +24,7 @@ export default function Page() {
             className="main-small-box-1 flex items-center justify-center lg:h-90 md:h-54 h-79 md:!w-[31%] sm:!w-[48.5%] !w-full"
           >
             <div className="color-pattern-bg-1"></div>
-            <p className="text-center">{ele}</p>
+            <p className="text-center mx-6">{ele}</p>
           </Link>
         ))}
       </div>

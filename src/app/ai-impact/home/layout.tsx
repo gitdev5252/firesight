@@ -3,11 +3,11 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 
 import "./page.css";
-import AIImpactFooter from "@/layouts/AIImpactFooter";
 import { motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
+import AIImpactFooter from "@/layouts/AIImpactFooter";
 
 export default function Page({
   children,
@@ -30,8 +30,8 @@ export default function Page({
     <>
       <div className="w-full lg:px-15 md:px-4">
         <div className="absolute top-0 left-0 w-full z-[-1020] h-[73.6vw] bg-[url('/images/polygon-pattern.svg')] bg-cover mix-blend-color"></div>
-        <div className="shineBg_body_red_circle lg:size-[546px] lg:left-[-255px] lg:top-[-217px] md:size-[409px] md:left-[-121px] md:top-[-90px] size-[229px] left-[-48px] top-[-58px]"></div>
-        <div className="shineBg_body_red_circle lg:size-[602px] lg:right-[-220px] lg:top-[465px] md:size-[352px] md:right-[-94px] md:top-[278px] md:block hidden"></div>
+        <div className="shineBg_body_blue_circle lg:size-[546px] lg:left-[-255px] lg:top-[-217px] md:size-[409px] md:left-[-121px] md:top-[-90px] size-[229px] left-[-48px] top-[-58px]"></div>
+        <div className="shineBg_body_blue_circle lg:size-[602px] lg:right-[-220px] lg:top-[465px] md:size-[352px] md:right-[-94px] md:top-[278px] md:block hidden"></div>
 
         <div className="md:absolute md:mt-0 mt-2 lg:w-[calc(100vw-140px)] lg:px-1 md:w-[calc(100vw-32px)] w-full flex items-center justify-center top-[41px] h-[42px] z-[10] gap-9">
           <div className="relative w-full flex items-center justify-center">
@@ -71,7 +71,7 @@ export default function Page({
         </div>
         <div
           id="main-container"
-          className="main-box-1 lg:mt-[55px] md:mt-8 mt-4 lg:mb-[42px] mb-6 w-full lg:p-10 lg:pr-11 px-4 py-[30px]"
+          className="main-box-1 lg:mt-[55px] md:mt-8 mt-4 lg:mb-[42px] md:mb-4 mb-6 w-full lg:p-10 lg:pr-11 px-4 py-[30px]"
           style={{
             background:
               curPath != "/ai-impact/home" ? "#0E111C !important" : "",
@@ -118,17 +118,16 @@ export default function Page({
                     </p>
                   </div>
                   <p className="lg:text-[18px] text-xs">
-                    The Professional Development Hub stands as a cornerstone of
-                    the Firesight Platform. Your gateway to mastering the future
-                    of work. Our platform is designed to empower solopreneurs
-                    with the tools and knowledge needed to thrive in an
-                    ever-growing AI-driven job market. Dedicated to facilitating
-                    personalised and occupation-specific learning experiences,
-                    empowered by our cutting edge AI technology. By focusing on
-                    the tools and skills critical for today’s dynamic job
-                    landscape, the Professional Development Hub is your partner
-                    in adapting to and excelling in the era of AI-driven
-                    employment.
+                    The Professional Development Hub is Firesight’s gateway to
+                    future-proof skills. Your gateway to mastering the future of
+                    work. Our platform is designed to empower solopreneurs with
+                    the tools and knowledge needed to thrive in an ever-growing
+                    AI-driven job market. Dedicated to facilitating personalised
+                    and occupation-specific learning experiences, empowered by
+                    our cutting edge AI technology. By focusing on the tools and
+                    skills critical for today’s dynamic job landscape, the
+                    Professional Development Hub is your partner in adapting to
+                    and excelling in the era of AI-driven employment.
                   </p>
                 </div>
                 <div className="flex flex-col gap-3">
@@ -241,8 +240,12 @@ export default function Page({
         </div>
       </div>
 
+      <div className="shineBg_body_blue_circle lg:hidden md:block hidden bottom-[157px] left-[calc(50vw-314px)] w-[629px] h-[592px]"></div>
+      <div className="shineBg_body_blue_circle lg:block hidden bottom-[6.8vw] right-[24.653vw] w-[min(602px,41.8vw)] h-[min(602px,41.8vw)]"></div>{" "}
       <AIImpactFooter>
-        <div className="w-[904px] h-[852px] bottom-[-306px] right-[-246px] overflow-hidden shineBg_body_red_circle bg-[length:138%_139%] lg:block hidden"></div>
+        <div className="circle-footer-mobile md:hidden block z-[-2342]"></div>
+        <div className="shineBg_body_blue_circle lg:block hidden bottom-[-25vw] right-[-17.57vw] w-[min(602px,41.8vw)] h-[min(602px,41.8vw)]"></div>
+        <div className="shineBg_body_blue_circle lg:block hidden bottom-[-32.85vw] left-[-16.666vw] w-[min(602px,41.8vw)] h-[min(602px,41.8vw)]"></div>
       </AIImpactFooter>
     </>
   );
@@ -253,7 +256,7 @@ export function TabBar({ type }: { type: number }) {
     [
       "AI Impact Index",
       "Community",
-      "Training Modules",
+      "Training Resources",
       "Resume Builder",
       "Career Advisor",
     ],
@@ -297,12 +300,12 @@ export function TabBar({ type }: { type: number }) {
   return (
     <div
       ref={containerRef}
-      className="lg:h-16 h-14 border-b-[1px] border-b-[#ffffff33] flex px-0 w-auto overflow-x-hidden relative box-border"
+      className="lg:h-16 h-14 border-b-[1px] border-b-[#ffffff1a] flex px-0 w-auto overflow-x-hidden relative box-border"
     >
       <motion.div
         ref={contentRef}
-        className={`cursor-grab flex justify-between gap-14 sm:px-0 px-14 box-border w-full ${
-          type ? " lg:pr-[16vw]" : ""
+        className={`cursor-grab flex justify-start sm:px-0 px-14 box-border w-full ${
+          type ? " lg:pr-[16vw] lg:gap-15 gap-11" : " gap-10"
         }`}
         drag="x"
         dragConstraints={constraints}
@@ -314,7 +317,7 @@ export function TabBar({ type }: { type: number }) {
             className={
               (curItem === index
                 ? "text-white font-bold "
-                : "text-[#86878D] ") +
+                : "text-[#fff] opacity-25 ") +
               "lg:text-[18px] md:text-[13px] text-[12px] pt-4 flex flex-col items-center gap-4 lg:h-[63px] h-[55px]"
             }
             onClick={() => {

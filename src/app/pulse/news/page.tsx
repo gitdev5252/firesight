@@ -206,9 +206,9 @@ export default function News() {
       </section>
       <FireSightFooter>
         <div className="green-shine-footer-mobile md:hidden block z-[-2342]"></div>
-        <div className="blue-shine-pulse-overview md:block hidden bottom-[7.7vw] right-[19.3vw] w-[min(602px, 41.8vw)] h-[min(602px, 41.8vw)]"></div>
-        <div className="blue-shine-pulse-overview md:block hidden bottom-[-14.375vw] right-[-20.277vw] w-[min(602px, 41.8vw)] h-[min(602px, 41.8vw)]"></div>
-        <div className="blue-shine-pulse-overview md:block hidden bottom-[-21.667vw] left-[-16.666vw] w-[min(602px, 41.8vw)] h-[min(602px, 41.8vw)]"></div>
+        <div className="blue-shine-pulse-overview md:block hidden bottom-[7.7vw] right-[19.3vw] w-[min(602px,41.8vw)] h-[min(602px,41.8vw)]"></div>
+        <div className="blue-shine-pulse-overview md:block hidden bottom-[-14.375vw] right-[-20.277vw] w-[min(602px,41.8vw)] h-[min(602px,41.8vw)]"></div>
+        <div className="blue-shine-pulse-overview md:block hidden bottom-[-21.667vw] left-[-16.666vw] w-[min(602px,41.8vw)] h-[min(602px,41.8vw)]"></div>
       </FireSightFooter>
     </>
   );
