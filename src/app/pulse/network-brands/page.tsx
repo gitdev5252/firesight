@@ -4,12 +4,12 @@ import { Button } from "@/components/ui/button";
 import "./page.css";
 import Image from "next/image";
 import FireSightFooter from "@/layouts/FireSightFooter";
+import Link from "next/link";
 
 export default function Page() {
   return (
     <>
       <div className="w-full relative">
-
         <div className="blue-shine-pulse-overview w-[41.8vw] h-[41.8vw] top-[-6.46vw] right-[-9.514vw] z-[-2000]"></div>
         <div className="bg-[url('/images/color-pattern-network-brands.svg')] bg-cover w-full h-[1970px] top-[0px] absolute z-[-10000] opacity-70 md:block hidden"></div>
       </div>
@@ -36,7 +36,6 @@ export default function Page() {
         </h3>
         <Button
           variant="outline"
-
           className="cursor-pointer gradient-border-btn text-[16px] md:mt-[35px] mt-[24px] bg-transparent rounded-full md:px-[50px] px-[36px] md:py-[20px] py-[12px] text-white hover:text-white"
         >
           Contact Us
@@ -74,12 +73,14 @@ export default function Page() {
             brewers, distillers, and beverage entrepreneurs—curated with
             precision, served with personality.
           </p>
-          <Button
-            variant="outline"
-            className="cursor-pointer gradient-border-btn text-[16px] bg-transparent rounded-full md:px-[50px] px-[36px] md:py-[20px] py-[12px] text-white hover:text-white"
-          >
-            bevera.ai
-          </Button>
+          <Link href="http://www.bevera.ai">
+            <Button
+              variant="outline"
+              className="cursor-pointer gradient-border-btn text-[16px] bg-transparent rounded-full md:px-[50px] px-[36px] md:py-[20px] py-[12px] text-white hover:text-white"
+            >
+              bevera.ai
+            </Button>
+          </Link>
         </div>
         <div className="flex justify-center items-center flex-col lg:w-[48.5%] w-full backdrop-blur-[34.5px] bg-[rgba(255,255,255,0.02)] border-[rgba(255,255,255,0.1)] border md:p-[64px] max-sm:px-[16px] max-sm:py-[36px] text-center rounded-[20px]">
           <Image
@@ -105,18 +106,20 @@ export default function Page() {
             <br /> for the Sports Business Landscape
           </h3>
           <p className="md:text-[16px] text-[12px]">
-            STADIUUM | Enterprise is a verticalized Pulse deployment tailored
-            for media, wagering, technology, and sports organisations.
-            Delivering high-frequency insights, personalized reporting, and live
-            briefings across leagues, teams, sponsors, and tech providers -
-            STADIUUM makes sense of industry noise with clarity and speed.
+            STADIUM | Enterprise is a verticalized Pulse deployment tailored for
+            media, wagering, technology, and sports organisations. Delivering
+            high-frequency insights, personalized reporting, and live briefings
+            across leagues, teams, sponsors, and tech providers - STADIUM makes
+            sense of industry noise with clarity and speed.
           </p>
-          <Button
-            variant="outline"
-            className="cursor-pointer gradient-border-btn text-[16px] md:mt-[35px] mt-[24px] bg-transparent rounded-full md:px-[50px] px-[36px] md:py-[20px] py-[12px] text-white hover:text-white"
-          >
-            stadium.com
-          </Button>
+          <Link href="http://www.stadium.com">
+            <Button
+              variant="outline"
+              className="cursor-pointer gradient-border-btn text-[16px] md:mt-[35px] mt-[24px] bg-transparent rounded-full md:px-[50px] px-[36px] md:py-[20px] py-[12px] text-white hover:text-white"
+            >
+              stadium.com
+            </Button>
+          </Link>
         </div>
       </div>
 

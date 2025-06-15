@@ -209,7 +209,7 @@ export default function FireSightFooter({
                   <div className="flex items-center gap-2 text-white">
                     <span className="font-bold">LONDON</span>
                     <span className="italic text-[#A0AEC0] text-xs">
-                      (Corporate HQ)
+                      (Accountants Office)
                     </span>
                   </div>
                   <div className="text-[#A0AEC0] text-xs text-center md:text-left">
