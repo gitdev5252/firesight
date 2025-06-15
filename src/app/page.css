@@ -258,7 +258,7 @@
 }
 
 .green-shine-footer-small {
-  border-radius: min(602px, 41.8vw);
+  border-radius: min(602px,41.8vw);
   opacity: 0.22;
   background: linear-gradient(
     180deg,
@@ -266,8 +266,8 @@
     rgba(134, 160, 216, 0.31) 100%
   );
   filter: blur(139px);
-  width: min(602px, 41.8vw);
-  height: min(602px, 41.8vw);
+  width: min(602px,41.8vw);
+  height: min(602px,41.8vw);
   flex-shrink: 0;
   position: absolute;
   bottom: 173px;
@@ -275,7 +275,7 @@
 }
 
 .green-shine-footer-2nd-small {
-  border-radius: min(602px, 41.8vw);
+  border-radius: min(602px,41.8vw);
   opacity: 0.09;
   background: linear-gradient(
     180deg,
@@ -283,8 +283,8 @@
     rgba(188, 239, 255, 0.62) 100%
   );
   filter: blur(139px);
-  width: min(602px, 41.8vw);
-  height: min(602px, 41.8vw);
+  width: min(602px,41.8vw);
+  height: min(602px,41.8vw);
   flex-shrink: 0;
   position: absolute;
   bottom: 111px;

@@ -44,9 +44,9 @@ export default function Page() {
             className="main-small-box-1 flex items-center justify-center lg:h-90 md:h-54 h-79 md:w-[31%] sm:w-[48.5%] w-full"
           >
             <div className="color-pattern-bg-1"></div>
-            <p className="text-center">{ele.name}</p>
+            <p className="text-center mx-6">{ele.name}</p>
             <div
-              className="absolute flex items-center justify-center lg:bottom-[21px] lg:right-[22px] md:bottom-3 md:right-3 right-5 bottom-4 lg:w-[102px] lg:h-[47px] w-[63px] h-[29px] bg-no-repeat"
+              className="absolute flex items-center justify-center lg:bottom-[21px] lg:right-[22px] md:bottom-3 md:right-3 right-5 bottom-4 lg:w-[106px] lg:h-[49px] w-[63px] h-[29px] bg-no-repeat"
               style={{
                 background: `url(/images/tag-back-${Math.floor(
                   ele.number / 1000

@@ -3,11 +3,11 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 
 import "../home/page.css";
-import AIImpactFooter from "@/layouts/AIImpactFooter";
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
+import FireSightFooter from "@/layouts/FireSightFooter";
 
 const pages = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 
@@ -108,11 +108,11 @@ export default function Page() {
     <>
       <div className="w-full lg:px-15 md:px-4">
         <div className="absolute top-0 left-0 w-full z-[-1020] h-[73.6vw] bg-[url('/images/polygon-pattern.svg')] bg-cover mix-blend-color"></div>
-        <div className="shineBg_body_red_circle lg:size-[546px] lg:left-[-255px] lg:top-[-217px] md:size-[409px] md:left-[-121px] md:top-[-90px] size-[229px] left-[-48px] top-[-58px]"></div>
-        <div className="shineBg_body_red_circle lg:size-[602px] lg:right-[-220px] lg:top-[465px] md:size-[352px] md:right-[-94px] md:top-[278px] md:block hidden"></div>
-        <div className="shineBg_body_red_circle lg:size-[546px] lg:left-[-200px] lg:top-[32.83%] md:w-[426px] md:h-[402px] md:left-[-143px] md:top-[26.25%] md:block hidden"></div>
-        <div className="shineBg_body_red_circle lg:size-[602px] lg:right-[-270px] lg:top-[48.32%] md:w-[426px] md:h-[402px] md:right-[-172px] md:top-[42.47%] md:block hidden"></div>
-        <div className="shineBg_body_red_circle lg:w-[904px] lg:h-[852px] lg:left-[-324px] lg:bottom-[260px] md:w-[426px] md:h-[402px] md:left-[-117px] md:bottom-[836px] md:block hidden"></div>
+        <div className="shineBg_body_blue_circle lg:size-[546px] lg:left-[-255px] lg:top-[-217px] md:size-[409px] md:left-[-121px] md:top-[-90px] size-[229px] left-[-48px] top-[-58px]"></div>
+        <div className="shineBg_body_blue_circle lg:size-[602px] lg:right-[-220px] lg:top-[465px] md:size-[352px] md:right-[-94px] md:top-[278px] md:block hidden"></div>
+        <div className="shineBg_body_blue_circle lg:size-[546px] lg:left-[-200px] lg:top-[32.83%] md:w-[426px] md:h-[402px] md:left-[-143px] md:top-[26.25%] md:block hidden"></div>
+        <div className="shineBg_body_blue_circle lg:size-[602px] lg:right-[-270px] lg:top-[48.32%] md:w-[426px] md:h-[402px] md:right-[-172px] md:top-[42.47%] md:block hidden"></div>
+        <div className="shineBg_body_blue_circle lg:w-[904px] lg:h-[852px] lg:left-[-324px] lg:bottom-[260px] md:w-[426px] md:h-[402px] md:left-[-117px] md:bottom-[836px] md:block hidden"></div>
 
         <div className="md:absolute md:mt-0 mt-2 lg:w-[calc(100vw-140px)] lg:px-1 md:w-[calc(100vw-32px)] w-full flex items-center justify-center top-[41px] h-[42px] z-[10] gap-9">
           <div className="relative w-full flex items-center justify-center">
@@ -150,7 +150,7 @@ export default function Page() {
           </Link>
           <p className="text-[16px] text-white">Back to Platform</p>
         </div>
-        <div className="main-box-1 lg:mt-[55px] md:mt-8 mt-4 lg:mb-[42px] mb-6 w-full lg:p-10 lg:pr-11 px-4 py-[30px] text-white">
+        <div className="main-box-1 lg:mt-[55px] md:mt-8 mt-4 lg:mb-[42px] md:mb-4 mb-6 w-full lg:p-10 lg:pr-11 px-4 py-[30px] text-white">
           {modalOpen && (
             <div className="main-modal-box text-white !absolute lg:top-29 lg:left-9 lg:right-19 lg:py-10 lg:px-15 top-18 md:left-8 md:right-8 md:px-6 md:py-8 left-0 right-0 pt-7 pl-7 pr-8 pb-5 z-500">
               <div className="flex justify-between items-center">
@@ -192,17 +192,16 @@ export default function Page() {
                     </p>
                   </div>
                   <p className="lg:text-[18px] text-xs">
-                    The Professional Development Hub stands as a cornerstone of
-                    the Firesight Platform. Your gateway to mastering the future
-                    of work. Our platform is designed to empower solopreneurs
-                    with the tools and knowledge needed to thrive in an
-                    ever-growing AI-driven job market. Dedicated to facilitating
-                    personalised and occupation-specific learning experiences,
-                    empowered by our cutting edge AI technology. By focusing on
-                    the tools and skills critical for today’s dynamic job
-                    landscape, the Professional Development Hub is your partner
-                    in adapting to and excelling in the era of AI-driven
-                    employment.
+                    The Professional Development Hub is Firesight’s gateway to
+                    future-proof skills. Your gateway to mastering the future of
+                    work. Our platform is designed to empower solopreneurs with
+                    the tools and knowledge needed to thrive in an ever-growing
+                    AI-driven job market. Dedicated to facilitating personalised
+                    and occupation-specific learning experiences, empowered by
+                    our cutting edge AI technology. By focusing on the tools and
+                    skills critical for today’s dynamic job landscape, the
+                    Professional Development Hub is your partner in adapting to
+                    and excelling in the era of AI-driven employment.
                   </p>
                 </div>
                 <div className="flex flex-col gap-3">
@@ -621,7 +620,7 @@ export default function Page() {
 
           <div className="flex md:flex-row flex-col md:border-b-[1px] border-b-[#ffffff1a]">
             <div className="flex flex-col lg:gap-11 gap-6 lg:flex-12 flex-13 md:border-r-[1px] md:border-t-0 border-t-[1px] border-[#ffffff1a] lg:py-15 md:py-8 py-10 lg:pr-15 lg:pl-4 md:pr-5">
-              <div className="flex gap-3 items-center justify-start self-center">
+              <div className="flex gap-3 items-center justify-start self-center md:hidden">
                 <p className="text-[18px] font-bold uppercase">
                   Automatability Score
                 </p>
@@ -633,7 +632,7 @@ export default function Page() {
                   className="lg:w-[24px] lg:h-[24px] md:w-[17px] md:h-[17px] w-[16px] h-[16px]"
                 />
               </div>
-              <div className="md:block flex items-center w-full mb-3">
+              <div className="md:block flex items-center w-full mb-3 md:hidden">
                 <div className="flex-1 h-[1px] bg-[#ffffff0d]"></div>
                 <p className="text-[71px] font-bold leading-[130%]">
                   {Math.floor(
@@ -735,14 +734,22 @@ export default function Page() {
                 </p>
               </div>
               <div className="flex flex-col lg:gap-11 gap-7 items-center w-full border-t-[1px] border-t-[#ffffff1a] lg:pt-20 lg:pb-15 lg:pl-6 py-10">
-                <p className="lg:text-[43px] md:text-[20px] text-[22px] font-bold uppercase text-center">
-                  Work less. <b className="text-[#e93249]">achieve</b> more.
-                </p>
-                <p className="lg:text-[24px] text-[13px]">
-                  What is the Firesight Platform?
-                </p>
-                <Button className="bg-[url(/images/color-poly-btn.svg)] bg-no-repeat w-[228px] h-[45px] flex items-center justify-center lg:text-[18px] text-[13px] font-bold">
+                <p className="text-[24px] font-bold uppercase text-center leading-[120%] bg-[linear-gradient(180deg,rgba(0,255,224,0.55)0%,rgba(188,239,255,0.62)100%)] bg-clip-text text-transparent lg:block hidden">
                   Explore
+                </p>
+                <p className="lg:text-[43px] md:text-[20px] text-[28px] font-bold uppercase text-center leading-[120%]">
+                  FIND OUT HOW <br className="lg:hidden md:block hidden" />
+                  <b className="bg-[linear-gradient(180deg,rgba(0,255,224,0.55)0%,rgba(188,239,255,0.62)100%)] bg-clip-text text-transparent">
+                    Firesight
+                  </b>{" "}
+                  CAN TRANSFORM
+                  <br className="lg:hidden md:block hidden" /> YOUR WORKDAY
+                </p>
+                <Button
+                  variant="outline"
+                  className="cursor-pointer gradient-border-btn lg:text-[22px] md:text-[14px] text-[16px] bg-transparent rounded-full lg:px-[50px] md:px-9 px-[50px] lg:py-5 md:py-3 py-5 text-white leading-normal lg:h-18 h-11 hover:text-white"
+                >
+                  14 Day Trial | <span className="font-bold">Start Now</span>
                 </Button>
               </div>
             </div>
@@ -793,9 +800,9 @@ export default function Page() {
                           className="main-small-box-1 flex items-center justify-center lg:h-90 md:h-54 h-79 md:w-[31%] w-full"
                         >
                           <div className="color-pattern-bg-1"></div>
-                          <p className="text-center">{ele.name}</p>
+                          <p className="text-center mx-6">{ele.name}</p>
                           <div
-                            className="absolute flex items-center justify-center lg:bottom-[21px] lg:right-[22px] md:bottom-3 md:right-3 right-5 bottom-4 lg:w-[102px] lg:h-[47px] w-[63px] h-[29px] bg-no-repeat"
+                            className="absolute flex items-center justify-center lg:bottom-[21px] lg:right-[22px] md:bottom-3 md:right-3 right-5 bottom-4 lg:w-[106px] lg:h-[49px] w-[63px] h-[29px] bg-no-repeat"
                             style={{
                               background: `url(/images/tag-back-${Math.floor(
                                 ele.number / 1000
@@ -873,10 +880,13 @@ export default function Page() {
           </div>
         </div>
       </div>
-
-      <AIImpactFooter>
-        <div className="w-[904px] h-[852px] bottom-[-306px] right-[-246px] overflow-hidden shineBg_body_red_circle bg-[length:138%_139%] lg:block hidden"></div>
-      </AIImpactFooter>
+      <div className="shineBg_body_blue_circle lg:hidden md:block hidden bottom-[157px] left-[calc(50vw-314px)] w-[629px] h-[592px]"></div>
+      <div className="shineBg_body_blue_circle lg:block hidden bottom-[6.8vw] right-[24.653vw] w-[min(602px,41.8vw)] h-[min(602px,41.8vw)]"></div>{" "}
+      <FireSightFooter>
+        <div className="circle-footer-mobile md:hidden block z-[-2342]"></div>
+        <div className="shineBg_body_blue_circle lg:block hidden bottom-[-25vw] right-[-17.57vw] w-[min(602px,41.8vw)] h-[min(602px,41.8vw)]"></div>
+        <div className="shineBg_body_blue_circle lg:block hidden bottom-[-32.85vw] left-[-16.666vw] w-[min(602px,41.8vw)] h-[min(602px,41.8vw)]"></div>
+      </FireSightFooter>
     </>
   );
 }
@@ -886,7 +896,7 @@ function TabBar({ type }: { type: number }) {
     [
       "AI Impact Index",
       "Community",
-      "Training Modules",
+      "Training Resources",
       "Resume Builder",
       "Career Advisor",
     ],
