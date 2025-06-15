@@ -57,7 +57,11 @@ export function Header({ scrolled }: { scrolled: boolean }) {
                 alt=" "
                 width={116}
                 height={116}
-                className={"inline mx-[-40px]"}
+                className={
+                  pathname.substring(0, 6) === "/pulse"
+                    ? "inline mx-[-40px]"
+                    : "hidden"
+                }
               />
               {pathname.substring(0, 6) === "/pulse"
                 ? "FIRESIGHT | PULSE"
