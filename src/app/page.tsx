@@ -250,7 +250,9 @@ export default function Home() {
           <div className="flex flex-wrap w-full md:mb-16 mb-[50px] gap-5">
             <div className="lg:flex-2 w-full">
               <h2 className="md:text-[43.8px] text-[28px] font-extrabold uppercase leading-11">
-                Media, market & Business intelligence platform
+                Media, market &<br />
+                Business intelligence
+                <br /> platform
               </h2>
               <p className="text-[12px] leading-normal text-white block md:hidden mt-4">
                 SaaS solution designed to centralize and optimize workflows for
@@ -404,11 +406,11 @@ export default function Home() {
       {/* Session section */}
       <section className="relative md:px-14 px-4 w-full flex flex-col items-center justify-center">
         <div className="session-bg z-[-100] h-[66.66vw] top-[calc(27vw+125px)] md:top-[300px] md:h-[30vw]"></div>
-        <div className="green-shine-session-mobile md:hidden block"></div>
-        <div className="green-shine-session md:block hidden"></div>
-        <div className="green-shine-session-small md:block hidden"></div>
-        <div className="green-shine-session-2nd-small md:block hidden"></div>
-        <div className="green-shine-session-3rd-small md:block hidden"></div>
+        <div className="green-shine-session-mobile md:hidden block z-[-100]"></div>
+        <div className="green-shine-session md:block hidden z-[-100]"></div>
+        <div className="green-shine-session-small md:block hidden z-[-100]"></div>
+        <div className="green-shine-session-2nd-small md:block hidden z-[-100]"></div>
+        <div className="green-shine-session-3rd-small md:block hidden z-[-100]"></div>
         <div className="flex md:gap-11 gap-3 text-white items-center justify-between md:mt-39 mt-20 mb-0 md:h-16 h-[30px]">
           <Link href="/">
             <Image
@@ -433,7 +435,7 @@ export default function Home() {
             width: "72.57vw",
             height: "60.14vw",
           }}
-          className="hidden md:block"
+          className="hidden md:block mt-13"
         >
           <div
             style={{
@@ -457,7 +459,8 @@ export default function Home() {
           <div className="flex flex-wrap w-full md:mb-16 mb-[50px] gap-5">
             <div className="lg:flex-2 w-full">
               <h2 className="md:text-[43.8px] text-[28px] font-extrabold uppercase leading-11">
-                Next-Gen COnference Technology
+                Next-Gen Conference
+                <br /> Technology
               </h2>
               <p className="text-[12px] leading-normal text-white block md:hidden mt-2">
                 Sessions is a next-generation browser-based conferencing
@@ -651,7 +654,8 @@ export default function Home() {
           <div className="flex flex-wrap w-full mb-16 gap-5">
             <div className="lg:flex-2 w-full">
               <h2 className="md:text-[43.8px] text-[28px] font-extrabold uppercase leading-11">
-                Unified intelligence platform
+                Unified intelligence
+                <br /> platform
               </h2>
               <p className="text-[12px] leading-normal text-white block md:hidden mt-2">
                 SaaS solution designed to centralize and optimize workflows for

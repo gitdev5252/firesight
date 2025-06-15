@@ -5,16 +5,11 @@ import "./header.css";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuTrigger,
-  DropdownMenuContent,
-  DropdownMenuItem,
-} from "@/components/ui/dropdown-menu";
 
 export function Header({ scrolled }: { scrolled: boolean }) {
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     setMobileMenuOpen(false);
@@ -50,71 +45,102 @@ export function Header({ scrolled }: { scrolled: boolean }) {
             height={24}
           />
         </nav> */}
-        <nav className="hidden md:flex flex-1 items-center justify-end space-x-[5.56vw] font-medium !text-[18px]">
-          <div className="relative">
-            <Image
-              src="/images/GreenBlurPolygon.svg"
-              alt=" "
-              width={116}
-              height={116}
-              className={
-                pathname.substring(0, 6) === "/pulse"
-                  ? "inline mx-[-48px]"
-                  : "hidden"
-              }
-            />
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button
-                  variant="ghost"
-                  className="px-2 text-white !text-[18px] !bg-transparent hover:text-white"
-                >
-                  {pathname.substring(0, 6) === "/pulse"
-                    ? "FIRESIGHT | PULSE"
-                    : "PRODUCTS"}
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="14"
-                    height="15"
-                    viewBox="0 0 14 15"
-                    fill="none"
+        <nav className="hidden md:flex flex-auto items-center justify-end space-x-[5.56vw] font-medium !text-[18px]">
+          <div className="flex items-center relative">
+            <Button
+              variant="ghost"
+              className="px-2 text-white !text-[18px] !bg-transparent hover:text-white"
+              onClick={() => setMenuOpen(!menuOpen)}
+            >
+              <Image
+                src="/images/BlueBlurPolygon.svg"
+                alt=" "
+                width={116}
+                height={116}
+                className={
+                  pathname.substring(0, 6) === "/pulse"
+                    ? "inline mx-[-40px]"
+                    : "hidden"
+                }
+              />
+              {pathname.substring(0, 6) === "/pulse"
+                ? "FIRESIGHT | PULSE"
+                : "PRODUCTS"}
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="14"
+                height="15"
+                viewBox="0 0 14 15"
+                fill="none"
+              >
+                <path
+                  d="M2.37914 5.72075L6.18247 9.52409C6.63164 9.97325 7.36664 9.97325 7.81581 9.52409L11.6191 5.72075"
+                  stroke="currentColor"
+                  strokeWidth="1.75"
+                  strokeMiterlimit="10"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </Button>
+            {menuOpen && (
+              <div className="main-menu-box text-white !absolute w-[388px] h-[250px] left-0 top-13">
+                <div className="flex justify-end items-center mt-4 pr-[22px]">
+                  <Button
+                    onClick={() => setMenuOpen(false)}
+                    variant="ghost"
+                    className="p-0"
                   >
-                    <path
-                      d="M2.37914 5.72075L6.18247 9.52409C6.63164 9.97325 7.36664 9.97325 7.81581 9.52409L11.6191 5.72075"
-                      stroke="currentColor"
-                      strokeWidth="1.75"
-                      strokeMiterlimit="10"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
+                    <Image
+                      src="/images/mobile/menu-close.svg"
+                      alt="Close"
+                      width={24}
+                      height={24}
+                      className="lg:size-6 md:size-[18px] size-[20px]"
                     />
-                  </svg>
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className="bg-transparent border-none shadow-lg min-w-[220px] z-[1002]">
-                <DropdownMenuItem
-                  asChild
-                  className="text-white hover:!text-gray-300 hover:!bg-transparent cursor-pointer !text-[18px]"
-                >
-                  <Link href="/sessions">
-                    FIRESIGHT | SESSIONS <small>(Comming Soon)</small>
-                  </Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem
-                  asChild
-                  className="text-white hover:!text-gray-300 hover:!bg-transparent cursor-pointer !text-[18px]"
-                >
-                  <Link href="/platform">
-                    FIRESIGHT | PLATFORM <small>(Comming Soon)</small>
-                  </Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem
-                  asChild
-                  className="text-white hover:!text-gray-300 hover:!bg-transparent cursor-pointer !text-[18px]"
-                >
-                  <Link href="/pulse">FIRESIGHT | PULSE</Link>
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+                  </Button>
+                </div>
+                <div className="flex flex-col px-1">
+                  <div className="flex items-center justify-start h-[52px]">
+                    <Image
+                      src="/images/BlueBlurPolygon.svg"
+                      alt=" "
+                      width={116}
+                      height={116}
+                      className={"mx-[-33px] my-[-48ox]"}
+                    />
+                    <Link href="/pulse/overview">FIRESIGHT | PULSE</Link>
+                  </div>
+                  <div className="flex items-center justify-start h-[52px]">
+                    <Image
+                      src="/images/GreenBlurPolygon.svg"
+                      alt=" "
+                      width={116}
+                      height={116}
+                      className={"mx-[-33px] my-[-48ox]"}
+                    />
+                    <Link href="/sessions">
+                      FIRESIGHT | SESSIONS{" "}
+                      <small>
+                        <i>(Comming Soon)</i>
+                      </small>
+                    </Link>
+                  </div>
+                  <div className="flex items-center justify-start h-[52px]">
+                    <Image
+                      src="/images/PinkBlurPolygon.svg"
+                      alt=" "
+                      width={116}
+                      height={116}
+                      className={"mx-[-33px] my-[-48ox]"}
+                    />
+                    <Link href="/platform">
+                      FIRESIGHT | PLATFORM <small>(Comming Soon)</small>
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
           <Link
             href="/about-us"
@@ -148,7 +174,7 @@ export function Header({ scrolled }: { scrolled: boolean }) {
             AI IMPACT INDEX
           </Link>
           <Link
-            href="/blog"
+            href="https://blog.firesight.ai/"
             className={
               (pathname === "/blog" ? "nav-item active" : "nav-item") +
               " lg:block hidden"

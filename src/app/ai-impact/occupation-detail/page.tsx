@@ -2,7 +2,7 @@
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 
-import "./page.css";
+import "../home/page.css";
 import AIImpactFooter from "@/layouts/AIImpactFooter";
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
@@ -285,18 +285,18 @@ export default function Page() {
               className="lg:w-[49px] lg:h-[41px] md:w-[38px] md:h-[32px] w-[31px] h-[26px]"
             />
             <div className="w-[1px] h-[18px] bg-[#ffffff1a] md:block hidden"></div>
+            <p className="lg:text-[32px] md:text-2xl text-[18px] font-bold">
+              Professional Development Hub
+            </p>
             <div onClick={() => setModalOpen(!modalOpen)}>
-              <p className="lg:text-[32px] md:text-2xl text-[18px] font-bold">
-                Professional Development Hub
-              </p>
+              <Image
+                src={`/images/icons/union${modalOpen ? "-red" : ""}.svg`}
+                alt="union"
+                width={24}
+                height={24}
+                className="lg:w-[24px] lg:h-[24px] md:w-[17px] md:h-[17px] w-[16px] h-[16px]"
+              />
             </div>
-            <Image
-              src={`/images/icons/union${modalOpen ? "-red" : ""}.svg`}
-              alt="union"
-              width={24}
-              height={24}
-              className="lg:w-[24px] lg:h-[24px] md:w-[17px] md:h-[17px] w-[16px] h-[16px]"
-            />
           </div>
 
           <div className="w-full lg:mt-19 md:mt-10 mt-15">
