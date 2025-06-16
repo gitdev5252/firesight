@@ -99,25 +99,25 @@ export default function Page() {
               WebkitTextFillColor: "transparent",
             }}
           >
-            stadium | enterprise
+            stadiuum | enterprise
           </h5>
           <h3 className="md:text-[26px] text-[24px] italic md:mb-[30px] mb-[12px]">
             Sports Media Intelligence
             <br /> for the Sports Business Landscape
           </h3>
           <p className="md:text-[16px] text-[12px]">
-            STADIUM | Enterprise is a verticalized Pulse deployment tailored for
-            media, wagering, technology, and sports organisations. Delivering
-            high-frequency insights, personalized reporting, and live briefings
-            across leagues, teams, sponsors, and tech providers - STADIUM makes
-            sense of industry noise with clarity and speed.
+            STADIUUM | Enterprise is a verticalized Pulse deployment tailored
+            for media, wagering, technology, and sports organisations.
+            Delivering high-frequency insights, personalized reporting, and live
+            briefings across leagues, teams, sponsors, and tech providers -
+            STADIUUM makes sense of industry noise with clarity and speed.
           </p>
-          <Link href="http://www.stadium.com">
+          <Link href="https://www.stadiuumgroup.com/">
             <Button
               variant="outline"
               className="cursor-pointer gradient-border-btn text-[16px] md:mt-[35px] mt-[24px] bg-transparent rounded-full md:px-[50px] px-[36px] md:py-[20px] py-[12px] text-white hover:text-white"
             >
-              stadium.com
+              stadiuum.com
             </Button>
           </Link>
         </div>
