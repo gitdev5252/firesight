@@ -3,17 +3,33 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import "./header.css";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 
 export function Header({ scrolled }: { scrolled: boolean }) {
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setMobileMenuOpen(false);
   }, [pathname]);
+
+  // Close desktop menu when clicking outside
+  useEffect(() => {
+    if (!menuOpen) return;
+    function handleClickOutside(event: MouseEvent) {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+        setMenuOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [menuOpen]);
+
   return (
     <header
       className="top-0 pt-4 w-[100vw] h-[100px] text-white z-[1001] fixed"
@@ -37,14 +53,6 @@ export function Header({ scrolled }: { scrolled: boolean }) {
           </Link>
         </div>
         {/* Desktop Nav */}
-        {/* <nav className="md:hidden flex flex-1 items-center justify-end">
-          <Image
-            src="/images/mobile/Menu.svg"
-            alt="menu"
-            width={24}
-            height={24}
-          />
-        </nav> */}
         <nav className="hidden md:flex flex-auto items-center justify-end space-x-[5.56vw] font-medium !text-[18px]">
           <div className="flex items-center relative">
             <Button
@@ -66,25 +74,23 @@ export function Header({ scrolled }: { scrolled: boolean }) {
               {pathname.substring(0, 6) === "/pulse"
                 ? "FIRESIGHT | PULSE"
                 : "PRODUCTS"}
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="14"
-                height="15"
-                viewBox="0 0 14 15"
-                fill="none"
-              >
-                <path
-                  d="M2.37914 5.72075L6.18247 9.52409C6.63164 9.97325 7.36664 9.97325 7.81581 9.52409L11.6191 5.72075"
-                  stroke="currentColor"
-                  strokeWidth="1.75"
-                  strokeMiterlimit="10"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
+              <Image
+                src={
+                  menuOpen
+                    ? "/images/icons/uparrow.png"
+                    : "/images/icons/downarrow.png"
+                }
+                alt={menuOpen ? "Down Arrow" : "Up Arrow"}
+                width={14}
+                height={14}
+                className="ml-2 mb-1"
+              />
             </Button>
             {menuOpen && (
-              <div className="main-menu-box text-white !absolute w-[388px] h-[250px] left-0 top-13">
+              <div
+                ref={menuRef}
+                className="main-menu-box text-white !absolute w-[388px] h-[250px] left-0 top-13"
+              >
                 <div className="flex justify-end items-center mt-4 pr-[22px]">
                   <Button
                     onClick={() => setMenuOpen(false)}
@@ -101,16 +107,21 @@ export function Header({ scrolled }: { scrolled: boolean }) {
                   </Button>
                 </div>
                 <div className="flex flex-col px-1">
-                  <div className="flex items-center justify-start h-[52px]">
-                    <Image
-                      src="/images/BlueBlurPolygon.svg"
-                      alt=" "
-                      width={116}
-                      height={116}
-                      className={"mx-[-33px] my-[-48ox]"}
-                    />
-                    <Link href="/pulse/overview">FIRESIGHT | PULSE</Link>
-                  </div>
+                  <Link
+                    href="/pulse/overview"
+                    onClick={() => setMenuOpen(false)}
+                  >
+                    <div className="flex items-center justify-start h-[52px]">
+                      <Image
+                        src="/images/BlueBlurPolygon.svg"
+                        alt=" "
+                        width={116}
+                        height={116}
+                        className={"mx-[-33px] my-[-48ox]"}
+                      />
+                      FIRESIGHT | PULSE
+                    </div>
+                  </Link>
                   <div className="flex items-center justify-start h-[52px]">
                     <Image
                       src="/images/GreenBlurPolygon.svg"
