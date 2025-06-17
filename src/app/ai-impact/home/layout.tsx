@@ -87,11 +87,7 @@ export default function Page({
                   bg-black/90 backdrop-blur-xl z-[10]"
                 style={{ borderRadius: "20px" }} // match modal border radius if needed
               ></div> */}
-              <div
-                className="main-modal-box text-white !absolute lg:top-29 lg:left-9 lg:right-19 lg:py-10 lg:px-15
-                  top-18 md:left-8 md:right-8 md:px-6 md:py-8
-                  left-0 right-0 pt-7 pl-7 pr-8 pb-5 z-[20] "
-              >
+              <div className="main-modal-box text-white !absolute lg:top-29 lg:left-9 lg:right-19 lg:py-10 lg:px-15 top-18 md:left-8 md:right-8 md:px-6 md:py-8 left-0 right-0 pt-7 pl-7 pr-8 pb-5 z-500">
                 <div className="flex justify-between items-center">
                   <p className="lg:text-2xl text-[16px]">
                     Professional Development Hub
