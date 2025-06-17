@@ -432,7 +432,7 @@ export default function Page() {
                       .map((ele, index) => (
                         <div
                           key={index}
-                          className="flex items-center justify-center text-[16px] bg-[url(/images/const-card-back.svg)] bg-no-repeat bg-cover h-[47px] w-[165px]"
+                          className="flex items-center justify-center text-[16px] rounded-[50px] border border-[rgba(255,255,255,0.25)] bg-[rgba(255,255,255,0.04)] h-[47px] w-[165px]"
                         >
                           {ele}
                         </div>
@@ -456,7 +456,7 @@ export default function Page() {
                       .map((ele, index) => (
                         <div
                           key={index}
-                          className="flex items-center justify-center text-[16px] bg-[url(/images/const-card-back.svg)] bg-no-repeat bg-cover h-[47px] w-[165px]"
+                          className="flex items-center justify-center text-[16px] rounded-[50px] border border-[rgba(255,255,255,0.25)] bg-[rgba(255,255,255,0.04)] h-[47px] w-[165px]"
                         >
                           {ele}
                         </div>
@@ -864,18 +864,20 @@ export default function Page() {
               </div>
             </div>
 
-            <div className="flex items-center gap-2 h-6 md:mt-[50px] mt-[10px] md:p-0 pl-4 z-20">
-              <Link href="/ai-impact/home/category">
-                <Image
-                  src="/images/icons/back-btn.svg"
-                  alt="back-btn"
-                  width={24}
-                  height={24}
-                />
-              </Link>
-              <p className="text-[16px] text-white">
-                Back to AI Occupational Categories
-              </p>
+            <div className="md:block hidden">
+              <div className="flex items-center gap-2 h-6 md:mt-[50px] mt-[10px] md:p-0 pl-4 z-20  ">
+                <Link href="/ai-impact/home/category">
+                  <Image
+                    src="/images/icons/back-btn.svg"
+                    alt="back-btn"
+                    width={24}
+                    height={24}
+                  />
+                </Link>
+                <p className="text-[16px] text-white">
+                  Back to AI Occupational Categories
+                </p>
+              </div>
             </div>
           </div>
         </div>
