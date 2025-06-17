@@ -1,5 +1,5 @@
 .main-box-1 {
-  background: rgba(255, 255, 255, 0.01);
+  background-color: #0e111c;
   border: 1px solid rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(32px) !important;
   border-radius: 20px;
@@ -18,16 +18,15 @@
   content: "";
   position: absolute;
   inset: 0;
-  z-index: 0;
+  z-index: 50;
   border-radius: 20px;
   backdrop-filter: blur(100px);
-  -webkit-backdrop-filter: blur(100px);
   pointer-events: none;
   opacity: 0.1;
 }
 .main-modal-box > * {
   position: relative;
-  z-index: 1;
+  z-index: 100;
 }
 
 .main-small-box-1 {
