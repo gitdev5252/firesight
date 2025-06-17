@@ -112,7 +112,7 @@ export default function Page() {
             briefings across leagues, teams, sponsors, and tech providers -
             STADIUUM makes sense of industry noise with clarity and speed.
           </p>
-          <Link href="https://www.stadiuumgroup.com/">
+          <Link href="https://www.stadiuum.com/">
             <Button
               variant="outline"
               className="cursor-pointer gradient-border-btn text-[16px] md:mt-[35px] mt-[24px] bg-transparent rounded-full md:px-[50px] px-[36px] md:py-[20px] py-[12px] text-white hover:text-white"
