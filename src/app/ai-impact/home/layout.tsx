@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import "./page.css";
 import { motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
-import { usePathname } from "next/navigation";
+// import { usePathname } from "next/navigation";
 import Link from "next/link";
 import AIImpactFooter from "@/layouts/AIImpactFooter";
 
@@ -15,17 +15,17 @@ export default function Page({
   children: React.ReactNode;
 }>) {
   const [modalOpen, setModalOpen] = useState(false);
-  const pathname = usePathname();
-  const [curPath, setCurPath] = useState("");
-  useEffect(() => {
-    setModalOpen(false);
-    console.log("pathname changed!", pathname);
-    setCurPath(pathname);
+  // const pathname = usePathname();
+  // const [curPath, setCurPath] = useState("");
+  // useEffect(() => {
+  //   setModalOpen(false);
+  //   console.log("pathname changed!", pathname);
+  //   setCurPath(pathname);
 
-    const container = document.getElementById("main-container");
-    if (container && pathname != "/ai-impact/home")
-      container.style.setProperty("background", "#0E111C", "important");
-  }, [pathname]);
+  //   const container = document.getElementById("main-container");
+  //   if (container && pathname != "/ai-impact/home")
+  //     container.style.setProperty("background", "#0E111C", "important");
+  // }, [pathname]);
   return (
     <>
       <div className="w-full lg:px-15 md:px-4">
