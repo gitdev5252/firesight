@@ -1,7 +1,7 @@
 // src/components/video/hooks/useVideoRoom.ts
 'use client';
 import { useState, useEffect } from 'react';
-import { Room, RoomEvent, DisconnectReason } from 'livekit-client';
+import { Room, RoomEvent } from 'livekit-client';
 
 export function useVideoRoom(roomName: string) {
   const [room, setRoom] = useState<Room | null>(null);

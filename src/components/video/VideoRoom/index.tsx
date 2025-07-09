@@ -13,8 +13,7 @@ import '@livekit/components-styles';
 import { VideoRoomProps } from './types';
 
 export default function VideoRoom({
-  roomName,
-  userName,
+
   serverUrl,
   token,
 }: VideoRoomProps) {

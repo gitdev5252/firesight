@@ -30,7 +30,7 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ token });
   } catch (error) {
     return NextResponse.json(
-      { error: 'Failed to generate token' },
+      { error: `Failed to generate token--> ${error}`  },
       { status: 500 }
     );
   }
