@@ -21,9 +21,12 @@ const fallbackCategories: Category[] = [
 
 async function getCategories(): Promise<Category[]> {
   try {
-    const res = await fetch("http://localhost:8000/categories", {
-      cache: "no-store",
-    });
+    const res = await fetch(
+      "https://firesight-backend-3irx.onrender.com/categories",
+      {
+        cache: "no-store",
+      }
+    );
     if (!res.ok) throw new Error("Fetch failed");
     return await res.json();
   } catch (error) {
