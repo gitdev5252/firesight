@@ -1,78 +1,22 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { TabBar } from "../../layout";
 import Image from "next/image";
 import Link from "next/link";
-import "../../page.css";
+import { useGetOccupationsByCategoryQuery } from "@/store/api/occupationApi";
+import { OccupationService } from "@/services/occupationService";
 
-/**
- * @typedef {Object} Occupation
- * @property {string} id
- * @property {string} category
- * @property {string} core_occupation
- * @property {number|null} substi_sco
- * @property {string|null} overall_salary_avg
- * @property {number|null} salary_normal
- * @property {number|null} auto_avg
- * @property {number|null} free_com_sco
- * @property {number|null} occ_cat_sco_com
- * @property {number|null} occ_cat_sco_ai
- * @property {number|null} lab_type_sco
- * @property {number|null} com_index
- * @property {number|null} ai_index
- * @property {number|null} thermometer
- */
+import "../../page.css";
 
 export default function OccupationPage() {
   const params = useParams();
   const occupation = params.occupation
-    ? decodeURIComponent(params.occupation)
+    ? decodeURIComponent(Array.isArray(params.occupation) ? params.occupation[0] : params.occupation)
     : "Unknown Occupation";
 
-  /** @type [Occupation[], Function] */
-  const [mainCardInfo, setMainCardInfo] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
-
-  // Array of 4 background images
-  const bgImages = [
-    "/images/tag-back-0.svg",
-    "/images/tag-back-1.svg",
-    "/images/tag-back-2.svg",
-    "/images/tag-back-3.svg",
-  ];
-
-  // Function to get random background image for each element
-  const getRandomBgImage = () => {
-    const randomIndex = Math.floor(Math.random() * bgImages.length);
-    const imagePath = bgImages[randomIndex];
-    return imagePath;
-  };
-
-  useEffect(() => {
-    async function fetchOccupationData() {
-      setLoading(true);
-      setError("");
-      try {
-        const res = await fetch(
-          `${
-            process.env.NEXT_PUBLIC_API_URL
-          }/categories/occupations?category=${encodeURIComponent(occupation)}`
-        );
-        if (!res.ok) throw new Error("Failed to fetch occupation data");
-        const data = await res.json();
-        setMainCardInfo(data);
-      } catch (err) {
-        setError("Could not load occupation data.");
-        setMainCardInfo([]);
-      } finally {
-        setLoading(false);
-      }
-    }
-    fetchOccupationData();
-  }, [occupation]);
+  // Use RTK Query hook instead of local state
+  const { data: mainCardInfo = [], isLoading, error } = useGetOccupationsByCategoryQuery(occupation);
 
   return (
     <div>
@@ -99,19 +43,23 @@ export default function OccupationPage() {
         {occupation}
       </p>
 
-      {loading ? (
+      {isLoading ? (
         <p className="text-white">Loading...</p>
       ) : error ? (
-        <p className="text-red-500">{error}</p>
+        <p className="text-red-500">
+          {'status' in error && error.status === 'FETCH_ERROR'
+            ? 'Network error. Please check your connection.'
+            : 'Could not load occupation data.'}
+        </p>
       ) : (
         <div className="flex flex-col sm:flex-row flex-wrap justify-between lg:gap-y-9 gap-y-4 text-white font-bold lg:text-2xl text-[16px] leading-normal h-[800px] overflow-y-auto p-[40px] mb-[40px]">
           {mainCardInfo.length === 0 ? (
             <p className="text-white">No data found for this occupation.</p>
           ) : (
-            mainCardInfo.map((ele, idx) => (
+            mainCardInfo.map((ele) => (
               <Link
                 key={ele.id}
-                href={`/ai-impact/occupation-detail/${encodeURIComponent(
+                href={`/ai-impact/${encodeURIComponent(
                   ele.core_occupation
                 )}`}
                 className="main-small-box-1 flex flex-col items-center justify-center lg:h-90 md:h-54 h-79 md:w-[31%] sm:w-[48.5%] w-full"
@@ -121,7 +69,7 @@ export default function OccupationPage() {
                 <div
                   className="absolute flex items-center justify-center lg:bottom-[21px] lg:right-[22px] md:bottom-3 md:right-3 right-5 bottom-4 lg:w-[106px] lg:h-[49px] w-[63px] h-[29px]"
                   style={{
-                    backgroundImage: `url(${getRandomBgImage()})`,
+                    backgroundImage: `url(${OccupationService.getRandomBackgroundImage()})`,
                     backgroundSize: "contain",
                     backgroundPosition: "center",
                     backgroundRepeat: "no-repeat",

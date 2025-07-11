@@ -1,13 +1,14 @@
 "use client";
 import Image from "next/image";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+
 import { Button } from "@/components/ui/button";
+import FireSightFooter from "@/layouts/FireSightFooter";
 
 import "../home/page.css";
-import { AnimatePresence, motion } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
-import { usePathname } from "next/navigation";
-import Link from "next/link";
-import FireSightFooter from "@/layouts/FireSightFooter";
 
 const pages = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 
@@ -318,12 +319,12 @@ export default function Page() {
           </div>
 
           {/*Summary*/}
-          <div className="flex w-full gap-2 lg:mt-22 md:mt-12 mt-8">
+          <div className="flex w-full gap-2">
             <div className="flex flex-col gap-3 flex-3">
               <p className="lg:text-[32px] md:text-[20px] text-[18px] font-bold text-[#E93249]">
                 Creative Director
               </p>
-              <div className="flex gap-3 items-end">
+              <div className="flex gap-3 items-end mt-15">
                 <p className="lg:text-[70px] md:text-[36px] text-[32px] font-bold leading-none lg:h-[60px] md:h-[32px] h-[30px]">
                   #451
                 </p>

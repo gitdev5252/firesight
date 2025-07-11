@@ -1,9 +1,12 @@
 "use client";
 
-import PropTypes from "prop-types";
 import Link from "next/link";
 
-export default function CategoryList({ categories }) {
+interface CategoryListProps {
+  categories: string[];
+}
+
+export default function CategoryList({ categories }: CategoryListProps) {
   return (
     <div className="flex flex-col sm:flex-row flex-wrap justify-between lg:gap-y-9 gap-y-4 text-white font-bold lg:text-2xl text-[16px] leading-normal h-[800px] overflow-y-auto p-[40px] mb-[40px]">
       {categories.map((ele, index) => (
@@ -19,7 +22,3 @@ export default function CategoryList({ categories }) {
     </div>
   );
 }
-
-CategoryList.propTypes = {
-  categories: PropTypes.arrayOf(PropTypes.string).isRequired,
-};

@@ -3,6 +3,8 @@ import { Lekton } from "next/font/google";
 import clsx from "clsx";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import { Provider } from "react-redux";
+import { store } from "../store";
 import { Header } from "@/layouts/Header";
 
 import "./globals.css";
@@ -35,15 +37,17 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={clsx(lekton.className, "bg-[#080B16] relative m-0")}>
-        {!hideHeader && <Header scrolled={scrolled} />}
-        <main
-          className={clsx(
-            hideHeader ? "overflow-y-hidden" : "overflow-x-hidden ",
-            "flex flex-col w-full justify-center items-center relative overflow-x-hidden"
-          )}
-        >
-          {children}
-        </main>
+        <Provider store={store}>
+          {!hideHeader && <Header scrolled={scrolled} />}
+          <main
+            className={clsx(
+              hideHeader ? "overflow-y-hidden" : "overflow-x-hidden ",
+              "flex flex-col w-full justify-center items-center relative overflow-x-hidden"
+            )}
+          >
+            {children}
+          </main>
+        </Provider>
       </body>
     </html>
   );
