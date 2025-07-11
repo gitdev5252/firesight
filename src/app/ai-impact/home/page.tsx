@@ -1,36 +1,29 @@
 import "./page.css";
 import { TabBar } from "./layout";
-import Link from "next/link";
+import CategoryList from "@/components/impact/CategoryList";
 
-type Category = {
-  id: string;
-  name: string;
-  description: string;
-  slug: string;
-};
-
-const fallbackCategories: Category[] = [
-  {
-    id: "1",
-    name: "Default Category",
-    description: "This is a fallback category.",
-    slug: "default-category",
-  },
-  // Add more fallback categories if needed
+const fallbackCategories: string[] = [
+  "Default Category 1",
+  "Default Category 2",
+  "Default Category 3",
+  "Default Category 4",
+  "Default Category 5",
+  "Default Category 6",
+  "Default Category 7",
 ];
 
-async function getCategories(): Promise<Category[]> {
+const API_URL =
+  process.env.NEXT_PUBLIC_API_URL ||
+  "https://firesight-backend-3irx.onrender.com";
+
+async function getCategories(): Promise<string[]> {
   try {
-    const res = await fetch(
-      "https://firesight-backend-3irx.onrender.com/categories",
-      {
-        cache: "no-store",
-      }
-    );
+    const res = await fetch(`${API_URL}/categories`, {
+      cache: "no-store",
+    });
     if (!res.ok) throw new Error("Fetch failed");
     return await res.json();
   } catch (error) {
-    // Return fallback categories if fetch fails
     console.error("Error fetching categories:", error);
     return fallbackCategories;
   }
@@ -44,18 +37,7 @@ export default async function Page() {
       <div className="w-full lg:my-29 md:mt-9 mt-11 md:mb-13 mb-7">
         <TabBar type={1} />
       </div>
-      <div className="flex flex-col sm:flex-row flex-wrap justify-between lg:gap-y-9 gap-y-4 text-white font-bold lg:text-2xl text-[16px] leading-normal h-[800px] overflow-y-auto p-[40px] mb-[40px]">
-        {categories.map((ele, index) => (
-          <Link
-            key={index}
-            href={`/ai-impact/home/category/${ele.slug}`}
-            className="main-small-box-1 flex items-center justify-center lg:h-90 md:h-54 h-79 md:!w-[31%] sm:!w-[48.5%] !w-full"
-          >
-            <div className="color-pattern-bg-1"></div>
-            <p className="text-center mx-6">{ele.name}</p>
-          </Link>
-        ))}
-      </div>
+      <CategoryList categories={categories} />
     </>
   );
 }

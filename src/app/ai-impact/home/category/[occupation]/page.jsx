@@ -1,10 +1,17 @@
 "use client";
-import { TabBar } from "../layout";
+import { useParams } from "next/navigation";
+import { TabBar } from "../../layout";
 import Image from "next/image";
-
-import "../page.css";
 import Link from "next/link";
-export default function Page() {
+
+import "../../page.css";
+
+export default function OccupationPage() {
+  const params = useParams();
+  const occupation = params.occupation
+    ? decodeURIComponent(params.occupation)
+    : "Unknown Occupation";
+
   const mainCardInfo = [
     { name: "Carpenter", number: 2890 },
     { name: "Carpenter", number: 2890 },
@@ -14,7 +21,7 @@ export default function Page() {
     { name: "Carpenter", number: 3265 },
   ];
   return (
-    <>
+    <div>
       {/* Back to AI Impact Home*/}
       <div className="flex w-full justify-start items-center gap-2 h-6 lg:mt-15 lg:mb-12 md:mt-11 md:mb-9 mt-8 mb-10">
         <Link href="/ai-impact/home">
@@ -59,6 +66,6 @@ export default function Page() {
           </Link>
         ))}
       </div>
-    </>
+    </div>
   );
 }
