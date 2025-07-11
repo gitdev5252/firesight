@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter, useParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
@@ -20,6 +20,12 @@ const swipePower = (offset: number, velocity: number) => {
 export default function Page() {
   const [modalOpen, setModalOpen] = useState(false);
   const pathname = usePathname();
+  const router = useRouter();
+  const params = useParams();
+
+  const occupation = params.occupation_detail
+  ? decodeURIComponent(Array.isArray(params.occupation_detail) ? params.occupation_detail[0] : params.occupation_detail)
+  : "Unknown Occupation";
   const taskProgress = [50, 0, 100, 0];
   const [curWindowWidth, setCurWindowWidth] = useState(0);
 
@@ -304,15 +310,13 @@ export default function Page() {
           </div>
 
           {/* Back to AI Impact Home*/}
-          <div className="flex w-full justify-start items-center gap-2 h-6 lg:mt-15 lg:mb-12 md:mt-11 md:mb-9 mt-8 mb-10">
-            <Link href="/ai-impact/home/category">
+          <div className="flex w-full justify-start items-center gap-2 h-6 lg:mt-15 lg:mb-12 md:mt-11 md:mb-9 mt-8 mb-10 cursor-pointer" onClick={() => router.back()}  >
               <Image
                 src="/images/icons/back-btn.svg"
                 alt="back-btn"
                 width={24}
                 height={24}
               />
-            </Link>
             <p className="lg:text-[16px] md:text-[13px] text-white">
               Back to Occupational Categories
             </p>
@@ -322,7 +326,7 @@ export default function Page() {
           <div className="flex w-full gap-2">
             <div className="flex flex-col gap-3 flex-3">
               <p className="lg:text-[32px] md:text-[20px] text-[18px] font-bold text-[#E93249]">
-                Creative Director
+                {occupation}
               </p>
               <div className="flex gap-3 items-end mt-15">
                 <p className="lg:text-[70px] md:text-[36px] text-[32px] font-bold leading-none lg:h-[60px] md:h-[32px] h-[30px]">

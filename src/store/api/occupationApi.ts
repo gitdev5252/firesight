@@ -6,7 +6,7 @@ export const occupationApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     // Get occupations by category
     getOccupationsByCategory: builder.query<Occupation[], string>({
-      query: (category) => `/categories/occupations?category=${encodeURIComponent(category)}`,
+      query: (category: string) => `/categories/occupations?category=${encodeURIComponent(category)}`,
       providesTags: (result) =>
         result
           ? [
@@ -14,6 +14,11 @@ export const occupationApi = baseApi.injectEndpoints({
             { type: 'Occupation', id: 'LIST' }
           ]
           : [{ type: 'Occupation', id: 'LIST' }],
+    }),
+
+    getCategories: builder.query<string[], void>({
+      query: () => '/categories',
+      providesTags: [{ type: 'Category', id: 'LIST' }],
     }),
 
     // Get all occupations with filters and pagination
@@ -70,4 +75,5 @@ export const {
   useGetOccupationByIdQuery,
   useGetOccupationCategoriesQuery,
   useSearchOccupationsQuery,
+  useGetCategoriesQuery,
 } = occupationApi; 
