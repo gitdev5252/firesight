@@ -1,6 +1,6 @@
 // API Configuration
 export const API_CONFIG = {
-  BASE_URL: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000',
+  BASE_URL: process.env.NEXT_PUBLIC_API_URL || 'https://firesight-backend-3irx.onrender.com',
   TIMEOUT: 10000,
   RETRY_ATTEMPTS: 3,
 } as const;
