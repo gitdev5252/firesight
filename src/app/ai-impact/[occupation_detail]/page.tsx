@@ -7,11 +7,13 @@ import { AnimatePresence, motion } from "framer-motion";
 
 import { Button } from "@/components/ui/button";
 import FireSightFooter from "@/layouts/FireSightFooter";
+import { useGetOccupationByNameQuery, useGetRelatedOccupationsByNameQuery } from "@/store/api/occupationApi";
 
 import "../home/page.css";
+import { getThermometer } from "@/utils/getThermometer";
 
-const pages = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
-
+const itemsPerSlide = 12; // or 6 or whatever your layout supports (like 4 per row × 2 rows)
+const occupationsPerSlide = 3; // or 6 or whatever your layout supports (like 4 per row × 2 rows)
 const swipeConfidenceThreshold = 100;
 const swipePower = (offset: number, velocity: number) => {
   return Math.abs(offset) * velocity;
@@ -19,94 +21,63 @@ const swipePower = (offset: number, velocity: number) => {
 
 export default function Page() {
   const [modalOpen, setModalOpen] = useState(false);
+  const [occupationTab, setOccupationTab] = useState(0);
   const pathname = usePathname();
   const router = useRouter();
   const params = useParams();
+  // useSearchOccupationsQuery,
+  const occupationParam = params?.occupation_detail;
+  const occupation = decodeURIComponent(
+    Array.isArray(occupationParam) ? occupationParam[0] : occupationParam || "Unknown Occupation"
+  );
 
-  const occupation = params.occupation_detail
-  ? decodeURIComponent(Array.isArray(params.occupation_detail) ? params.occupation_detail[0] : params.occupation_detail)
-  : "Unknown Occupation";
+  // Query data
+  const { data: impactData } = useGetOccupationByNameQuery(occupation);
+  const { data: categoryData } = useGetRelatedOccupationsByNameQuery(occupation);
+
+  // Related occupations & pagination
+  const relatedOccupations = categoryData?.relatedOccupations || [];
+  const totalSlides = Math.ceil(relatedOccupations.length / itemsPerSlide);
+  const totalOccupationSlides = Math.ceil(relatedOccupations.length / occupationsPerSlide);
   const taskProgress = [50, 0, 100, 0];
-  const [curWindowWidth, setCurWindowWidth] = useState(0);
+  // const [curWindowWidth, setCurWindowWidth] = useState(0);
 
-  const [[page, direction], setPage] = useState([0, 0]);
-
-  const paginate = (newDirection: number) => {
-    setPage(([prevPage]) => {
-      const newPage = (prevPage + newDirection + pages.length) % pages.length;
-      return [newPage, newDirection];
-    });
-  };
+  const thermometerSrc = getThermometer(impactData?.thermometer);
 
   const [[page1, direction1], setPage1] = useState([0, 0]);
+  const [[page2, direction2], setPage2] = useState([0, 0]);
 
   const paginate1 = (newDirection: number) => {
     setPage1(([prevPage]) => {
-      const newPage = (prevPage + newDirection + pages.length) % pages.length;
+      const newPage = (prevPage + newDirection + totalSlides) % totalSlides;
       return [newPage, newDirection];
     });
   };
+  const paginate2 = (newDirection: number) => {
+    setPage2(([prevPage]) => {
+      const newPage = (prevPage + newDirection + totalOccupationSlides) % totalOccupationSlides;
+      return [newPage, newDirection];
+    });
+  };
+  const sortedOccupations =
+    occupationTab === 1
+      ? [...relatedOccupations].sort((a, b) => b.ranking - a.ranking)
+      : occupationTab === 2
+        ? [...relatedOccupations].sort((a, b) => a.ranking - b.ranking)
+        : relatedOccupations;
 
-  const mainCardInfo = [
-    { name: "Carpenter", number: 2890 },
-    { name: "Carpenter", number: 2890 },
-    { name: "Carpenter", number: 2890 },
-    { name: "Copywriter", number: 965 },
-    { name: "Mechanic", number: 1890 },
-    { name: "Carpenter", number: 3265 },
-    { name: "Carpenter", number: 2890 },
-    { name: "Carpenter", number: 2890 },
-    { name: "Carpenter", number: 2890 },
-    { name: "Copywriter", number: 965 },
-    { name: "Mechanic", number: 1890 },
-    { name: "Carpenter", number: 3265 },
-    { name: "Carpenter", number: 2890 },
-    { name: "Carpenter", number: 2890 },
-    { name: "Carpenter", number: 2890 },
-    { name: "Copywriter", number: 965 },
-    { name: "Mechanic", number: 1890 },
-    { name: "Carpenter", number: 3265 },
-    { name: "Carpenter", number: 2890 },
-    { name: "Carpenter", number: 2890 },
-    { name: "Carpenter", number: 2890 },
-    { name: "Copywriter", number: 965 },
-    { name: "Mechanic", number: 1890 },
-    { name: "Carpenter", number: 3265 },
-    { name: "Carpenter", number: 2890 },
-    { name: "Carpenter", number: 2890 },
-    { name: "Carpenter", number: 2890 },
-    { name: "Copywriter", number: 965 },
-    { name: "Mechanic", number: 1890 },
-    { name: "Carpenter", number: 3265 },
-  ];
+  // useEffect(() => {
+  //   setCurWindowWidth(window.innerWidth);
+  //   const handleResize = () => {
+  //     setCurWindowWidth(window.innerWidth);
+  //   };
+  //   window.addEventListener("resize", handleResize);
 
-  const constOccupationInfo = [
-    "Documentation",
-    "Documentation",
-    "Documentation",
-    "Documentation",
-    "Documentation",
-    "Documentation",
-    "Documentation",
-    "Documentation",
-    "Documentation",
-    "Documentation",
-    "Documentation",
-    "Documentation",
-  ];
-
-  useEffect(() => {
-    setCurWindowWidth(window.innerWidth);
-    const handleResize = () => {
-      setCurWindowWidth(window.innerWidth);
-    };
-    window.addEventListener("resize", handleResize);
-
-    // Cleanup the event listener on component unmount
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
+  //   // Cleanup the event listener on component unmount
+  //   return () => {
+  //     window.removeEventListener("resize", handleResize);
+  //   };
+  // }, []);
 
   useEffect(() => {
     setModalOpen(false);
@@ -311,12 +282,12 @@ export default function Page() {
 
           {/* Back to AI Impact Home*/}
           <div className="flex w-full justify-start items-center gap-2 h-6 lg:mt-15 lg:mb-12 md:mt-11 md:mb-9 mt-8 mb-10 cursor-pointer" onClick={() => router.back()}  >
-              <Image
-                src="/images/icons/back-btn.svg"
-                alt="back-btn"
-                width={24}
-                height={24}
-              />
+            <Image
+              src="/images/icons/back-btn.svg"
+              alt="back-btn"
+              width={24}
+              height={24}
+            />
             <p className="lg:text-[16px] md:text-[13px] text-white">
               Back to Occupational Categories
             </p>
@@ -330,20 +301,20 @@ export default function Page() {
               </p>
               <div className="flex gap-3 items-end mt-15">
                 <p className="lg:text-[70px] md:text-[36px] text-[32px] font-bold leading-none lg:h-[60px] md:h-[32px] h-[30px]">
-                  #451
+                  #{impactData?.ranking}
                 </p>
                 <div className="w-[1px] lg:h-[18px] md:h-[14px] h-[13px] lg:mb-[6px] mb-1 bg-[#ffffff1a]"></div>
                 <p className="lg:text-[18px] md:text-sm text-[13px]">
-                  451 of 3999
+                  {impactData?.ranking} of {impactData?.totalOccupations}
                 </p>
                 <div className="w-[1px] lg:h-[18px] md:h-[14px] h-[13px] lg:mb-[6px] mb-1 bg-[#ffffff1a]"></div>
                 <p className="lg:text-[18px] md:text-sm text-[13px]">
-                  Risk Level: <b>High</b>
+                  Risk Level: <b>{impactData?.thermometer}</b>
                 </p>
               </div>
               <div className="lg:flex-4 flex-3 md:hidden items-center justify-end flex pt-[30px]">
                 <Image
-                  src="/images/speedometer.svg"
+                  src={"/images/speedometer.svg"}
                   alt="speedometer"
                   width={596}
                   height={372}
@@ -362,12 +333,19 @@ export default function Page() {
             </div>
             <div className="lg:flex-4 flex-3 md:flex items-center justify-end hidden pt-[30px]">
               <Image
+                src={thermometerSrc}
+                alt="speedometer"
+                width={596}
+                height={372}
+              // className="size-fit"
+              />
+              {/* <Image
                 src="/images/speedometer.svg"
                 alt="speedometer"
                 width={596}
                 height={372}
                 className="size-fit"
-              />
+              /> */}
             </div>
           </div>
 
@@ -397,8 +375,8 @@ export default function Page() {
                   dragConstraints={{ left: 0, right: 0 }}
                   onDragEnd={(e, { offset, velocity }) => {
                     const swipe = swipePower(offset.x, velocity.x);
-                    if (swipe < -swipeConfidenceThreshold) paginate(1);
-                    else if (swipe > swipeConfidenceThreshold) paginate(-1);
+                    if (swipe < -swipeConfidenceThreshold) paginate1(1);
+                    else if (swipe > swipeConfidenceThreshold) paginate1(-1);
                   }}
                   variants={{
                     enter: (dir: number) => ({
@@ -420,53 +398,52 @@ export default function Page() {
                   transition={{ duration: 0.5 }}
                   className="absolute w-full h-full flex flex-col items-center justify-stretch"
                 >
-                  <div className="flex justify-around lg:gap-y-9 gap-y-4 text-white font-bold lg:text-2xl text-[16px] leading-normal w-full">
-                    {constOccupationInfo
-                      .splice(
-                        page1 ? 0 : 0,
-                        curWindowWidth >= 1200
-                          ? 6
-                          : curWindowWidth >= 1024
-                          ? 5
-                          : curWindowWidth >= 768
-                          ? 4
-                          : curWindowWidth >= 600
-                          ? 3
-                          : 2
-                      )
-                      .map((ele, index) => (
-                        <div
-                          key={index}
-                          className="flex items-center justify-center text-[16px] rounded-[50px] border border-[rgba(255,255,255,0.25)] bg-[rgba(255,255,255,0.04)] h-[47px] w-[165px]"
-                        >
-                          {ele}
-                        </div>
-                      ))}
+                  <div className="relative w-full lg:mb-6 min-h-[130px]">
+                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 place-items-center">
+                      {relatedOccupations
+                        .slice(page1 * 12, (page1 + 1) * 12) // 6 per row × 2 rows = 12
+                        .map((occ, index) => (
+                          <div
+                            key={index}
+                            className="flex items-center justify-center text-[16px] rounded-[50px] border border-[rgba(255,255,255,0.25)] bg-[rgba(255,255,255,0.04)] h-[47px] w-[165px]"
+                          >
+                            <div className="flex flex-col items-center">
+                              <span className="font-semibold text-center truncate w-[140px] block">
+                                {occ.core_occupation}
+                              </span>
+
+                              {/* <span className="font-semibold">{occ.core_occupation}</span> */}
+                              <span className="text-xs text-gray-400">#{occ.ranking}</span>
+                            </div>
+                          </div>
+                        ))}
+                    </div>
                   </div>
-                  <div className="flex justify-around mt-4 lg:gap-y-9 gap-y-4 text-white font-bold lg:text-2xl text-[16px] leading-normal w-full">
-                    {constOccupationInfo
+
+                  {/* <div className="flex justify-around mt-4 lg:gap-y-9 gap-y-4 text-white font-bold lg:text-2xl text-[16px] leading-normal w-full">
+                    {relatedOccupations
                       .splice(
                         page1 ? 0 : 0,
 
                         curWindowWidth >= 1200
                           ? 6
                           : curWindowWidth >= 1024
-                          ? 5
-                          : curWindowWidth >= 768
-                          ? 4
-                          : curWindowWidth >= 600
-                          ? 3
-                          : 2
+                            ? 5
+                            : curWindowWidth >= 768
+                              ? 4
+                              : curWindowWidth >= 600
+                                ? 3
+                                : 2
                       )
                       .map((ele, index) => (
                         <div
                           key={index}
                           className="flex items-center justify-center text-[16px] rounded-[50px] border border-[rgba(255,255,255,0.25)] bg-[rgba(255,255,255,0.04)] h-[47px] w-[165px]"
                         >
-                          {ele}
+                          {ele?.core_occupation || "Unknown Occupation"}
                         </div>
                       ))}
-                  </div>
+                  </div> */}
                 </motion.div>
               </AnimatePresence>
             </div>
@@ -481,7 +458,7 @@ export default function Page() {
                 />
               </div>
               <div className="flex justify-center gap-1">
-                {pages.map((_, index) => (
+                {Array.from({ length: totalSlides }).map((_, index) => (
                   <button
                     key={index}
                     onClick={() => paginate1(index - page1)}
@@ -535,13 +512,13 @@ export default function Page() {
               </div>
               <div className="flex gap-3 items-end">
                 <p className="lg:text-[70px] text-[48px] font-bold leading-none text-[#E93249] lg:h-[60px] h-[42px]">
-                  4
+                  {impactData?.substi_sco}
                 </p>
                 <div className="w-[1px] lg:h-[18px] md:h-[14px] h-[13px] lg:mb-[6px] mb-1 bg-[#ffffff1a]"></div>
-                <p className="lg:text-[18px] md:text-sm text-[13px]">4/10</p>
+                <p className="lg:text-[18px] md:text-sm text-[13px]">{impactData?.substi_sco}/10</p>
                 <div className="w-[1px] lg:h-[18px] md:h-[14px] h-[13px] lg:mb-[6px] mb-1 bg-[#ffffff1a] md:block hidden"></div>
                 <p className="lg:text-[18px] md:text-sm text-[13px]">
-                  Risk Level: <b>Moderate</b>
+                  Risk Level: <b>{impactData?.thermometer}</b>
                 </p>
               </div>
               <p className="lg:text-[15.7px] text-[11px] lg:mt-7 mt-4">
@@ -642,7 +619,7 @@ export default function Page() {
                 <p className="text-[71px] font-bold leading-[130%]">
                   {Math.floor(
                     taskProgress.reduce((s, ele) => s + ele) /
-                      taskProgress.length
+                    taskProgress.length
                   )}
                   %
                 </p>
@@ -717,10 +694,11 @@ export default function Page() {
                   />
                 </div>
                 <p className="lg:text-[109px] text-[71px] font-bold leading-[130%]">
-                  {Math.floor(
+                  {Math.floor((impactData?.auto_avg ?? 0) * 10)}
+                  {/* {Math.floor(
                     taskProgress.reduce((s, ele) => s + ele) /
-                      taskProgress.length
-                  )}
+                    taskProgress.length
+                  )} */}
                   %
                 </p>
               </div>
@@ -762,19 +740,19 @@ export default function Page() {
 
           {/*Last section*/}
           <div className="flex flex-col items-center w-full mt-13">
-            <TabBar type={1} />
+            <TabBar type={1} curItem={occupationTab} setCurItem={setOccupationTab} />
 
             <div className="relative w-full lg:mt-16 lg:mb-6 my-8 lg:h-90 md:h-54 h-79">
-              <AnimatePresence initial={false} custom={direction}>
+              <AnimatePresence initial={false} custom={direction2}>
                 <motion.div
-                  key={page}
-                  custom={direction}
+                  key={page2}
+                  custom={direction2}
                   drag="x"
                   dragConstraints={{ left: 0, right: 0 }}
                   onDragEnd={(e, { offset, velocity }) => {
                     const swipe = swipePower(offset.x, velocity.x);
-                    if (swipe < -swipeConfidenceThreshold) paginate(1);
-                    else if (swipe > swipeConfidenceThreshold) paginate(-1);
+                    if (swipe < -swipeConfidenceThreshold) paginate2(1);
+                    else if (swipe > swipeConfidenceThreshold) paginate2(-1);
                   }}
                   variants={{
                     enter: (dir: number) => ({
@@ -797,25 +775,25 @@ export default function Page() {
                   className="absolute w-full h-full flex items-center justify-stretch"
                 >
                   <div className="flex justify-between lg:gap-y-9 gap-y-4 text-white font-bold lg:text-2xl text-[16px] leading-normal w-full">
-                    {mainCardInfo
-                      .splice(page, curWindowWidth >= 768 ? 3 : 1)
+                    {sortedOccupations
+                      .slice(page2 * occupationsPerSlide, (page2 + 1) * occupationsPerSlide)
                       .map((ele, index) => (
                         <div
                           key={index}
                           className="main-small-box-1 flex items-center justify-center lg:h-90 md:h-54 h-79 md:w-[31%] w-full"
                         >
                           <div className="color-pattern-bg-1"></div>
-                          <p className="text-center mx-6">{ele.name}</p>
+                          <p className="text-center mx-6">{ele.core_occupation}</p>
                           <div
                             className="absolute flex items-center justify-center lg:bottom-[21px] lg:right-[22px] md:bottom-3 md:right-3 right-5 bottom-4 lg:w-[106px] lg:h-[49px] w-[63px] h-[29px] bg-no-repeat"
                             style={{
                               background: `url(/images/tag-back-${Math.floor(
-                                ele.number / 1000
+                                ele.ranking / 1000
                               )}.svg)`,
                               backgroundSize: "cover",
                             }}
                           >
-                            #{ele.number}
+                            #{ele.ranking}
                           </div>
                         </div>
                       ))}
@@ -830,17 +808,17 @@ export default function Page() {
                   alt="Back Btn"
                   width={24}
                   height={24}
-                  onClick={() => paginate(-1)}
+                  onClick={() => paginate2(-1)}
                 />
               </div>
               <div className="flex justify-center gap-1">
-                {pages.map((_, index) => (
+                {Array.from({ length: totalOccupationSlides }).map((_, index) => (
                   <button
                     key={index}
-                    onClick={() => paginate(index - page)}
+                    onClick={() => paginate2(index - page2)}
                     className="w-[10px] h-[10px]"
                   >
-                    {page === index ? (
+                    {page2 === index ? (
                       <Image
                         src="/images/slide-show-btn-on.svg"
                         alt="ON"
@@ -864,7 +842,7 @@ export default function Page() {
                   alt="Arrow Right"
                   width={24}
                   height={24}
-                  onClick={() => paginate(1)}
+                  onClick={() => paginate2(1)}
                 />
               </div>
             </div>
@@ -898,7 +876,15 @@ export default function Page() {
   );
 }
 
-function TabBar({ type }: { type: number }) {
+function TabBar({
+  type,
+  curItem,
+  setCurItem,
+}: {
+  type: number;
+  curItem?: number;
+  setCurItem?: (index: number) => void;
+}) {
   const tabItems = [
     [
       "AI Impact Index",
@@ -908,14 +894,14 @@ function TabBar({ type }: { type: number }) {
       "Career Advisor",
     ],
     [
-      "Alphabetical",
+      "Similar Occupations",
       "Most Impacted",
       "Least Impacted",
-      "Occupational Categories",
+      // "Occupational Categories",
     ],
   ];
 
-  const [curItem, setCurItem] = useState(0);
+  // const [curItem, setCurItem] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const [constraints, setConstraints] = useState({ left: 0, right: 0 });
@@ -945,39 +931,31 @@ function TabBar({ type }: { type: number }) {
     return () => window.removeEventListener("resize", updateConstraints);
   }, []);
   return (
-    <div
-      ref={containerRef}
-      className="lg:h-16 h-14 border-b-[1px] border-b-[#ffffff33] flex px-0 w-auto overflow-x-hidden relative box-border"
-    >
-      <motion.div
-        ref={contentRef}
-        className={`cursor-grab flex justify-between gap-14 sm:px-0 px-14 box-border w-full ${
-          type ? " lg:pr-[16vw]" : ""
+    <motion.div
+      ref={contentRef}
+      className={`cursor-grab flex justify-between gap-14 sm:px-0 px-14 box-border w-full ${type ? " lg:pr-[16vw]" : ""
         }`}
-        drag="x"
-        dragConstraints={constraints}
-        dragElastic={0.1}
-      >
-        {tabItems[type].map((ele, index) => (
-          <div
-            key={ele}
-            className={
-              (curItem === index
-                ? "text-white font-bold "
-                : "text-[#86878D] ") +
-              "lg:text-[18px] md:text-[13px] text-[12px] pt-4 flex flex-col items-center gap-4 lg:h-[63px] h-[55px]"
-            }
-            onClick={() => {
-              setCurItem(index);
-            }}
-          >
-            <p className="text-center w-full flex text-nowrap">{ele}</p>
+      drag="x"
+      dragConstraints={constraints}
+      dragElastic={0.1}
+    >
+      <div className="border-b border-[#ffffff33] w-full">
+        <div className="flex items-center justify-center gap-10 relative">
+          {tabItems[type].map((ele, index) => (
             <div
-              className={curItem === index ? "w-full h-1 !bg-[#E93249]" : ""}
-            ></div>
-          </div>
-        ))}
-      </motion.div>
-    </div>
+              key={ele}
+              onClick={() => setCurItem && setCurItem(index)}
+              className={`relative pb-3 cursor-pointer text-[16px] whitespace-nowrap ${curItem === index ? "text-white font-bold" : "text-[#86878D]"
+                }`}
+            >
+              {ele}
+              {curItem === index && (
+                <div className="absolute -bottom-[1px] left-1/2 -translate-x-1/2 w-[80%] h-[4px] bg-[#E93249] rounded-full" />
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+    </motion.div>
   );
 }
