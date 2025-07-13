@@ -66,7 +66,30 @@ export const occupationApi = baseApi.injectEndpoints({
           ]
           : [{ type: 'Occupation', id: 'SEARCH' }],
     }),
+
+    // Get occupation by name
+    getOccupationByName: builder.query<Occupation, string>({
+      query: (name: string) => `/categories/get-occupation?name=${encodeURIComponent(name)}`,
+      providesTags: (result, error, name) => [{ type: 'Occupation', id: name }],
+    }),
+
+    // Get related occupations by name
+    getRelatedOccupationsByName: builder.query<
+      {
+        occupation: { core_occupation: string; category: string };
+        relatedOccupations: { core_occupation: string; ranking: number }[];
+        totalInSameCategory: number;
+        category: string;
+      },
+      string
+    >({
+      query: (name: string) => `/categories/related-occupations?name=${encodeURIComponent(name)}`,
+      providesTags: (result, error, name) => [{ type: 'Occupation', id: `related-${name}` }],
+    }),
+
   }),
+
+
 });
 
 export const {
@@ -76,4 +99,6 @@ export const {
   useGetOccupationCategoriesQuery,
   useSearchOccupationsQuery,
   useGetCategoriesQuery,
+  useGetOccupationByNameQuery,
+  useGetRelatedOccupationsByNameQuery,
 } = occupationApi; 
