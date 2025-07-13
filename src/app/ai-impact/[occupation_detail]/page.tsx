@@ -413,7 +413,7 @@ export default function Page() {
                               </span>
 
                               {/* <span className="font-semibold">{occ.core_occupation}</span> */}
-                              <span className="text-xs text-gray-400">#{occ.ranking}</span>
+                              {/* <span className="text-xs text-gray-400">#{occ.ranking}</span> */}
                             </div>
                           </div>
                         ))}
@@ -780,21 +780,23 @@ export default function Page() {
                       .map((ele, index) => (
                         <div
                           key={index}
-                          className="main-small-box-1 flex items-center justify-center lg:h-90 md:h-54 h-79 md:w-[31%] w-full"
+                          className="main-small-box-1 relative overflow-hidden rounded-[...] flex items-center justify-center lg:h-90 md:h-54 h-79 md:w-[31%] w-full"
                         >
                           <div className="color-pattern-bg-1"></div>
                           <p className="text-center mx-6">{ele.core_occupation}</p>
                           <div
-                            className="absolute flex items-center justify-center lg:bottom-[21px] lg:right-[22px] md:bottom-3 md:right-3 right-5 bottom-4 lg:w-[106px] lg:h-[49px] w-[63px] h-[29px] bg-no-repeat"
-                            style={{
-                              background: `url(/images/tag-back-${Math.floor(
-                                ele.ranking / 1000
-                              )}.svg)`,
-                              backgroundSize: "cover",
-                            }}
+                            className="absolute flex items-center justify-center lg:bottom-[21px] lg:right-[22px] md:bottom-3 md:right-3 right-5 bottom-4 lg:w-[106px] lg:h-[49px] w-[63px] h-[29px] rounded-full overflow-hidden"
                           >
-                            #{ele.ranking}
+                            <Image
+                              src={`/images/tag-back-${Math.floor(ele.ranking / 1000)}.svg`}
+                              alt=""
+                              fill
+                              className="object-cover"
+                              priority
+                            />
+                            <span className="relative z-10 font-bold text-white">#{ele.ranking}</span>
                           </div>
+
                         </div>
                       ))}
                   </div>
@@ -933,8 +935,7 @@ function TabBar({
   return (
     <motion.div
       ref={contentRef}
-      className={`cursor-grab flex justify-between gap-14 sm:px-0 px-14 box-border w-full ${type ? " lg:pr-[16vw]" : ""
-        }`}
+      className={`cursor-grab flex justify-between gap-14 sm:px-0 px-14 box-border w-full overflow-hidden relative`}
       drag="x"
       dragConstraints={constraints}
       dragElastic={0.1}

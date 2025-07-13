@@ -254,7 +254,13 @@ export default function Page({
   );
 }
 
-export function TabBar({ type }: { type: number }) {
+export function TabBar({
+  type,
+  onSortChange,
+}: {
+  type: number;
+  onSortChange?: (index: number) => void;
+}) {
   const tabItems = [
     [
       "AI Impact Index",
@@ -326,6 +332,7 @@ export function TabBar({ type }: { type: number }) {
             onClick={() => {
               if (type) {
                 setCurChildItem(index);
+                onSortChange?.(index); 
               } else {
                 setCurItem(index);
               }

@@ -8,6 +8,8 @@ import { useGetOccupationsByCategoryQuery } from "@/store/api/occupationApi";
 import { OccupationService } from "@/services/occupationService";
 
 import "../../page.css";
+import { useEffect, useState } from "react";
+import { Occupation } from "@/types/occupation";
 
 export default function OccupationPage() {
   const params = useParams();
@@ -17,6 +19,40 @@ export default function OccupationPage() {
 
   // Use RTK Query hook instead of local state
   const { data: mainCardInfo = [], isLoading, error } = useGetOccupationsByCategoryQuery(occupation);
+  const [sortedOccupations, setSortedOccupations] = useState<Occupation[]>([]);
+  const fullOccupationsList = [...mainCardInfo]; // Replace with actual list
+
+  const handleSortChange = (index: number) => {
+    let sorted = [];
+
+    switch (index) {
+      case 0: // Alphabetical
+        sorted = [...fullOccupationsList].sort((a, b) =>
+          a.core_occupation.localeCompare(b.core_occupation)
+        );
+        break;
+      case 1: // Most Impacted
+        sorted = [...fullOccupationsList].sort((a, b) =>
+          (b?.ranking ?? 0) - (a?.ranking ?? 0)
+        );
+        break;
+      case 2: // Least Impacted
+        sorted = [...fullOccupationsList].sort((a, b) => (b?.ranking ?? 0) - (a?.ranking ?? 0)
+        );
+        break;
+      case 3: // Categories (optional or no sort)
+      default:
+        sorted = fullOccupationsList;
+    }
+
+    setSortedOccupations(sorted);
+  };
+
+  useEffect(() => {
+    if (mainCardInfo.length > 0) {
+      handleSortChange(0);
+    }
+  }, [mainCardInfo]);
 
   return (
     <div>
@@ -36,7 +72,7 @@ export default function OccupationPage() {
       </div>
 
       <div className="w-full my-0">
-        <TabBar type={1} />
+        <TabBar type={1} onSortChange={handleSortChange} />
       </div>
 
       <p className="lg:text-[32px] lg:mt-15 md:mt-12 mt-15 mb-7 font-bold text-[#E93249] leading-[120%]">
@@ -53,10 +89,12 @@ export default function OccupationPage() {
         </p>
       ) : (
         <div className="flex flex-col sm:flex-row flex-wrap justify-between lg:gap-y-9 gap-y-4 text-white font-bold lg:text-2xl text-[16px] leading-normal h-[800px] overflow-y-auto p-[40px] mb-[40px]">
-          {mainCardInfo.length === 0 ? (
+          {isLoading ? (
+            <p className="text-white">Loading...</p>
+          ) : mainCardInfo.length === 0 ? (
             <p className="text-white">No data found for this occupation.</p>
           ) : (
-            mainCardInfo.map((ele) => (
+            sortedOccupations.map((ele) => (
               <Link
                 key={ele.id}
                 href={`/ai-impact/${encodeURIComponent(
