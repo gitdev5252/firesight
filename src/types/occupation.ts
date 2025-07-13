@@ -14,6 +14,7 @@ export interface Occupation {
   ai_index: number | null;
   thermometer: number | null;
   ranking?: number;
+  totalOccupations?: number;
 }
 
 export interface OccupationCategory {
