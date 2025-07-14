@@ -144,3 +144,15 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #292828;
 }
+
+.ticket-pill {
+  clip-path: polygon(
+    10% 0%,  /* Top-left in a bit */
+    90% 0%,  /* Top-right in a bit */
+    100% 50%, /* Right point */
+    90% 100%, /* Bottom-right in a bit */
+    10% 100%, /* Bottom-left in a bit */
+    0% 50%    /* Left point */
+  );
+  border-radius: 8px;
+}

@@ -366,7 +366,7 @@ export default function Page() {
               />
             </div>
 
-            <div className="relative w-full lg:mt-16 lg:mb-6 my-8 h-[110px]">
+            <div className="relative w-full lg:mt-16 lg:mb-6 my-8 min-h-[250px]">
               <AnimatePresence initial={false} custom={direction1}>
                 <motion.div
                   key={page1}
@@ -396,58 +396,31 @@ export default function Page() {
                   animate="center"
                   exit="exit"
                   transition={{ duration: 0.5 }}
-                  className="absolute w-full h-full flex flex-col items-center justify-stretch"
+                  className="absolute w-full h-full flex flex-col items-center justify-stretch pb-10"
                 >
-                  <div className="relative w-full lg:mb-6 min-h-[130px]">
-                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 place-items-center">
+                  <div className="sm:w-full w-auto -mx-[50px] sm:mx-0">
+                    <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-x-2 gap-y-4
+  px-4 sm:px-0">
+
                       {relatedOccupations
-                        .slice(page1 * 12, (page1 + 1) * 12) // 6 per row × 2 rows = 12
+                        .slice(page1 * 12, (page1 + 1) * 12)
                         .map((occ, index) => (
                           <div
                             key={index}
-                            className="flex items-center justify-center text-[16px] rounded-[50px] border border-[rgba(255,255,255,0.25)] bg-[rgba(255,255,255,0.04)] h-[47px] w-[165px]"
+                            className="flex items-center justify-center text-[14px] rounded-[50px] border border-[rgba(255,255,255,0.25)] bg-[rgba(255,255,255,0.04)] h-[45px] w-full max-w-[165px]"
                           >
-                            <div className="flex flex-col items-center">
-                              <span className="font-semibold text-center truncate w-[140px] block">
-                                {occ.core_occupation}
-                              </span>
-
-                              {/* <span className="font-semibold">{occ.core_occupation}</span> */}
-                              {/* <span className="text-xs text-gray-400">#{occ.ranking}</span> */}
-                            </div>
+                            <span className="font-semibold text-center truncate w-[90%] block">
+                              {occ.core_occupation}
+                            </span>
                           </div>
                         ))}
                     </div>
                   </div>
 
-                  {/* <div className="flex justify-around mt-4 lg:gap-y-9 gap-y-4 text-white font-bold lg:text-2xl text-[16px] leading-normal w-full">
-                    {relatedOccupations
-                      .splice(
-                        page1 ? 0 : 0,
-
-                        curWindowWidth >= 1200
-                          ? 6
-                          : curWindowWidth >= 1024
-                            ? 5
-                            : curWindowWidth >= 768
-                              ? 4
-                              : curWindowWidth >= 600
-                                ? 3
-                                : 2
-                      )
-                      .map((ele, index) => (
-                        <div
-                          key={index}
-                          className="flex items-center justify-center text-[16px] rounded-[50px] border border-[rgba(255,255,255,0.25)] bg-[rgba(255,255,255,0.04)] h-[47px] w-[165px]"
-                        >
-                          {ele?.core_occupation || "Unknown Occupation"}
-                        </div>
-                      ))}
-                  </div> */}
                 </motion.div>
               </AnimatePresence>
             </div>
-            <div className="flex items-center justify-center gap-6">
+            <div className="flex items-center justify-center gap-6 mt-35 sm:mt-0">
               <div>
                 <Image
                   src="/images/icons/back-btn.svg"
@@ -903,7 +876,6 @@ function TabBar({
     ],
   ];
 
-  // const [curItem, setCurItem] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const [constraints, setConstraints] = useState({ left: 0, right: 0 });
@@ -912,13 +884,10 @@ function TabBar({
     const updateConstraints = () => {
       const container = containerRef.current;
       const content = contentRef.current;
-
       if (container && content) {
         const containerWidth = container.offsetWidth;
         const contentWidth = content.scrollWidth;
-
         const maxDrag = contentWidth - containerWidth;
-
         if (maxDrag > 0) {
           setConstraints({ left: -maxDrag, right: 0 });
         } else {
@@ -926,37 +895,43 @@ function TabBar({
         }
       }
     };
-
     updateConstraints();
     window.addEventListener("resize", updateConstraints);
-
     return () => window.removeEventListener("resize", updateConstraints);
   }, []);
+
   return (
-    <motion.div
-      ref={contentRef}
-      className={`cursor-grab flex justify-between gap-14 sm:px-0 px-14 box-border w-full overflow-hidden relative`}
-      drag="x"
-      dragConstraints={constraints}
-      dragElastic={0.1}
-    >
-      <div className="border-b border-[#ffffff33] w-full">
-        <div className="flex items-center justify-center gap-10 relative">
-          {tabItems[type].map((ele, index) => (
-            <div
-              key={ele}
-              onClick={() => setCurItem && setCurItem(index)}
-              className={`relative pb-3 cursor-pointer text-[16px] whitespace-nowrap ${curItem === index ? "text-white font-bold" : "text-[#86878D]"
-                }`}
-            >
-              {ele}
-              {curItem === index && (
-                <div className="absolute -bottom-[1px] left-1/2 -translate-x-1/2 w-[80%] h-[4px] bg-[#E93249] rounded-full" />
-              )}
-            </div>
-          ))}
+    <div ref={containerRef} className="w-full overflow-x-auto scrollbar-hide" style={{ msOverflowStyle: 'none', scrollbarWidth: 'none' }}>
+      <motion.div
+        ref={contentRef}
+        className={
+          `flex flex-nowrap items-center justify-center ` +
+          `gap-6 sm:gap-10 md:gap-14 px-2 sm:px-0 w-max min-w-full relative`
+        }
+        drag="x"
+        dragConstraints={constraints}
+        dragElastic={0.1}
+        style={{ touchAction: 'pan-x', WebkitOverflowScrolling: 'touch', scrollbarWidth: 'none' }}
+      >
+        <div className="border-b border-[#ffffff33] w-full min-w-full">
+          <div className="flex flex-nowrap items-center justify-center gap-6 sm:gap-10 md:gap-14 relative px-2 sm:px-0">
+            {tabItems[type].map((ele, index) => (
+              <div
+                key={ele}
+                onClick={() => setCurItem && setCurItem(index)}
+                className={`relative pb-3 cursor-pointer text-[13px] sm:text-[15px] md:text-[16px] whitespace-nowrap min-w-[90px] text-center ` +
+                  (curItem === index ? "text-white font-bold" : "text-[#86878D]")}
+                style={{ WebkitTapHighlightColor: 'transparent' }}
+              >
+                {ele}
+                {curItem === index && (
+                  <div className="absolute -bottom-[1px] left-1/2 -translate-x-1/2 w-[80%] h-[4px] bg-[#E93249] rounded-full" />
+                )}
+              </div>
+            ))}
+          </div>
         </div>
-      </div>
-    </motion.div>
+      </motion.div>
+    </div>
   );
 }
