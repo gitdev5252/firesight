@@ -86,6 +86,11 @@ export const occupationApi = baseApi.injectEndpoints({
       query: (name: string) => `/categories/related-occupations?name=${encodeURIComponent(name)}`,
       providesTags: (result, error, name) => [{ type: 'Occupation', id: `related-${name}` }],
     }),
+    // Get full task data by occupation name
+    getOccupationTaskByName: builder.query<Occupation, string>({
+      query: (name: string) => `/categories/occupation-tasks?name=${encodeURIComponent(name)}`,
+      providesTags: (result, error, name) => [{ type: 'Occupation', id: `tasks-${name}` }],
+    }),
 
   }),
 
@@ -101,4 +106,5 @@ export const {
   useGetCategoriesQuery,
   useGetOccupationByNameQuery,
   useGetRelatedOccupationsByNameQuery,
+  useGetOccupationTaskByNameQuery,
 } = occupationApi; 

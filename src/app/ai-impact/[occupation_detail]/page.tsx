@@ -7,13 +7,12 @@ import { AnimatePresence, motion } from "framer-motion";
 
 import { Button } from "@/components/ui/button";
 import FireSightFooter from "@/layouts/FireSightFooter";
-import { useGetOccupationByNameQuery, useGetRelatedOccupationsByNameQuery } from "@/store/api/occupationApi";
+import { useGetOccupationByNameQuery, useGetRelatedOccupationsByNameQuery, useGetOccupationTaskByNameQuery } from "@/store/api/occupationApi";
 
 import "../home/page.css";
 import { getThermometer } from "@/utils/getThermometer";
 
 const itemsPerSlide = 12; // or 6 or whatever your layout supports (like 4 per row × 2 rows)
-const occupationsPerSlide = 3; // or 6 or whatever your layout supports (like 4 per row × 2 rows)
 const swipeConfidenceThreshold = 100;
 const swipePower = (offset: number, velocity: number) => {
   return Math.abs(offset) * velocity;
@@ -32,14 +31,43 @@ export default function Page() {
   );
 
   // Query data
+  const taskProgress = [50, 0, 100, 0];
+
   const { data: impactData } = useGetOccupationByNameQuery(occupation);
   const { data: categoryData } = useGetRelatedOccupationsByNameQuery(occupation);
+  const { data: taskData, isLoading: isTaskLoading, error } = useGetOccupationTaskByNameQuery(occupation);
+  const transformedTasks = taskData
+    ? {
+      tasks: !isTaskLoading
+        ? Array.from({ length: 20 }, (_, i) => {
+          const raw = Number(taskData[`task_${i + 1}`] || 0);
+          return (raw / 10) * 100; // Convert to percent
+        })
+        : taskProgress,
+    }
+    : null;
+
 
   // Related occupations & pagination
   const relatedOccupations = categoryData?.relatedOccupations || [];
   const totalSlides = Math.ceil(relatedOccupations.length / itemsPerSlide);
+  // Responsive occupationsPerSlide
+  const [occupationsPerSlide, setOccupationsPerSlide] = useState(3);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 640) {
+        setOccupationsPerSlide(2);
+      } else {
+        setOccupationsPerSlide(3);
+      }
+    };
+    handleResize(); // Set on mount
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   const totalOccupationSlides = Math.ceil(relatedOccupations.length / occupationsPerSlide);
-  const taskProgress = [50, 0, 100, 0];
   // const [curWindowWidth, setCurWindowWidth] = useState(0);
 
   const thermometerSrc = getThermometer(impactData?.thermometer);
@@ -170,7 +198,7 @@ export default function Page() {
                     </p>
                   </div>
                   <p className="lg:text-[18px] text-xs">
-                    The Professional Development Hub is Firesight’s gateway to
+                    The Professional Development Hub is Firesight's gateway to
                     future-proof skills. Your gateway to mastering the future of
                     work. Our platform is designed to empower solopreneurs with
                     the tools and knowledge needed to thrive in an ever-growing
@@ -615,9 +643,16 @@ export default function Page() {
                   <div className="absolute w-full h-[218px] top-[190px] rounded-[5px] border-[1px] border-[#252832] bg-[#131621] z-20"></div>
                   <div className="absolute w-[1px] bg-[#19202c] h-full left-[50%] z-10"></div>
                 </div>
-                <div className="flex flex-col flex-1 lg:gap-11 gap-6">
+
+
+                {/* <div className="flex flex-col flex-1 lg:gap-11 gap-6">
                   {taskProgress.map((ele, index) => (
-                    <div key={index} className="flex flex-col">
+                    <div key={index} className="flex flex-col"> */}
+
+
+                <div className="flex flex-col flex-1 lg:gap-11 gap-6 h-[1000px] overflow-y-auto overflow-x-hidden custom-scroll w-auto p-2">
+                  {transformedTasks?.tasks?.map((ele, index) => (
+                    <div key={index} className="flex flex-col ">
                       <div className="bg-[url(/images/poly-btn.svg)] bg-no-repeat w-[78px] h-[34px] flex items-center justify-center lg:text-[22px] text-[16px]">
                         {ele}%
                       </div>
@@ -680,14 +715,14 @@ export default function Page() {
                   Firesight Observations
                 </p>
                 <p className="lg:text-[16px] text-[11px] lg:mt-7 mt-4">
-                  AI can suggest complementary colour palettes based on a
+                  {isTaskLoading ? "Loading..." :
+                    taskData?.description || `AI can suggest complementary colour palettes based on a
                   selected colour or image, ensuring aesthetically pleasing
                   design outcomes.AI can suggest complementary colour palettes
                   based on a selected colour or image, ensuring aesthetically
                   pleasing design outcomes. AI can suggest complementary colour
                   palettes based on a selected colour or image, ensuring
-                  aesthetically pleasing design outcomes.
-                </p>
+                  aesthetically pleasing design outcomes.`}                </p>
               </div>
               <div className="flex flex-col lg:gap-11 gap-7 items-center w-full border-t-[1px] border-t-[#ffffff1a] lg:pt-20 lg:pb-15 lg:pl-6 py-10">
                 <p className="text-[24px] font-bold uppercase text-center leading-[120%] bg-[linear-gradient(180deg,rgba(0,255,224,0.55)0%,rgba(188,239,255,0.62)100%)] bg-clip-text text-transparent lg:block hidden">
@@ -747,32 +782,36 @@ export default function Page() {
                   transition={{ duration: 0.5 }}
                   className="absolute w-full h-full flex items-center justify-stretch"
                 >
-                  <div className="flex justify-between lg:gap-y-9 gap-y-4 text-white font-bold lg:text-2xl text-[16px] leading-normal w-full">
-                    {sortedOccupations
-                      .slice(page2 * occupationsPerSlide, (page2 + 1) * occupationsPerSlide)
-                      .map((ele, index) => (
-                        <div
-                          key={index}
-                          className="main-small-box-1 relative overflow-hidden rounded-[...] flex items-center justify-center lg:h-90 md:h-54 h-79 md:w-[31%] w-full"
-                        >
-                          <div className="color-pattern-bg-1"></div>
-                          <p className="text-center mx-6">{ele.core_occupation}</p>
-                          <div
-                            className="absolute flex items-center justify-center lg:bottom-[21px] lg:right-[22px] md:bottom-3 md:right-3 right-5 bottom-4 lg:w-[106px] lg:h-[49px] w-[63px] h-[29px] rounded-full overflow-hidden"
-                          >
-                            <Image
-                              src={`/images/tag-back-${Math.floor(ele.ranking / 1000)}.svg`}
-                              alt=""
-                              fill
-                              className="object-cover"
-                              priority
-                            />
-                            <span className="relative z-10 font-bold text-white">#{ele.ranking}</span>
-                          </div>
+                  <div className="sm:w-full w-auto -mx-[50px] sm:mx-0">
 
-                        </div>
-                      ))}
+                    <div className="flex justify-between lg:gap-y-9 gap-y-4 text-white font-bold lg:text-2xl text-[16px] leading-normal w-full">
+                      {sortedOccupations
+                        .slice(page2 * occupationsPerSlide, (page2 + 1) * occupationsPerSlide)
+                        .map((ele, index) => (
+                          <div
+                            key={index}
+                            className="main-small-box-1 relative overflow-hidden rounded-[...] flex items-center justify-center lg:h-90 md:h-54 h-79 md:w-[31%] w-full ml-7"
+                          >
+                            <div className="color-pattern-bg-1"></div>
+                            <p className="text-center mx-6">{ele.core_occupation}</p>
+                            <div
+                              className="absolute flex items-center justify-center lg:bottom-[21px] lg:right-[22px] md:bottom-3 md:right-3 right-5 bottom-4 lg:w-[106px] lg:h-[49px] w-[63px] h-[29px] rounded-full overflow-hidden"
+                            >
+                              <Image
+                                src={`/images/tag-back-${Math.floor(ele.ranking / 1000)}.svg`}
+                                alt=""
+                                fill
+                                className="object-cover"
+                                priority
+                              />
+                              <span className="relative z-10 font-bold text-white">#{ele.ranking}</span>
+                            </div>
+
+                          </div>
+                        ))}
+                    </div>
                   </div>
+
                 </motion.div>
               </AnimatePresence>
             </div>

@@ -156,3 +156,27 @@
   );
   border-radius: 8px;
 }
+
+.custom-scroll {
+  overflow-y: auto;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE 10+ */
+}
+
+.custom-scroll::-webkit-scrollbar {
+  display: none; /* Chrome, Safari */
+}
+
+.custom-ticket-shape {
+  display: inline-block;
+  padding: 0.5em 2em;
+  color: #fff;
+  background: #181a20;
+  border: 1.5px solid #444;
+  font-family: 'Fira Mono', monospace;
+  font-size: 1.25rem;
+  clip-path: polygon(
+    12px 0%, calc(100% - 12px) 0%, 100% 12px, 100% calc(100% - 12px),
+    calc(100% - 12px) 100%, 12px 100%, 0% calc(100% - 12px), 0% 12px
+  );
+}
