@@ -17,6 +17,30 @@ export interface Occupation {
   totalOccupations?: number;
 }
 
+export interface OccupationTaskData extends Occupation {
+  description?: string;
+  task_1?: number;
+  task_2?: number;
+  task_3?: number;
+  task_4?: number;
+  task_5?: number;
+  task_6?: number;
+  task_7?: number;
+  task_8?: number;
+  task_9?: number;
+  task_10?: number;
+  task_11?: number;
+  task_12?: number;
+  task_13?: number;
+  task_14?: number;
+  task_15?: number;
+  task_16?: number;
+  task_17?: number;
+  task_18?: number;
+  task_19?: number;
+  task_20?: number;
+}
+
 export interface OccupationCategory {
   id: string;
   name: string;
