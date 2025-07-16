@@ -162,7 +162,7 @@ npm install @reduxjs/toolkit react-redux
 ### 2. Environment Variables
 
 ```env
-NEXT_PUBLIC_API_URL=http://localhost:8000
+NEXT_PUBLIC_API_URL=https://firesight-backend-3irx.onrender.com
 ```
 
 ### 3. Usage in Components
