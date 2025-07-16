@@ -395,7 +395,7 @@ export default function Page() {
               />
             </div>
 
-            <div className="relative w-full lg:mt-16 lg:mb-6 my-8 min-h-[250px]">
+            <div className="relative w-full lg:mt-16 lg:mb-6 my-8 lg:min-h-[130px] min-h-[230px]">
               <AnimatePresence initial={false} custom={direction1}>
                 <motion.div
                   key={page1}
@@ -449,7 +449,7 @@ export default function Page() {
                 </motion.div>
               </AnimatePresence>
             </div>
-            <div className="flex items-center justify-center gap-6 mt-35 sm:mt-0">
+            <div className="flex items-center justify-center gap-6 sm:mt-0">
               <div>
                 <Image
                   src="/images/icons/back-btn.svg"
