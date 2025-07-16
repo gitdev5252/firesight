@@ -35,14 +35,15 @@ export default function Page() {
 
   const { data: impactData } = useGetOccupationByNameQuery(occupation);
   const { data: categoryData } = useGetRelatedOccupationsByNameQuery(occupation);
-  const { data: taskData, isLoading: isTaskLoading, error } = useGetOccupationTaskByNameQuery(occupation);
+  const { data: taskData, isLoading: isTaskLoading } = useGetOccupationTaskByNameQuery(occupation);
   const transformedTasks = taskData
     ? {
       tasks: !isTaskLoading
         ? Array.from({ length: 20 }, (_, i) => {
-          const raw = Number(taskData[`task_${i + 1}`] || 0);
-          return (raw / 10) * 100; // Convert to percent
-        })
+            const key = `task_${i + 1}` as keyof typeof taskData;
+            const raw = Number(taskData && key in taskData ? taskData[key] : 0);
+            return (raw / 10) * 100; // Convert to percent
+          })
         : taskProgress,
     }
     : null;
@@ -205,7 +206,7 @@ export default function Page() {
                     AI-driven job market. Dedicated to facilitating personalised
                     and occupation-specific learning experiences, empowered by
                     our cutting edge AI technology. By focusing on the tools and
-                    skills critical for today’s dynamic job landscape, the
+                    skills critical for today&apos;s dynamic job landscape, the
                     Professional Development Hub is your partner in adapting to
                     and excelling in the era of AI-driven employment.
                   </p>
