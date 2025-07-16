@@ -199,7 +199,7 @@ export default function Page() {
                     </p>
                   </div>
                   <p className="lg:text-[18px] text-xs">
-                    The Professional Development Hub is Firesight's gateway to
+                    The Professional Development Hub is Firesight&apos;s gateway to
                     future-proof skills. Your gateway to mastering the future of
                     work. Our platform is designed to empower solopreneurs with
                     the tools and knowledge needed to thrive in an ever-growing
