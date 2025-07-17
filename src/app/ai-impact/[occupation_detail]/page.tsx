@@ -111,6 +111,7 @@ export default function Page() {
   useEffect(() => {
     setModalOpen(false);
   }, [pathname]);
+  const [selectedEconomy, setSelectedEconomy] = useState("Emerging");
   return (
     <>
       <div className="w-full lg:px-15 md:px-4">
@@ -552,50 +553,51 @@ export default function Page() {
                 />
               </div>
               <div className="flex gap-3 items-end">
-                <div className="flex items-center gap-1">
-                  <Image
-                    src="/images/radio-off.svg"
-                    alt="Radio Off"
-                    width={24}
-                    height={24}
-                    className="lg:w-[24px] lg:h-[24px] md:w-[17px] md:h-[17px] w-[16px] h-[16px]"
-                  />
-                  <p className="lg:text-[18px] md:text-sm text-[13px] text-[#86878D]">
-                    Low Income
-                  </p>
-                </div>
-                <div className="flex items-center gap-1">
-                  <Image
-                    src="/images/radio-on.svg"
-                    alt="Radio On"
-                    width={24}
-                    height={24}
-                    className="lg:w-[24px] lg:h-[24px] md:w-[17px] md:h-[17px] w-[16px] h-[16px]"
-                  />
-                  <p className="lg:text-[18px] md:text-sm text-[13px]">
-                    Emerging
-                  </p>
-                </div>
-                <div className="flex items-center gap-1">
-                  <Image
-                    src="/images/radio-off.svg"
-                    alt="Radio Off"
-                    width={24}
-                    height={24}
-                    className="lg:w-[24px] lg:h-[24px] md:w-[17px] md:h-[17px] w-[16px] h-[16px]"
-                  />
-                  <p className="lg:text-[18px] md:text-sm text-[13px] text-[#86878D]">
-                    Advanced
-                  </p>
-                </div>
+                {[
+                  { label: "Low Income", value: "Low Income" },
+                  { label: "Emerging", value: "Emerging" },
+                  { label: "Advanced", value: "Advanced" },
+                ].map((option) => (
+                  <div
+                    key={option.value}
+                    className="flex items-center gap-1 cursor-pointer"
+                    onClick={() => setSelectedEconomy(option.value)}
+                  >
+                    <Image
+                      src={
+                        selectedEconomy === option.value
+                          ? "/images/radio-on.svg"
+                          : "/images/radio-off.svg"
+                      }
+                      alt={option.label}
+                      width={24}
+                      height={24}
+                      className="lg:w-[24px] lg:h-[24px] md:w-[17px] md:h-[17px] w-[16px] h-[16px]"
+                    />
+                    <p
+                      className={
+                        "lg:text-[18px] md:text-sm text-[13px] font-bold transition-colors duration-200 " +
+                        (selectedEconomy === option.value ? "text-white" : "text-[#86878D]")
+                      }
+                    >
+                      {option.label}
+                    </p>
+                  </div>
+                ))}
               </div>
               <div className="lg:mt-7 md:mt-4 flex items-center justify-center flex-1 lg:pl-15 pl-3">
                 <Image
-                  src="/images/map.png"
-                  alt="Map"
+                  src={
+                    selectedEconomy === "Low Income"
+                      ? "/images/low income.svg"
+                      : selectedEconomy === "Emerging"
+                      ? "/images/emerging.svg"
+                      : "/images/advanced.svg"
+                  }
+                  alt={selectedEconomy}
                   width={700}
                   height={411}
-                ></Image>
+                />
               </div>
             </div>
           </div>

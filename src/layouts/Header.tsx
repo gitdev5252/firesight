@@ -278,6 +278,14 @@ export function Header({ scrolled }: { scrolled: boolean }) {
               <div className="vertical-divider !h-[105px]"></div>
               {/* Main Nav */}
               <div className="flex flex-col flex-1 items-center gap-y-3">
+              <div>
+                  <Link
+                    href="/ai-impact"
+                    className="hover:underline"
+                  >
+                    AI Impact Index
+                  </Link>
+                </div>
                 <div>
                   <Link href="/" className="hover:underline">
                     Home
@@ -296,14 +304,7 @@ export function Header({ scrolled }: { scrolled: boolean }) {
                     Blog
                   </Link>
                 </div>
-                <div>
-                  <Link
-                    href="https://impact.firesight.ai/"
-                    className="hover:underline"
-                  >
-                    AI Impact Index
-                  </Link>
-                </div>
+                
               </div>
             </div>
 

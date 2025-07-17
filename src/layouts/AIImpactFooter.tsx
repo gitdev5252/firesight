@@ -37,16 +37,27 @@ export default function AIImpactFooter({
                   aria-label="LinkedIn"
                 >
                   <Image
-                    src="/images/icons/linkedin.svg"
+                    src="/images/icons/linkedin.png"
                     alt="LinkedIn"
                     width={30}
                     height={30}
                   />
                 </Link>
-                <Link href="/" aria-label="cb">
+                <Link
+                  href="/"
+                  aria-label="Meta"
+                >
                   <Image
-                    src="/images/icons/cb.svg"
-                    alt="cb"
+                    src="/images/icons/meta.png"
+                    alt="LinkedIn"
+                    width={30}
+                    height={30}
+                  />
+                </Link>
+                <Link href="/" aria-label="Instagram">
+                  <Image
+                    src="/images/icons/instagram.png"
+                    alt="Instagram"
                     width={30}
                     height={30}
                   />
@@ -56,7 +67,7 @@ export default function AIImpactFooter({
                   aria-label="Twitter"
                 >
                   <Image
-                    src="/images/icons/x.svg"
+                    src="/images/icons/x.png"
                     alt="X"
                     width={30}
                     height={30}
@@ -64,7 +75,7 @@ export default function AIImpactFooter({
                 </Link>
                 <Link href="https://www.discord.com/" aria-label="Discord">
                   <Image
-                    src="/images/icons/discord.svg"
+                    src="/images/icons/discord.png"
                     alt="Game"
                     width={30}
                     height={30}
