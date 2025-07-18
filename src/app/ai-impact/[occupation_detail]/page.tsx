@@ -355,7 +355,7 @@ export default function Page() {
                 Occupation description
               </p>
               <p className="lg:text-[15.7px] text-[11px] mr-8">
-                {taskData?.description ||
+                {taskData?.core_description ||
                   "This occupation is not available in the database."}
               </p>
             </div>
@@ -365,15 +365,7 @@ export default function Page() {
                 alt="speedometer"
                 width={596}
                 height={372}
-              // className="size-fit"
               />
-              {/* <Image
-                src="/images/speedometer.svg"
-                alt="speedometer"
-                width={596}
-                height={372}
-                className="size-fit"
-              /> */}
             </div>
           </div>
 
