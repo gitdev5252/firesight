@@ -20,6 +20,7 @@ export interface Occupation {
 export interface OccupationTaskData extends Occupation {
   description?: string;
   firesight_observations?: string;
+  core_description?: string;
   task_1?: number;
   task_2?: number;
   task_3?: number;
