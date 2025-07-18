@@ -6,7 +6,6 @@ import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
 import { Button } from "@/components/ui/button";
-import FireSightFooter from "@/layouts/FireSightFooter";
 import { useGetOccupationByNameQuery, useGetRelatedOccupationsByNameQuery, useGetOccupationTaskByNameQuery } from "@/store/api/occupationApi";
 
 import "../home/page.css";
@@ -356,7 +355,7 @@ export default function Page() {
                 Occupation description
               </p>
               <p className="lg:text-[15.7px] text-[11px] mr-8">
-                {taskData?.core_description ||
+                {taskData?.description ||
                   "This occupation is not available in the database."}
               </p>
             </div>
