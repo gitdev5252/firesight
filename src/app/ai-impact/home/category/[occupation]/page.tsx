@@ -88,7 +88,7 @@ export default function OccupationPage() {
             : 'Could not load occupation data.'}
         </p>
       ) : (
-        <div className="flex flex-col sm:flex-row flex-wrap justify-between lg:gap-y-9 gap-y-4 text-white font-bold lg:text-2xl text-[16px] leading-normal h-[800px] overflow-y-auto p-[40px] mb-[40px]">
+        <div className="flex flex-col sm:flex-row flex-wrap md:justify-between lg:gap-y-9 gap-y-5 gap-x-5 text-white font-bold lg:text-2xl text-[16px] leading-normal h-[800px] overflow-y-auto p-[40px] mb-[40px]">
           {isLoading ? (
             <p className="text-white">Loading...</p>
           ) : mainCardInfo.length === 0 ? (

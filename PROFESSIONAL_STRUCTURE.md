@@ -41,21 +41,25 @@ src/
 ## 🔧 Key Features
 
 ### 1. **Redux Toolkit + RTK Query**
+
 - **Modern Redux**: Using Redux Toolkit for simplified state management
 - **RTK Query**: Built-in data fetching, caching, and synchronization
 - **Type Safety**: Full TypeScript support with typed hooks
 
 ### 2. **Professional Type System**
+
 - **Centralized Types**: All interfaces in `/types` directory
 - **Reusable Types**: Common types for API responses, pagination, etc.
 - **Strict Typing**: Full TypeScript coverage
 
 ### 3. **Service Layer Architecture**
+
 - **Business Logic**: Separated into service classes
 - **Reusable Functions**: Utility functions for common operations
 - **Clean Components**: Components focus on UI, not business logic
 
 ### 4. **API Management**
+
 - **Base API**: Centralized API configuration
 - **Error Handling**: Consistent error handling across the app
 - **Caching**: Automatic caching and revalidation
@@ -66,17 +70,18 @@ src/
 ### Using RTK Query in Components
 
 ```tsx
-import { useGetOccupationsByCategoryQuery } from '@/store/api/occupationApi';
+import { useGetOccupationsByCategoryQuery } from "@/store/api/occupationApi";
 
 export default function OccupationPage() {
-  const { data, isLoading, error } = useGetOccupationsByCategoryQuery('technology');
-  
+  const { data, isLoading, error } =
+    useGetOccupationsByCategoryQuery("technology");
+
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error loading data</div>;
-  
+
   return (
     <div>
-      {data?.map(occupation => (
+      {data?.map((occupation) => (
         <OccupationCard key={occupation.id} occupation={occupation} />
       ))}
     </div>
@@ -87,32 +92,34 @@ export default function OccupationPage() {
 ### Using Redux State
 
 ```tsx
-import { useAppSelector, useAppDispatch } from '@/store/hooks';
-import { setSearchTerm, addToast } from '@/store/slices/uiSlice';
+import { useAppSelector, useAppDispatch } from "@/store/hooks";
+import { setSearchTerm, addToast } from "@/store/slices/uiSlice";
 
 export default function SearchComponent() {
   const dispatch = useAppDispatch();
-  const searchTerm = useAppSelector(state => state.ui.searchTerm);
-  
+  const searchTerm = useAppSelector((state) => state.ui.searchTerm);
+
   const handleSearch = (term: string) => {
     dispatch(setSearchTerm(term));
-    dispatch(addToast({ type: 'success', message: 'Search updated' }));
+    dispatch(addToast({ type: "success", message: "Search updated" }));
   };
-  
-  return <input value={searchTerm} onChange={e => handleSearch(e.target.value)} />;
+
+  return (
+    <input value={searchTerm} onChange={(e) => handleSearch(e.target.value)} />
+  );
 }
 ```
 
 ### Using Service Layer
 
 ```tsx
-import { OccupationService } from '@/services/occupationService';
+import { OccupationService } from "@/services/occupationService";
 
 // In your component
 const sortedOccupations = OccupationService.sortOccupations(
-  occupations, 
-  'ai_index', 
-  'desc'
+  occupations,
+  "ai_index",
+  "desc"
 );
 
 const stats = OccupationService.getOccupationStats(occupations);
@@ -121,21 +128,25 @@ const stats = OccupationService.getOccupationStats(occupations);
 ## 🚀 Benefits
 
 ### 1. **Scalability**
+
 - Modular architecture allows easy feature additions
 - Clear separation of concerns
 - Reusable components and utilities
 
 ### 2. **Maintainability**
+
 - Type-safe development reduces bugs
 - Centralized state management
 - Consistent error handling
 
 ### 3. **Performance**
+
 - RTK Query provides automatic caching
 - Optimistic updates
 - Background refetching
 
 ### 4. **Developer Experience**
+
 - Hot reloading with Redux DevTools
 - TypeScript IntelliSense
 - Consistent code patterns
@@ -143,25 +154,28 @@ const stats = OccupationService.getOccupationStats(occupations);
 ## 📦 Installation & Setup
 
 ### 1. Install Dependencies
+
 ```bash
 npm install @reduxjs/toolkit react-redux
 ```
 
 ### 2. Environment Variables
+
 ```env
-NEXT_PUBLIC_API_URL=http://localhost:3001/api
+NEXT_PUBLIC_API_URL=https://firesight-backend-3irx.onrender.com
 ```
 
 ### 3. Usage in Components
+
 ```tsx
 // Use RTK Query hooks for data fetching
-import { useGetOccupationsByCategoryQuery } from '@/store/api/occupationApi';
+import { useGetOccupationsByCategoryQuery } from "@/store/api/occupationApi";
 
 // Use typed Redux hooks for state management
-import { useAppSelector, useAppDispatch } from '@/store/hooks';
+import { useAppSelector, useAppDispatch } from "@/store/hooks";
 
 // Use service layer for business logic
-import { OccupationService } from '@/services/occupationService';
+import { OccupationService } from "@/services/occupationService";
 ```
 
 ## 🔄 Data Flow
@@ -175,21 +189,25 @@ import { OccupationService } from '@/services/occupationService';
 ## 🎯 Best Practices
 
 ### 1. **State Management**
+
 - Use RTK Query for server state
 - Use Redux slices for client state
 - Keep components focused on UI
 
 ### 2. **Type Safety**
+
 - Define interfaces for all data structures
 - Use typed hooks throughout the app
 - Leverage TypeScript for better DX
 
 ### 3. **Error Handling**
+
 - Consistent error handling patterns
 - User-friendly error messages
 - Graceful fallbacks
 
 ### 4. **Performance**
+
 - Leverage RTK Query caching
 - Use React.memo for expensive components
 - Implement proper loading states
@@ -204,4 +222,4 @@ import { OccupationService } from '@/services/occupationService';
 
 ---
 
-This structure provides a solid foundation for a professional, scalable Next.js application with modern Redux patterns and best practices. 
+This structure provides a solid foundation for a professional, scalable Next.js application with modern Redux patterns and best practices.

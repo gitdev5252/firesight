@@ -1,5 +1,5 @@
 import { baseApi } from './baseApi';
-import type { Occupation, OccupationCategory, OccupationFilters, OccupationResponse } from '../../types/occupation';
+import type { Occupation, OccupationCategory, OccupationFilters, OccupationResponse, OccupationTaskData } from '../../types/occupation';
 import type { PaginationParams } from '../../types/common';
 
 export const occupationApi = baseApi.injectEndpoints({
@@ -87,7 +87,7 @@ export const occupationApi = baseApi.injectEndpoints({
       providesTags: (result, error, name) => [{ type: 'Occupation', id: `related-${name}` }],
     }),
     // Get full task data by occupation name
-    getOccupationTaskByName: builder.query<Occupation, string>({
+    getOccupationTaskByName: builder.query<OccupationTaskData, string>({
       query: (name: string) => `/categories/occupation-tasks?name=${encodeURIComponent(name)}`,
       providesTags: (result, error, name) => [{ type: 'Occupation', id: `tasks-${name}` }],
     }),
