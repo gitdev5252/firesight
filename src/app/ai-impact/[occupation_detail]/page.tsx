@@ -11,6 +11,7 @@ import { useGetOccupationByNameQuery, useGetRelatedOccupationsByNameQuery, useGe
 
 import "../home/page.css";
 import { getThermometer } from "@/utils/getThermometer";
+import AIImpactFooter from "@/layouts/AIImpactFooter";
 
 const itemsPerSlide = 12; // or 6 or whatever your layout supports (like 4 per row × 2 rows)
 const swipeConfidenceThreshold = 100;
@@ -40,10 +41,10 @@ export default function Page() {
     ? {
       tasks: !isTaskLoading
         ? Array.from({ length: 20 }, (_, i) => {
-            const key = `task_${i + 1}` as keyof typeof taskData;
-            const raw = Number(taskData && key in taskData ? taskData[key] : 0);
-            return (raw / 10) * 100; // Convert to percent
-          })
+          const key = `task_${i + 1}` as keyof typeof taskData;
+          const raw = Number(taskData && key in taskData ? taskData[key] : 0);
+          return (raw / 10) * 100; // Convert to percent
+        })
         : taskProgress,
     }
     : null;
@@ -355,10 +356,8 @@ export default function Page() {
                 Occupation description
               </p>
               <p className="lg:text-[15.7px] text-[11px] mr-8">
-                A Creative Director is responsible for leading a team of
-                creative professionals in developing innovative ideas and
-                concepts for various projects, ensuring that the creative vision
-                aligns with the objectives of the organization or client.
+                {taskData?.core_description ||
+                  "This occupation is not available in the database."}
               </p>
             </div>
             <div className="lg:flex-4 flex-3 md:flex items-center justify-end hidden pt-[30px]">
@@ -525,18 +524,7 @@ export default function Page() {
                 </p>
               </div>
               <p className="lg:text-[15.7px] text-[11px] lg:mt-7 mt-4">
-                The role of a Creative Director falls into the moderate
-                substitutability category. While some aspects of the role
-                involve tasks that can be augmented or supported by AI, such as
-                developing creative strategies, reviewing designs, and managing
-                budgets, there are critical elements that resist full
-                automation. Creative direction, artistic direction, client
-                collaboration, pitching concepts, and fostering a creative
-                culture all require human intuition, emotional intelligence, and
-                strategic decision-making, which are less amenable to
-                automation. Therefore, while AI can assist in certain aspects of
-                the role, the core functions of a Creative Director are likely
-                to remain reliant on human expertise for the foreseeable future.
+                {taskData?.description}
               </p>
             </div>
             <div className="flex flex-col lg:gap-12 gap-8 flex-13 lg:py-15 py-8 items-center">
@@ -719,7 +707,8 @@ export default function Page() {
                 </p>
                 <p className="lg:text-[16px] text-[11px] lg:mt-7 mt-4">
                   {isTaskLoading ? "Loading..." :
-                    taskData?.description || `AI can suggest complementary colour palettes based on a
+                    taskData?.firesight_observations
+                    || `AI can suggest complementary colour palettes based on a
                   selected colour or image, ensuring aesthetically pleasing
                   design outcomes.AI can suggest complementary colour palettes
                   based on a selected colour or image, ensuring aesthetically
@@ -884,11 +873,11 @@ export default function Page() {
       </div>
       <div className="shineBg_body_blue_circle lg:hidden md:block hidden bottom-[157px] left-[calc(50vw-314px)] w-[629px] h-[592px]"></div>
       <div className="shineBg_body_blue_circle lg:block hidden bottom-[6.8vw] right-[24.653vw] w-[min(602px,41.8vw)] h-[min(602px,41.8vw)]"></div>{" "}
-      <FireSightFooter>
+      <AIImpactFooter>
         <div className="circle-footer-mobile md:hidden block z-[-2342]"></div>
         <div className="shineBg_body_blue_circle lg:block hidden bottom-[-25vw] right-[-17.57vw] w-[min(602px,41.8vw)] h-[min(602px,41.8vw)]"></div>
         <div className="shineBg_body_blue_circle lg:block hidden bottom-[-32.85vw] left-[-16.666vw] w-[min(602px,41.8vw)] h-[min(602px,41.8vw)]"></div>
-      </FireSightFooter>
+      </AIImpactFooter>
     </>
   );
 }
