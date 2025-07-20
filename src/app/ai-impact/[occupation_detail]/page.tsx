@@ -104,8 +104,8 @@ export default function Page() {
     occupationTab === 1
       ? [...relatedOccupations].sort((a, b) => b.ranking - a.ranking)
       : occupationTab === 2
-      ? [...relatedOccupations].sort((a, b) => a.ranking - b.ranking)
-      : relatedOccupations;
+        ? [...relatedOccupations].sort((a, b) => a.ranking - b.ranking)
+        : relatedOccupations;
 
   // useEffect(() => {
   //   setCurWindowWidth(window.innerWidth);
@@ -399,7 +399,7 @@ export default function Page() {
                 Constituent Occupations
               </p>
               {modalOpenCO && (
-                <div className="main-modal-box text-white !absolute lg:top-220 lg:left-9 lg:right-19 lg:py-10 lg:px-15 top-220 md:left-8 md:right-8 md:px-6 md:py-8 left-0 right-0 pt-7 pl-7 pr-8 pb-5 z-500">
+                <div className="main-modal-box text-white !absolute lg:top-230 lg:left-9 lg:right-19 lg:py-10 lg:px-15 top-230 md:left-8 md:right-8 md:px-6 md:py-8 left-0 right-0 pt-7 pl-7 pr-8 pb-5 z-500">
                   <div className="flex justify-between items-center">
                     <p className="lg:text-2xl text-[16px]">
                       FUNCTIONALITY NOTES:
@@ -452,7 +452,7 @@ export default function Page() {
                 className="cursor-pointer"
               >
                 <Image
-                  src="/images/icons/union.svg"
+                  src={`/images/icons/union${modalOpenCO ? "-red" : ""}.svg`}
                   alt="union"
                   width={24}
                   height={24}
@@ -573,7 +573,7 @@ export default function Page() {
                   className="cursor-pointer"
                 >
                   <Image
-                    src="/images/icons/union.svg"
+                    src={`/images/icons/union${modalOpenOEC ? "-red" : ""}.svg`}
                     alt="union"
                     width={24}
                     height={24}
@@ -601,7 +601,7 @@ export default function Page() {
             <div className="flex flex-col lg:gap-12 gap-8 flex-13 lg:py-15 py-8 items-center">
               <div className="flex gap-3 items-center justify-start">
                 {modalOpenMap && (
-                  <div className="main-modal-box text-white !absolute lg:top-322 lg:left-9 lg:right-19 lg:py-10 lg:px-15 top-322 md:left-8 md:right-8 md:px-6 md:py-8 left-0 right-0 pt-7 pl-7 pr-8 pb-5 z-500">
+                  <div className="main-modal-box text-white !absolute lg:top-344 lg:left-9 lg:right-19 lg:py-10 lg:px-15 top-360 md:left-8 md:right-8 md:px-6 md:py-8 left-0 right-0 pt-7 pl-7 pr-8 pb-5 z-500">
                     <div className="flex justify-between items-center">
                       <p className="lg:text-2xl text-[16px]">
                         FUNCTIONALITY NOTES:
@@ -761,7 +761,7 @@ export default function Page() {
                   </div>
                 )}
                 {modalOpenOEC && (
-                  <div className="main-modal-box text-white !absolute lg:top-322 top-410 lg:left-9 lg:right-19 lg:py-10 lg:px-15 md:left-8 md:right-8 md:px-6 md:py-8 left-0 right-0 pt-7 pl-7 pr-8 pb-5 z-500">
+                  <div className="main-modal-box text-white !absolute lg:top-342 top-440 lg:left-9 lg:right-19 lg:py-10 lg:px-15 md:left-8 md:right-8 md:px-6 md:py-8 left-0 right-0 pt-7 pl-7 pr-8 pb-5 z-500">
                     <div className="flex justify-between items-center">
                       <p className="lg:text-2xl text-[16px]">
                         FUNCTIONALITY NOTES:
@@ -882,7 +882,7 @@ export default function Page() {
                   className="cursor-pointer"
                 >
                   <Image
-                    src="/images/icons/union.svg"
+                    src={`/images/icons/union${modalOpenMap ? "-red" : ""}.svg`}
                     alt="union"
                     width={24}
                     height={24}
@@ -931,8 +931,8 @@ export default function Page() {
                     selectedEconomy === "Low Income"
                       ? "/images/low income.svg"
                       : selectedEconomy === "Emerging"
-                      ? "/images/emerging.svg"
-                      : "/images/advanced.svg"
+                        ? "/images/emerging.svg"
+                        : "/images/advanced.svg"
                   }
                   alt={selectedEconomy}
                   width={700}
@@ -951,7 +951,7 @@ export default function Page() {
                   Automatability Score
                 </p>
                 {modalOpenAS && (
-                  <div className="main-modal-box text-white !absolute lg:top-522 lg:left-9 lg:right-19 lg:py-10 lg:px-15 top-522 md:left-8 md:right-8 md:px-6 md:py-8 left-0 right-0 pt-7 pl-7 pr-8 pb-5 z-500">
+                  <div className="main-modal-box text-white !absolute lg:top-522 lg:left-9 lg:right-19 lg:py-10 lg:px-15 top-580 md:left-8 md:right-8 md:px-6 md:py-8 left-0 right-0 pt-7 pl-7 pr-8 pb-5 z-500">
                     <div className="flex justify-between items-center">
                       <p className="lg:text-2xl text-[16px]">
                         FUNCTIONALITY NOTES:
@@ -1077,7 +1077,7 @@ export default function Page() {
                   className="cursor-pointer"
                 >
                   <Image
-                    src="/images/icons/union.svg"
+                    src={`/images/icons/union${modalOpenAS ? "-red" : ""}.svg`}
                     alt="union"
                     width={24}
                     height={24}
@@ -1090,7 +1090,7 @@ export default function Page() {
                 <p className="text-[71px] font-bold leading-[130%] text-center mx-4">
                   {Math.floor(
                     taskProgress.reduce((s, ele) => s + ele) /
-                      taskProgress.length
+                    taskProgress.length
                   )}
                   %
                 </p>
@@ -1102,7 +1102,7 @@ export default function Page() {
                   Occupation Task Breakdown
                 </p>
                 {modalOpenOTB && (
-                  <div className="main-modal-box text-white !absolute lg:top-522 lg:left-9 lg:right-19 lg:py-10 lg:px-15 top-522 md:left-8 md:right-8 md:px-6 md:py-8 left-0 right-0 pt-7 pl-7 pr-8 pb-5 z-500 ">
+                  <div className="main-modal-box text-white !absolute lg:top-522 lg:left-9 lg:right-19 lg:py-10 lg:px-15 top-600 md:left-8 md:right-8 md:px-6 md:py-8 left-0 right-0 pt-7 pl-7 pr-8 pb-5 z-500 ">
                     <div className="flex justify-between items-center">
                       <p className="lg:text-2xl text-[16px]">
                         FUNCTIONALITY NOTES:
@@ -1236,7 +1236,8 @@ export default function Page() {
                   className="cursor-pointer"
                 >
                   <Image
-                    src="/images/icons/union.svg"
+                    src={`/images/icons/union${modalOpenOTB ? "-red" : ""}.svg`}
+
                     alt="union"
                     width={24}
                     height={24}
@@ -1300,7 +1301,7 @@ export default function Page() {
                     Automatability Score
                   </p>
                   {modalOpenAS && (
-                    <div className="main-modal-box text-white !absolute lg:top-522 lg:left-9 lg:right-19 lg:py-10 lg:px-15 top-522 md:left-8 md:right-8 md:px-6 md:py-8 left-0 right-0 pt-7 pl-7 pr-8 pb-5 z-500">
+                    <div className="main-modal-box text-white !absolute lg:top-522 lg:left-9 lg:right-19 lg:py-10 lg:px-15 top-1000 md:left-8 md:right-8 md:px-6 md:py-8 left-0 right-0 pt-7 pl-7 pr-8 pb-5 z-500">
                       <div className="flex justify-between items-center">
                         <p className="lg:text-2xl text-[16px]">
                           FUNCTIONALITY NOTES:
@@ -1430,7 +1431,7 @@ export default function Page() {
                     className="cursor-pointer"
                   >
                     <Image
-                      src="/images/icons/union.svg"
+                      src={`/images/icons/union${modalOpenAS ? "-red" : ""}.svg`}
                       alt="union"
                       width={24}
                       height={24}
@@ -1455,7 +1456,7 @@ export default function Page() {
                   {isTaskLoading
                     ? "Loading..."
                     : taskData?.firesight_observations ||
-                      `AI can suggest complementary colour palettes based on a
+                    `AI can suggest complementary colour palettes based on a
                   selected colour or image, ensuring aesthetically pleasing
                   design outcomes.AI can suggest complementary colour palettes
                   based on a selected colour or image, ensuring aesthetically
