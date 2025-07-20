@@ -402,7 +402,7 @@ export default function Page() {
                       />
                     </Button>
                   </div>
-                  <div className="md:mt-8 mt-17 flex flex-col lg:gap-8 md:gap-7 gap-8">
+                  <div className="md:mt-4 mt-4 flex flex-col lg:gap-8 md:gap-7 gap-8">
 
                     <div className="flex flex-col gap-3">
                       <div className="flex items-center gap-3">
@@ -483,9 +483,9 @@ export default function Page() {
                         .map((occ, index) => (
                           <div
                             key={index}
-                            className="flex items-center justify-center text-[14px] text-xs rounded-[50px] border border-[rgba(255,255,255,0.25)] bg-[rgba(255,255,255,0.04)] h-[45px] min-w-[120px] px-4 w-auto"
+                            className="flex items-center justify-center rounded-[50px] border border-[rgba(255,255,255,0.25)] bg-[rgba(255,255,255,0.04)] h-[45px] min-w-[90px] px-2 sm:min-w-[120px] sm:px-4 w-auto"
                           >
-                            <span className="font-semibold text-center w-full block break-words whitespace-normal">
+                            <span className="font-semibold text-center w-full block break-words whitespace-normal text-[12px] sm:text-[14px]">
                               {occ.core_occupation}
                             </span>
                           </div>
@@ -551,7 +551,7 @@ export default function Page() {
                 <p className="lg:text-[20px] md:text-[18px] text-[16px] font-bold uppercase">
                   SUBSTITUTABILITY SCORE
                 </p>
-                <div ref={oecBtnRef} onClick={handleOECModalOpen}>
+                <div ref={oecBtnRef} onClick={handleOECModalOpen} className="cursor-pointer">
 
 
                   <Image
@@ -600,7 +600,7 @@ export default function Page() {
                         />
                       </Button>
                     </div>
-                    <div className="md:mt-8 mt-17 flex flex-col lg:gap-8 md:gap-7 gap-8">
+                    <div className="md:mt-4 mt-4 flex flex-col lg:gap-8 md:gap-7 gap-8">
                       <div className="flex flex-col gap-3">
                         <div className="flex items-center gap-3">
                         
@@ -614,7 +614,7 @@ export default function Page() {
 
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
-                            width="70"
+                            width="180"
                             height="14"
                             viewBox="0 0 13 14"
                             fill="none"
@@ -639,7 +639,7 @@ export default function Page() {
 
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
-                            width="80"
+                            width="180"
                             height="14"
                             viewBox="0 0 13 14"
                             fill="none"
@@ -666,7 +666,7 @@ export default function Page() {
 
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
-                            width="50"
+                            width="180"
                             height="14"
                             viewBox="0 0 13 14"
                             fill="none"
@@ -710,7 +710,7 @@ export default function Page() {
                         />
                       </Button>
                     </div>
-                    <div className="md:mt-8 mt-17 flex flex-col lg:gap-8 md:gap-7 gap-8">
+                    <div className="md:mt-4 mt-4 flex flex-col lg:gap-8 md:gap-7 gap-8">
                       <div className="flex flex-col gap-3">
                         <div className="flex items-center gap-3">
                          
@@ -724,10 +724,9 @@ export default function Page() {
 
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
-                            width="13"
-                            height="14"
                             viewBox="0 0 13 14"
                             fill="none"
+                            className="w-[13px] h-[14px] shrink-0"
                           >
                             <path
                               d="M12.3623 3.78809V10.2109L6.7998 13.4229L1.2373 10.2109V3.78809L6.7998 0.576172L12.3623 3.78809Z"
@@ -735,6 +734,7 @@ export default function Page() {
                               stroke="white"
                             />
                           </svg>
+
                           {/* <p className="lg:text-[18px] text-sm md:font-normal font-bold">
                             AI Impact Index
                           </p> */}
@@ -749,10 +749,9 @@ export default function Page() {
 
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
-                            width="13"
-                            height="14"
                             viewBox="0 0 13 14"
                             fill="none"
+                            className="w-[13px] h-[14px] shrink-0"
                           >
                             <path
                               d="M12.3623 3.78809V10.2109L6.7998 13.4229L1.2373 10.2109V3.78809L6.7998 0.576172L12.3623 3.78809Z"
@@ -775,10 +774,9 @@ export default function Page() {
 
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
-                            width="13"
-                            height="14"
                             viewBox="0 0 13 14"
                             fill="none"
+                            className="w-[13px] h-[14px] shrink-0"
                           >
                             <path
                               d="M12.3623 3.78809V10.2109L6.7998 13.4229L1.2373 10.2109V3.78809L6.7998 0.576172L12.3623 3.78809Z"
@@ -802,7 +800,7 @@ export default function Page() {
                 <p className="lg:text-[20px] md:text-[18px] text-[16px] font-bold uppercase">
                   Occupation Economy Selector
                 </p>
-                <div ref={oecBtnRef} onClick={() => setModalOpenMap(!modalOpenMap)}>
+                <div ref={oecBtnRef} onClick={() => setModalOpenMap(!modalOpenMap)} className="cursor-pointer">
 
                   <Image
                     src="/images/icons/union.svg"
@@ -892,15 +890,14 @@ export default function Page() {
                         />
                       </Button>
                     </div>
-                    <div className="md:mt-8 mt-17 flex flex-col lg:gap-8 md:gap-7 gap-8">
+                    <div className="md:mt-4 mt-4 flex flex-col lg:gap-8 md:gap-7 gap-8">
                       <div className="flex flex-col gap-3">
                         <div className="flex items-center gap-3">
-                          {/* <svg
+                          {/*   <svg
                             xmlns="http://www.w3.org/2000/svg"
-                            width="13"
-                            height="14"
                             viewBox="0 0 13 14"
                             fill="none"
+                            className="w-[13px] h-[14px] shrink-0"
                           >
                             <path
                               d="M12.3623 3.78809V10.2109L6.7998 13.4229L1.2373 10.2109V3.78809L6.7998 0.576172L12.3623 3.78809Z"
@@ -920,10 +917,9 @@ export default function Page() {
                         <div className="flex items-center gap-3">
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
-                            width="13"
-                            height="14"
                             viewBox="0 0 13 14"
                             fill="none"
+                            className="w-[13px] h-[14px] shrink-0"
                           >
                             <path
                               d="M12.3623 3.78809V10.2109L6.7998 13.4229L1.2373 10.2109V3.78809L6.7998 0.576172L12.3623 3.78809Z"
@@ -943,10 +939,9 @@ export default function Page() {
                         <div className="flex items-center gap-3">
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
-                            width="13"
-                            height="14"
                             viewBox="0 0 13 14"
                             fill="none"
+                            className="w-[13px] h-[14px] shrink-0"
                           >
                             <path
                               d="M12.3623 3.78809V10.2109L6.7998 13.4229L1.2373 10.2109V3.78809L6.7998 0.576172L12.3623 3.78809Z"
@@ -966,10 +961,9 @@ export default function Page() {
                         <div className="flex items-center gap-3">
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
-                            width="13"
-                            height="14"
                             viewBox="0 0 13 14"
                             fill="none"
+                            className="w-[13px] h-[14px] shrink-0"
                           >
                             <path
                               d="M12.3623 3.78809V10.2109L6.7998 13.4229L1.2373 10.2109V3.78809L6.7998 0.576172L12.3623 3.78809Z"
@@ -999,17 +993,17 @@ export default function Page() {
                   />
                 </div>
               </div>
-              <div className="md:block flex items-center w-full mb-3 md:hidden">
-                <div className="flex- h-[1px] bg-[#ffffff0d]"></div>
-                <p className="text-[71px] font-bold leading-[130%]">
+              <div className="flex md:hidden items-center justify-center w-full mb-3">
+                <div className="flex-1 h-[1px] bg-[#ffffff0d]"></div>
+                <p className="text-[71px] font-bold leading-[130%] text-center mx-4">
                   {Math.floor(
-                    taskProgress.reduce((s, ele) => s + ele) /
-                    taskProgress.length
+                    taskProgress.reduce((s, ele) => s + ele) / taskProgress.length
                   )}
                   %
                 </p>
                 <div className="flex-1 h-[1px] bg-[#ffffff0d]"></div>
               </div>
+
               <div className="flex gap-3 w-full items-center justify-start lg:ml-13">
 
                 <p className="lg:text-[20px] md:text-[18px] text-[16px] font-bold uppercase">
@@ -1035,15 +1029,14 @@ export default function Page() {
                         />
                       </Button>
                     </div>
-                    <div className="md:mt-8 mt-17 flex flex-col lg:gap-8 md:gap-7 gap-8">
+                    <div className="md:mt-4 mt-4 flex flex-col lg:gap-8 md:gap-7 gap-8">
                       <div className="flex flex-col gap-3">
                         <div className="flex items-center gap-3">
-                          {/* <svg
+                          {/*   <svg
                             xmlns="http://www.w3.org/2000/svg"
-                            width="13"
-                            height="14"
                             viewBox="0 0 13 14"
                             fill="none"
+                            className="w-[13px] h-[14px] shrink-0"
                           >
                             <path
                               d="M12.3623 3.78809V10.2109L6.7998 13.4229L1.2373 10.2109V3.78809L6.7998 0.576172L12.3623 3.78809Z"
@@ -1063,10 +1056,9 @@ export default function Page() {
                         <div className="flex items-center gap-3">
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
-                            width="13"
-                            height="14"
                             viewBox="0 0 13 14"
                             fill="none"
+                            className="w-[13px] h-[14px] shrink-0"
                           >
                             <path
                               d="M12.3623 3.78809V10.2109L6.7998 13.4229L1.2373 10.2109V3.78809L6.7998 0.576172L12.3623 3.78809Z"
@@ -1086,10 +1078,9 @@ export default function Page() {
                         <div className="flex items-center gap-3">
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
-                            width="13"
-                            height="14"
                             viewBox="0 0 13 14"
                             fill="none"
+                            className="w-[13px] h-[14px] shrink-0"
                           >
                             <path
                               d="M12.3623 3.78809V10.2109L6.7998 13.4229L1.2373 10.2109V3.78809L6.7998 0.576172L12.3623 3.78809Z"
@@ -1109,10 +1100,9 @@ export default function Page() {
                         <div className="flex items-center gap-3">
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
-                            width="13"
-                            height="14"
                             viewBox="0 0 13 14"
                             fill="none"
+                            className="w-[13px] h-[14px] shrink-0"
                           >
                             <path
                               d="M12.3623 3.78809V10.2109L6.7998 13.4229L1.2373 10.2109V3.78809L6.7998 0.576172L12.3623 3.78809Z"
@@ -1153,7 +1143,8 @@ export default function Page() {
                     <div key={index} className="flex flex-col"> */}
 
                 {/* if u want to hide scroll use custom-scroll */}
-                <div className="flex flex-col flex-1 lg:gap-11 gap-6 h-[1000px] overflow-y-auto overflow-x-hidden  w-auto p-2">
+
+                <div className="custom-scrollbar flex flex-col flex-1 lg:gap-11 gap-6 h-[1000px] overflow-y-auto overflow-x-hidden w-auto p-2">
                   {taskData?.tasks?.map((ele, index) => (
                     <div key={index} className="flex flex-col ">
                       <div className="bg-[url(/images/poly-btn.svg)] bg-no-repeat w-[78px] h-[34px] flex items-center justify-center lg:text-[22px] text-[16px]">
@@ -1219,12 +1210,11 @@ export default function Page() {
                       <div className="md:mt-8 mt-17 flex flex-col lg:gap-8 md:gap-7 gap-8">
                         <div className="flex flex-col gap-3">
                           <div className="flex items-center gap-3">
-                            {/* <svg
+                            {/*   <svg
                             xmlns="http://www.w3.org/2000/svg"
-                            width="13"
-                            height="14"
                             viewBox="0 0 13 14"
                             fill="none"
+                            className="w-[13px] h-[14px] shrink-0"
                           >
                             <path
                               d="M12.3623 3.78809V10.2109L6.7998 13.4229L1.2373 10.2109V3.78809L6.7998 0.576172L12.3623 3.78809Z"
