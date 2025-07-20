@@ -104,8 +104,8 @@ export default function Page() {
     occupationTab === 1
       ? [...relatedOccupations].sort((a, b) => b.ranking - a.ranking)
       : occupationTab === 2
-        ? [...relatedOccupations].sort((a, b) => a.ranking - b.ranking)
-        : relatedOccupations;
+      ? [...relatedOccupations].sort((a, b) => a.ranking - b.ranking)
+      : relatedOccupations;
 
   // useEffect(() => {
   //   setCurWindowWidth(window.innerWidth);
@@ -761,7 +761,8 @@ export default function Page() {
                   </div>
                 )}
                 {modalOpenOEC && (
-                  <div className="main-modal-box text-white !absolute lg:top-342 top-440 lg:left-9 lg:right-19 lg:py-10 lg:px-15 md:left-8 md:right-8 md:px-6 md:py-8 left-0 right-0 pt-7 pl-7 pr-8 pb-5 z-500">
+
+                  <div className="main-modal-box text-white !absolute lg:top-322 top-410 lg:left-9 lg:right-19 lg:py-10 lg:px-15 md:left-8 md:right-8 md:px-6 md:py-8 left-0 right-0 pt-7 pl-7 pr-8 pb-5 z-500">
                     <div className="flex justify-between items-center">
                       <p className="lg:text-2xl text-[16px]">
                         FUNCTIONALITY NOTES:
@@ -931,8 +932,8 @@ export default function Page() {
                     selectedEconomy === "Low Income"
                       ? "/images/low income.svg"
                       : selectedEconomy === "Emerging"
-                        ? "/images/emerging.svg"
-                        : "/images/advanced.svg"
+                      ? "/images/emerging.svg"
+                      : "/images/advanced.svg"
                   }
                   alt={selectedEconomy}
                   width={700}
