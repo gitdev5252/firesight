@@ -20,7 +20,15 @@ const swipePower = (offset: number, velocity: number) => {
 
 export default function Page() {
   const [modalOpen, setModalOpen] = useState(false);
+  const [modalOpenOEC, setModalOpenOEC] = useState(false);
+  const [modalOpenMap, setModalOpenMap] = useState(false);
   const [occupationTab, setOccupationTab] = useState(0);
+  const oecBtnRef = useRef<HTMLDivElement>(null);
+
+  const handleOECModalOpen = () => {
+    setModalOpenOEC(true);
+  };
+
   const pathname = usePathname();
   const router = useRouter();
   const params = useParams();
@@ -47,7 +55,7 @@ export default function Page() {
         : taskProgress,
     }
     : null;
-
+  console.log(impactData, "impactDataimpactDataimpactData")
 
   // Related occupations & pagination
   const relatedOccupations = categoryData?.relatedOccupations || [];
@@ -110,6 +118,7 @@ export default function Page() {
 
   useEffect(() => {
     setModalOpen(false);
+    setModalOpenOEC(false);
   }, [pathname]);
   const [selectedEconomy, setSelectedEconomy] = useState("Emerging");
   return (
@@ -283,6 +292,7 @@ export default function Page() {
               </div>
             </div>
           )}
+
           <div className="w-full flex justify-start items-center gap-4 text-white">
             <Image
               src="/images/icons/pro-hub.svg"
@@ -427,9 +437,9 @@ export default function Page() {
                         .map((occ, index) => (
                           <div
                             key={index}
-                            className="flex items-center justify-center text-[14px] rounded-[50px] border border-[rgba(255,255,255,0.25)] bg-[rgba(255,255,255,0.04)] h-[45px] w-full max-w-[165px]"
+                            className="flex items-center justify-center text-[14px] text-xs rounded-[50px] border border-[rgba(255,255,255,0.25)] bg-[rgba(255,255,255,0.04)] h-[45px] min-w-[120px] px-4 w-auto"
                           >
-                            <span className="font-semibold text-center truncate w-[90%] block">
+                            <span className="font-semibold text-center w-full block break-words whitespace-normal">
                               {occ.core_occupation}
                             </span>
                           </div>
@@ -495,13 +505,17 @@ export default function Page() {
                 <p className="lg:text-[20px] md:text-[18px] text-[16px] font-bold uppercase">
                   SUBSTITUTABILITY SCORE
                 </p>
-                <Image
-                  src="/images/icons/union.svg"
-                  alt="union"
-                  width={24}
-                  height={24}
-                  className="lg:w-[24px] lg:h-[24px] md:w-[17px] md:h-[17px] w-[16px] h-[16px]"
-                />
+                <div ref={oecBtnRef} onClick={handleOECModalOpen}>
+
+
+                  <Image
+                    src="/images/icons/union.svg"
+                    alt="union"
+                    width={24}
+                    height={24}
+                    className="lg:w-[24px] lg:h-[24px] md:w-[17px] md:h-[17px] w-[16px] h-[16px]"
+                  />
+                </div>
               </div>
               <div className="flex gap-3 items-end">
                 <p className="lg:text-[70px] text-[48px] font-bold leading-none text-[#E93249] lg:h-[60px] h-[42px]">
@@ -520,16 +534,256 @@ export default function Page() {
             </div>
             <div className="flex flex-col lg:gap-12 gap-8 flex-13 lg:py-15 py-8 items-center">
               <div className="flex gap-3 items-center justify-start">
+                {modalOpenMap && (
+                  <div className="main-modal-box text-white !absolute lg:top-322 lg:left-9 lg:right-19 lg:py-10 lg:px-15 top-18 md:left-8 md:right-8 md:px-6 md:py-8 left-0 right-0 pt-7 pl-7 pr-8 pb-5 z-500">
+                    <div className="flex justify-between items-center">
+                      <p className="lg:text-2xl text-[16px]">
+                        FUNCTIONALITY NOTES:
+                      </p>
+                      <Button
+                        onClick={() => setModalOpenMap(false)}
+                        variant="ghost"
+                        className="p-0"
+                      >
+                        <Image
+                          src="/images/mobile/menu-close.svg"
+                          alt="Close"
+                          width={24}
+                          height={24}
+                          className="lg:size-6 md:size-[18px] size-[20px]"
+                        />
+                      </Button>
+                    </div>
+                    <div className="md:mt-8 mt-17 flex flex-col lg:gap-8 md:gap-7 gap-8">
+                      <div className="flex flex-col gap-3">
+                        <div className="flex items-center gap-3">
+                          {/* <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="13"
+                            height="14"
+                            viewBox="0 0 13 14"
+                            fill="none"
+                          >
+                            <path
+                              d="M12.3623 3.78809V10.2109L6.7998 13.4229L1.2373 10.2109V3.78809L6.7998 0.576172L12.3623 3.78809Z"
+                              fill="white"
+                              stroke="white"
+                            />
+                          </svg> */}
+                          {/* <p className="lg:text-[18px] text-sm md:font-normal font-bold">
+                            What Purpose Does it Serve?
+                          </p> */}
+                          <p className="lg:text-[18px] text-xs">
+                            All countries globally are classified into one of three economic states. This AI Impact Index feature allows you to filter the occupational risk of any job by each of these three different economic conditions. Below is a full country breakdown:
+                          </p>
+                        </div>
+                      </div>
+                      <div className="flex flex-col gap-3">
+                        <div className="flex items-center gap-3">
+                          {/* <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="13"
+                            height="14"
+                            viewBox="0 0 13 14"
+                            fill="none"
+                          >
+                            <path
+                              d="M12.3623 3.78809V10.2109L6.7998 13.4229L1.2373 10.2109V3.78809L6.7998 0.576172L12.3623 3.78809Z"
+                              fill="white"
+                              stroke="white"
+                            />
+                          </svg> */}
+                          {/* <p className="lg:text-[18px] text-sm md:font-normal font-bold">
+                            AI Impact Index
+                          </p> */}
+                          <p className="lg:text-[18px] text-xs">
+                            Low Income Economies: Martinique, Palau, American Samoa, Cambodia, Lebanon, Bolivia, Costa Rica, North Macedonia, Marshall Islands, Iran, Azerbaijan, China, El Salvador, Nicaragua, Albania, Tonga, Tunisia, Jordan, Sri Lanka, Honduras, Syria, Réunion, State of Palestine, Afghanistan, Samoa, Tuvalu, Kyrgyzstan, Tajikistan, Bhutan, Mayotte, Guyana, Sao Tome & Principe, Myanmar, Kiribati, Comoros, Micronesia, Vanuatu, Cabo Verde, Djibouti, Sudan, Ethiopia, Solomon Islands, Haiti, Nepal, Yemen, Gambia, Cameroon, Montserrat, Timor-Leste, Laos, Chad, Wallis & Futuna, Côte d'Ivoire, North Korea, Bangladesh, Zimbabwe, Lesotho, Guinea-Bissau, Rwanda, Nigeria, Congo, Guinea, Somalia, Uganda, Senegal, Sierra Leone, Tanzania, South Sudan, Benin, Burkina Faso, Mali, Niger, Liberia, Togo, Western Sahara, Central African Republic, Zambia, Mozambique, Madagascar, Burundi, Malawi, Eritrea, DR Congo.
+                          </p>
+                        </div>
+                      </div>
+                      <div className="flex flex-col gap-3">
+                        <div className="flex items-center gap-3">
+                          {/* <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="13"
+                            height="14"
+                            viewBox="0 0 13 14"
+                            fill="none"
+                          >
+                            <path
+                              d="M12.3623 3.78809V10.2109L6.7998 13.4229L1.2373 10.2109V3.78809L6.7998 0.576172L12.3623 3.78809Z"
+                              fill="white"
+                              stroke="white"
+                            />
+                          </svg> */}
+                          {/* <p className="lg:text-[18px] text-sm md:font-normal font-bold">
+                            Coming Soon Regions
+                          </p> */}
+                          <p className="lg:text-[18px] text-xs">
+                            Emerging Economies: Kuwait, Guam, Puerto Rico, Guadeloupe, Barbados, Niue, Northern Mariana Islands, Andorra, Antigua and Barbuda, Cyprus, Bahamas, Malta, Saint Kitts & Nevis, Curaçao, South Korea, Aruba, Saint Helena, Uruguay, Serbia, Hungary, Slovakia, New Caledonia, Indonesia, Botswana, Greece, Sint Maarten, Bulgaria, Equatorial Guinea, St. Vincent & Grenadines, Malaysia, Panama, Argentina, Romania, Belarus, Turks and Caicos, Seychelles, Anguilla, Tokelau, Chile, French Polynesia, Bosnia and Herzegovina, Montenegro, Saint Lucia, Turkey, Maldives, Ukraine, Ecuador, Paraguay, Brazil, Cook Islands, Thailand, French Guiana, Dominican Republic, Mauritius, India, Oman, Kazakhstan, Dominica, Peru, Mexico, Moldova, Saint Martin, Trinidad and Tobago, Vietnam, Colombia, Jamaica, Venezuela, Gabon, Iraq, Mongolia, Morocco, Algeria, Fiji, Armenia, Georgia, Philippines, Ghana, Cuba, Guatemala, Belize, Macao, Namibia, South Africa, Nauru, Mauritania, Egypt, Pakistan, Suriname, Holy See, Grenada, Eswatini, Papua New Guinea, Kenya, Turkmenistan, Angola, Uzbekistan, Libya.
+
+
+                          </p>
+                        </div>
+                      </div>
+                      <div className="flex flex-col gap-3">
+                        <div className="flex items-center gap-3">
+                          {/* <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="13"
+                            height="14"
+                            viewBox="0 0 13 14"
+                            fill="none"
+                          >
+                            <path
+                              d="M12.3623 3.78809V10.2109L6.7998 13.4229L1.2373 10.2109V3.78809L6.7998 0.576172L12.3623 3.78809Z"
+                              fill="white"
+                              stroke="white"
+                            />
+                          </svg> */}
+                          {/* <p className="lg:text-[18px] text-sm md:font-normal font-bold">
+                            Coming Soon Regions
+                          </p> */}
+                          <p className="lg:text-[18px] text-xs">
+                            Advanced Economies: Bermuda, Falkland Islands, Hong Kong, Saint Barthelemy, Gibraltar, Faeroe Islands, Saudi Arabia, Qatar, New Zealand, Cayman Islands, Greenland, Liechtenstein, Luxembourg, Monaco, Brunei, Austria, Norway, Netherlands, Switzerland, United States, Canada, Caribbean Netherlands, France, Denmark, Australia, Germany, Iceland, British Virgin Islands, Belgium, Sweden, Finland, United Arab Emirates, Ireland, United Kingdom, Italy, U.S. Virgin Islands, Japan, Spain, Slovenia, Czech Republic, Taiwan, Estonia, Israel, San Marino, Lithuania, Portugal, Poland, Latvia, Croatia, Russia, Isle of Man, Bahrain, Saint Pierre & Miquelon, Singapore.
+
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+                {modalOpenOEC && (
+                  <div className="main-modal-box text-white !absolute lg:top-322 lg:left-9 lg:right-19 lg:py-10 lg:px-15 top-18 md:left-8 md:right-8 md:px-6 md:py-8 left-0 right-0 pt-7 pl-7 pr-8 pb-5 z-500">
+                    <div className="flex justify-between items-center">
+                      <p className="lg:text-2xl text-[16px]">
+                        FUNCTIONALITY NOTES:
+                      </p>
+                      <Button
+                        onClick={() => setModalOpenOEC(false)}
+                        variant="ghost"
+                        className="p-0"
+                      >
+                        <Image
+                          src="/images/mobile/menu-close.svg"
+                          alt="Close"
+                          width={24}
+                          height={24}
+                          className="lg:size-6 md:size-[18px] size-[20px]"
+                        />
+                      </Button>
+                    </div>
+                    <div className="md:mt-8 mt-17 flex flex-col lg:gap-8 md:gap-7 gap-8">
+                      <div className="flex flex-col gap-3">
+                        <div className="flex items-center gap-3">
+                          {/* <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="13"
+                            height="14"
+                            viewBox="0 0 13 14"
+                            fill="none"
+                          >
+                            <path
+                              d="M12.3623 3.78809V10.2109L6.7998 13.4229L1.2373 10.2109V3.78809L6.7998 0.576172L12.3623 3.78809Z"
+                              fill="white"
+                              stroke="white"
+                            />
+                          </svg> */}
+                          {/* <p className="lg:text-[18px] text-sm md:font-normal font-bold">
+                            What Purpose Does it Serve?
+                          </p> */}
+                          <p className="lg:text-[18px] text-xs">
+                            The Firesight Substitutability Rating evaluates the potential impact of artificial intelligence (AI) on occupations by focusing on the likelihood of job displacement. It examines whether AI should perform job tasks, considering social, ethical, and legal contexts along with skill levels.   Ratings are assigned as follows:
+                          </p>
+                        </div>
+                      </div>
+                      <div className="flex flex-col gap-3">
+                        <div className="flex items-center gap-3">
+                          {/* <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="13"
+                            height="14"
+                            viewBox="0 0 13 14"
+                            fill="none"
+                          >
+                            <path
+                              d="M12.3623 3.78809V10.2109L6.7998 13.4229L1.2373 10.2109V3.78809L6.7998 0.576172L12.3623 3.78809Z"
+                              fill="white"
+                              stroke="white"
+                            />
+                          </svg> */}
+                          {/* <p className="lg:text-[18px] text-sm md:font-normal font-bold">
+                            AI Impact Index
+                          </p> */}
+                          <p className="lg:text-[18px] text-xs">
+                            Low Substitutability (0-2): High complementarity with AI, indicating low risk of displacement and potential for productivity gains.
+                          </p>
+                        </div>
+                      </div>
+                      <div className="flex flex-col gap-3">
+                        <div className="flex items-center gap-3">
+                          {/* <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="13"
+                            height="14"
+                            viewBox="0 0 13 14"
+                            fill="none"
+                          >
+                            <path
+                              d="M12.3623 3.78809V10.2109L6.7998 13.4229L1.2373 10.2109V3.78809L6.7998 0.576172L12.3623 3.78809Z"
+                              fill="white"
+                              stroke="white"
+                            />
+                          </svg> */}
+                          {/* <p className="lg:text-[18px] text-sm md:font-normal font-bold">
+                            Coming Soon Regions
+                          </p> */}
+                          <p className="lg:text-[18px] text-xs">
+                            Moderate Substitutability (3-6): Balanced potential for AI support and substitution, with varying impacts on job displacement.
+
+                          </p>
+                        </div>
+                      </div>
+                      <div className="flex flex-col gap-3">
+                        <div className="flex items-center gap-3">
+                          {/* <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="13"
+                            height="14"
+                            viewBox="0 0 13 14"
+                            fill="none"
+                          >
+                            <path
+                              d="M12.3623 3.78809V10.2109L6.7998 13.4229L1.2373 10.2109V3.78809L6.7998 0.576172L12.3623 3.78809Z"
+                              fill="white"
+                              stroke="white"
+                            />
+                          </svg> */}
+                          {/* <p className="lg:text-[18px] text-sm md:font-normal font-bold">
+                            Coming Soon Regions
+                          </p> */}
+                          <p className="lg:text-[18px] text-xs">
+                            High Substitutability (7-10): Low complementarity with AI, indicating high risk of job automation and significant reductions in human labor demand.
+
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
                 <p className="lg:text-[20px] md:text-[18px] text-[16px] font-bold uppercase">
                   Occupation Economy Selector
                 </p>
-                <Image
-                  src="/images/icons/union.svg"
-                  alt="union"
-                  width={24}
-                  height={24}
-                  className="lg:w-[24px] lg:h-[24px] md:w-[17px] md:h-[17px] w-[16px] h-[16px]"
-                />
+                <div ref={oecBtnRef} onClick={() => setModalOpenMap(!modalOpenMap)}>
+
+                  <Image
+                    src="/images/icons/union.svg"
+                    alt="union"
+                    width={24}
+                    height={24}
+                    className="lg:w-[24px] lg:h-[24px] md:w-[17px] md:h-[17px] w-[16px] h-[16px]"
+                  />
+                </div>
               </div>
               <div className="flex gap-3 items-end">
                 {[
@@ -570,8 +824,8 @@ export default function Page() {
                     selectedEconomy === "Low Income"
                       ? "/images/low income.svg"
                       : selectedEconomy === "Emerging"
-                      ? "/images/emerging.svg"
-                      : "/images/advanced.svg"
+                        ? "/images/emerging.svg"
+                        : "/images/advanced.svg"
                   }
                   alt={selectedEconomy}
                   width={700}
@@ -579,6 +833,7 @@ export default function Page() {
                 />
               </div>
             </div>
+
           </div>
 
           <div className="h-[1px] w-full bg-[#ffffff1a]"></div>
@@ -598,7 +853,7 @@ export default function Page() {
                 />
               </div>
               <div className="md:block flex items-center w-full mb-3 md:hidden">
-                <div className="flex-1 h-[1px] bg-[#ffffff0d]"></div>
+                <div className="flex- h-[1px] bg-[#ffffff0d]"></div>
                 <p className="text-[71px] font-bold leading-[130%]">
                   {Math.floor(
                     taskProgress.reduce((s, ele) => s + ele) /
@@ -633,26 +888,26 @@ export default function Page() {
 
 
                 <div className="flex flex-col flex-1 lg:gap-11 gap-6 h-[1000px] overflow-y-auto overflow-x-hidden custom-scroll w-auto p-2">
-                  {transformedTasks?.tasks?.map((ele, index) => (
+                  {taskData?.tasks?.map((ele, index) => (
                     <div key={index} className="flex flex-col ">
                       <div className="bg-[url(/images/poly-btn.svg)] bg-no-repeat w-[78px] h-[34px] flex items-center justify-center lg:text-[22px] text-[16px]">
-                        {ele}%
+                        {ele?.value}%
                       </div>
                       <p className="lg:text-[19px] md:text-[18px] text-[16px] font-bold mt-6 lg:mb-3 mb-1">
-                        Reviewing Developer Work
+                        {ele?.name}
                       </p>
                       <div className="relative w-full h-[14px]">
                         <div className="absolute top-[5px] h-1 w-full bg-[#ffffff43] z-10"></div>
                         <div
                           className={`absolute top-[5px] h-1 left-0 bg-[#E93249] z-20`}
                           style={{
-                            width: `${ele}%`,
+                            width: `${ele?.value}%`,
                           }}
                         ></div>
                         <div
                           className={`absolute top-0 h-[14px] w-[14px] z-30 bg-[url(/images/slider-ring.svg)] bg-no-repeat bg-cover`}
                           style={{
-                            left: `${ele}%`,
+                            left: `${ele?.value}%`,
                             transform: "translateX(-7px)",
                           }}
                         ></div>
