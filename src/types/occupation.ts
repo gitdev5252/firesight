@@ -21,10 +21,10 @@ export interface OccupationTaskData extends Occupation {
   description?: string;
   firesight_observations?: string;
   core_description?: string;
-  tasks?: Array<{
+  tasks?: {
     name: string;
     value: number;
-  }>;
+  }[];
   task_1?: number;
   task_2?: number;
   task_3?: number;
