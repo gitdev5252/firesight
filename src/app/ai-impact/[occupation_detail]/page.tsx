@@ -6,7 +6,11 @@ import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
 import { Button } from "@/components/ui/button";
-import { useGetOccupationByNameQuery, useGetRelatedOccupationsByNameQuery, useGetOccupationTaskByNameQuery } from "@/store/api/occupationApi";
+import {
+  useGetOccupationByNameQuery,
+  useGetRelatedOccupationsByNameQuery,
+  useGetOccupationTaskByNameQuery,
+} from "@/store/api/occupationApi";
 
 import "../home/page.css";
 import { getThermometer } from "@/utils/getThermometer";
@@ -39,15 +43,19 @@ export default function Page() {
   // useSearchOccupationsQuery,
   const occupationParam = params?.occupation_detail;
   const occupation = decodeURIComponent(
-    Array.isArray(occupationParam) ? occupationParam[0] : occupationParam || "Unknown Occupation"
+    Array.isArray(occupationParam)
+      ? occupationParam[0]
+      : occupationParam || "Unknown Occupation"
   );
 
   // Query data
   const taskProgress = [50, 0, 100, 0];
 
   const { data: impactData } = useGetOccupationByNameQuery(occupation);
-  const { data: categoryData } = useGetRelatedOccupationsByNameQuery(occupation);
-  const { data: taskData, isLoading: isTaskLoading } = useGetOccupationTaskByNameQuery(occupation);
+  const { data: categoryData } =
+    useGetRelatedOccupationsByNameQuery(occupation);
+  const { data: taskData, isLoading: isTaskLoading } =
+    useGetOccupationTaskByNameQuery(occupation);
 
   // Related occupations & pagination
   const relatedOccupations = categoryData?.relatedOccupations || [];
@@ -68,7 +76,9 @@ export default function Page() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const totalOccupationSlides = Math.ceil(relatedOccupations.length / occupationsPerSlide);
+  const totalOccupationSlides = Math.ceil(
+    relatedOccupations.length / occupationsPerSlide
+  );
   // const [curWindowWidth, setCurWindowWidth] = useState(0);
 
   const thermometerSrc = getThermometer(impactData?.thermometer);
@@ -84,7 +94,9 @@ export default function Page() {
   };
   const paginate2 = (newDirection: number) => {
     setPage2(([prevPage]) => {
-      const newPage = (prevPage + newDirection + totalOccupationSlides) % totalOccupationSlides;
+      const newPage =
+        (prevPage + newDirection + totalOccupationSlides) %
+        totalOccupationSlides;
       return [newPage, newDirection];
     });
   };
@@ -92,8 +104,8 @@ export default function Page() {
     occupationTab === 1
       ? [...relatedOccupations].sort((a, b) => b.ranking - a.ranking)
       : occupationTab === 2
-        ? [...relatedOccupations].sort((a, b) => a.ranking - b.ranking)
-        : relatedOccupations;
+      ? [...relatedOccupations].sort((a, b) => a.ranking - b.ranking)
+      : relatedOccupations;
 
   // useEffect(() => {
   //   setCurWindowWidth(window.innerWidth);
@@ -113,7 +125,7 @@ export default function Page() {
     setModalOpenOEC(false);
     setModalOpenOTB(false);
     setModalOpenAS(false);
-    setModalOpenCO(false)
+    setModalOpenCO(false);
   }, [pathname]);
   const [selectedEconomy, setSelectedEconomy] = useState("Emerging");
   return (
@@ -204,16 +216,17 @@ export default function Page() {
                     </p>
                   </div>
                   <p className="lg:text-[18px] text-xs">
-                    The Professional Development Hub is Firesight&apos;s gateway to
-                    future-proof skills. Your gateway to mastering the future of
-                    work. Our platform is designed to empower solopreneurs with
-                    the tools and knowledge needed to thrive in an ever-growing
-                    AI-driven job market. Dedicated to facilitating personalised
-                    and occupation-specific learning experiences, empowered by
-                    our cutting edge AI technology. By focusing on the tools and
-                    skills critical for today&apos;s dynamic job landscape, the
-                    Professional Development Hub is your partner in adapting to
-                    and excelling in the era of AI-driven employment.
+                    The Professional Development Hub is Firesight&apos;s gateway
+                    to future-proof skills. Your gateway to mastering the future
+                    of work. Our platform is designed to empower solopreneurs
+                    with the tools and knowledge needed to thrive in an
+                    ever-growing AI-driven job market. Dedicated to facilitating
+                    personalised and occupation-specific learning experiences,
+                    empowered by our cutting edge AI technology. By focusing on
+                    the tools and skills critical for today&apos;s dynamic job
+                    landscape, the Professional Development Hub is your partner
+                    in adapting to and excelling in the era of AI-driven
+                    employment.
                   </p>
                 </div>
                 <div className="flex flex-col gap-3">
@@ -316,7 +329,10 @@ export default function Page() {
           </div>
 
           {/* Back to AI Impact Home*/}
-          <div className="flex w-full justify-start items-center gap-2 h-6 lg:mt-15 lg:mb-12 md:mt-11 md:mb-9 mt-8 mb-10 cursor-pointer" onClick={() => router.back()}  >
+          <div
+            className="flex w-full justify-start items-center gap-2 h-6 lg:mt-15 lg:mb-12 md:mt-11 md:mb-9 mt-8 mb-10 cursor-pointer"
+            onClick={() => router.back()}
+          >
             <Image
               src="/images/icons/back-btn.svg"
               alt="back-btn"
@@ -403,7 +419,6 @@ export default function Page() {
                     </Button>
                   </div>
                   <div className="md:mt-4 mt-4 flex flex-col lg:gap-8 md:gap-7 gap-8">
-
                     <div className="flex flex-col gap-3">
                       <div className="flex items-center gap-3">
                         <svg
@@ -423,15 +438,19 @@ export default function Page() {
                             Coming Soon Regions
                           </p> */}
                         <p className="lg:text-[18px] text-xs">
-                          The constituent occupations are roles that can be typically found within the core occupation highlighted.
+                          The constituent occupations are roles that can be
+                          typically found within the core occupation
+                          highlighted.
                         </p>
                       </div>
                     </div>
                   </div>
                 </div>
               )}
-              <div onClick={() => setModalOpenCO(!modalOpenCO)} className="cursor-pointer">
-
+              <div
+                onClick={() => setModalOpenCO(!modalOpenCO)}
+                className="cursor-pointer"
+              >
                 <Image
                   src="/images/icons/union.svg"
                   alt="union"
@@ -442,7 +461,7 @@ export default function Page() {
               </div>
             </div>
 
-            <div className="relative w-full lg:mt-16 lg:mb-6 my-8 lg:min-h-[130px] min-h-[230px]">
+            <div className="relative w-full lg:mt-16 lg:mb-14 mb-35 mt-5 lg:min-h-[130px] min-h-[230px]">
               <AnimatePresence initial={false} custom={direction1}>
                 <motion.div
                   key={page1}
@@ -475,9 +494,7 @@ export default function Page() {
                   className="absolute w-full h-full flex flex-col items-center justify-stretch pb-10"
                 >
                   <div className="sm:w-full w-auto -mx-[50px] sm:mx-0">
-                    <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-x-2 gap-y-4
-  px-4 sm:px-0">
-
+                    <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-x-2 gap-y-4 px-4 sm:px-0">
                       {relatedOccupations
                         .slice(page1 * 12, (page1 + 1) * 12)
                         .map((occ, index) => (
@@ -492,7 +509,6 @@ export default function Page() {
                         ))}
                     </div>
                   </div>
-
                 </motion.div>
               </AnimatePresence>
             </div>
@@ -551,9 +567,11 @@ export default function Page() {
                 <p className="lg:text-[20px] md:text-[18px] text-[16px] font-bold uppercase">
                   SUBSTITUTABILITY SCORE
                 </p>
-                <div ref={oecBtnRef} onClick={handleOECModalOpen} className="cursor-pointer">
-
-
+                <div
+                  ref={oecBtnRef}
+                  onClick={handleOECModalOpen}
+                  className="cursor-pointer"
+                >
                   <Image
                     src="/images/icons/union.svg"
                     alt="union"
@@ -568,7 +586,9 @@ export default function Page() {
                   {impactData?.substi_sco}
                 </p>
                 <div className="w-[1px] lg:h-[18px] md:h-[14px] h-[13px] lg:mb-[6px] mb-1 bg-[#ffffff1a]"></div>
-                <p className="lg:text-[18px] md:text-sm text-[13px]">{impactData?.substi_sco}/10</p>
+                <p className="lg:text-[18px] md:text-sm text-[13px]">
+                  {impactData?.substi_sco}/10
+                </p>
                 <div className="w-[1px] lg:h-[18px] md:h-[14px] h-[13px] lg:mb-[6px] mb-1 bg-[#ffffff1a] md:block hidden"></div>
                 <p className="lg:text-[18px] md:text-sm text-[13px]">
                   Risk Level: <b>{impactData?.thermometer}</b>
@@ -603,15 +623,17 @@ export default function Page() {
                     <div className="md:mt-4 mt-4 flex flex-col lg:gap-8 md:gap-7 gap-8">
                       <div className="flex flex-col gap-3">
                         <div className="flex items-center gap-3">
-                        
                           <p className="lg:text-[18px] text-xs">
-                            All countries globally are classified into one of three economic states. This AI Impact Index feature allows you to filter the occupational risk of any job by each of these three different economic conditions. Below is a full country breakdown:
+                            All countries globally are classified into one of
+                            three economic states. This AI Impact Index feature
+                            allows you to filter the occupational risk of any
+                            job by each of these three different economic
+                            conditions. Below is a full country breakdown:
                           </p>
                         </div>
                       </div>
                       <div className="flex flex-col gap-3">
                         <div className="flex items-center gap-3">
-
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="180"
@@ -630,13 +652,30 @@ export default function Page() {
                           </p> */}
 
                           <p className="lg:text-[18px] text-xs">
-                            Low Income Economies: Martinique, Palau, American Samoa, Cambodia, Lebanon, Bolivia, Costa Rica, North Macedonia, Marshall Islands, Iran, Azerbaijan, China, El Salvador, Nicaragua, Albania, Tonga, Tunisia, Jordan, Sri Lanka, Honduras, Syria, Réunion, State of Palestine, Afghanistan, Samoa, Tuvalu, Kyrgyzstan, Tajikistan, Bhutan, Mayotte, Guyana, Sao Tome & Principe, Myanmar, Kiribati, Comoros, Micronesia, Vanuatu, Cabo Verde, Djibouti, Sudan, Ethiopia, Solomon Islands, Haiti, Nepal, Yemen, Gambia, Cameroon, Montserrat, Timor-Leste, Laos, Chad, Wallis & Futuna, Côte d&apos;Ivoire, North Korea, Bangladesh, Zimbabwe, Lesotho, Guinea-Bissau, Rwanda, Nigeria, Congo, Guinea, Somalia, Uganda, Senegal, Sierra Leone, Tanzania, South Sudan, Benin, Burkina Faso, Mali, Niger, Liberia, Togo, Western Sahara, Central African Republic, Zambia, Mozambique, Madagascar, Burundi, Malawi, Eritrea, DR Congo.
+                            Low Income Economies: Martinique, Palau, American
+                            Samoa, Cambodia, Lebanon, Bolivia, Costa Rica, North
+                            Macedonia, Marshall Islands, Iran, Azerbaijan,
+                            China, El Salvador, Nicaragua, Albania, Tonga,
+                            Tunisia, Jordan, Sri Lanka, Honduras, Syria,
+                            Réunion, State of Palestine, Afghanistan, Samoa,
+                            Tuvalu, Kyrgyzstan, Tajikistan, Bhutan, Mayotte,
+                            Guyana, Sao Tome & Principe, Myanmar, Kiribati,
+                            Comoros, Micronesia, Vanuatu, Cabo Verde, Djibouti,
+                            Sudan, Ethiopia, Solomon Islands, Haiti, Nepal,
+                            Yemen, Gambia, Cameroon, Montserrat, Timor-Leste,
+                            Laos, Chad, Wallis & Futuna, Côte d&apos;Ivoire,
+                            North Korea, Bangladesh, Zimbabwe, Lesotho,
+                            Guinea-Bissau, Rwanda, Nigeria, Congo, Guinea,
+                            Somalia, Uganda, Senegal, Sierra Leone, Tanzania,
+                            South Sudan, Benin, Burkina Faso, Mali, Niger,
+                            Liberia, Togo, Western Sahara, Central African
+                            Republic, Zambia, Mozambique, Madagascar, Burundi,
+                            Malawi, Eritrea, DR Congo.
                           </p>
                         </div>
                       </div>
                       <div className="flex flex-col gap-3">
                         <div className="flex items-center gap-3">
-
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="180"
@@ -655,15 +694,34 @@ export default function Page() {
                           </p> */}
 
                           <p className="lg:text-[18px] text-xs">
-                            Emerging Economies: Kuwait, Guam, Puerto Rico, Guadeloupe, Barbados, Niue, Northern Mariana Islands, Andorra, Antigua and Barbuda, Cyprus, Bahamas, Malta, Saint Kitts & Nevis, Curaçao, South Korea, Aruba, Saint Helena, Uruguay, Serbia, Hungary, Slovakia, New Caledonia, Indonesia, Botswana, Greece, Sint Maarten, Bulgaria, Equatorial Guinea, St. Vincent & Grenadines, Malaysia, Panama, Argentina, Romania, Belarus, Turks and Caicos, Seychelles, Anguilla, Tokelau, Chile, French Polynesia, Bosnia and Herzegovina, Montenegro, Saint Lucia, Turkey, Maldives, Ukraine, Ecuador, Paraguay, Brazil, Cook Islands, Thailand, French Guiana, Dominican Republic, Mauritius, India, Oman, Kazakhstan, Dominica, Peru, Mexico, Moldova, Saint Martin, Trinidad and Tobago, Vietnam, Colombia, Jamaica, Venezuela, Gabon, Iraq, Mongolia, Morocco, Algeria, Fiji, Armenia, Georgia, Philippines, Ghana, Cuba, Guatemala, Belize, Macao, Namibia, South Africa, Nauru, Mauritania, Egypt, Pakistan, Suriname, Holy See, Grenada, Eswatini, Papua New Guinea, Kenya, Turkmenistan, Angola, Uzbekistan, Libya.
-
-
+                            Emerging Economies: Kuwait, Guam, Puerto Rico,
+                            Guadeloupe, Barbados, Niue, Northern Mariana
+                            Islands, Andorra, Antigua and Barbuda, Cyprus,
+                            Bahamas, Malta, Saint Kitts & Nevis, Curaçao, South
+                            Korea, Aruba, Saint Helena, Uruguay, Serbia,
+                            Hungary, Slovakia, New Caledonia, Indonesia,
+                            Botswana, Greece, Sint Maarten, Bulgaria, Equatorial
+                            Guinea, St. Vincent & Grenadines, Malaysia, Panama,
+                            Argentina, Romania, Belarus, Turks and Caicos,
+                            Seychelles, Anguilla, Tokelau, Chile, French
+                            Polynesia, Bosnia and Herzegovina, Montenegro, Saint
+                            Lucia, Turkey, Maldives, Ukraine, Ecuador, Paraguay,
+                            Brazil, Cook Islands, Thailand, French Guiana,
+                            Dominican Republic, Mauritius, India, Oman,
+                            Kazakhstan, Dominica, Peru, Mexico, Moldova, Saint
+                            Martin, Trinidad and Tobago, Vietnam, Colombia,
+                            Jamaica, Venezuela, Gabon, Iraq, Mongolia, Morocco,
+                            Algeria, Fiji, Armenia, Georgia, Philippines, Ghana,
+                            Cuba, Guatemala, Belize, Macao, Namibia, South
+                            Africa, Nauru, Mauritania, Egypt, Pakistan,
+                            Suriname, Holy See, Grenada, Eswatini, Papua New
+                            Guinea, Kenya, Turkmenistan, Angola, Uzbekistan,
+                            Libya.
                           </p>
                         </div>
                       </div>
                       <div className="flex flex-col gap-3">
                         <div className="flex items-center gap-3">
-
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="180"
@@ -682,8 +740,20 @@ export default function Page() {
                           </p> */}
 
                           <p className="lg:text-[18px] text-xs">
-                            Advanced Economies: Bermuda, Falkland Islands, Hong Kong, Saint Barthelemy, Gibraltar, Faeroe Islands, Saudi Arabia, Qatar, New Zealand, Cayman Islands, Greenland, Liechtenstein, Luxembourg, Monaco, Brunei, Austria, Norway, Netherlands, Switzerland, United States, Canada, Caribbean Netherlands, France, Denmark, Australia, Germany, Iceland, British Virgin Islands, Belgium, Sweden, Finland, United Arab Emirates, Ireland, United Kingdom, Italy, U.S. Virgin Islands, Japan, Spain, Slovenia, Czech Republic, Taiwan, Estonia, Israel, San Marino, Lithuania, Portugal, Poland, Latvia, Croatia, Russia, Isle of Man, Bahrain, Saint Pierre & Miquelon, Singapore.
-
+                            Advanced Economies: Bermuda, Falkland Islands, Hong
+                            Kong, Saint Barthelemy, Gibraltar, Faeroe Islands,
+                            Saudi Arabia, Qatar, New Zealand, Cayman Islands,
+                            Greenland, Liechtenstein, Luxembourg, Monaco,
+                            Brunei, Austria, Norway, Netherlands, Switzerland,
+                            United States, Canada, Caribbean Netherlands,
+                            France, Denmark, Australia, Germany, Iceland,
+                            British Virgin Islands, Belgium, Sweden, Finland,
+                            United Arab Emirates, Ireland, United Kingdom,
+                            Italy, U.S. Virgin Islands, Japan, Spain, Slovenia,
+                            Czech Republic, Taiwan, Estonia, Israel, San Marino,
+                            Lithuania, Portugal, Poland, Latvia, Croatia,
+                            Russia, Isle of Man, Bahrain, Saint Pierre &
+                            Miquelon, Singapore.
                           </p>
                         </div>
                       </div>
@@ -691,7 +761,7 @@ export default function Page() {
                   </div>
                 )}
                 {modalOpenOEC && (
-                  <div className="main-modal-box text-white !absolute lg:top-322 lg:left-9 lg:right-19 lg:py-10 lg:px-15 top-322 md:left-8 md:right-8 md:px-6 md:py-8 left-0 right-0 pt-7 pl-7 pr-8 pb-5 z-500">
+                  <div className="main-modal-box text-white !absolute lg:top-322 top-410 lg:left-9 lg:right-19 lg:py-10 lg:px-15 md:left-8 md:right-8 md:px-6 md:py-8 left-0 right-0 pt-7 pl-7 pr-8 pb-5 z-500">
                     <div className="flex justify-between items-center">
                       <p className="lg:text-2xl text-[16px]">
                         FUNCTIONALITY NOTES:
@@ -713,15 +783,19 @@ export default function Page() {
                     <div className="md:mt-4 mt-4 flex flex-col lg:gap-8 md:gap-7 gap-8">
                       <div className="flex flex-col gap-3">
                         <div className="flex items-center gap-3">
-                         
                           <p className="lg:text-[18px] text-xs">
-                            The Firesight Substitutability Rating evaluates the potential impact of artificial intelligence (AI) on occupations by focusing on the likelihood of job displacement. It examines whether AI should perform job tasks, considering social, ethical, and legal contexts along with skill levels.   Ratings are assigned as follows:
+                            The Firesight Substitutability Rating evaluates the
+                            potential impact of artificial intelligence (AI) on
+                            occupations by focusing on the likelihood of job
+                            displacement. It examines whether AI should perform
+                            job tasks, considering social, ethical, and legal
+                            contexts along with skill levels. Ratings are
+                            assigned as follows:
                           </p>
                         </div>
                       </div>
                       <div className="flex flex-col gap-3">
                         <div className="flex items-center gap-3">
-
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 13 14"
@@ -740,13 +814,14 @@ export default function Page() {
                           </p> */}
 
                           <p className="lg:text-[18px] text-xs">
-                            Low Substitutability (0-2): High complementarity with AI, indicating low risk of displacement and potential for productivity gains.
+                            Low Substitutability (0-2): High complementarity
+                            with AI, indicating low risk of displacement and
+                            potential for productivity gains.
                           </p>
                         </div>
                       </div>
                       <div className="flex flex-col gap-3">
                         <div className="flex items-center gap-3">
-
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 13 14"
@@ -764,14 +839,14 @@ export default function Page() {
                           </p> */}
 
                           <p className="lg:text-[18px] text-xs">
-                            Moderate Substitutability (3-6): Balanced potential for AI support and substitution, with varying impacts on job displacement.
-
+                            Moderate Substitutability (3-6): Balanced potential
+                            for AI support and substitution, with varying
+                            impacts on job displacement.
                           </p>
                         </div>
                       </div>
                       <div className="flex flex-col gap-3">
                         <div className="flex items-center gap-3">
-
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 13 14"
@@ -789,8 +864,9 @@ export default function Page() {
                           </p> */}
 
                           <p className="lg:text-[18px] text-xs">
-                            High Substitutability (7-10): Low complementarity with AI, indicating high risk of job automation and significant reductions in human labor demand.
-
+                            High Substitutability (7-10): Low complementarity
+                            with AI, indicating high risk of job automation and
+                            significant reductions in human labor demand.
                           </p>
                         </div>
                       </div>
@@ -800,8 +876,11 @@ export default function Page() {
                 <p className="lg:text-[20px] md:text-[18px] text-[16px] font-bold uppercase">
                   Occupation Economy Selector
                 </p>
-                <div ref={oecBtnRef} onClick={() => setModalOpenMap(!modalOpenMap)} className="cursor-pointer">
-
+                <div
+                  ref={oecBtnRef}
+                  onClick={() => setModalOpenMap(!modalOpenMap)}
+                  className="cursor-pointer"
+                >
                   <Image
                     src="/images/icons/union.svg"
                     alt="union"
@@ -836,7 +915,9 @@ export default function Page() {
                     <p
                       className={
                         "lg:text-[18px] md:text-sm text-[13px] font-bold transition-colors duration-200 " +
-                        (selectedEconomy === option.value ? "text-white" : "text-[#86878D]")
+                        (selectedEconomy === option.value
+                          ? "text-white"
+                          : "text-[#86878D]")
                       }
                     >
                       {option.label}
@@ -850,8 +931,8 @@ export default function Page() {
                     selectedEconomy === "Low Income"
                       ? "/images/low income.svg"
                       : selectedEconomy === "Emerging"
-                        ? "/images/emerging.svg"
-                        : "/images/advanced.svg"
+                      ? "/images/emerging.svg"
+                      : "/images/advanced.svg"
                   }
                   alt={selectedEconomy}
                   width={700}
@@ -859,7 +940,6 @@ export default function Page() {
                 />
               </div>
             </div>
-
           </div>
 
           <div className="h-[1px] w-full bg-[#ffffff1a]"></div>
@@ -909,7 +989,13 @@ export default function Page() {
                             What Purpose Does it Serve?
                           </p> */}
                           <p className="lg:text-[18px] text-xs">
-                            The Firesight Automatability Rating quantifies the extent to which tasks within a core occupation can be performed by artificial intelligence (AI) or automated systems. This rating is calculated by averaging the automatability score assigned to 20 tailored tasks conducted within that occupation. Ratings are assigned as follows:
+                            The Firesight Automatability Rating quantifies the
+                            extent to which tasks within a core occupation can
+                            be performed by artificial intelligence (AI) or
+                            automated systems. This rating is calculated by
+                            averaging the automatability score assigned to 20
+                            tailored tasks conducted within that occupation.
+                            Ratings are assigned as follows:
                           </p>
                         </div>
                       </div>
@@ -931,7 +1017,8 @@ export default function Page() {
                             AI Impact Index
                           </p> */}
                           <p className="lg:text-[18px] text-xs">
-                            Fully Automatable (10): These tasks can be completely managed by AI without human intervention.
+                            Fully Automatable (10): These tasks can be
+                            completely managed by AI without human intervention.
                           </p>
                         </div>
                       </div>
@@ -953,7 +1040,9 @@ export default function Page() {
                             Coming Soon Regions
                           </p> */}
                           <p className="lg:text-[18px] text-xs">
-                            Semi-Automatable (5): These tasks can be partially managed by AI, requiring some human oversight or input.
+                            Semi-Automatable (5): These tasks can be partially
+                            managed by AI, requiring some human oversight or
+                            input.
                           </p>
                         </div>
                       </div>
@@ -975,15 +1064,18 @@ export default function Page() {
                             Coming Soon Regions
                           </p> */}
                           <p className="lg:text-[18px] text-xs">
-                            Non-Automatable (0): These tasks cannot be automated and require full human involvement.
+                            Non-Automatable (0): These tasks cannot be automated
+                            and require full human involvement.
                           </p>
                         </div>
                       </div>
                     </div>
                   </div>
                 )}
-                <div onClick={() => setModalOpenAS(!modalOpenAS)} className="cursor-pointer">
-
+                <div
+                  onClick={() => setModalOpenAS(!modalOpenAS)}
+                  className="cursor-pointer"
+                >
                   <Image
                     src="/images/icons/union.svg"
                     alt="union"
@@ -997,7 +1089,8 @@ export default function Page() {
                 <div className="flex-1 h-[1px] bg-[#ffffff0d]"></div>
                 <p className="text-[71px] font-bold leading-[130%] text-center mx-4">
                   {Math.floor(
-                    taskProgress.reduce((s, ele) => s + ele) / taskProgress.length
+                    taskProgress.reduce((s, ele) => s + ele) /
+                      taskProgress.length
                   )}
                   %
                 </p>
@@ -1005,7 +1098,6 @@ export default function Page() {
               </div>
 
               <div className="flex gap-3 w-full items-center justify-start lg:ml-13">
-
                 <p className="lg:text-[20px] md:text-[18px] text-[16px] font-bold uppercase">
                   Occupation Task Breakdown
                 </p>
@@ -1048,7 +1140,16 @@ export default function Page() {
                             What Purpose Does it Serve?
                           </p> */}
                           <p className="lg:text-[18px] text-xs">
-                            The Occupation Task Breakdown provides a detailed analysis of the tasks central to each occupation, highlighting those that are most critical. This section enumerates the top 20 tasks that are prioritized within a given occupation, each accompanied by an 'Automatability Score'. This score quantifies the extent to which artificial intelligence (AI) can automate each task. The Automatability Score can be one of 3 ratings, which are defined as follows:
+                            The Occupation Task Breakdown provides a detailed
+                            analysis of the tasks central to each occupation,
+                            highlighting those that are most critical. This
+                            section enumerates the top 20 tasks that are
+                            prioritized within a given occupation, each
+                            accompanied by an &#39;Automatability Score&#39;.
+                            This score quantifies the extent to which artificial
+                            intelligence (AI) can automate each task. The
+                            Automatability Score can be one of 3 ratings, which
+                            are defined as follows:
                           </p>
                         </div>
                       </div>
@@ -1070,7 +1171,10 @@ export default function Page() {
                             AI Impact Index
                           </p> */}
                           <p className="lg:text-[18px] text-xs">
-                            Fully Automatable (100%): These tasks are highly conducive to automation, indicating that AI can perform them independently without human intervention.
+                            Fully Automatable (100%): These tasks are highly
+                            conducive to automation, indicating that AI can
+                            perform them independently without human
+                            intervention.
                           </p>
                         </div>
                       </div>
@@ -1092,7 +1196,10 @@ export default function Page() {
                             Coming Soon Regions
                           </p> */}
                           <p className="lg:text-[18px] text-xs">
-                            Semi Automatable (50%): Tasks in this category can be partially automated. AI can assist or enhance human efforts, reducing the workload but not completely replacing human involvement.
+                            Semi Automatable (50%): Tasks in this category can
+                            be partially automated. AI can assist or enhance
+                            human efforts, reducing the workload but not
+                            completely replacing human involvement.
                           </p>
                         </div>
                       </div>
@@ -1114,14 +1221,20 @@ export default function Page() {
                             Coming Soon Regions
                           </p> */}
                           <p className="lg:text-[18px] text-xs">
-                            Non Automatable (0%): These tasks require human capabilities that AI cannot replicate, such as complex decision-making, emotional intelligence, and nuanced interactions.
+                            Non Automatable (0%): These tasks require human
+                            capabilities that AI cannot replicate, such as
+                            complex decision-making, emotional intelligence, and
+                            nuanced interactions.
                           </p>
                         </div>
                       </div>
                     </div>
                   </div>
                 )}
-                <div onClick={() => setModalOpenOTB(!modalOpenOTB)} className="cursor-pointer">
+                <div
+                  onClick={() => setModalOpenOTB(!modalOpenOTB)}
+                  className="cursor-pointer"
+                >
                   <Image
                     src="/images/icons/union.svg"
                     alt="union"
@@ -1131,12 +1244,11 @@ export default function Page() {
                   />
                 </div>
               </div>
-              <div className="flex lg:gap-9 gap-5">
+              <div className="flex lg:gap-9 sm:gap-5 gap-0">
                 <div className="lg:w-3 md:w-2 w-1 md:h-full relative md:order-none order-last">
                   {/* <div className="absolute w-full h-[218px] top-[190px] rounded-[5px] border-[1px] border-[#252832] bg-[#131621] z-20"></div> */}
-                  <div className="absolute w-[1px] bg-[#19202c] h-full left-[50%] z-10"></div>
+                  <div className="absolute w-[1px] bg-[#19202c] h-full left-[50%] z-10 sm-visible hidden"></div>
                 </div>
-
 
                 {/* <div className="flex flex-col flex-1 lg:gap-11 gap-6">
                   {taskProgress.map((ele, index) => (
@@ -1226,7 +1338,13 @@ export default function Page() {
                             What Purpose Does it Serve?
                           </p> */}
                             <p className="lg:text-[18px] text-xs">
-                              The Firesight Automatability Rating quantifies the extent to which tasks within a core occupation can be performed by artificial intelligence (AI) or automated systems. This rating is calculated by averaging the automatability score assigned to 20 tailored tasks conducted within that occupation. Ratings are assigned as follows:
+                              The Firesight Automatability Rating quantifies the
+                              extent to which tasks within a core occupation can
+                              be performed by artificial intelligence (AI) or
+                              automated systems. This rating is calculated by
+                              averaging the automatability score assigned to 20
+                              tailored tasks conducted within that occupation.
+                              Ratings are assigned as follows:
                             </p>
                           </div>
                         </div>
@@ -1249,7 +1367,9 @@ export default function Page() {
                             AI Impact Index
                           </p> */}
                             <p className="lg:text-[18px] text-xs">
-                              Fully Automatable (10): These tasks can be completely managed by AI without human intervention.
+                              Fully Automatable (10): These tasks can be
+                              completely managed by AI without human
+                              intervention.
                             </p>
                           </div>
                         </div>
@@ -1272,7 +1392,9 @@ export default function Page() {
                             Coming Soon Regions
                           </p> */}
                             <p className="lg:text-[18px] text-xs">
-                              Semi-Automatable (5): These tasks can be partially managed by AI, requiring some human oversight or input.
+                              Semi-Automatable (5): These tasks can be partially
+                              managed by AI, requiring some human oversight or
+                              input.
                             </p>
                           </div>
                         </div>
@@ -1295,15 +1417,18 @@ export default function Page() {
                             Coming Soon Regions
                           </p> */}
                             <p className="lg:text-[18px] text-xs">
-                              Non-Automatable (0): These tasks cannot be automated and require full human involvement.
+                              Non-Automatable (0): These tasks cannot be
+                              automated and require full human involvement.
                             </p>
                           </div>
                         </div>
                       </div>
                     </div>
                   )}
-                  <div onClick={() => setModalOpenAS(!modalOpenAS)} className="cursor-pointer">
-
+                  <div
+                    onClick={() => setModalOpenAS(!modalOpenAS)}
+                    className="cursor-pointer"
+                  >
                     <Image
                       src="/images/icons/union.svg"
                       alt="union"
@@ -1327,15 +1452,17 @@ export default function Page() {
                   Firesight Observations
                 </p>
                 <p className="lg:text-[16px] text-[11px] lg:mt-7 mt-4">
-                  {isTaskLoading ? "Loading..." :
-                    taskData?.firesight_observations
-                    || `AI can suggest complementary colour palettes based on a
+                  {isTaskLoading
+                    ? "Loading..."
+                    : taskData?.firesight_observations ||
+                      `AI can suggest complementary colour palettes based on a
                   selected colour or image, ensuring aesthetically pleasing
                   design outcomes.AI can suggest complementary colour palettes
                   based on a selected colour or image, ensuring aesthetically
                   pleasing design outcomes. AI can suggest complementary colour
                   palettes based on a selected colour or image, ensuring
-                  aesthetically pleasing design outcomes.`}                </p>
+                  aesthetically pleasing design outcomes.`}{" "}
+                </p>
               </div>
               <div className="flex flex-col lg:gap-11 gap-7 items-center w-full border-t-[1px] border-t-[#ffffff1a] lg:pt-20 lg:pb-15 lg:pl-6 py-10">
                 <p className="text-[24px] font-bold uppercase text-center leading-[120%] bg-[linear-gradient(180deg,rgba(0,255,224,0.55)0%,rgba(188,239,255,0.62)100%)] bg-clip-text text-transparent lg:block hidden">
@@ -1361,7 +1488,11 @@ export default function Page() {
 
           {/*Last section*/}
           <div className="flex flex-col items-center w-full mt-13">
-            <TabBar type={1} curItem={occupationTab} setCurItem={setOccupationTab} />
+            <TabBar
+              type={1}
+              curItem={occupationTab}
+              setCurItem={setOccupationTab}
+            />
 
             <div className="relative w-full lg:mt-16 lg:mb-6 my-8 lg:h-90 md:h-54 h-79">
               <AnimatePresence initial={false} custom={direction2}>
@@ -1396,35 +1527,39 @@ export default function Page() {
                   className="absolute w-full h-full flex items-center justify-stretch"
                 >
                   <div className="sm:w-full w-auto -mx-[50px] sm:mx-0">
-
                     <div className="flex justify-between lg:gap-y-9 gap-y-4 text-white font-bold lg:text-2xl text-[16px] leading-normal w-full">
                       {sortedOccupations
-                        .slice(page2 * occupationsPerSlide, (page2 + 1) * occupationsPerSlide)
+                        .slice(
+                          page2 * occupationsPerSlide,
+                          (page2 + 1) * occupationsPerSlide
+                        )
                         .map((ele, index) => (
                           <div
                             key={index}
                             className="main-small-box-1 relative overflow-hidden rounded-[...] flex items-center justify-center lg:h-90 md:h-54 h-79 md:w-[31%] w-full ml-7"
                           >
                             <div className="color-pattern-bg-1"></div>
-                            <p className="text-center mx-6">{ele.core_occupation}</p>
-                            <div
-                              className="absolute flex items-center justify-center lg:bottom-[21px] lg:right-[22px] md:bottom-3 md:right-3 right-5 bottom-4 lg:w-[106px] lg:h-[49px] w-[63px] h-[29px] rounded-full overflow-hidden"
-                            >
+                            <p className="text-center mx-6">
+                              {ele.core_occupation}
+                            </p>
+                            <div className="absolute flex items-center justify-center lg:bottom-[21px] lg:right-[22px] md:bottom-3 md:right-3 right-5 bottom-4 lg:w-[106px] lg:h-[49px] w-[63px] h-[29px] rounded-full overflow-hidden">
                               <Image
-                                src={`/images/tag-back-${Math.floor(ele.ranking / 1000)}.svg`}
+                                src={`/images/tag-back-${Math.floor(
+                                  ele.ranking / 1000
+                                )}.svg`}
                                 alt=""
                                 fill
                                 className="object-cover"
                                 priority
                               />
-                              <span className="relative z-10 font-bold text-white">#{ele.ranking}</span>
+                              <span className="relative z-10 font-bold text-white">
+                                #{ele.ranking}
+                              </span>
                             </div>
-
                           </div>
                         ))}
                     </div>
                   </div>
-
                 </motion.div>
               </AnimatePresence>
             </div>
@@ -1439,29 +1574,31 @@ export default function Page() {
                 />
               </div>
               <div className="flex justify-center gap-1">
-                {Array.from({ length: totalOccupationSlides }).map((_, index) => (
-                  <button
-                    key={index}
-                    onClick={() => paginate2(index - page2)}
-                    className="w-[10px] h-[10px]"
-                  >
-                    {page2 === index ? (
-                      <Image
-                        src="/images/slide-show-btn-on.svg"
-                        alt="ON"
-                        width={10}
-                        height={10}
-                      ></Image>
-                    ) : (
-                      <Image
-                        src="/images/slide-show-btn-off.svg"
-                        alt="OFF"
-                        width={10}
-                        height={10}
-                      ></Image>
-                    )}
-                  </button>
-                ))}
+                {Array.from({ length: totalOccupationSlides }).map(
+                  (_, index) => (
+                    <button
+                      key={index}
+                      onClick={() => paginate2(index - page2)}
+                      className="w-[10px] h-[10px]"
+                    >
+                      {page2 === index ? (
+                        <Image
+                          src="/images/slide-show-btn-on.svg"
+                          alt="ON"
+                          width={10}
+                          height={10}
+                        ></Image>
+                      ) : (
+                        <Image
+                          src="/images/slide-show-btn-off.svg"
+                          alt="OFF"
+                          width={10}
+                          height={10}
+                        ></Image>
+                      )}
+                    </button>
+                  )
+                )}
               </div>
               <div>
                 <Image
@@ -1553,7 +1690,11 @@ function TabBar({
   }, []);
 
   return (
-    <div ref={containerRef} className="w-full overflow-x-auto scrollbar-hide" style={{ msOverflowStyle: 'none', scrollbarWidth: 'none' }}>
+    <div
+      ref={containerRef}
+      className="w-full overflow-x-auto scrollbar-hide"
+      style={{ msOverflowStyle: "none", scrollbarWidth: "none" }}
+    >
       <motion.div
         ref={contentRef}
         className={
@@ -1563,7 +1704,11 @@ function TabBar({
         drag="x"
         dragConstraints={constraints}
         dragElastic={0.1}
-        style={{ touchAction: 'pan-x', WebkitOverflowScrolling: 'touch', scrollbarWidth: 'none' }}
+        style={{
+          touchAction: "pan-x",
+          WebkitOverflowScrolling: "touch",
+          scrollbarWidth: "none",
+        }}
       >
         <div className="border-b border-[#ffffff33] w-full min-w-full">
           <div className="flex flex-nowrap items-center justify-center gap-6 sm:gap-10 md:gap-14 relative px-2 sm:px-0">
@@ -1571,9 +1716,13 @@ function TabBar({
               <div
                 key={ele}
                 onClick={() => setCurItem && setCurItem(index)}
-                className={`relative pb-3 cursor-pointer text-[13px] sm:text-[15px] md:text-[16px] whitespace-nowrap min-w-[90px] text-center ` +
-                  (curItem === index ? "text-white font-bold" : "text-[#86878D]")}
-                style={{ WebkitTapHighlightColor: 'transparent' }}
+                className={
+                  `relative pb-3 cursor-pointer text-[13px] sm:text-[15px] md:text-[16px] whitespace-nowrap min-w-[90px] text-center ` +
+                  (curItem === index
+                    ? "text-white font-bold"
+                    : "text-[#86878D]")
+                }
+                style={{ WebkitTapHighlightColor: "transparent" }}
               >
                 {ele}
                 {curItem === index && (
