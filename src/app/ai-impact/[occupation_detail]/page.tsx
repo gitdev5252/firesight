@@ -603,22 +603,7 @@ export default function Page() {
                     <div className="md:mt-8 mt-17 flex flex-col lg:gap-8 md:gap-7 gap-8">
                       <div className="flex flex-col gap-3">
                         <div className="flex items-center gap-3">
-                          {/* <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="13"
-                            height="14"
-                            viewBox="0 0 13 14"
-                            fill="none"
-                          >
-                            <path
-                              d="M12.3623 3.78809V10.2109L6.7998 13.4229L1.2373 10.2109V3.78809L6.7998 0.576172L12.3623 3.78809Z"
-                              fill="white"
-                              stroke="white"
-                            />
-                          </svg> */}
-                          {/* <p className="lg:text-[18px] text-sm md:font-normal font-bold">
-                            What Purpose Does it Serve?
-                          </p> */}
+                        
                           <p className="lg:text-[18px] text-xs">
                             All countries globally are classified into one of three economic states. This AI Impact Index feature allows you to filter the occupational risk of any job by each of these three different economic conditions. Below is a full country breakdown:
                           </p>
@@ -626,6 +611,7 @@ export default function Page() {
                       </div>
                       <div className="flex flex-col gap-3">
                         <div className="flex items-center gap-3">
+
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="70"
@@ -642,13 +628,15 @@ export default function Page() {
                           {/* <p className="lg:text-[18px] text-sm md:font-normal font-bold">
                             AI Impact Index
                           </p> */}
+
                           <p className="lg:text-[18px] text-xs">
-                            Low Income Economies: Martinique, Palau, American Samoa, Cambodia, Lebanon, Bolivia, Costa Rica, North Macedonia, Marshall Islands, Iran, Azerbaijan, China, El Salvador, Nicaragua, Albania, Tonga, Tunisia, Jordan, Sri Lanka, Honduras, Syria, Réunion, State of Palestine, Afghanistan, Samoa, Tuvalu, Kyrgyzstan, Tajikistan, Bhutan, Mayotte, Guyana, Sao Tome & Principe, Myanmar, Kiribati, Comoros, Micronesia, Vanuatu, Cabo Verde, Djibouti, Sudan, Ethiopia, Solomon Islands, Haiti, Nepal, Yemen, Gambia, Cameroon, Montserrat, Timor-Leste, Laos, Chad, Wallis & Futuna, Côte d'Ivoire, North Korea, Bangladesh, Zimbabwe, Lesotho, Guinea-Bissau, Rwanda, Nigeria, Congo, Guinea, Somalia, Uganda, Senegal, Sierra Leone, Tanzania, South Sudan, Benin, Burkina Faso, Mali, Niger, Liberia, Togo, Western Sahara, Central African Republic, Zambia, Mozambique, Madagascar, Burundi, Malawi, Eritrea, DR Congo.
+                            Low Income Economies: Martinique, Palau, American Samoa, Cambodia, Lebanon, Bolivia, Costa Rica, North Macedonia, Marshall Islands, Iran, Azerbaijan, China, El Salvador, Nicaragua, Albania, Tonga, Tunisia, Jordan, Sri Lanka, Honduras, Syria, Réunion, State of Palestine, Afghanistan, Samoa, Tuvalu, Kyrgyzstan, Tajikistan, Bhutan, Mayotte, Guyana, Sao Tome & Principe, Myanmar, Kiribati, Comoros, Micronesia, Vanuatu, Cabo Verde, Djibouti, Sudan, Ethiopia, Solomon Islands, Haiti, Nepal, Yemen, Gambia, Cameroon, Montserrat, Timor-Leste, Laos, Chad, Wallis & Futuna, Côte d&apos;Ivoire, North Korea, Bangladesh, Zimbabwe, Lesotho, Guinea-Bissau, Rwanda, Nigeria, Congo, Guinea, Somalia, Uganda, Senegal, Sierra Leone, Tanzania, South Sudan, Benin, Burkina Faso, Mali, Niger, Liberia, Togo, Western Sahara, Central African Republic, Zambia, Mozambique, Madagascar, Burundi, Malawi, Eritrea, DR Congo.
                           </p>
                         </div>
                       </div>
                       <div className="flex flex-col gap-3">
                         <div className="flex items-center gap-3">
+
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="80"
@@ -665,6 +653,7 @@ export default function Page() {
                           {/* <p className="lg:text-[18px] text-sm md:font-normal font-bold">
                             Coming Soon Regions
                           </p> */}
+
                           <p className="lg:text-[18px] text-xs">
                             Emerging Economies: Kuwait, Guam, Puerto Rico, Guadeloupe, Barbados, Niue, Northern Mariana Islands, Andorra, Antigua and Barbuda, Cyprus, Bahamas, Malta, Saint Kitts & Nevis, Curaçao, South Korea, Aruba, Saint Helena, Uruguay, Serbia, Hungary, Slovakia, New Caledonia, Indonesia, Botswana, Greece, Sint Maarten, Bulgaria, Equatorial Guinea, St. Vincent & Grenadines, Malaysia, Panama, Argentina, Romania, Belarus, Turks and Caicos, Seychelles, Anguilla, Tokelau, Chile, French Polynesia, Bosnia and Herzegovina, Montenegro, Saint Lucia, Turkey, Maldives, Ukraine, Ecuador, Paraguay, Brazil, Cook Islands, Thailand, French Guiana, Dominican Republic, Mauritius, India, Oman, Kazakhstan, Dominica, Peru, Mexico, Moldova, Saint Martin, Trinidad and Tobago, Vietnam, Colombia, Jamaica, Venezuela, Gabon, Iraq, Mongolia, Morocco, Algeria, Fiji, Armenia, Georgia, Philippines, Ghana, Cuba, Guatemala, Belize, Macao, Namibia, South Africa, Nauru, Mauritania, Egypt, Pakistan, Suriname, Holy See, Grenada, Eswatini, Papua New Guinea, Kenya, Turkmenistan, Angola, Uzbekistan, Libya.
 
@@ -674,6 +663,7 @@ export default function Page() {
                       </div>
                       <div className="flex flex-col gap-3">
                         <div className="flex items-center gap-3">
+
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="50"
@@ -690,6 +680,7 @@ export default function Page() {
                           {/* <p className="lg:text-[18px] text-sm md:font-normal font-bold">
                             Coming Soon Regions
                           </p> */}
+
                           <p className="lg:text-[18px] text-xs">
                             Advanced Economies: Bermuda, Falkland Islands, Hong Kong, Saint Barthelemy, Gibraltar, Faeroe Islands, Saudi Arabia, Qatar, New Zealand, Cayman Islands, Greenland, Liechtenstein, Luxembourg, Monaco, Brunei, Austria, Norway, Netherlands, Switzerland, United States, Canada, Caribbean Netherlands, France, Denmark, Australia, Germany, Iceland, British Virgin Islands, Belgium, Sweden, Finland, United Arab Emirates, Ireland, United Kingdom, Italy, U.S. Virgin Islands, Japan, Spain, Slovenia, Czech Republic, Taiwan, Estonia, Israel, San Marino, Lithuania, Portugal, Poland, Latvia, Croatia, Russia, Isle of Man, Bahrain, Saint Pierre & Miquelon, Singapore.
 
@@ -722,22 +713,7 @@ export default function Page() {
                     <div className="md:mt-8 mt-17 flex flex-col lg:gap-8 md:gap-7 gap-8">
                       <div className="flex flex-col gap-3">
                         <div className="flex items-center gap-3">
-                          {/* <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="13"
-                            height="14"
-                            viewBox="0 0 13 14"
-                            fill="none"
-                          >
-                            <path
-                              d="M12.3623 3.78809V10.2109L6.7998 13.4229L1.2373 10.2109V3.78809L6.7998 0.576172L12.3623 3.78809Z"
-                              fill="white"
-                              stroke="white"
-                            />
-                          </svg> */}
-                          {/* <p className="lg:text-[18px] text-sm md:font-normal font-bold">
-                            What Purpose Does it Serve?
-                          </p> */}
+                         
                           <p className="lg:text-[18px] text-xs">
                             The Firesight Substitutability Rating evaluates the potential impact of artificial intelligence (AI) on occupations by focusing on the likelihood of job displacement. It examines whether AI should perform job tasks, considering social, ethical, and legal contexts along with skill levels.   Ratings are assigned as follows:
                           </p>
@@ -745,6 +721,7 @@ export default function Page() {
                       </div>
                       <div className="flex flex-col gap-3">
                         <div className="flex items-center gap-3">
+
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="13"
@@ -761,6 +738,7 @@ export default function Page() {
                           {/* <p className="lg:text-[18px] text-sm md:font-normal font-bold">
                             AI Impact Index
                           </p> */}
+
                           <p className="lg:text-[18px] text-xs">
                             Low Substitutability (0-2): High complementarity with AI, indicating low risk of displacement and potential for productivity gains.
                           </p>
@@ -768,6 +746,7 @@ export default function Page() {
                       </div>
                       <div className="flex flex-col gap-3">
                         <div className="flex items-center gap-3">
+
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="13"
@@ -784,6 +763,7 @@ export default function Page() {
                           {/* <p className="lg:text-[18px] text-sm md:font-normal font-bold">
                             Coming Soon Regions
                           </p> */}
+
                           <p className="lg:text-[18px] text-xs">
                             Moderate Substitutability (3-6): Balanced potential for AI support and substitution, with varying impacts on job displacement.
 
@@ -792,6 +772,7 @@ export default function Page() {
                       </div>
                       <div className="flex flex-col gap-3">
                         <div className="flex items-center gap-3">
+
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="13"
@@ -808,6 +789,7 @@ export default function Page() {
                           {/* <p className="lg:text-[18px] text-sm md:font-normal font-bold">
                             Coming Soon Regions
                           </p> */}
+
                           <p className="lg:text-[18px] text-xs">
                             High Substitutability (7-10): Low complementarity with AI, indicating high risk of job automation and significant reductions in human labor demand.
 
