@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname, useRouter, useParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import React from "react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -15,12 +16,20 @@ import {
 import "../home/page.css";
 import { getThermometer } from "@/utils/getThermometer";
 import AIImpactFooter from "@/layouts/AIImpactFooter";
+import { useIsMobile } from "@/hooks/useIsMobile";
 
 const itemsPerSlide = 12; // or 6 or whatever your layout supports (like 4 per row × 2 rows)
 const swipeConfidenceThreshold = 100;
 const swipePower = (offset: number, velocity: number) => {
   return Math.abs(offset) * velocity;
 };
+
+const tagBackgrounds = [
+  "/images/tag-back-0.svg",
+  "/images/tag-back-1.svg",
+  "/images/tag-back-2.svg",
+  "/images/tag-back-3.svg",
+];
 
 export default function Page() {
   // Modal States
@@ -128,6 +137,23 @@ export default function Page() {
     setModalOpenCO(false);
   }, [pathname]);
   const [selectedEconomy, setSelectedEconomy] = useState("Emerging");
+
+  const isMobile = useIsMobile();
+  const itemsPerPage = isMobile ? 4 : 8;
+
+  const itemsToShow = relatedOccupations.slice(
+    page1 * itemsPerPage,
+    (page1 + 1) * itemsPerPage
+  );
+
+  const randomTagBackgrounds = React.useMemo(
+    () =>
+      itemsToShow.map(
+        () => tagBackgrounds[Math.floor(Math.random() * tagBackgrounds.length)]
+      ),
+    [itemsToShow]
+  );
+
   return (
     <>
       <div className="w-full lg:px-15 md:px-4">
@@ -399,11 +425,8 @@ export default function Page() {
                 Constituent Occupations
               </p>
               {modalOpenCO && (
-                <div className="main-modal-box text-white !absolute lg:top-230 lg:left-9 lg:right-19 lg:py-10 lg:px-15 top-230 md:left-8 md:right-8 md:px-6 md:py-8 left-0 right-0 pt-7 pl-7 pr-8 pb-5 z-500">
-                  <div className="flex justify-between items-center">
-                    <p className="lg:text-2xl text-[16px]">
-                      FUNCTIONALITY NOTES:
-                    </p>
+                <div className="main-modal-box text-white !absolute lg:top-220 lg:left-9 lg:right-19 lg:py-10 lg:px-15 top-220 md:left-8 md:right-8 md:px-6 md:py-8 left-0 right-0 pt-7 pl-7 pr-8 pb-5 z-500">
+                  <div className="flex justify-end">
                     <Button
                       onClick={() => setModalOpenCO(false)}
                       variant="ghost"
@@ -452,7 +475,7 @@ export default function Page() {
                 className="cursor-pointer"
               >
                 <Image
-                  src={`/images/icons/union${modalOpenCO ? "-red" : ""}.svg`}
+                  src="/images/icons/union.svg"
                   alt="union"
                   width={24}
                   height={24}
@@ -461,7 +484,7 @@ export default function Page() {
               </div>
             </div>
 
-            <div className="relative w-full lg:mt-16 lg:mb-14 mb-35 mt-5 lg:min-h-[130px] min-h-[230px]">
+            <div className="relative w-full mt-10 min-h-[130px]">
               <AnimatePresence initial={false} custom={direction1}>
                 <motion.div
                   key={page1}
@@ -491,28 +514,26 @@ export default function Page() {
                   animate="center"
                   exit="exit"
                   transition={{ duration: 0.5 }}
-                  className="absolute w-full h-full flex flex-col items-center justify-stretch pb-10"
+                  className="absolute w-full h-full flex flex-col items-center justify-stretch"
                 >
                   <div className="sm:w-full w-auto -mx-[50px] sm:mx-0">
-                    <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-x-2 gap-y-4 px-4 sm:px-0">
-                      {relatedOccupations
-                        .slice(page1 * 12, (page1 + 1) * 12)
-                        .map((occ, index) => (
-                          <div
-                            key={index}
-                            className="flex items-center justify-center rounded-[50px] border border-[rgba(255,255,255,0.25)] bg-[rgba(255,255,255,0.04)] h-[45px] min-w-[90px] px-2 sm:min-w-[120px] sm:px-4 w-auto"
-                          >
-                            <span className="font-semibold text-center w-full block break-words whitespace-normal text-[12px] sm:text-[14px]">
-                              {occ.core_occupation}
-                            </span>
-                          </div>
-                        ))}
+                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-2 gap-y-4 px-4 sm:px-0">
+                      {itemsToShow.map((occ, index) => (
+                        <div
+                          key={index}
+                          className="flex items-center justify-center rounded-[50px] border border-[rgba(255,255,255,0.25)] bg-[rgba(255,255,255,0.04)] h-[45px] min-w-[90px] px-2 sm:min-w-[120px] sm:px-4 w-auto"
+                        >
+                          <span className="font-semibold text-center w-full block break-words whitespace-normal text-[12px] sm:text-[14px]">
+                            {occ.core_occupation}
+                          </span>
+                        </div>
+                      ))}
                     </div>
                   </div>
                 </motion.div>
               </AnimatePresence>
             </div>
-            <div className="flex items-center justify-center gap-6 sm:mt-0">
+            <div className="flex items-center justify-center gap-6">
               <div>
                 <Image
                   src="/images/icons/back-btn.svg"
@@ -573,7 +594,7 @@ export default function Page() {
                   className="cursor-pointer"
                 >
                   <Image
-                    src={`/images/icons/union${modalOpenOEC ? "-red" : ""}.svg`}
+                    src="/images/icons/union.svg"
                     alt="union"
                     width={24}
                     height={24}
@@ -601,11 +622,8 @@ export default function Page() {
             <div className="flex flex-col lg:gap-12 gap-8 flex-13 lg:py-15 py-8 items-center">
               <div className="flex gap-3 items-center justify-start">
                 {modalOpenMap && (
-                  <div className="main-modal-box text-white !absolute lg:top-344 lg:left-9 lg:right-19 lg:py-10 lg:px-15 top-360 md:left-8 md:right-8 md:px-6 md:py-8 left-0 right-0 pt-7 pl-7 pr-8 pb-5 z-500">
-                    <div className="flex justify-between items-center">
-                      <p className="lg:text-2xl text-[16px]">
-                        FUNCTIONALITY NOTES:
-                      </p>
+                  <div className="main-modal-box text-white !absolute lg:top-322 lg:left-9 lg:right-19 lg:py-10 lg:px-15 top-322 md:left-8 md:right-8 md:px-6 md:py-8 left-0 right-0 pt-7 pl-7 pr-8 pb-5 z-500">
+                    <div className="flex justify-end">
                       <Button
                         onClick={() => setModalOpenMap(false)}
                         variant="ghost"
@@ -761,12 +779,8 @@ export default function Page() {
                   </div>
                 )}
                 {modalOpenOEC && (
-
-                  <div className="main-modal-box text-white !absolute lg:top-322 top-410 lg:left-9 lg:right-19 lg:py-10 lg:px-15 md:left-8 md:right-8 md:px-6 md:py-8 left-0 right-0 pt-7 pl-7 pr-8 pb-5 z-500">
-                    <div className="flex justify-between items-center">
-                      <p className="lg:text-2xl text-[16px]">
-                        FUNCTIONALITY NOTES:
-                      </p>
+                  <div className="main-modal-box text-white !absolute lg:top-322 lg:left-9 lg:right-19 lg:py-10 lg:px-15 top-322 md:left-8 md:right-8 md:px-6 md:py-8 left-0 right-0 pt-7 pl-7 pr-8 pb-5 z-500">
+                    <div className="flex justify-end">
                       <Button
                         onClick={() => setModalOpenOEC(false)}
                         variant="ghost"
@@ -883,7 +897,7 @@ export default function Page() {
                   className="cursor-pointer"
                 >
                   <Image
-                    src={`/images/icons/union${modalOpenMap ? "-red" : ""}.svg`}
+                    src="/images/icons/union.svg"
                     alt="union"
                     width={24}
                     height={24}
@@ -926,7 +940,7 @@ export default function Page() {
                   </div>
                 ))}
               </div>
-              <div className="lg:mt-7 md:mt-4 flex items-center justify-center flex-1 lg:pl-15 pl-3">
+              <div className="flex items-center justify-center flex-1">
                 <Image
                   src={
                     selectedEconomy === "Low Income"
@@ -935,9 +949,11 @@ export default function Page() {
                       ? "/images/emerging.svg"
                       : "/images/advanced.svg"
                   }
+                  style={{ maxWidth: "unset" }}
+                  className="h-[230px] sm:h-[451px] !sm:width-[500px]"
                   alt={selectedEconomy}
-                  width={700}
-                  height={411}
+                  width={750}
+                  height={450}
                 />
               </div>
             </div>
@@ -952,11 +968,8 @@ export default function Page() {
                   Automatability Score
                 </p>
                 {modalOpenAS && (
-                  <div className="main-modal-box text-white !absolute lg:top-522 lg:left-9 lg:right-19 lg:py-10 lg:px-15 top-580 md:left-8 md:right-8 md:px-6 md:py-8 left-0 right-0 pt-7 pl-7 pr-8 pb-5 z-500">
-                    <div className="flex justify-between items-center">
-                      <p className="lg:text-2xl text-[16px]">
-                        FUNCTIONALITY NOTES:
-                      </p>
+                  <div className="main-modal-box text-white !absolute lg:top-522 lg:left-9 lg:right-19 lg:py-10 lg:px-15 top-522 md:left-8 md:right-8 md:px-6 md:py-8 left-0 right-0 pt-7 pl-7 pr-8 pb-5 z-500">
+                    <div className="flex justify-end">
                       <Button
                         onClick={() => setModalOpenAS(false)}
                         variant="ghost"
@@ -1078,7 +1091,7 @@ export default function Page() {
                   className="cursor-pointer"
                 >
                   <Image
-                    src={`/images/icons/union${modalOpenAS ? "-red" : ""}.svg`}
+                    src="/images/icons/union.svg"
                     alt="union"
                     width={24}
                     height={24}
@@ -1091,7 +1104,7 @@ export default function Page() {
                 <p className="text-[71px] font-bold leading-[130%] text-center mx-4">
                   {Math.floor(
                     taskProgress.reduce((s, ele) => s + ele) /
-                    taskProgress.length
+                      taskProgress.length
                   )}
                   %
                 </p>
@@ -1103,11 +1116,8 @@ export default function Page() {
                   Occupation Task Breakdown
                 </p>
                 {modalOpenOTB && (
-                  <div className="main-modal-box text-white !absolute lg:top-522 lg:left-9 lg:right-19 lg:py-10 lg:px-15 top-600 md:left-8 md:right-8 md:px-6 md:py-8 left-0 right-0 pt-7 pl-7 pr-8 pb-5 z-500 ">
-                    <div className="flex justify-between items-center">
-                      <p className="lg:text-2xl text-[16px]">
-                        FUNCTIONALITY NOTES:
-                      </p>
+                  <div className="main-modal-box text-white !absolute lg:top-522 lg:left-9 lg:right-19 lg:py-10 lg:px-15 top-522 md:left-8 md:right-8 md:px-6 md:py-8 left-0 right-0 pt-7 pl-7 pr-8 pb-5 z-500 ">
+                    <div className="flex justify-end">
                       <Button
                         onClick={() => setModalOpenOTB(false)}
                         variant="ghost"
@@ -1146,8 +1156,8 @@ export default function Page() {
                             highlighting those that are most critical. This
                             section enumerates the top 20 tasks that are
                             prioritized within a given occupation, each
-                            accompanied by an &#39;Automatability Score&#39;.
-                            This score quantifies the extent to which artificial
+                            accompanied by an 'Automatability Score'. This score
+                            quantifies the extent to which artificial
                             intelligence (AI) can automate each task. The
                             Automatability Score can be one of 3 ratings, which
                             are defined as follows:
@@ -1237,8 +1247,7 @@ export default function Page() {
                   className="cursor-pointer"
                 >
                   <Image
-                    src={`/images/icons/union${modalOpenOTB ? "-red" : ""}.svg`}
-
+                    src="/images/icons/union.svg"
                     alt="union"
                     width={24}
                     height={24}
@@ -1246,10 +1255,10 @@ export default function Page() {
                   />
                 </div>
               </div>
-              <div className="flex lg:gap-9 sm:gap-5 gap-0">
+              <div className="flex">
                 <div className="lg:w-3 md:w-2 w-1 md:h-full relative md:order-none order-last">
                   {/* <div className="absolute w-full h-[218px] top-[190px] rounded-[5px] border-[1px] border-[#252832] bg-[#131621] z-20"></div> */}
-                  <div className="absolute w-[1px] bg-[#19202c] h-full left-[50%] z-10 sm-visible hidden"></div>
+                  <div className="absolute w-[1px] bg-[#19202c] h-full left-[50%] z-10 sm:visible hidden"></div>
                 </div>
 
                 {/* <div className="flex flex-col flex-1 lg:gap-11 gap-6">
@@ -1302,11 +1311,8 @@ export default function Page() {
                     Automatability Score
                   </p>
                   {modalOpenAS && (
-                    <div className="main-modal-box text-white !absolute lg:top-522 lg:left-9 lg:right-19 lg:py-10 lg:px-15 top-1000 md:left-8 md:right-8 md:px-6 md:py-8 left-0 right-0 pt-7 pl-7 pr-8 pb-5 z-500">
-                      <div className="flex justify-between items-center">
-                        <p className="lg:text-2xl text-[16px]">
-                          FUNCTIONALITY NOTES:
-                        </p>
+                    <div className="main-modal-box text-white !absolute lg:top-522 lg:left-9 lg:right-19 lg:py-10 lg:px-15 top-522 md:left-8 md:right-8 md:px-6 md:py-8 left-0 right-0 pt-7 pl-7 pr-8 pb-5 z-500">
+                      <div className="flex justify-end">
                         <Button
                           onClick={() => setModalOpenAS(false)}
                           variant="ghost"
@@ -1432,7 +1438,7 @@ export default function Page() {
                     className="cursor-pointer"
                   >
                     <Image
-                      src={`/images/icons/union${modalOpenAS ? "-red" : ""}.svg`}
+                      src="/images/icons/union.svg"
                       alt="union"
                       width={24}
                       height={24}
@@ -1457,7 +1463,7 @@ export default function Page() {
                   {isTaskLoading
                     ? "Loading..."
                     : taskData?.firesight_observations ||
-                    `AI can suggest complementary colour palettes based on a
+                      `AI can suggest complementary colour palettes based on a
                   selected colour or image, ensuring aesthetically pleasing
                   design outcomes.AI can suggest complementary colour palettes
                   based on a selected colour or image, ensuring aesthetically
@@ -1531,10 +1537,7 @@ export default function Page() {
                   <div className="sm:w-full w-auto -mx-[50px] sm:mx-0">
                     <div className="flex justify-between lg:gap-y-9 gap-y-4 text-white font-bold lg:text-2xl text-[16px] leading-normal w-full">
                       {sortedOccupations
-                        .slice(
-                          page2 * occupationsPerSlide,
-                          (page2 + 1) * occupationsPerSlide
-                        )
+                        .slice(page2 * itemsPerPage, (page2 + 1) * itemsPerPage)
                         .map((ele, index) => (
                           <div
                             key={index}
@@ -1546,8 +1549,8 @@ export default function Page() {
                             </p>
                             <div className="absolute flex items-center justify-center lg:bottom-[21px] lg:right-[22px] md:bottom-3 md:right-3 right-5 bottom-4 lg:w-[106px] lg:h-[49px] w-[63px] h-[29px] rounded-full overflow-hidden">
                               <Image
-                                src={`/images/tag-back-${Math.floor(
-                                  ele.ranking / 1000
+                                src={`/images/tag-back-${Math.abs(
+                                  Math.floor(ele.ranking / 1000) - 1
                                 )}.svg`}
                                 alt=""
                                 fill
