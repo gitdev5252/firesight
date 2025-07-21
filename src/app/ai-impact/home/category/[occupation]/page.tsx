@@ -4,11 +4,12 @@ import { useParams } from "next/navigation";
 import { TabBar } from "../../layout";
 import Image from "next/image";
 import Link from "next/link";
-import { useGetOccupationsByCategoryQuery } from "@/store/api/occupationApi";
+import { useGetAllCategoriesQuery, useGetOccupationsByCategoryQuery } from "@/store/api/occupationApi";
 import { OccupationService } from "@/services/occupationService";
 
 import "../../page.css";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
+import { SearchContext } from "../../layout";
 import { Occupation } from "@/types/occupation";
 
 export default function OccupationPage() {
@@ -19,40 +20,50 @@ export default function OccupationPage() {
 
   // Use RTK Query hook instead of local state
   const { data: mainCardInfo = [], isLoading, error } = useGetOccupationsByCategoryQuery(occupation);
+  const { data: occupations = [] } = useGetAllCategoriesQuery();
   const [sortedOccupations, setSortedOccupations] = useState<Occupation[]>([]);
+  const [tabIndex, setTabIndex] = useState(0);
+  const { searchTerm } = useContext(SearchContext);
   const fullOccupationsList = [...mainCardInfo]; // Replace with actual list
 
-  const handleSortChange = (index: number) => {
-    let sorted = [];
-
-    switch (index) {
+  const handleTabChange = (index: number) => {
+    setTabIndex(index);
+  };
+  useEffect(() => {
+    let filtered = fullOccupationsList;
+    if (searchTerm.trim() !== "") {
+      filtered = filtered.filter((occ) =>
+        occ.core_occupation.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    }
+    let sorted: Occupation[] = [];
+    switch (tabIndex) {
       case 0: // Alphabetical
-        sorted = [...fullOccupationsList].sort((a, b) =>
+        sorted = [...filtered].sort((a, b) =>
           a.core_occupation.localeCompare(b.core_occupation)
         );
         break;
       case 1: // Most Impacted
-        sorted = [...fullOccupationsList].sort((a, b) =>
+        sorted = [...filtered].sort((a, b) =>
           (b?.ranking ?? 0) - (a?.ranking ?? 0)
         );
         break;
       case 2: // Least Impacted
-        sorted = [...fullOccupationsList].sort((a, b) => (b?.ranking ?? 0) - (a?.ranking ?? 0)
-        );
+        sorted = filtered;
         break;
       case 3: // Categories (optional or no sort)
       default:
-        sorted = fullOccupationsList;
+        sorted = [];
     }
-
     setSortedOccupations(sorted);
-  };
-
+  }, [mainCardInfo, searchTerm, tabIndex]);
+console.log(occupations,"occupations")
+console.log(fullOccupationsList,"occupations")
   useEffect(() => {
     if (mainCardInfo.length > 0) {
-      handleSortChange(0);
+      handleTabChange(0);
     }
-  }, [mainCardInfo]);
+  }, [mainCardInfo, searchTerm]);
 
   return (
     <div>
@@ -72,7 +83,7 @@ export default function OccupationPage() {
       </div>
 
       <div className="w-full my-0">
-        <TabBar type={1} onSortChange={handleSortChange} />
+        <TabBar type={1} selectedIndex={tabIndex} onTabChange={handleTabChange} onSortChange={handleTabChange} />
       </div>
 
       <p className="lg:text-[32px] lg:mt-15 md:mt-12 mt-15 mb-7 font-bold text-[#E93249] leading-[120%]">
@@ -89,8 +100,22 @@ export default function OccupationPage() {
         </p>
       ) : (
         <div className="flex flex-col sm:flex-row flex-wrap md:justify-between lg:gap-y-9 gap-y-5 gap-x-5 text-white font-bold lg:text-2xl text-[16px] leading-normal h-[800px] overflow-y-auto p-[40px] mb-[40px]">
-          {isLoading ? (
-            <p className="text-white">Loading...</p>
+          {tabIndex === 3 ? (
+            // Render categories as links
+            occupations.length === 0 ? (
+              <p className="text-white">No categories found.</p>
+            ) : (
+              occupations.map((cat) => (
+                <Link
+                  key={cat}
+                  href={`/ai-impact/home/category/${encodeURIComponent(cat)}`}
+                  className="main-small-box-1 flex items-center justify-center lg:h-90 md:h-54 h-79 md:w-[31%] sm:w-[48.5%] w-full cursor-pointer"
+                >
+                  <div className="color-pattern-bg-1"></div>
+                  <p className="text-center mx-6">{cat}</p>
+                </Link>
+              ))
+            )
           ) : mainCardInfo.length === 0 ? (
             <p className="text-white">No data found for this occupation.</p>
           ) : (
