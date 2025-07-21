@@ -24,13 +24,6 @@ const swipePower = (offset: number, velocity: number) => {
   return Math.abs(offset) * velocity;
 };
 
-const tagBackgrounds = [
-  "/images/tag-back-0.svg",
-  "/images/tag-back-1.svg",
-  "/images/tag-back-2.svg",
-  "/images/tag-back-3.svg",
-];
-
 export default function Page() {
   // Modal States
   const [modalOpen, setModalOpen] = useState(false);
@@ -88,7 +81,6 @@ export default function Page() {
   const totalOccupationSlides = Math.ceil(
     relatedOccupations.length / occupationsPerSlide
   );
-  // const [curWindowWidth, setCurWindowWidth] = useState(0);
 
   const thermometerSrc = getThermometer(impactData?.thermometer);
 
@@ -116,19 +108,6 @@ export default function Page() {
       ? [...relatedOccupations].sort((a, b) => a.ranking - b.ranking)
       : relatedOccupations;
 
-  // useEffect(() => {
-  //   setCurWindowWidth(window.innerWidth);
-  //   const handleResize = () => {
-  //     setCurWindowWidth(window.innerWidth);
-  //   };
-  //   window.addEventListener("resize", handleResize);
-
-  //   // Cleanup the event listener on component unmount
-  //   return () => {
-  //     window.removeEventListener("resize", handleResize);
-  //   };
-  // }, []);
-
   useEffect(() => {
     setModalOpen(false);
     setModalOpenOEC(false);
@@ -144,14 +123,6 @@ export default function Page() {
   const itemsToShow = relatedOccupations.slice(
     page1 * itemsPerPage,
     (page1 + 1) * itemsPerPage
-  );
-
-  const randomTagBackgrounds = React.useMemo(
-    () =>
-      itemsToShow.map(
-        () => tagBackgrounds[Math.floor(Math.random() * tagBackgrounds.length)]
-      ),
-    [itemsToShow]
   );
 
   return (
