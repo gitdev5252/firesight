@@ -1127,8 +1127,8 @@ export default function Page() {
                             highlighting those that are most critical. This
                             section enumerates the top 20 tasks that are
                             prioritized within a given occupation, each
-                            accompanied by an 'Automatability Score'. This score
-                            quantifies the extent to which artificial
+                            accompanied by an &apos;Automatability Score&apos;.
+                            This score quantifies the extent to which artificial
                             intelligence (AI) can automate each task. The
                             Automatability Score can be one of 3 ratings, which
                             are defined as follows:
