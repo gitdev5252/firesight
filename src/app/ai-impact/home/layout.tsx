@@ -289,7 +289,7 @@ export function TabBar({
     ],
   ];
 
-  const [curItem, setCurItem] = useState(3);
+  const [curItem, setCurItem] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const [constraints, setConstraints] = useState({ left: 0, right: 0 });
