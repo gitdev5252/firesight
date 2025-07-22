@@ -78,10 +78,10 @@ export default function Page({
         <div
           id="main-container"
           className="main-box-1 lg:mt-[55px] md:mt-8 mt-4 lg:mb-[42px] md:mb-4 mb-6 w-full lg:p-10 lg:pr-11 px-4 py-[30px]"
-        // style={{
-        //   background:
-        //     curPath != "/ai-impact/home" ? "#0E111C !important" : "",
-        // }}
+          // style={{
+          //   background:
+          //     curPath != "/ai-impact/home" ? "#0E111C !important" : "",
+          // }}
         >
           {modalOpen && (
             <>
@@ -242,7 +242,7 @@ export default function Page({
             className="h-12 lg:mt-27 md:mt-12 mt-14 w-full bg-white rounded-[25px] pl-6 text-black"
             placeholder="Search Occupations"
             value={searchTerm}
-            onChange={e => setSearchTerm(e.target.value)}
+            onChange={(e) => setSearchTerm(e.target.value)}
           />
 
           {/* <p className="lg:text-[20px] mt-[50px] font-bold text-[#E93249] leading-[120%]">Engineering & Agriculture</p> */}
@@ -289,7 +289,7 @@ export function TabBar({
     ],
   ];
 
-  const [curItem, setCurItem] = useState(0);
+  const [curItem, setCurItem] = useState(3);
   const containerRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const [constraints, setConstraints] = useState({ left: 0, right: 0 });
@@ -325,8 +325,9 @@ export function TabBar({
     >
       <motion.div
         ref={contentRef}
-        className={`cursor-grab flex justify-start sm:px-0 px-14 box-border w-full ${type ? " lg:pr-[16vw] lg:gap-15 gap-11" : " gap-10"
-          }`}
+        className={`cursor-grab flex justify-start sm:px-0 px-14 box-border w-full ${
+          type ? " lg:pr-[16vw] lg:gap-15 gap-11" : " gap-10"
+        }`}
         drag="x"
         dragConstraints={constraints}
         dragElastic={0.1}
@@ -343,7 +344,7 @@ export function TabBar({
             onClick={() => {
               if (type) {
                 onTabChange?.(index);
-                onSortChange?.(index); 
+                onSortChange?.(index);
               } else {
                 setCurItem(index);
               }
@@ -351,7 +352,11 @@ export function TabBar({
           >
             <p className="text-center w-full flex text-nowrap">{ele}</p>
             <div
-              className={(type == 0 ? curItem : selectedIndex ?? 3) === index ? "w-full h-1 !bg-[#E93249]" : ""}
+              className={
+                (type == 3 ? curItem : selectedIndex ?? 3) === index
+                  ? "w-full h-1 !bg-[#E93249]"
+                  : ""
+              }
             ></div>
           </div>
         ))}

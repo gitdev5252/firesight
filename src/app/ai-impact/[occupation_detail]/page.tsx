@@ -554,9 +554,119 @@ export default function Page() {
 
           <div className="h-[1px] w-full bg-[#ffffff1a]"></div>
 
-          <div className="flex md:flex-row flex-col md:gap-5">
+          <div className="flex md:flex-row flex-col md:gap-5 relative">
             <div className="flex flex-col lg:gap-8 gap-4 flex-7 md:border-r-[1px] md:border-t-0 border-t-[1px] border-[#ffffff1a] md:order-none order-last lg:py-15 md:py-8 py-10 lg:pr-15 lg:pl-4 pr-5">
               <div className="flex gap-3 w-full items-center justify-start">
+                {modalOpenOEC && (
+                  <div className="main-modal-box text-white !absolute lg:right-19 lg:py-10 lg:px-15 sm:top-30 top-122 md:right-8 md:px-6 md:py-8 left-0 right-0 pt-7 pl-7 pr-8 pb-5 z-500">
+                    <div className="flex justify-end">
+                      <Button
+                        onClick={() => setModalOpenOEC(false)}
+                        variant="ghost"
+                        className="p-0 cursor-pointer"
+                      >
+                        <Image
+                          src="/images/mobile/menu-close.svg"
+                          alt="Close"
+                          width={24}
+                          height={24}
+                          className="lg:size-6 md:size-[18px] size-[20px]"
+                        />
+                      </Button>
+                    </div>
+                    <div className="md:mt-4 mt-4 flex flex-col lg:gap-8 md:gap-7 gap-8">
+                      <div className="flex flex-col gap-3">
+                        <div className="flex items-center gap-3">
+                          <p className="lg:text-[18px] text-xs">
+                            The Firesight Substitutability Rating evaluates the
+                            potential impact of artificial intelligence (AI) on
+                            occupations by focusing on the likelihood of job
+                            displacement. It examines whether AI should perform
+                            job tasks, considering social, ethical, and legal
+                            contexts along with skill levels. Ratings are
+                            assigned as follows:
+                          </p>
+                        </div>
+                      </div>
+                      <div className="flex flex-col gap-3">
+                        <div className="flex items-center gap-3">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 13 14"
+                            fill="none"
+                            className="w-[13px] h-[14px] shrink-0"
+                          >
+                            <path
+                              d="M12.3623 3.78809V10.2109L6.7998 13.4229L1.2373 10.2109V3.78809L6.7998 0.576172L12.3623 3.78809Z"
+                              fill="white"
+                              stroke="white"
+                            />
+                          </svg>
+
+                          {/* <p className="lg:text-[18px] text-sm md:font-normal font-bold">
+                            AI Impact Index
+                          </p> */}
+
+                          <p className="lg:text-[18px] text-xs">
+                            Low Substitutability (0-2): High complementarity
+                            with AI, indicating low risk of displacement and
+                            potential for productivity gains.
+                          </p>
+                        </div>
+                      </div>
+                      <div className="flex flex-col gap-3">
+                        <div className="flex items-center gap-3">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 13 14"
+                            fill="none"
+                            className="w-[13px] h-[14px] shrink-0"
+                          >
+                            <path
+                              d="M12.3623 3.78809V10.2109L6.7998 13.4229L1.2373 10.2109V3.78809L6.7998 0.576172L12.3623 3.78809Z"
+                              fill="white"
+                              stroke="white"
+                            />
+                          </svg>
+                          {/* <p className="lg:text-[18px] text-sm md:font-normal font-bold">
+                            Coming Soon Regions
+                          </p> */}
+
+                          <p className="lg:text-[18px] text-xs">
+                            Moderate Substitutability (3-6): Balanced potential
+                            for AI support and substitution, with varying
+                            impacts on job displacement.
+                          </p>
+                        </div>
+                      </div>
+                      <div className="flex flex-col gap-3">
+                        <div className="flex items-center gap-3">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 13 14"
+                            fill="none"
+                            className="w-[13px] h-[14px] shrink-0"
+                          >
+                            <path
+                              d="M12.3623 3.78809V10.2109L6.7998 13.4229L1.2373 10.2109V3.78809L6.7998 0.576172L12.3623 3.78809Z"
+                              fill="white"
+                              stroke="white"
+                            />
+                          </svg>
+                          {/* <p className="lg:text-[18px] text-sm md:font-normal font-bold">
+                            Coming Soon Regions
+                          </p> */}
+
+                          <p className="lg:text-[18px] text-xs">
+                            High Substitutability (7-10): Low complementarity
+                            with AI, indicating high risk of job automation and
+                            significant reductions in human labor demand.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
                 <p className="lg:text-[20px] md:text-[18px] text-[16px] font-bold uppercase">
                   SUBSTITUTABILITY SCORE
                 </p>
@@ -594,7 +704,7 @@ export default function Page() {
             <div className="flex flex-col lg:gap-12 gap-8 flex-13 lg:py-15 py-8 items-center">
               <div className="flex gap-3 items-center justify-start">
                 {modalOpenMap && (
-                  <div className="main-modal-box text-white !absolute lg:top-322 lg:left-9 lg:right-19 lg:py-10 lg:px-15 top-322 md:left-8 md:right-8 md:px-6 md:py-8 left-0 right-0 pt-7 pl-7 pr-8 pb-5 z-500">
+                  <div className="main-modal-box text-white !absolute lg:right-19 lg:py-10 lg:px-15 top-30 md:right-8 md:px-6 md:py-8 left-0 right-0 pt-7 pl-7 pr-8 pb-5 z-500">
                     <div className="flex justify-end">
                       <Button
                         onClick={() => setModalOpenMap(false)}
@@ -750,116 +860,7 @@ export default function Page() {
                     </div>
                   </div>
                 )}
-                {modalOpenOEC && (
-                  <div className="main-modal-box text-white !absolute lg:top-322 lg:left-9 lg:right-19 lg:py-10 lg:px-15 top-322 md:left-8 md:right-8 md:px-6 md:py-8 left-0 right-0 pt-7 pl-7 pr-8 pb-5 z-500">
-                    <div className="flex justify-end">
-                      <Button
-                        onClick={() => setModalOpenOEC(false)}
-                        variant="ghost"
-                        className="p-0 cursor-pointer"
-                      >
-                        <Image
-                          src="/images/mobile/menu-close.svg"
-                          alt="Close"
-                          width={24}
-                          height={24}
-                          className="lg:size-6 md:size-[18px] size-[20px]"
-                        />
-                      </Button>
-                    </div>
-                    <div className="md:mt-4 mt-4 flex flex-col lg:gap-8 md:gap-7 gap-8">
-                      <div className="flex flex-col gap-3">
-                        <div className="flex items-center gap-3">
-                          <p className="lg:text-[18px] text-xs">
-                            The Firesight Substitutability Rating evaluates the
-                            potential impact of artificial intelligence (AI) on
-                            occupations by focusing on the likelihood of job
-                            displacement. It examines whether AI should perform
-                            job tasks, considering social, ethical, and legal
-                            contexts along with skill levels. Ratings are
-                            assigned as follows:
-                          </p>
-                        </div>
-                      </div>
-                      <div className="flex flex-col gap-3">
-                        <div className="flex items-center gap-3">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 13 14"
-                            fill="none"
-                            className="w-[13px] h-[14px] shrink-0"
-                          >
-                            <path
-                              d="M12.3623 3.78809V10.2109L6.7998 13.4229L1.2373 10.2109V3.78809L6.7998 0.576172L12.3623 3.78809Z"
-                              fill="white"
-                              stroke="white"
-                            />
-                          </svg>
 
-                          {/* <p className="lg:text-[18px] text-sm md:font-normal font-bold">
-                            AI Impact Index
-                          </p> */}
-
-                          <p className="lg:text-[18px] text-xs">
-                            Low Substitutability (0-2): High complementarity
-                            with AI, indicating low risk of displacement and
-                            potential for productivity gains.
-                          </p>
-                        </div>
-                      </div>
-                      <div className="flex flex-col gap-3">
-                        <div className="flex items-center gap-3">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 13 14"
-                            fill="none"
-                            className="w-[13px] h-[14px] shrink-0"
-                          >
-                            <path
-                              d="M12.3623 3.78809V10.2109L6.7998 13.4229L1.2373 10.2109V3.78809L6.7998 0.576172L12.3623 3.78809Z"
-                              fill="white"
-                              stroke="white"
-                            />
-                          </svg>
-                          {/* <p className="lg:text-[18px] text-sm md:font-normal font-bold">
-                            Coming Soon Regions
-                          </p> */}
-
-                          <p className="lg:text-[18px] text-xs">
-                            Moderate Substitutability (3-6): Balanced potential
-                            for AI support and substitution, with varying
-                            impacts on job displacement.
-                          </p>
-                        </div>
-                      </div>
-                      <div className="flex flex-col gap-3">
-                        <div className="flex items-center gap-3">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 13 14"
-                            fill="none"
-                            className="w-[13px] h-[14px] shrink-0"
-                          >
-                            <path
-                              d="M12.3623 3.78809V10.2109L6.7998 13.4229L1.2373 10.2109V3.78809L6.7998 0.576172L12.3623 3.78809Z"
-                              fill="white"
-                              stroke="white"
-                            />
-                          </svg>
-                          {/* <p className="lg:text-[18px] text-sm md:font-normal font-bold">
-                            Coming Soon Regions
-                          </p> */}
-
-                          <p className="lg:text-[18px] text-xs">
-                            High Substitutability (7-10): Low complementarity
-                            with AI, indicating high risk of job automation and
-                            significant reductions in human labor demand.
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                )}
                 <p className="lg:text-[20px] md:text-[18px] text-[16px] font-bold uppercase">
                   Occupation Economy Selector
                 </p>
@@ -933,33 +934,29 @@ export default function Page() {
 
           <div className="h-[1px] w-full bg-[#ffffff1a]"></div>
 
-          <div className="flex md:flex-row flex-col md:border-b-[1px] border-b-[#ffffff1a]">
+          <div className="flex md:flex-row flex-col md:border-b-[1px] border-b-[#ffffff1a] relative">
             <div className="flex flex-col lg:gap-11 gap-6 lg:flex-12 flex-13 md:border-r-[1px] md:border-t-0 border-t-[1px] border-[#ffffff1a] lg:py-15 md:py-8 py-10 lg:pr-15 lg:pl-4 md:pr-5">
-              <div className="flex gap-3 items-center justify-start self-center md:hidden">
-                <p className="text-[18px] font-bold uppercase">
-                  Automatability Score
-                </p>
-                {modalOpenAS && (
-                  <div className="main-modal-box text-white !absolute lg:top-522 lg:left-9 lg:right-19 lg:py-10 lg:px-15 top-522 md:left-8 md:right-8 md:px-6 md:py-8 left-0 right-0 pt-7 pl-7 pr-8 pb-5 z-500">
-                    <div className="flex justify-end">
-                      <Button
-                        onClick={() => setModalOpenAS(false)}
-                        variant="ghost"
-                        className="p-0"
-                      >
-                        <Image
-                          src="/images/mobile/menu-close.svg"
-                          alt="Close"
-                          width={24}
-                          height={24}
-                          className="lg:size-6 md:size-[18px] size-[20px]"
-                        />
-                      </Button>
-                    </div>
-                    <div className="md:mt-4 mt-4 flex flex-col lg:gap-8 md:gap-7 gap-8">
-                      <div className="flex flex-col gap-3">
-                        <div className="flex items-center gap-3">
-                          {/*   <svg
+              {modalOpenAS && (
+                <div className="main-modal-box text-white sm:top-25 top-20 !absolute lg:right-19 lg:py-10 lg:px-15 md:right-8 md:px-6 md:py-8 left-0 right-0 pt-7 pl-7 pr-8 pb-5 z-1500">
+                  <div className="flex justify-end">
+                    <Button
+                      onClick={() => setModalOpenAS(false)}
+                      variant="ghost"
+                      className="p-0"
+                    >
+                      <Image
+                        src="/images/mobile/menu-close.svg"
+                        alt="Close"
+                        width={24}
+                        height={24}
+                        className="lg:size-6 md:size-[18px] size-[20px]"
+                      />
+                    </Button>
+                  </div>
+                  <div className="md:mt-4 mt-4 flex flex-col lg:gap-8 md:gap-7 gap-8">
+                    <div className="flex flex-col gap-3">
+                      <div className="flex items-center gap-3">
+                        {/*   <svg
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 13 14"
                             fill="none"
@@ -971,93 +968,98 @@ export default function Page() {
                               stroke="white"
                             />
                           </svg> */}
-                          {/* <p className="lg:text-[18px] text-sm md:font-normal font-bold">
+                        {/* <p className="lg:text-[18px] text-sm md:font-normal font-bold">
                             What Purpose Does it Serve?
                           </p> */}
-                          <p className="lg:text-[18px] text-xs">
-                            The Firesight Automatability Rating quantifies the
-                            extent to which tasks within a core occupation can
-                            be performed by artificial intelligence (AI) or
-                            automated systems. This rating is calculated by
-                            averaging the automatability score assigned to 20
-                            tailored tasks conducted within that occupation.
-                            Ratings are assigned as follows:
-                          </p>
-                        </div>
+                        <p className="lg:text-[18px] text-xs">
+                          The Firesight Automatability Rating quantifies the
+                          extent to which tasks within a core occupation can be
+                          performed by artificial intelligence (AI) or automated
+                          systems. This rating is calculated by averaging the
+                          automatability score assigned to 20 tailored tasks
+                          conducted within that occupation. Ratings are assigned
+                          as follows:
+                        </p>
                       </div>
-                      <div className="flex flex-col gap-3">
-                        <div className="flex items-center gap-3">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 13 14"
-                            fill="none"
-                            className="w-[13px] h-[14px] shrink-0"
-                          >
-                            <path
-                              d="M12.3623 3.78809V10.2109L6.7998 13.4229L1.2373 10.2109V3.78809L6.7998 0.576172L12.3623 3.78809Z"
-                              fill="white"
-                              stroke="white"
-                            />
-                          </svg>
-                          {/* <p className="lg:text-[18px] text-sm md:font-normal font-bold">
+                    </div>
+                    <div className="flex flex-col gap-3">
+                      <div className="flex items-center gap-3">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 13 14"
+                          fill="none"
+                          className="w-[13px] h-[14px] shrink-0"
+                        >
+                          <path
+                            d="M12.3623 3.78809V10.2109L6.7998 13.4229L1.2373 10.2109V3.78809L6.7998 0.576172L12.3623 3.78809Z"
+                            fill="white"
+                            stroke="white"
+                          />
+                        </svg>
+                        {/* <p className="lg:text-[18px] text-sm md:font-normal font-bold">
                             AI Impact Index
                           </p> */}
-                          <p className="lg:text-[18px] text-xs">
-                            Fully Automatable (10): These tasks can be
-                            completely managed by AI without human intervention.
-                          </p>
-                        </div>
+                        <p className="lg:text-[18px] text-xs">
+                          Fully Automatable (10): These tasks can be completely
+                          managed by AI without human intervention.
+                        </p>
                       </div>
-                      <div className="flex flex-col gap-3">
-                        <div className="flex items-center gap-3">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 13 14"
-                            fill="none"
-                            className="w-[13px] h-[14px] shrink-0"
-                          >
-                            <path
-                              d="M12.3623 3.78809V10.2109L6.7998 13.4229L1.2373 10.2109V3.78809L6.7998 0.576172L12.3623 3.78809Z"
-                              fill="white"
-                              stroke="white"
-                            />
-                          </svg>
-                          {/* <p className="lg:text-[18px] text-sm md:font-normal font-bold">
+                    </div>
+                    <div className="flex flex-col gap-3">
+                      <div className="flex items-center gap-3">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 13 14"
+                          fill="none"
+                          className="w-[13px] h-[14px] shrink-0"
+                        >
+                          <path
+                            d="M12.3623 3.78809V10.2109L6.7998 13.4229L1.2373 10.2109V3.78809L6.7998 0.576172L12.3623 3.78809Z"
+                            fill="white"
+                            stroke="white"
+                          />
+                        </svg>
+                        {/* <p className="lg:text-[18px] text-sm md:font-normal font-bold">
                             Coming Soon Regions
                           </p> */}
-                          <p className="lg:text-[18px] text-xs">
-                            Semi-Automatable (5): These tasks can be partially
-                            managed by AI, requiring some human oversight or
-                            input.
-                          </p>
-                        </div>
+                        <p className="lg:text-[18px] text-xs">
+                          Semi-Automatable (5): These tasks can be partially
+                          managed by AI, requiring some human oversight or
+                          input.
+                        </p>
                       </div>
-                      <div className="flex flex-col gap-3">
-                        <div className="flex items-center gap-3">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 13 14"
-                            fill="none"
-                            className="w-[13px] h-[14px] shrink-0"
-                          >
-                            <path
-                              d="M12.3623 3.78809V10.2109L6.7998 13.4229L1.2373 10.2109V3.78809L6.7998 0.576172L12.3623 3.78809Z"
-                              fill="white"
-                              stroke="white"
-                            />
-                          </svg>
-                          {/* <p className="lg:text-[18px] text-sm md:font-normal font-bold">
+                    </div>
+                    <div className="flex flex-col gap-3">
+                      <div className="flex items-center gap-3">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 13 14"
+                          fill="none"
+                          className="w-[13px] h-[14px] shrink-0"
+                        >
+                          <path
+                            d="M12.3623 3.78809V10.2109L6.7998 13.4229L1.2373 10.2109V3.78809L6.7998 0.576172L12.3623 3.78809Z"
+                            fill="white"
+                            stroke="white"
+                          />
+                        </svg>
+                        {/* <p className="lg:text-[18px] text-sm md:font-normal font-bold">
                             Coming Soon Regions
                           </p> */}
-                          <p className="lg:text-[18px] text-xs">
-                            Non-Automatable (0): These tasks cannot be automated
-                            and require full human involvement.
-                          </p>
-                        </div>
+                        <p className="lg:text-[18px] text-xs">
+                          Non-Automatable (0): These tasks cannot be automated
+                          and require full human involvement.
+                        </p>
                       </div>
                     </div>
                   </div>
-                )}
+                </div>
+              )}
+              <div className="flex gap-3 items-center justify-start self-center md:hidden">
+                <p className="text-[18px] font-bold uppercase">
+                  Automatability Score
+                </p>
+
                 <div
                   onClick={() => setModalOpenAS(!modalOpenAS)}
                   className="cursor-pointer"
@@ -1083,12 +1085,12 @@ export default function Page() {
                 <div className="flex-1 h-[1px] bg-[#ffffff0d]"></div>
               </div>
 
-              <div className="flex gap-3 w-full items-center justify-start lg:ml-13">
+              <div className="flex gap-3 w-full items-center justify-start lg:ml-13 ">
                 <p className="lg:text-[20px] md:text-[18px] text-[16px] font-bold uppercase">
                   Occupation Task Breakdown
                 </p>
                 {modalOpenOTB && (
-                  <div className="main-modal-box text-white !absolute lg:top-522 lg:left-9 lg:right-19 lg:py-10 lg:px-15 top-522 md:left-8 md:right-8 md:px-6 md:py-8 left-0 right-0 pt-7 pl-7 pr-8 pb-5 z-500 ">
+                  <div className="main-modal-box text-white !absolute lg:right-19 lg:py-10 lg:px-15 top-65 sm:top-25 md:right-8 md:px-6 md:py-8 left-0 right-0 pt-7 pl-7 pr-8 pb-5 z-500 ">
                     <div className="flex justify-end">
                       <Button
                         onClick={() => setModalOpenOTB(false)}
@@ -1245,7 +1247,7 @@ export default function Page() {
               </div>
             </div>
             <div className="flex flex-col flex-12">
-              <div className="md:flex flex-col items-center w-full lg:pt-20 lg:pb-15 py-9 hidden">
+              <div className="md:flex flex-col items-center w-full lg:pb-15 py-12 hidden">
                 <div className="flex gap-3 items-center justify-start">
                   <p className="lg:text-[20px] md:text-[18px] text-[16px] font-bold uppercase">
                     Automatability Score
