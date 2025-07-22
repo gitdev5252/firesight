@@ -11,15 +11,7 @@ type Occupation = {
   ranking?: number;
 };
 
-const fallbackCategories: string[] = [
-  "Default Category 1",
-  "Default Category 2",
-  "Default Category 3",
-  "Default Category 4",
-  "Default Category 5",
-  "Default Category 6",
-  "Default Category 7",
-];
+const fallbackCategories: string[] = [];
 
 const API_URL =
   process.env.NEXT_PUBLIC_API_URL ||
@@ -61,7 +53,7 @@ export default function Page() {
 
     fetchData();
   }, [sortIndex]);
-    console.log(occupations,"fullOccupationsList")
+  console.log(occupations, "fullOccupationsList");
 
   const getSortedOccupationsOrCategories = () => {
     if (sortIndex === 3) {
@@ -111,11 +103,11 @@ export default function Page() {
       <CategoryList
         categories={
           sortIndex === 3
-            ? (searchTerm.trim() !== ""
-                ? categories.filter(cat =>
-                    cat.toLowerCase().includes(searchTerm.toLowerCase())
-                  )
-                : categories)
+            ? searchTerm.trim() !== ""
+              ? categories.filter((cat) =>
+                  cat.toLowerCase().includes(searchTerm.toLowerCase())
+                )
+              : categories
             : getSortedOccupationsOrCategories()
         }
       />
