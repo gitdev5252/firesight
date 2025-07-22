@@ -172,7 +172,12 @@ export default function Page() {
           </Link>
           <p className="text-[16px] text-white">Back to Platform</p>
         </div>
-        <div className="main-box-1 lg:mt-[55px] md:mt-8 mt-4 lg:mb-[42px] md:mb-4 mb-6 w-full lg:p-10 lg:pr-11 px-4 py-[30px] text-white">
+        <div
+          className="main-box-1 lg:mt-[55px] md:mt-8 mt-4 lg:mb-[42px] md:mb-4 mb-6 w-full lg:p-10 lg:pr-11 px-4 py-[30px] text-white"
+          style={{
+            background: "transparent",
+          }}
+        >
           {modalOpen && (
             <div className="main-modal-box text-white !absolute lg:top-29 lg:left-9 lg:right-19 lg:py-10 lg:px-15 top-18 md:left-8 md:right-8 md:px-6 md:py-8 left-0 right-0 pt-7 pl-7 pr-8 pb-5 z-500">
               <div className="flex justify-between items-center">
@@ -502,7 +507,7 @@ export default function Page() {
                   initial="enter"
                   animate="center"
                   exit="exit"
-                  transition={{ duration: 0.5 }}
+                  transition={{ duration: 0 }}
                   className="absolute w-full h-full flex flex-col items-center justify-stretch"
                 >
                   <div className="sm:w-full w-auto -mx-[50px] sm:mx-0">
@@ -1541,7 +1546,7 @@ export default function Page() {
 
             <div className="md:block hidden">
               <div className="flex items-center gap-2 h-6 md:mt-[50px] mt-[10px] md:p-0 pl-4 z-20  ">
-                <Link href="/ai-impact/home/category">
+                <Link href="/ai-impact">
                   <Image
                     src="/images/icons/back-btn.svg"
                     alt="back-btn"

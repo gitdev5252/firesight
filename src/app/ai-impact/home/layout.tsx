@@ -82,6 +82,9 @@ export default function Page({
           //   background:
           //     curPath != "/ai-impact/home" ? "#0E111C !important" : "",
           // }}
+          style={{
+            background: "transparent",
+          }}
         >
           {modalOpen && (
             <>
