@@ -119,6 +119,7 @@ export default function Page() {
 
   const isMobile = useIsMobile();
   const itemsPerPage = isMobile ? 4 : 8;
+  const itemsPerPageBottom = isMobile ? 2 : 3;
 
   const itemsToShow = relatedOccupations.slice(
     page1 * itemsPerPage,
@@ -390,13 +391,13 @@ export default function Page() {
           <div className="h-[1px] w-full bg-[#ffffff1a] lg:my-18 my-9"></div>
 
           {/* Constituent Occupations*/}
-          <div className="lg:my-18 my-9">
+          <div className="lg:my-18 my-9 relative">
             <div className="flex gap-3 w-full items-center justify-start">
               <p className="lg:text-[20px] md:text-[18px] text-[16px] font-bold uppercase">
                 Constituent Occupations
               </p>
               {modalOpenCO && (
-                <div className="main-modal-box text-white !absolute lg:top-220 lg:left-9 lg:right-19 lg:py-10 lg:px-15 top-220 md:left-8 md:right-8 md:px-6 md:py-8 left-0 right-0 pt-7 pl-7 pr-8 pb-5 z-500">
+                <div className="main-modal-box text-white !absolute top-10 lg:py-10 lg:px-15 sm:right-10 left-0 right-0 pt-4 pl-4 pr-4 pb-5 z-500">
                   <div className="flex justify-end">
                     <Button
                       onClick={() => setModalOpenCO(false)}
@@ -1106,21 +1107,6 @@ export default function Page() {
                     <div className="md:mt-4 mt-4 flex flex-col lg:gap-8 md:gap-7 gap-8">
                       <div className="flex flex-col gap-3">
                         <div className="flex items-center gap-3">
-                          {/*   <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 13 14"
-                            fill="none"
-                            className="w-[13px] h-[14px] shrink-0"
-                          >
-                            <path
-                              d="M12.3623 3.78809V10.2109L6.7998 13.4229L1.2373 10.2109V3.78809L6.7998 0.576172L12.3623 3.78809Z"
-                              fill="white"
-                              stroke="white"
-                            />
-                          </svg> */}
-                          {/* <p className="lg:text-[18px] text-sm md:font-normal font-bold">
-                            What Purpose Does it Serve?
-                          </p> */}
                           <p className="lg:text-[18px] text-xs">
                             The Occupation Task Breakdown provides a detailed
                             analysis of the tasks central to each occupation,
@@ -1149,9 +1135,6 @@ export default function Page() {
                               stroke="white"
                             />
                           </svg>
-                          {/* <p className="lg:text-[18px] text-sm md:font-normal font-bold">
-                            AI Impact Index
-                          </p> */}
                           <p className="lg:text-[18px] text-xs">
                             Fully Automatable (100%): These tasks are highly
                             conducive to automation, indicating that AI can
@@ -1174,9 +1157,6 @@ export default function Page() {
                               stroke="white"
                             />
                           </svg>
-                          {/* <p className="lg:text-[18px] text-sm md:font-normal font-bold">
-                            Coming Soon Regions
-                          </p> */}
                           <p className="lg:text-[18px] text-xs">
                             Semi Automatable (50%): Tasks in this category can
                             be partially automated. AI can assist or enhance
@@ -1199,9 +1179,6 @@ export default function Page() {
                               stroke="white"
                             />
                           </svg>
-                          {/* <p className="lg:text-[18px] text-sm md:font-normal font-bold">
-                            Coming Soon Regions
-                          </p> */}
                           <p className="lg:text-[18px] text-xs">
                             Non Automatable (0%): These tasks require human
                             capabilities that AI cannot replicate, such as
@@ -1228,16 +1205,8 @@ export default function Page() {
               </div>
               <div className="flex">
                 <div className="lg:w-3 md:w-2 w-1 md:h-full relative md:order-none order-last">
-                  {/* <div className="absolute w-full h-[218px] top-[190px] rounded-[5px] border-[1px] border-[#252832] bg-[#131621] z-20"></div> */}
                   <div className="absolute w-[1px] bg-[#19202c] h-full left-[50%] z-10 sm:visible hidden"></div>
                 </div>
-
-                {/* <div className="flex flex-col flex-1 lg:gap-11 gap-6">
-                  {taskProgress.map((ele, index) => (
-                    <div key={index} className="flex flex-col"> */}
-
-                {/* if u want to hide scroll use custom-scroll */}
-
                 <div className="custom-scrollbar flex flex-col flex-1 lg:gap-11 gap-6 h-[1000px] overflow-y-auto overflow-x-hidden w-auto p-2">
                   {taskData?.tasks?.map((ele, index) => (
                     <div key={index} className="flex flex-col ">
@@ -1301,21 +1270,6 @@ export default function Page() {
                       <div className="md:mt-8 mt-17 flex flex-col lg:gap-8 md:gap-7 gap-8">
                         <div className="flex flex-col gap-3">
                           <div className="flex items-center gap-3">
-                            {/*   <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 13 14"
-                            fill="none"
-                            className="w-[13px] h-[14px] shrink-0"
-                          >
-                            <path
-                              d="M12.3623 3.78809V10.2109L6.7998 13.4229L1.2373 10.2109V3.78809L6.7998 0.576172L12.3623 3.78809Z"
-                              fill="white"
-                              stroke="white"
-                            />
-                          </svg> */}
-                            {/* <p className="lg:text-[18px] text-sm md:font-normal font-bold">
-                            What Purpose Does it Serve?
-                          </p> */}
                             <p className="lg:text-[18px] text-xs">
                               The Firesight Automatability Rating quantifies the
                               extent to which tasks within a core occupation can
@@ -1342,9 +1296,6 @@ export default function Page() {
                                 stroke="white"
                               />
                             </svg>
-                            {/* <p className="lg:text-[18px] text-sm md:font-normal font-bold">
-                            AI Impact Index
-                          </p> */}
                             <p className="lg:text-[18px] text-xs">
                               Fully Automatable (10): These tasks can be
                               completely managed by AI without human
@@ -1367,9 +1318,6 @@ export default function Page() {
                                 stroke="white"
                               />
                             </svg>
-                            {/* <p className="lg:text-[18px] text-sm md:font-normal font-bold">
-                            Coming Soon Regions
-                          </p> */}
                             <p className="lg:text-[18px] text-xs">
                               Semi-Automatable (5): These tasks can be partially
                               managed by AI, requiring some human oversight or
@@ -1392,9 +1340,6 @@ export default function Page() {
                                 stroke="white"
                               />
                             </svg>
-                            {/* <p className="lg:text-[18px] text-sm md:font-normal font-bold">
-                            Coming Soon Regions
-                          </p> */}
                             <p className="lg:text-[18px] text-xs">
                               Non-Automatable (0): These tasks cannot be
                               automated and require full human involvement.
@@ -1418,12 +1363,7 @@ export default function Page() {
                   </div>
                 </div>
                 <p className="lg:text-[109px] text-[71px] font-bold leading-[130%]">
-                  {Math.floor((impactData?.auto_avg ?? 0) * 10)}
-                  {/* {Math.floor(
-                    taskProgress.reduce((s, ele) => s + ele) /
-                    taskProgress.length
-                  )} */}
-                  %
+                  {Math.floor((impactData?.auto_avg ?? 0) * 10)}%
                 </p>
               </div>
               <div className="flex flex-col lg:gap-6 gap-0 w-full border-t-[1px] border-t-[#ffffff1a] lg:pt-20 lg:pb-15 lg:pl-24 md:pt-8 pb-12 pt-11 md:pl-11">
@@ -1508,7 +1448,10 @@ export default function Page() {
                   <div className="sm:w-full w-auto -mx-[50px] sm:mx-0">
                     <div className="flex justify-between lg:gap-y-9 gap-y-4 text-white font-bold lg:text-2xl text-[16px] leading-normal w-full">
                       {sortedOccupations
-                        .slice(page2 * itemsPerPage, (page2 + 1) * itemsPerPage)
+                        .slice(
+                          page2 * itemsPerPageBottom,
+                          (page2 + 1) * itemsPerPageBottom
+                        )
                         .map((ele, index) => (
                           <div
                             key={index}
