@@ -59,11 +59,10 @@ export default function OccupationPage() {
   }, [mainCardInfo, searchTerm, tabIndex]);
 console.log(occupations,"occupations")
 console.log(fullOccupationsList,"occupations")
+  // Only reset tabIndex to 0 when occupation changes (not on every search)
   useEffect(() => {
-    if (mainCardInfo.length > 0) {
-      handleTabChange(0);
-    }
-  }, [mainCardInfo, searchTerm]);
+    setTabIndex(0);
+  }, [occupation]);
 
   return (
     <div>
@@ -101,21 +100,28 @@ console.log(fullOccupationsList,"occupations")
       ) : (
         <div className="flex flex-col sm:flex-row flex-wrap md:justify-between lg:gap-y-9 gap-y-5 gap-x-5 text-white font-bold lg:text-2xl text-[16px] leading-normal h-[800px] overflow-y-auto p-[40px] mb-[40px]">
           {tabIndex === 3 ? (
-            // Render categories as links
-            occupations.length === 0 ? (
-              <p className="text-white">No categories found.</p>
-            ) : (
-              occupations.map((cat) => (
-                <Link
-                  key={cat}
-                  href={`/ai-impact/home/category/${encodeURIComponent(cat)}`}
-                  className="main-small-box-1 flex items-center justify-center lg:h-90 md:h-54 h-79 md:w-[31%] sm:w-[48.5%] w-full cursor-pointer"
-                >
-                  <div className="color-pattern-bg-1"></div>
-                  <p className="text-center mx-6">{cat}</p>
-                </Link>
-              ))
-            )
+            // Render categories as links, filtered by searchTerm
+            (() => {
+              const filteredCategories = searchTerm.trim() === ""
+                ? occupations
+                : occupations.filter((cat) =>
+                    cat.toLowerCase().includes(searchTerm.toLowerCase())
+                  );
+              return filteredCategories.length === 0 ? (
+                <p className="text-white">No categories found.</p>
+              ) : (
+                filteredCategories.map((cat) => (
+                  <Link
+                    key={cat}
+                    href={`/ai-impact/home/category/${encodeURIComponent(cat)}`}
+                    className="main-small-box-1 flex items-center justify-center lg:h-90 md:h-54 h-79 md:w-[31%] sm:w-[48.5%] w-full cursor-pointer"
+                  >
+                    <div className="color-pattern-bg-1"></div>
+                    <p className="text-center mx-6">{cat}</p>
+                  </Link>
+                ))
+              );
+            })()
           ) : mainCardInfo.length === 0 ? (
             <p className="text-white">No data found for this occupation.</p>
           ) : (

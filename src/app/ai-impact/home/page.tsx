@@ -58,6 +58,7 @@ export default function Page() {
 
     fetchData();
   }, [sortIndex]);
+    console.log(occupations,"fullOccupationsList")
 
   const getSortedOccupationsOrCategories = () => {
     if (sortIndex === 3) {
@@ -98,7 +99,15 @@ export default function Page() {
         <TabBar type={1} selectedIndex={sortIndex} onTabChange={setSortIndex} onSortChange={setSortIndex} />
       </div>
       <CategoryList
-        categories={sortIndex === 3 ? categories : getSortedOccupationsOrCategories()}
+        categories={
+          sortIndex === 3
+            ? (searchTerm.trim() !== ""
+                ? categories.filter(cat =>
+                    cat.toLowerCase().includes(searchTerm.toLowerCase())
+                  )
+                : categories)
+            : getSortedOccupationsOrCategories()
+        }
       />
     </>
   );
