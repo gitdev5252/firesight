@@ -91,8 +91,13 @@ export const occupationApi = baseApi.injectEndpoints({
       query: (name: string) => `/categories/occupation-tasks?name=${encodeURIComponent(name)}`,
       providesTags: (result, error, name) => [{ type: 'Occupation', id: `tasks-${name}` }],
     }),
-
+    getAllCategories: builder.query<string[], void>({
+      query: () => '/categories',
+      providesTags: [{ type: 'Category', id: 'LIST' }],
+    }),
+    
   }),
+  
 
 
 });
@@ -107,4 +112,5 @@ export const {
   useGetOccupationByNameQuery,
   useGetRelatedOccupationsByNameQuery,
   useGetOccupationTaskByNameQuery,
+  useGetAllCategoriesQuery, 
 } = occupationApi; 

@@ -4,10 +4,15 @@ import { Button } from "@/components/ui/button";
 
 import "./page.css";
 import { motion } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, createContext } from "react";
 // import { usePathname } from "next/navigation";
 import Link from "next/link";
 import AIImpactFooter from "@/layouts/AIImpactFooter";
+
+export const SearchContext = createContext<{
+  searchTerm: string;
+  setSearchTerm: (v: string) => void;
+}>({ searchTerm: "", setSearchTerm: () => {} });
 
 export default function Page({
   children,
@@ -15,6 +20,7 @@ export default function Page({
   children: React.ReactNode;
 }>) {
   const [modalOpen, setModalOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
   // const pathname = usePathname();
   // const [curPath, setCurPath] = useState("");
   // useEffect(() => {
@@ -27,7 +33,7 @@ export default function Page({
   //     container.style.setProperty("background", "#0E111C", "important");
   // }, [pathname]);
   return (
-    <>
+    <SearchContext.Provider value={{ searchTerm, setSearchTerm }}>
       <div className="w-full lg:px-15 md:px-4">
         <div className="absolute top-0 left-0 w-full z-[-1020] h-[73.6vw] bg-[url('/images/polygon-pattern.svg')] bg-cover mix-blend-color"></div>
         <div className="shineBg_body_blue_circle lg:size-[546px] lg:left-[-255px] lg:top-[-217px] md:size-[409px] md:left-[-121px] md:top-[-90px] size-[229px] left-[-48px] top-[-58px]"></div>
@@ -233,9 +239,11 @@ export default function Page({
           </div>
           {/* Search Bar */}
           <input
-            className="h-12 lg:mt-27 md:mt-12 mt-14 w-full bg-white rounded-[25px] pl-6"
+            className="h-12 lg:mt-27 md:mt-12 mt-14 w-full bg-white rounded-[25px] pl-6 text-black"
             placeholder="Search Occupations"
-          ></input>
+            value={searchTerm}
+            onChange={e => setSearchTerm(e.target.value)}
+          />
 
           {/* <p className="lg:text-[20px] mt-[50px] font-bold text-[#E93249] leading-[120%]">Engineering & Agriculture</p> */}
 
@@ -250,16 +258,20 @@ export default function Page({
         <div className="shineBg_body_blue_circle lg:block hidden bottom-[-25vw] right-[-17.57vw] w-[min(602px,41.8vw)] h-[min(602px,41.8vw)]"></div>
         <div className="shineBg_body_blue_circle lg:block hidden bottom-[-32.85vw] left-[-16.666vw] w-[min(602px,41.8vw)] h-[min(602px,41.8vw)]"></div>
       </AIImpactFooter>
-    </>
+    </SearchContext.Provider>
   );
 }
 
 export function TabBar({
   type,
   onSortChange,
+  selectedIndex,
+  onTabChange,
 }: {
   type: number;
   onSortChange?: (index: number) => void;
+  selectedIndex?: number;
+  onTabChange?: (index: number) => void;
 }) {
   const tabItems = [
     [
@@ -278,7 +290,6 @@ export function TabBar({
   ];
 
   const [curItem, setCurItem] = useState(0);
-  const [curChildItem, setCurChildItem] = useState(3);
   const containerRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const [constraints, setConstraints] = useState({ left: 0, right: 0 });
@@ -324,14 +335,14 @@ export function TabBar({
           <div
             key={ele}
             className={
-              ((type == 0 ? curItem : curChildItem) === index
+              ((type == 0 ? curItem : selectedIndex ?? 3) === index
                 ? "text-white font-bold "
                 : "text-[#fff] opacity-25 ") +
               "lg:text-[18px] md:text-[13px] text-[12px] pt-4 flex flex-col items-center gap-4 lg:h-[63px] h-[55px]"
             }
             onClick={() => {
               if (type) {
-                setCurChildItem(index);
+                onTabChange?.(index);
                 onSortChange?.(index); 
               } else {
                 setCurItem(index);
@@ -340,7 +351,7 @@ export function TabBar({
           >
             <p className="text-center w-full flex text-nowrap">{ele}</p>
             <div
-              className={(type == 0 ? curItem : curChildItem) === index ? "w-full h-1 !bg-[#E93249]" : ""}
+              className={(type == 0 ? curItem : selectedIndex ?? 3) === index ? "w-full h-1 !bg-[#E93249]" : ""}
             ></div>
           </div>
         ))}
