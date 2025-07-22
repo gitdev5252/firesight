@@ -32,7 +32,7 @@ export default function OccupationPage() {
   } = useGetOccupationsByCategoryQuery(occupation);
   const { data: occupations = [] } = useGetAllCategoriesQuery();
   const [sortedOccupations, setSortedOccupations] = useState<Occupation[]>([]);
-  const [tabIndex, setTabIndex] = useState(0);
+  const [tabIndex, setTabIndex] = useState(3); // Default to Occupational Categories tab
   const { searchTerm } = useContext(SearchContext);
   const fullOccupationsList = [...mainCardInfo]; // Replace with actual list
 
@@ -67,10 +67,16 @@ export default function OccupationPage() {
     }
     setSortedOccupations(sorted);
   }, [mainCardInfo, searchTerm, tabIndex]);
-  // Only reset tabIndex to 0 when occupation changes (not on every search)
   useEffect(() => {
-    setTabIndex(0);
+    setTabIndex(3);
   }, [occupation]);
+  const filteredCategories = searchTerm.trim() === ""
+    ? occupations
+    : occupations.filter((cat) =>
+      cat.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  const renderedListLength =
+    tabIndex === 3 ? filteredCategories.length : sortedOccupations.length;
 
   return (
     <div>
@@ -111,7 +117,11 @@ export default function OccupationPage() {
             : "Could not load occupation data."}
         </p>
       ) : (
-        <div className="flex flex-col sm:flex-row flex-wrap md:justify-between lg:gap-y-9 gap-y-5 gap-x-5 text-white font-bold lg:text-2xl text-[16px] leading-normal h-[800px] overflow-y-auto p-[40px] mb-[40px]">
+        <div
+          className={`flex flex-col sm:flex-row flex-wrap ${renderedListLength !== 2 ? "md:justify-between" : ""
+            } lg:gap-y-9 gap-y-5 gap-x-5 text-white font-bold lg:text-2xl text-[16px] leading-normal h-[800px] overflow-y-auto p-[40px] mb-[40px]`}
+        >
+
           {tabIndex === 3 ? (
             // Render categories as links, filtered by searchTerm
             (() => {

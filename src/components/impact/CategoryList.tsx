@@ -15,7 +15,9 @@ interface CategoryListProps {
 
 export default function CategoryList({ categories }: CategoryListProps) {
   return (
-    <div className="flex flex-col sm:flex-row flex-wrap md:justify-between lg:gap-y-9 gap-y-5 gap-x-5 text-white font-bold lg:text-2xl text-[16px] leading-normal h-[800px] overflow-y-auto px-[40px] mb-[40px]">
+    <div className={`flex flex-col sm:flex-row flex-wrap ${categories.length !== 2 ? "md:justify-between" : ""
+      } lg:gap-y-9 gap-y-5 gap-x-5 text-white font-bold lg:text-2xl text-[16px] leading-normal h-[800px] overflow-y-auto px-[40px] mb-[40px]`}>
+
       {categories.map((ele, index) => {
         if (typeof ele === "string") {
           return (
@@ -38,6 +40,7 @@ export default function CategoryList({ categories }: CategoryListProps) {
               <div className="color-pattern-bg-1"></div>
               <p className="text-center mx-6">{ele.core_occupation}</p>
               {ele.ranking !== undefined && (
+
                 <div className="absolute flex items-center justify-center lg:bottom-[21px] lg:right-[22px] md:bottom-3 md:right-3 right-5 bottom-4 lg:w-[106px] lg:h-[49px] w-[63px] h-[29px] rounded-full overflow-hidden">
                   <Image
                     src={`/images/tag-back-${Math.floor(
