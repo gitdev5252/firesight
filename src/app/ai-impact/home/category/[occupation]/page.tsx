@@ -8,7 +8,6 @@ import {
   useGetAllCategoriesQuery,
   useGetOccupationsByCategoryQuery,
 } from "@/store/api/occupationApi";
-import { OccupationService } from "@/services/occupationService";
 
 import "../../page.css";
 import { useEffect, useState, useContext } from "react";
