@@ -1,8 +1,7 @@
 "use client";
 
-import { OccupationService } from "@/services/occupationService";
 import Link from "next/link";
-
+import Image from "next/image";
 interface Occupation {
   id: string;
   core_occupation: string;
@@ -15,7 +14,6 @@ interface CategoryListProps {
 }
 
 export default function CategoryList({ categories }: CategoryListProps) {
-  console.log(categories, "newe ta");
   return (
     <div className={`flex flex-col sm:flex-row flex-wrap ${categories.length !== 2 ? "md:justify-between" : ""
       } lg:gap-y-9 gap-y-5 gap-x-5 text-white font-bold lg:text-2xl text-[16px] leading-normal h-[800px] overflow-y-auto px-[40px] mb-[40px]`}>
@@ -42,17 +40,20 @@ export default function CategoryList({ categories }: CategoryListProps) {
               <div className="color-pattern-bg-1"></div>
               <p className="text-center mx-6">{ele.core_occupation}</p>
               {ele.ranking !== undefined && (
-                <div
-                  className="absolute flex items-center justify-center lg:bottom-[21px] lg:right-[22px] md:bottom-3 md:right-3 right-5 bottom-4 lg:w-[106px] lg:h-[49px] w-[63px] h-[29px]"
-                  style={{
-                    backgroundImage: `url(${OccupationService.getRandomBackgroundImage()})`,
-                    backgroundSize: "contain",
-                    backgroundPosition: "center",
-                    backgroundRepeat: "no-repeat",
-                    zIndex: 10,
-                  }}
-                >
-                  <span className="relative z-20 text-[23px]">#{ele.ranking ?? "?"}</span>
+
+                <div className="absolute flex items-center justify-center lg:bottom-[21px] lg:right-[22px] md:bottom-3 md:right-3 right-5 bottom-4 lg:w-[106px] lg:h-[49px] w-[63px] h-[29px] rounded-full overflow-hidden">
+                  <Image
+                    src={`/images/tag-back-${Math.floor(
+                      ele.ranking / 1000
+                    )}.svg`}
+                    alt=""
+                    fill
+                    className="object-cover"
+                    priority
+                  />
+                  <span className="relative z-10 font-bold text-white">
+                    #{ele.ranking}
+                  </span>
                 </div>
               )}
             </Link>

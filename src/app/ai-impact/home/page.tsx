@@ -37,7 +37,7 @@ export default function Page() {
         if (sortIndex === 3) {
           // Tab 4 → fetch just categories
           const res = await fetch(`${API_URL}/categories`, {
-            cache: "no-store",
+            // cache: "no-store",
           });
           if (!res.ok) throw new Error("Failed to fetch categories");
           const data = await res.json();
@@ -46,7 +46,7 @@ export default function Page() {
         } else {
           // Tab 1-3 → fetch all occupations
           const res = await fetch(`${API_URL}/categories/all-occupations`, {
-            cache: "no-store",
+            // cache: "no-store",
           });
           if (!res.ok) throw new Error("Failed to fetch occupations");
           const data = await res.json();

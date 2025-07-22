@@ -124,17 +124,23 @@
   height: 2.3rem;
   background: transparent;
   color: #fff;
-  border: 1.5px solid #86878D;
+  border: 1.5px solid #86878d;
   font-size: 1rem;
-  font-family: 'JetBrains Mono', 'Fira Mono', 'Menlo', 'monospace', inherit;
+  font-family: "JetBrains Mono", "Fira Mono", "Menlo", "monospace", inherit;
   font-weight: 500;
   letter-spacing: 0.01em;
   clip-path: polygon(
-    12px 0%, calc(100% - 12px) 0%, 100% 12px, 100% calc(100% - 12px),
-    calc(100% - 12px) 100%, 12px 100%, 0% calc(100% - 12px), 0% 12px
+    12px 0%,
+    calc(100% - 12px) 0%,
+    100% 12px,
+    100% calc(100% - 12px),
+    calc(100% - 12px) 100%,
+    12px 100%,
+    0% calc(100% - 12px),
+    0% 12px
   );
   transition: border-color 0.2s;
 }
 .clipped-corner-box:hover {
-  border-color: #E93249;
+  border-color: #e93249;
 }

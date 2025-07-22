@@ -4,8 +4,10 @@ import { useParams } from "next/navigation";
 import { TabBar } from "../../layout";
 import Image from "next/image";
 import Link from "next/link";
-import { useGetAllCategoriesQuery, useGetOccupationsByCategoryQuery } from "@/store/api/occupationApi";
-import { OccupationService } from "@/services/occupationService";
+import {
+  useGetAllCategoriesQuery,
+  useGetOccupationsByCategoryQuery,
+} from "@/store/api/occupationApi";
 
 import "../../page.css";
 import { useEffect, useState, useContext } from "react";
@@ -15,11 +17,19 @@ import { Occupation } from "@/types/occupation";
 export default function OccupationPage() {
   const params = useParams();
   const occupation = params.occupation
-    ? decodeURIComponent(Array.isArray(params.occupation) ? params.occupation[0] : params.occupation)
+    ? decodeURIComponent(
+        Array.isArray(params.occupation)
+          ? params.occupation[0]
+          : params.occupation
+      )
     : "Unknown Occupation";
 
   // Use RTK Query hook instead of local state
-  const { data: mainCardInfo = [], isLoading, error } = useGetOccupationsByCategoryQuery(occupation);
+  const {
+    data: mainCardInfo = [],
+    isLoading,
+    error,
+  } = useGetOccupationsByCategoryQuery(occupation);
   const { data: occupations = [] } = useGetAllCategoriesQuery();
   const [sortedOccupations, setSortedOccupations] = useState<Occupation[]>([]);
   const [tabIndex, setTabIndex] = useState(3); // Default to Occupational Categories tab
@@ -44,8 +54,8 @@ export default function OccupationPage() {
         );
         break;
       case 1: // Most Impacted
-        sorted = [...filtered].sort((a, b) =>
-          (b?.ranking ?? 0) - (a?.ranking ?? 0)
+        sorted = [...filtered].sort(
+          (a, b) => (b?.ranking ?? 0) - (a?.ranking ?? 0)
         );
         break;
       case 2: // Least Impacted
@@ -57,9 +67,6 @@ export default function OccupationPage() {
     }
     setSortedOccupations(sorted);
   }, [mainCardInfo, searchTerm, tabIndex]);
-  console.log(occupations, "occupations")
-  console.log(fullOccupationsList, "occupations")
-  // Only reset tabIndex to 3 (Occupational Categories) when occupation changes (not on every search)
   useEffect(() => {
     setTabIndex(3);
   }, [occupation]);
@@ -89,7 +96,12 @@ export default function OccupationPage() {
       </div>
 
       <div className="w-full my-0">
-        <TabBar type={1} selectedIndex={tabIndex} onTabChange={handleTabChange} onSortChange={handleTabChange} />
+        <TabBar
+          type={1}
+          selectedIndex={tabIndex}
+          onTabChange={handleTabChange}
+          onSortChange={handleTabChange}
+        />
       </div>
 
       <p className="lg:text-[32px] lg:mt-15 md:mt-12 mt-15 mb-7 font-bold text-[#E93249] leading-[120%]">
@@ -100,9 +112,9 @@ export default function OccupationPage() {
         <p className="text-white">Loading...</p>
       ) : error ? (
         <p className="text-red-500">
-          {'status' in error && error.status === 'FETCH_ERROR'
-            ? 'Network error. Please check your connection.'
-            : 'Could not load occupation data.'}
+          {"status" in error && error.status === "FETCH_ERROR"
+            ? "Network error. Please check your connection."
+            : "Could not load occupation data."}
         </p>
       ) : (
         <div
@@ -113,7 +125,12 @@ export default function OccupationPage() {
           {tabIndex === 3 ? (
             // Render categories as links, filtered by searchTerm
             (() => {
-
+              const filteredCategories =
+                searchTerm.trim() === ""
+                  ? occupations
+                  : occupations.filter((cat) =>
+                      cat.toLowerCase().includes(searchTerm.toLowerCase())
+                    );
               return filteredCategories.length === 0 ? (
                 <p className="text-white">No categories found.</p>
               ) : (
@@ -135,24 +152,24 @@ export default function OccupationPage() {
             sortedOccupations.map((ele) => (
               <Link
                 key={ele.id}
-                href={`/ai-impact/${encodeURIComponent(
-                  ele.core_occupation
-                )}`}
+                href={`/ai-impact/${encodeURIComponent(ele.core_occupation)}`}
                 className="main-small-box-1 flex flex-col items-center justify-center lg:h-90 md:h-54 h-79 md:w-[31%] sm:w-[48.5%] w-full"
               >
                 <div className="color-pattern-bg-1"></div>
                 <p className="text-center mx-6">{ele.core_occupation}</p>
-                <div
-                  className="absolute flex items-center justify-center lg:bottom-[21px] lg:right-[22px] md:bottom-3 md:right-3 right-5 bottom-4 lg:w-[106px] lg:h-[49px] w-[63px] h-[29px]"
-                  style={{
-                    backgroundImage: `url(${OccupationService.getRandomBackgroundImage()})`,
-                    backgroundSize: "contain",
-                    backgroundPosition: "center",
-                    backgroundRepeat: "no-repeat",
-                    zIndex: 10,
-                  }}
-                >
-                  <span className="relative z-20 text-[23px]">#{ele.ranking ?? "?"}</span>
+                <div className="absolute flex items-center justify-center lg:bottom-[21px] lg:right-[22px] md:bottom-3 md:right-3 right-5 bottom-4 lg:w-[106px] lg:h-[49px] w-[63px] h-[29px] rounded-full overflow-hidden">
+                  <Image
+                    src={`/images/tag-back-${Math.floor(
+                      (ele.ranking ?? 0) / 1000
+                    )}.svg`}
+                    alt=""
+                    fill
+                    className="object-cover"
+                    priority
+                  />
+                  <span className="relative z-10 font-bold text-white">
+                    #{ele.ranking}
+                  </span>
                 </div>
               </Link>
             ))
