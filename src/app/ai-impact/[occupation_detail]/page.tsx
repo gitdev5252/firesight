@@ -105,8 +105,8 @@ export default function Page() {
     occupationTab === 1
       ? [...relatedOccupations].sort((a, b) => b.ranking - a.ranking)
       : occupationTab === 2
-      ? [...relatedOccupations].sort((a, b) => a.ranking - b.ranking)
-      : relatedOccupations;
+        ? [...relatedOccupations].sort((a, b) => a.ranking - b.ranking)
+        : relatedOccupations;
 
   useEffect(() => {
     setModalOpen(false);
@@ -937,8 +937,8 @@ export default function Page() {
                     selectedEconomy === "Low Income"
                       ? "/images/low income.svg"
                       : selectedEconomy === "Emerging"
-                      ? "/images/emerging.svg"
-                      : "/images/advanced.svg"
+                        ? "/images/emerging.svg"
+                        : "/images/advanced.svg"
                   }
                   style={{ maxWidth: "unset" }}
                   className="h-[230px] sm:h-[451px] !sm:width-[500px]"
@@ -1467,8 +1467,12 @@ export default function Page() {
                           (page2 + 1) * itemsPerPageBottom
                         )
                         .map((ele, index) => (
-                          <div
+
+                          <Link
                             key={index}
+                            href={`/ai-impact/${encodeURIComponent(
+                              ele.core_occupation
+                            )}`}
                             className="main-small-box-1 relative overflow-hidden rounded-[...] flex items-center justify-center lg:h-90 md:h-54 h-79 md:w-[31%] w-full ml-7"
                           >
                             <div className="color-pattern-bg-1"></div>
@@ -1489,7 +1493,7 @@ export default function Page() {
                                 #{ele.ranking}
                               </span>
                             </div>
-                          </div>
+                          </Link>
                         ))}
                     </div>
                   </div>

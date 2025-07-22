@@ -18,7 +18,7 @@ const API_URL =
   "https://firesight-backend-3irx.onrender.com";
 
 export default function Page() {
-  const [sortIndex, setSortIndex] = useState(0);
+  const [sortIndex, setSortIndex] = useState(3); // Default to Occupational Categories tab
   const [categories, setCategories] = useState<string[]>(fallbackCategories);
   const [occupations, setOccupations] = useState<Occupation[]>([]);
   const { searchTerm } = useContext(SearchContext);
