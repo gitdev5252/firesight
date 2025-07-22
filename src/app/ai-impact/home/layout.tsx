@@ -184,7 +184,7 @@ export default function Page({
                           stroke="white"
                         />
                       </svg>
-                      <p className="lg:text-[18px] text-sm md:font-normal font-bold">
+                      <p className="lg:text-[18px] text-sm md:font-normal font-extrabold">
                         Coming Soon Regions
                       </p>
                     </div>

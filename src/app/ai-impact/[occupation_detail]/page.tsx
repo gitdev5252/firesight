@@ -248,8 +248,12 @@ export default function Page() {
                   </div>
                   <p className="lg:text-[18px] text-xs">
                     Our pioneering feature of the hub, the AI Impact Index
-                    provides an exhaustive analysis of over 40,000 occupations,
-                    categorised into 4,000 interactive core occupations
+                    provides an exhaustive analysis of over{" "}
+                    <span className="font-bold">40,000 occupations</span>,
+                    categorised into{" "}
+                    <span className="font-bold">
+                      4,000 interactive core occupations&nbsp;
+                    </span>
                     evaluating the potential risks and challenges posed by AI
                     and automation. This index is a valuable resource for users,
                     offering insights into how their roles might evolve, and
@@ -272,27 +276,42 @@ export default function Page() {
                         stroke="white"
                       />
                     </svg>
-                    <p className="lg:text-[18px] text-sm md:font-normal font-bold">
+                    <p className="lg:text-[18px] text-sm md:font-normal">
                       Coming Soon Regions
                     </p>
                   </div>
-                  <p className="lg:text-[18px] text-xs">
-                    Personalised Learning Modules: Tailored to meet your unique
-                    career aspirations and learning needs, these modules will
-                    use advanced AI algorithms to recommend the most relevant
-                    and impactful learning paths for your professional growth.
-                    Resume Builder: Utilising a finely tuned Language Learning
-                    Model (LLM) with a comprehensive occupation-specific
-                    knowledge base, this module assists users in creating
-                    resumes that stand out Firesight Community: Join our
-                    dedicated Discord server for networking, peer support, and
-                    professional growth—a vibrant community ideal for
-                    freelancers and solopreneurs. Career Advisor Chatbot: Also
-                    powered by the advanced LLM, this chatbot offers real-time,
-                    personalized career guidance. This AI-driven counsellor
-                    supports users in navigating their career paths, providing
-                    advice on job searches, interview preparation, and career
-                    progression.
+                  <p className="lg:text-[18px] text-xs pl-4">
+                    <span className="font-bold">
+                      &#9679; Training Resources:
+                    </span>{" "}
+                    Tailored to meet your unique career aspirations and learning
+                    needs, Training Resources offers a curated library of
+                    learning resources covering every occupation in the AI
+                    Impact Index (nearly 4000). Browse hand-picked courses,
+                    articles and tutorials to close critical skill gaps quickly.
+                    <br />
+                    <span className="font-bold">
+                      &#9679; Resume Builder:
+                    </span>{" "}
+                    Utilising a finely tuned Language Learning Model (LLM) with
+                    a comprehensive occupation-specific knowledge base, this
+                    module assists users in creating resumes that stand out.
+                    <br />
+                    <span className="font-bold">
+                      &#9679; Firesight Community:
+                    </span>{" "}
+                    Join our dedicated Discord server for networking, peer
+                    support, and professional growth—a vibrant community ideal
+                    for freelancers and solopreneurs.
+                    <br />
+                    <span className="font-bold">
+                      &#9679; Career Advisor Chatbot:
+                    </span>
+                    Also powered by the advanced LLM, this chatbot offers
+                    real-time, personalized career guidance. This AI-driven
+                    counsellor supports users in navigating their career paths,
+                    providing advice on job searches, interview preparation, and
+                    career progression.
                   </p>
                 </div>
               </div>
@@ -1453,8 +1472,8 @@ export default function Page() {
                             </p>
                             <div className="absolute flex items-center justify-center lg:bottom-[21px] lg:right-[22px] md:bottom-3 md:right-3 right-5 bottom-4 lg:w-[106px] lg:h-[49px] w-[63px] h-[29px] rounded-full overflow-hidden">
                               <Image
-                                src={`/images/tag-back-${Math.abs(
-                                  Math.floor(ele.ranking / 1000) - 1
+                                src={`/images/tag-back-${Math.floor(
+                                  ele.ranking / 1000
                                 )}.svg`}
                                 alt=""
                                 fill
