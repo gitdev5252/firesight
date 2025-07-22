@@ -521,7 +521,7 @@ export default function Page() {
               initial="enter"
               animate="center"
               exit="exit"
-              transition={{ duration: 0.5 }}
+              transition={{ duration: 0.1 }}
               className={
                 "absolute w-full h-full flex items-center justify-stretch"
               }

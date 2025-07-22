@@ -564,7 +564,7 @@ export default function Overview() {
               initial="enter"
               animate="center"
               exit="exit"
-              transition={{ duration: 0.5 }}
+              transition={{ duration: 0.1 }}
               className="absolute w-full h-full flex items-center justify-stretch"
             >
               <div className="flex flex-col w-full h-full justify-stretch gap-3 items-stretch">
@@ -773,7 +773,7 @@ export default function Overview() {
               initial="enter"
               animate="center"
               exit="exit"
-              transition={{ duration: 0.5 }}
+              transition={{ duration: 0.1 }}
               className="absolute w-full h-full flex items-center justify-stretch px-6"
             >
               <div className="flex flex-col w-full h-full justify-stretch gap-[30px] items-stretch">

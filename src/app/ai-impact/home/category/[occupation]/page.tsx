@@ -55,6 +55,11 @@ export default function OccupationPage() {
         break;
       case 1: // Most Impacted
         sorted = [...filtered].sort(
+          (a, b) => (a?.ranking ?? 0) - (b?.ranking ?? 0)
+        );
+        break;
+      case 2: // Most Impacted
+        sorted = [...filtered].sort(
           (a, b) => (b?.ranking ?? 0) - (a?.ranking ?? 0)
         );
         break;

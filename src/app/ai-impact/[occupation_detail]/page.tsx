@@ -105,8 +105,8 @@ export default function Page() {
     occupationTab === 1
       ? [...relatedOccupations].sort((a, b) => a.ranking - b.ranking)
       : occupationTab === 2
-        ? [...relatedOccupations].sort((a, b) => b.ranking - a.ranking)
-        : relatedOccupations;
+      ? [...relatedOccupations].sort((a, b) => b.ranking - a.ranking)
+      : relatedOccupations;
 
   useEffect(() => {
     setModalOpen(false);
@@ -507,7 +507,7 @@ export default function Page() {
                   initial="enter"
                   animate="center"
                   exit="exit"
-                  transition={{ duration: 0 }}
+                  transition={{ duration: 0.1 }}
                   className="absolute w-full h-full flex flex-col items-center justify-stretch"
                 >
                   <div className="sm:w-full w-auto -mx-[50px] sm:mx-0">
@@ -937,8 +937,8 @@ export default function Page() {
                     selectedEconomy === "Low Income"
                       ? "/images/low income.svg"
                       : selectedEconomy === "Emerging"
-                        ? "/images/emerging.svg"
-                        : "/images/advanced.svg"
+                      ? "/images/emerging.svg"
+                      : "/images/advanced.svg"
                   }
                   style={{ maxWidth: "unset" }}
                   className="h-[230px] sm:h-[451px] !sm:width-[500px]"
@@ -1456,7 +1456,7 @@ export default function Page() {
                   initial="enter"
                   animate="center"
                   exit="exit"
-                  transition={{ duration: 0.5 }}
+                  transition={{ duration: 0.1 }}
                   className="absolute w-full h-full flex items-center justify-stretch"
                 >
                   <div className="sm:w-full w-auto -mx-[50px] sm:mx-0">
@@ -1467,7 +1467,6 @@ export default function Page() {
                           (page2 + 1) * itemsPerPageBottom
                         )
                         .map((ele, index) => (
-
                           <Link
                             key={index}
                             href={`/ai-impact/${encodeURIComponent(
