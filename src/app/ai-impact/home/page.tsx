@@ -61,6 +61,7 @@ export default function Page() {
 
     fetchData();
   }, [sortIndex]);
+    console.log(occupations,"fullOccupationsList")
 
   const getSortedOccupationsOrCategories = () => {
     if (sortIndex === 3) {
@@ -109,7 +110,13 @@ export default function Page() {
       </div>
       <CategoryList
         categories={
-          sortIndex === 3 ? categories : getSortedOccupationsOrCategories()
+          sortIndex === 3
+            ? (searchTerm.trim() !== ""
+                ? categories.filter(cat =>
+                    cat.toLowerCase().includes(searchTerm.toLowerCase())
+                  )
+                : categories)
+            : getSortedOccupationsOrCategories()
         }
       />
     </>
