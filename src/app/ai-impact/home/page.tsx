@@ -92,7 +92,7 @@ export default function Page() {
 
   return (
     <>
-      <div className="w-full lg:my-29 md:mt-9 mt-11 md:mb-13 mb-5 mb-7">
+      <div className="w-full lg:my-29 md:mt-9 mt-11 md:mb-13 mb-7">
         <TabBar
           type={1}
           selectedIndex={sortIndex}
