@@ -78,10 +78,10 @@ export default function Page({
         <div
           id="main-container"
           className="main-box-1 lg:mt-[55px] md:mt-8 mt-4 lg:mb-[42px] md:mb-4 mb-6 w-full lg:p-10 lg:pr-11 px-4 py-[30px]"
-        // style={{
-        //   background:
-        //     curPath != "/ai-impact/home" ? "#0E111C !important" : "",
-        // }}
+          // style={{
+          //   background:
+          //     curPath != "/ai-impact/home" ? "#0E111C !important" : "",
+          // }}
         >
           {modalOpen && (
             <>
@@ -211,38 +211,55 @@ export default function Page({
               </div>
             </>
           )}
-          <div className="w-full flex justify-start items-center gap-4 text-white">
-            <Image
-              src="/images/icons/pro-hub.svg"
-              alt="professional hub"
-              width={49}
-              height={41}
-              className="lg:w-[49px] lg:h-[41px] md:w-[38px] md:h-[32px] w-[31px] h-[26px]"
-            />
-            <div className="w-[1px] h-[18px] bg-[#ffffff1a] md:block hidden"></div>
-            <p className="lg:text-[32px] md:text-2xl text-[18px] font-bold">
-              Professional Development Hub
-            </p>
-            <div onClick={() => setModalOpen(!modalOpen)}>
+          <div className="w-full flex flex-wrap items-center gap-4 text-white mt-10">
+            <div className="flex items-center gap-2">
               <Image
-                src={`/images/icons/union${modalOpen ? "-red" : ""}.svg`}
-                alt="union"
-                width={24}
-                height={24}
-                className="lg:w-[24px] lg:h-[24px] md:w-[17px] md:h-[17px] w-[16px] h-[16px]"
+                src="/images/icons/pro-hub.svg"
+                alt="professional hub"
+                width={49}
+                height={41}
+                className="lg:w-[49px] lg:h-[41px] md:w-[38px] md:h-[32px] w-[31px] h-[26px]"
               />
+              <div className="text-[21px] text-[#ffffff1a] hidden sm:block">
+                |
+              </div>
+              <p className="lg:text-[32px] md:text-2xl text-[18px] font-bold flex items-center gap-2">
+                Professional Development Hub
+              </p>
+              <div onClick={() => setModalOpen(!modalOpen)}>
+                <Image
+                  src={`/images/icons/union${modalOpen ? "-red" : ""}.svg`}
+                  alt="union"
+                  width={24}
+                  height={24}
+                  className="lg:w-[24px] lg:h-[24px] md:w-[17px] md:h-[17px] w-[16px] h-[16px]"
+                />
+              </div>
+            </div>
+            <div className="text-[21px] mx-[20px] text-[#ffffff1a] sm:block hidden">
+              |
+            </div>
+            <div className="flex items-center gap-2 sm:w-auto w-full">
+              <div className="w-20 h-[1px] bg-[#ffffff1a] sm:hidden block" />
+              <div className="flex items-center gap-2 lg:text-[28px] md:text-[17px] cursor-pointer sm:mx-auto">
+                <Image
+                  src="/images/icons/area-chart.svg"
+                  alt="ai-impact-index"
+                  width={24}
+                  height={24}
+                />
+                AI Impact Index
+              </div>
+              <div className="w-20 h-[1px] bg-[#ffffff1a] sm:hidden block" />
             </div>
           </div>
 
-          <div className="w-full lg:mt-19 md:mt-10 mt-15">
-            <TabBar type={0} />
-          </div>
           {/* Search Bar */}
           <input
-            className="h-12 lg:mt-27 md:mt-12 mt-14 w-full bg-white rounded-[25px] pl-6 text-black"
+            className="h-12 lg:mt-20 md:mt-12 mt-10 w-full bg-white rounded-[25px] pl-6 text-black"
             placeholder="Search Occupations"
             value={searchTerm}
-            onChange={e => setSearchTerm(e.target.value)}
+            onChange={(e) => setSearchTerm(e.target.value)}
           />
 
           {/* <p className="lg:text-[20px] mt-[50px] font-bold text-[#E93249] leading-[120%]">Engineering & Agriculture</p> */}
@@ -325,8 +342,9 @@ export function TabBar({
     >
       <motion.div
         ref={contentRef}
-        className={`cursor-grab flex justify-start sm:px-0 px-14 box-border w-full ${type ? " lg:pr-[16vw] lg:gap-15 gap-11" : " gap-10"
-          }`}
+        className={`cursor-grab flex justify-start sm:px-0 px-14 box-border w-full ${
+          type ? " lg:pr-[16vw] lg:gap-15 gap-11" : " gap-10"
+        }`}
         drag="x"
         dragConstraints={constraints}
         dragElastic={0.1}
@@ -343,7 +361,7 @@ export function TabBar({
             onClick={() => {
               if (type) {
                 onTabChange?.(index);
-                onSortChange?.(index); 
+                onSortChange?.(index);
               } else {
                 setCurItem(index);
               }
@@ -351,7 +369,11 @@ export function TabBar({
           >
             <p className="text-center w-full flex text-nowrap">{ele}</p>
             <div
-              className={(type == 0 ? curItem : selectedIndex ?? 3) === index ? "w-full h-1 !bg-[#E93249]" : ""}
+              className={
+                (type == 3 ? curItem : selectedIndex ?? 3) === index
+                  ? "w-full h-1 !bg-[#E93249]"
+                  : ""
+              }
             ></div>
           </div>
         ))}
