@@ -67,12 +67,12 @@ export default function OccupationPage() {
   useEffect(() => {
     setTabIndex(3);
   }, [occupation]);
-  const filteredCategories =
-    searchTerm.trim() === ""
-      ? occupations
-      : occupations.filter((cat) =>
-          cat.toLowerCase().includes(searchTerm.toLowerCase())
-        );
+  // const filteredCategories =
+  //   searchTerm.trim() === ""
+  //     ? occupations
+  //     : occupations.filter((cat) =>
+  //         cat.toLowerCase().includes(searchTerm.toLowerCase())
+  //       );
   // const renderedListLength =
   //   tabIndex === 3 ? filteredCategories.length : sortedOccupations.length;
 
