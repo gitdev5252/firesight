@@ -36,17 +36,20 @@ export default function Page() {
       try {
         if (sortIndex === 3) {
           // Tab 4 → fetch just categories
-          const res = await fetch(`${API_URL}/categories`, { cache: "no-store" });
+          const res = await fetch(`${API_URL}/categories`, {
+            cache: "no-store",
+          });
           if (!res.ok) throw new Error("Failed to fetch categories");
           const data = await res.json();
           setCategories(data);
           setOccupations([]); // Clear occupations when on tab 4
         } else {
           // Tab 1-3 → fetch all occupations
-          const res = await fetch(`${API_URL}/categories/all-occupations`, { cache: "no-store" });
+          const res = await fetch(`${API_URL}/categories/all-occupations`, {
+            cache: "no-store",
+          });
           if (!res.ok) throw new Error("Failed to fetch occupations");
           const data = await res.json();
-          console.log(data, "sortIndexsortIndex")
           setOccupations(data);
           setCategories(fallbackCategories); // Reset categories to fallback for other tabs
         }
@@ -62,7 +65,7 @@ export default function Page() {
   const getSortedOccupationsOrCategories = () => {
     if (sortIndex === 3) {
       if (searchTerm.trim() !== "") {
-        return categories.filter(cat =>
+        return categories.filter((cat) =>
           cat.toLowerCase().includes(searchTerm.toLowerCase())
         );
       }
@@ -72,7 +75,9 @@ export default function Page() {
     const sorted = [...occupations];
     switch (sortIndex) {
       case 0: // Alphabetical
-        sorted.sort((a, b) => a.core_occupation.localeCompare(b.core_occupation));
+        sorted.sort((a, b) =>
+          a.core_occupation.localeCompare(b.core_occupation)
+        );
         break;
       case 1: // Most Impacted (#1 to #4000)
         sorted.sort((a, b) => (a.ranking ?? 0) - (b.ranking ?? 0));
@@ -95,10 +100,17 @@ export default function Page() {
   return (
     <>
       <div className="w-full lg:my-29 md:mt-9 mt-11 md:mb-13 mb-5 mb-7">
-        <TabBar type={1} selectedIndex={sortIndex} onTabChange={setSortIndex} onSortChange={setSortIndex} />
+        <TabBar
+          type={1}
+          selectedIndex={sortIndex}
+          onTabChange={setSortIndex}
+          onSortChange={setSortIndex}
+        />
       </div>
       <CategoryList
-        categories={sortIndex === 3 ? categories : getSortedOccupationsOrCategories()}
+        categories={
+          sortIndex === 3 ? categories : getSortedOccupationsOrCategories()
+        }
       />
     </>
   );
