@@ -103,9 +103,9 @@ export default function Page() {
   };
   const sortedOccupations =
     occupationTab === 1
-      ? [...relatedOccupations].sort((a, b) => b.ranking - a.ranking)
+      ? [...relatedOccupations].sort((a, b) => a.ranking - b.ranking)
       : occupationTab === 2
-        ? [...relatedOccupations].sort((a, b) => a.ranking - b.ranking)
+        ? [...relatedOccupations].sort((a, b) => b.ranking - a.ranking)
         : relatedOccupations;
 
   useEffect(() => {
