@@ -37,10 +37,8 @@ export default function OccupationPage() {
   const fullOccupationsList = [...mainCardInfo]; // Replace with actual list
 
   const handleTabChange = (index: number) => {
-    // Only allow Occupational Categories tab (index 1) to be selected
-    if (index === 1) {
-      setTabIndex(index);
-    }
+    // Allow all tabs to be selected now
+    setTabIndex(index);
   };
   useEffect(() => {
     let filtered = fullOccupationsList;
@@ -57,17 +55,12 @@ export default function OccupationPage() {
       case 1: // Occupational Categories - this will be handled separately
         sorted = [];
         break;
-      case 2: // Alphabetical
-        sorted = [...filtered].sort((a, b) =>
-          a.core_occupation.localeCompare(b.core_occupation)
-        );
-        break;
-      case 3: // Most Impacted (less to greater - ascending order by ranking)
+      case 2: // Most Impacted (less to greater - ascending order by ranking)
         sorted = [...filtered].sort(
           (a, b) => (a?.ranking ?? 0) - (b?.ranking ?? 0)
         );
         break;
-      case 4: // Least Impact (greater to less - descending order by ranking)
+      case 3: // Least Impact (greater to less - descending order by ranking)
         sorted = [...filtered].sort(
           (a, b) => (a?.ranking ?? 0) - (b?.ranking ?? 0)
         );
@@ -75,6 +68,11 @@ export default function OccupationPage() {
       case 2: // Most Impacted
         sorted = [...filtered].sort(
           (a, b) => (b?.ranking ?? 0) - (a?.ranking ?? 0)
+        );
+        break;
+      case 4: // Alphabetical
+        sorted = [...filtered].sort((a, b) =>
+          a.core_occupation.localeCompare(b.core_occupation)
         );
         break;
       default:
@@ -117,7 +115,6 @@ export default function OccupationPage() {
           selectedIndex={tabIndex}
           onTabChange={handleTabChange}
           onSortChange={handleTabChange}
-          disabledTabs={[0, 2, 3, 4]} // Disable All, Alphabetical, Most Impacted, Least Impacted
         />
       </div>
 
@@ -163,7 +160,34 @@ export default function OccupationPage() {
                 ))
               );
             })()
-          ) : null}
+          ) : mainCardInfo.length === 0 ? (
+            <p className="text-white">No data found for this occupation.</p>
+          ) : (
+            sortedOccupations.map((ele) => (
+              <Link
+                key={ele.id}
+                href={`/ai-impact/${encodeURIComponent(ele.core_occupation)}`}
+                className="main-small-box-1 flex flex-col items-center justify-center lg:h-90 md:h-54 h-79 md:w-[31%] sm:w-[48.5%] w-full"
+              >
+                <div className="color-pattern-bg-1"></div>
+                <p className="text-center mx-6">{ele.core_occupation}</p>
+                <div className="absolute flex items-center justify-center lg:bottom-[21px] lg:right-[22px] md:bottom-3 md:right-3 right-5 bottom-4 lg:w-[106px] lg:h-[49px] w-[63px] h-[29px] rounded-full overflow-hidden">
+                  <Image
+                    src={`/images/tag-back-${Math.floor(
+                      (ele.ranking ?? 0) / 1000
+                    )}.svg`}
+                    alt=""
+                    fill
+                    className="object-cover"
+                    priority
+                  />
+                  <span className="relative z-10 font-bold text-white">
+                    #{ele.ranking}
+                  </span>
+                </div>
+              </Link>
+            ))
+          )}
         </div>
       )}
     </div>
