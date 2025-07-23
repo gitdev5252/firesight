@@ -35,6 +35,7 @@ export default function OccupationPage() {
   const [tabIndex, setTabIndex] = useState(1); // Default to Occupational Categories tab (index 1)
   const { searchTerm } = useContext(SearchContext);
   const fullOccupationsList = [...mainCardInfo]; // Replace with actual list
+  console.log(sortedOccupations);
 
   const handleTabChange = (index: number) => {
     // Only allow Occupational Categories tab (index 1) to be selected
@@ -139,34 +140,35 @@ export default function OccupationPage() {
           //   } lg:gap-y-9 gap-y-5 gap-x-5 text-white font-bold lg:text-2xl text-[16px] leading-normal h-[800px] overflow-y-auto p-[40px] mb-[40px]`}
           className={`flex flex-col sm:flex-row flex-wrap sm:justify-around lg:gap-x-10 md:gap-x-5 gap-x-7 gap-y-7 lg:gap-y-10 md:gap-y-5 text-white font-bold lg:text-2xl text-[16px] leading-normal sm:h-[800px] h-[750px] overflow-y-auto p-[20px] sm:mb-[40px]`}
         >
-          {tabIndex === 1 ? (
-            // Render categories as links, filtered by searchTerm
-            (() => {
-              const filteredCategories =
-                searchTerm.trim() === ""
-                  ? occupations
-                  : occupations.filter((cat) =>
-                      cat.toLowerCase().includes(searchTerm.toLowerCase())
-                    );
-              return filteredCategories.length === 0 ? (
-                <p className="text-white">No categories found.</p>
-              ) : (
-                filteredCategories.map((cat) => (
-                  <Link
-                    key={cat}
-                    href={`/ai-impact/home/category/${encodeURIComponent(cat)}`}
-                    className="main-small-box-1 flex items-center justify-center lg:h-90 md:h-54 h-79 md:w-[31%] sm:w-[48.5%] w-full cursor-pointer"
-                  >
-                    <div className="color-pattern-bg-1"></div>
-                    <p className="text-center mx-6">{cat}</p>
-                  </Link>
-                ))
-              );
-            })()
-          ) : null}
+          {tabIndex === 1
+            ? // Render categories as links, filtered by searchTerm
+              (() => {
+                const filteredCategories =
+                  searchTerm.trim() === ""
+                    ? occupations
+                    : occupations.filter((cat) =>
+                        cat.toLowerCase().includes(searchTerm.toLowerCase())
+                      );
+                return filteredCategories.length === 0 ? (
+                  <p className="text-white">No categories found.</p>
+                ) : (
+                  filteredCategories.map((cat) => (
+                    <Link
+                      key={cat}
+                      href={`/ai-impact/home/category/${encodeURIComponent(
+                        cat
+                      )}`}
+                      className="main-small-box-1 flex items-center justify-center lg:h-90 md:h-54 h-79 md:w-[31%] sm:w-[48.5%] w-full cursor-pointer"
+                    >
+                      <div className="color-pattern-bg-1"></div>
+                      <p className="text-center mx-6">{cat}</p>
+                    </Link>
+                  ))
+                );
+              })()
+            : null}
         </div>
       )}
     </div>
   );
 }
-
