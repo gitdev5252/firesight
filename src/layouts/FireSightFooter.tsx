@@ -200,15 +200,15 @@ export default function FireSightFooter({
                 />
                 <div>
                   <div className="flex items-center gap-2 text-white">
-                    <span className="font-bold">LONDON</span>
+                    <span className="font-bold">FAREHAM</span>
                     <span className="italic text-[#A0AEC0] text-xs">
-                      (Accountants Office)
+                      (Corporate HQ)
                     </span>
                   </div>
                   <div className="text-[#A0AEC0] text-xs text-center md:text-left">
-                    1180 N Town Center Dr #100,
+                    203 West St, Fareham,
                     <br />
-                    Nevada, 89144, UNITED STATES
+                    Hampshire, PO16 0EN, UNITED KINGDOM
                   </div>
                 </div>
               </div>
@@ -237,7 +237,7 @@ export default function FireSightFooter({
                 </div>
               </div>
               <div className="vertical-divider md:!block !hidden !h-[60px]"></div>
-              {/* Miami */}
+              {/* Ha Noi */}
               <div className="flex items-start">
                 <Image
                   src="/images/icons/location.svg"
@@ -248,15 +248,15 @@ export default function FireSightFooter({
                 />
                 <div>
                   <div className="flex items-center gap-2 text-white">
-                    <span className="font-bold">MIAMI</span>
+                    <span className="font-bold">HA NOI</span>
                     <span className="italic text-[#A0AEC0] text-xs">
                       (Outpost)
                     </span>
                   </div>
                   <div className="text-[#A0AEC0] text-xs text-center md:text-left">
-                    7600 Dr Phillips Blvd Bay 158,
+                    1 Thai ha St, Trung Liet
                     <br />
-                    Florida, 32819, UNITED STATES
+                    Ward, Ha Noi, VIETNAM
                   </div>
                 </div>
               </div>
@@ -500,15 +500,15 @@ export default function FireSightFooter({
                 />
                 <div>
                   <div className="flex items-center gap-2 text-white">
-                    <span className="font-bold">LONDON</span>
+                    <span className="font-bold">FAREHAM</span>
                     <span className="italic text-[#A0AEC0] text-xs">
-                      (Accountants Office)
+                      (Corporate HQ)
                     </span>
                   </div>
                   <div className="text-[#A0AEC0] text-xs text-center md:text-left">
-                    1180 N Town Center Dr #100,
+                    203 West St, Fareham,
                     <br />
-                    Nevada, 89144, UNITED STATES
+                    Hampshire, PO16 0EN, UNITED KINGDOM
                   </div>
                 </div>
               </div>
@@ -537,7 +537,7 @@ export default function FireSightFooter({
                 </div>
               </div>
               <div className="vertical-divider md:!block !hidden !h-[60px]"></div>
-              {/* Miami */}
+              {/* Ha Noi */}
               <div className="flex items-start">
                 <Image
                   src="/images/icons/location.svg"
@@ -548,15 +548,15 @@ export default function FireSightFooter({
                 />
                 <div>
                   <div className="flex items-center gap-2 text-white">
-                    <span className="font-bold">MIAMI</span>
+                    <span className="font-bold">HA NOI</span>
                     <span className="italic text-[#A0AEC0] text-xs">
                       (Outpost)
                     </span>
                   </div>
                   <div className="text-[#A0AEC0] text-xs text-center md:text-left">
-                    7600 Dr Phillips Blvd Bay 158,
+                    1 Thai ha St, Trung Liet
                     <br />
-                    Florida, 32819, UNITED STATES
+                    Ward, Ha Noi, VIETNAM
                   </div>
                 </div>
               </div>
@@ -766,7 +766,7 @@ export default function FireSightFooter({
                   </div>
                 </div>
               </div>
-              {/* London */}
+              {/* Fareham */}
               <div className="flex items-start">
                 <Image
                   src="/images/icons/location.svg"
@@ -777,19 +777,19 @@ export default function FireSightFooter({
                 />
                 <div>
                   <div className="flex items-center gap-2 text-white">
-                    <span className="font-bold">DELAWARE</span>
+                    <span className="font-bold">FAREHAM</span>
                     <span className="italic text-[#A0AEC0] text-xs">
                       (Corporate HQ)
                     </span>
                   </div>
                   <div className="text-[#A0AEC0] text-xs text-center md:text-left">
-                    1180 N Town Center Dr #100,
+                    203 West St, Fareham,
                     <br />
-                    Nevada, 89144, UNITED STATES
+                    Hampshire, PO16 0EN, UNITED KINGDOM
                   </div>
                 </div>
               </div>
-              {/* Miami */}
+              {/* Ha Noi */}
               <div className="flex items-start">
                 <Image
                   src="/images/icons/location.svg"
@@ -800,15 +800,15 @@ export default function FireSightFooter({
                 />
                 <div>
                   <div className="flex items-center gap-2 text-white">
-                    <span className="font-bold">MIAMI</span>
+                    <span className="font-bold">HA NOI</span>
                     <span className="italic text-[#A0AEC0] text-xs">
                       (Outpost)
                     </span>
                   </div>
                   <div className="text-[#A0AEC0] text-xs text-center md:text-left">
-                    7600 Dr Phillips Blvd Bay 158,
+                    1 Thai ha St, Trung Liet
                     <br />
-                    Florida, 32819, UNITED STATES
+                    Ward, Ha Noi, VIETNAM
                   </div>
                 </div>
               </div>
