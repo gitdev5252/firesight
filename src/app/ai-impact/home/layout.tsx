@@ -323,9 +323,9 @@ export function TabBar({
     [
       "All",
       "Occupational Categories",
-      "Alphabetical",
       "Most Impacted",
       "Least Impacted",
+      "Alphabetical",
     ],
   ];
 

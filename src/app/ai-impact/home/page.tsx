@@ -70,16 +70,16 @@ export default function Page() {
     switch (sortIndex) {
       case 0: // All (no sorting, just return as is)
         break;
-      case 2: // Alphabetical
+      case 2: // Most Impacted (#1 to #4000)
+        sorted.sort((a, b) => (a.ranking ?? 0) - (b.ranking ?? 0));
+        break;
+      case 3: // Least Impacted (#4000 to #1)
+        sorted.sort((a, b) => (b.ranking ?? 0) - (a.ranking ?? 0));
+        break;
+      case 4: // Alphabetical
         sorted.sort((a, b) =>
           a.core_occupation.localeCompare(b.core_occupation)
         );
-        break;
-      case 3: // Most Impacted (#1 to #4000)
-        sorted.sort((a, b) => (a.ranking ?? 0) - (b.ranking ?? 0));
-        break;
-      case 4: // Least Impacted (#4000 to #1)
-        sorted.sort((a, b) => (b.ranking ?? 0) - (a.ranking ?? 0));
         break;
       default:
         break;
