@@ -191,23 +191,40 @@ export default function Page({
                         Coming Soon Regions
                       </p>
                     </div>
-                    <p className="lg:text-[18px] text-xs">
-                      Personalised Learning Modules: Tailored to meet your
-                      unique career aspirations and learning needs, these
-                      modules will use advanced AI algorithms to recommend the
-                      most relevant and impactful learning paths for your
-                      professional growth. Resume Builder: Utilising a finely
-                      tuned Language Learning Model (LLM) with a comprehensive
-                      occupation-specific knowledge base, this module assists
-                      users in creating resumes that stand out Firesight
-                      Community: Join our dedicated Discord server for
-                      networking, peer support, and professional growth—a
-                      vibrant community ideal for freelancers and solopreneurs.
-                      Career Advisor Chatbot: Also powered by the advanced LLM,
-                      this chatbot offers real-time, personalized career
-                      guidance. This AI-driven counsellor supports users in
-                      navigating their career paths, providing advice on job
-                      searches, interview preparation, and career progression.
+                    <p className="lg:text-[18px] text-xs pl-4">
+                      <span className="font-bold">
+                        &#9679; Training Resources:
+                      </span>{" "}
+                      Tailored to meet your unique career aspirations and
+                      learning needs, Training Resources offers a curated
+                      library of learning resources covering every occupation in
+                      the AI Impact Index (nearly 4000). Browse hand-picked
+                      courses, articles and tutorials to close critical skill
+                      gaps quickly.
+                      <br />
+                      <span className="font-bold">
+                        &#9679; Resume Builder:
+                      </span>{" "}
+                      Utilising a finely tuned Language Learning Model (LLM)
+                      with a comprehensive occupation-specific knowledge base,
+                      this module assists users in creating resumes that stand
+                      out.
+                      <br />
+                      <span className="font-bold">
+                        &#9679; Firesight Community:
+                      </span>{" "}
+                      Join our dedicated Discord server for networking, peer
+                      support, and professional growth—a vibrant community ideal
+                      for freelancers and solopreneurs.
+                      <br />
+                      <span className="font-bold">
+                        &#9679; Career Advisor Chatbot:
+                      </span>
+                      Also powered by the advanced LLM, this chatbot offers
+                      real-time, personalized career guidance. This AI-driven
+                      counsellor supports users in navigating their career
+                      paths, providing advice on job searches, interview
+                      preparation, and career progression.
                     </p>
                   </div>
                 </div>
