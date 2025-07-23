@@ -11,15 +11,7 @@ type Occupation = {
   ranking?: number;
 };
 
-const fallbackCategories: string[] = [
-  "Default Category 1",
-  "Default Category 2",
-  "Default Category 3",
-  "Default Category 4",
-  "Default Category 5",
-  "Default Category 6",
-  "Default Category 7",
-];
+const fallbackCategories: string[] = [];
 
 const API_URL =
   process.env.NEXT_PUBLIC_API_URL ||
@@ -61,7 +53,7 @@ export default function Page() {
 
     fetchData();
   }, [sortIndex]);
-    console.log(occupations,"fullOccupationsList")
+  console.log(occupations, "fullOccupationsList");
 
   const getSortedOccupationsOrCategories = () => {
     if (sortIndex === 1) {
@@ -103,7 +95,7 @@ export default function Page() {
 
   return (
     <>
-      <div className="w-full lg:my-29 md:mt-9 mt-11 md:mb-13 mb-5 mb-7">
+      <div className="w-full lg:my-29 md:mt-9 mt-11 md:mb-13 mb-7">
         <TabBar
           type={1}
           selectedIndex={sortIndex}
