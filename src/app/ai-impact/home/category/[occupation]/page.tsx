@@ -53,7 +53,12 @@ export default function OccupationPage() {
           a.core_occupation.localeCompare(b.core_occupation)
         );
         break;
-      case 1: // Most Impacted
+      case 1: // Most Impacted (less to greater - ascending order by ranking)
+        sorted = [...filtered].sort(
+          (a, b) => (a?.ranking ?? 0) - (b?.ranking ?? 0)
+        );
+        break;
+      case 2: // Least Impact (greater to less - descending order by ranking)
         sorted = [...filtered].sort(
           (a, b) => (b?.ranking ?? 0) - (a?.ranking ?? 0)
         );
