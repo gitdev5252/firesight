@@ -1,5 +1,5 @@
 .main-box-1 {
-  background-color: #0e111c;
+  background-color: rgb(14, 17, 28);
   border: 1px solid rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(32px) !important;
   border-radius: 20px;
@@ -7,7 +7,7 @@
 }
 
 .main-modal-box {
-  background: rgba(255, 255, 255, 0.02);
+  background: rgba(14, 17, 28, 0.9);
   border: 1px solid rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(32px) !important;
   border-radius: 20px;
@@ -22,7 +22,7 @@
   border-radius: 20px;
   backdrop-filter: blur(100px);
   pointer-events: none;
-  opacity: 0.1;
+  opacity: 0.8;
 }
 .main-modal-box > * {
   position: relative;
