@@ -1588,11 +1588,11 @@ function TabBar({
 }) {
   const tabItems = [
     [
-      "AI Impact Index",
-      "Community",
-      "Training Resources",
-      "Resume Builder",
-      "Career Advisor",
+      // "AI Impact Index",
+      // "Community",
+      // "Training Resources",
+      // "Resume Builder",
+      // "Career Advisor",
     ],
     [
       "Similar Occupations",
