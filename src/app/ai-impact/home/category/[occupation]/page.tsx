@@ -123,7 +123,7 @@ export default function OccupationPage() {
         <div
           // className={`flex flex-col sm:flex-row flex-wrap ${renderedListLength !== 2 ? "md:justify-between" : ""
           //   } lg:gap-y-9 gap-y-5 gap-x-5 text-white font-bold lg:text-2xl text-[16px] leading-normal h-[800px] overflow-y-auto p-[40px] mb-[40px]`}
-          className={`flex flex-col sm:flex-row flex-wrap justify-start gap-x-5 gap-y-7 md:gap-y-9 text-white font-bold lg:text-2xl text-[16px] leading-normal h-[800px] overflow-y-auto p-[40px] mb-[40px]`}
+          className={`flex flex-col sm:flex-row flex-wrap sm:justify-around lg:gap-x-10 md:gap-x-5 gap-x-7 gap-y-7 lg:gap-y-10 md:gap-y-5 text-white font-bold lg:text-2xl text-[16px] leading-normal sm:h-[800px] h-[750px] overflow-y-auto p-[20px] sm:mb-[40px]`}
         >
           {tabIndex === 3 ? (
             // Render categories as links, filtered by searchTerm
