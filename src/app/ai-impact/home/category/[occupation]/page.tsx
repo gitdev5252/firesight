@@ -35,6 +35,7 @@ export default function OccupationPage() {
   const [tabIndex, setTabIndex] = useState(1); // Default to Occupational Categories tab (index 1)
   const { searchTerm } = useContext(SearchContext);
   const fullOccupationsList = [...mainCardInfo]; // Replace with actual list
+  console.log(sortedOccupations);
 
   const handleTabChange = (index: number) => {
     // Allow all tabs to be selected now
@@ -193,4 +194,3 @@ export default function OccupationPage() {
     </div>
   );
 }
-
