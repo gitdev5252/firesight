@@ -18,7 +18,7 @@ const API_URL =
   "https://firesight-backend-3irx.onrender.com";
 
 export default function Page() {
-  const [sortIndex, setSortIndex] = useState(3); // Default to Occupational Categories tab
+  const [sortIndex, setSortIndex] = useState(1); // Default to Occupational Categories tab (index 1)
   const [categories, setCategories] = useState<string[]>(fallbackCategories);
   const [occupations, setOccupations] = useState<Occupation[]>([]);
   const { searchTerm } = useContext(SearchContext);
@@ -26,17 +26,17 @@ export default function Page() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        if (sortIndex === 3) {
-          // Tab 4 → fetch just categories
+        if (sortIndex === 1) {
+          // Occupational Categories → fetch just categories
           const res = await fetch(`${API_URL}/categories`, {
             // cache: "no-store",
           });
           if (!res.ok) throw new Error("Failed to fetch categories");
           const data = await res.json();
           setCategories(data);
-          setOccupations([]); // Clear occupations when on tab 4
+          setOccupations([]); // Clear occupations when on categories tab
         } else {
-          // Tab 1-3 → fetch all occupations
+          // All other tabs (All, Alphabetical, Most Impacted, Least Impacted) → fetch all occupations
           const res = await fetch(`${API_URL}/categories/all-occupations`, {
             // cache: "no-store",
           });
@@ -56,7 +56,8 @@ export default function Page() {
   console.log(occupations, "fullOccupationsList");
 
   const getSortedOccupationsOrCategories = () => {
-    if (sortIndex === 3) {
+    if (sortIndex === 1) {
+      // Occupational Categories
       if (searchTerm.trim() !== "") {
         return categories.filter((cat) =>
           cat.toLowerCase().includes(searchTerm.toLowerCase())
@@ -67,15 +68,17 @@ export default function Page() {
 
     const sorted = [...occupations];
     switch (sortIndex) {
-      case 0: // Alphabetical
+      case 0: // All (no sorting, just return as is)
+        break;
+      case 2: // Alphabetical
         sorted.sort((a, b) =>
           a.core_occupation.localeCompare(b.core_occupation)
         );
         break;
-      case 1: // Most Impacted (#1 to #4000)
+      case 3: // Most Impacted (#1 to #4000)
         sorted.sort((a, b) => (a.ranking ?? 0) - (b.ranking ?? 0));
         break;
-      case 2: // Least Impacted (#4000 to #1)
+      case 4: // Least Impacted (#4000 to #1)
         sorted.sort((a, b) => (b.ranking ?? 0) - (a.ranking ?? 0));
         break;
       default:
@@ -101,15 +104,7 @@ export default function Page() {
         />
       </div>
       <CategoryList
-        categories={
-          sortIndex === 3
-            ? searchTerm.trim() !== ""
-              ? categories.filter((cat) =>
-                  cat.toLowerCase().includes(searchTerm.toLowerCase())
-                )
-              : categories
-            : getSortedOccupationsOrCategories()
-        }
+        categories={getSortedOccupationsOrCategories()}
       />
     </>
   );

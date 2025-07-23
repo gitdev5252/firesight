@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 
 import "./page.css";
 import { motion } from "framer-motion";
-import { useEffect, useRef, useState, createContext } from "react";
+import React, { useEffect, useRef, useState, createContext } from "react";
 // import { usePathname } from "next/navigation";
 import Link from "next/link";
 import AIImpactFooter from "@/layouts/AIImpactFooter";
@@ -12,7 +12,7 @@ import AIImpactFooter from "@/layouts/AIImpactFooter";
 export const SearchContext = createContext<{
   searchTerm: string;
   setSearchTerm: (v: string) => void;
-}>({ searchTerm: "", setSearchTerm: () => {} });
+}>({ searchTerm: "", setSearchTerm: () => { } });
 
 export default function Page({
   children,
@@ -304,11 +304,13 @@ export function TabBar({
   onSortChange,
   selectedIndex,
   onTabChange,
+  disabledTabs = [],
 }: {
   type: number;
   onSortChange?: (index: number) => void;
   selectedIndex?: number;
   onTabChange?: (index: number) => void;
+  disabledTabs?: number[];
 }) {
   const tabItems = [
     [
@@ -319,10 +321,11 @@ export function TabBar({
       "Career Advisor",
     ],
     [
+      "All",
+      "Occupational Categories",
       "Alphabetical",
       "Most Impacted",
       "Least Impacted",
-      "Occupational Categories",
     ],
   ];
 
@@ -362,40 +365,49 @@ export function TabBar({
     >
       <motion.div
         ref={contentRef}
-        className={`cursor-grab flex justify-start sm:px-0 px-14 box-border w-full ${
-          type ? " lg:pr-[16vw] lg:gap-15 gap-11" : " gap-10"
-        }`}
+        className={`cursor-grab flex justify-start sm:px-0 px-14 box-border w-full ${type ? " lg:pr-[16vw] lg:gap-15 gap-11" : " gap-10"
+          }`}
         drag="x"
         dragConstraints={constraints}
         dragElastic={0.1}
       >
         {tabItems[type].map((ele, index) => (
-          <div
-            key={ele}
-            className={
-              ((type == 0 ? curItem : selectedIndex ?? 3) === index
-                ? "text-white font-bold "
-                : "text-[#fff] opacity-25 ") +
-              "lg:text-[18px] md:text-[13px] text-[12px] pt-4 flex flex-col items-center gap-4 lg:h-[63px] h-[55px]"
-            }
-            onClick={() => {
-              if (type) {
-                onTabChange?.(index);
-                onSortChange?.(index);
-              } else {
-                setCurItem(index);
-              }
-            }}
-          >
-            <p className="text-center w-full flex text-nowrap">{ele}</p>
+          <React.Fragment key={index}>
             <div
+              key={ele}
               className={
-                (type == 3 ? curItem : selectedIndex ?? 3) === index
-                  ? "w-full h-1 !bg-[#E93249]"
-                  : ""
+                ((type == 0 ? curItem : selectedIndex ?? 3) === index
+                  ? "text-white font-bold "
+                  : "text-[#fff] opacity-25 ") +
+                "lg:text-[18px] md:text-[13px] text-[12px] pt-4 flex flex-col items-center gap-4 lg:h-[63px] h-[55px]" +
+                (disabledTabs.includes(index) ? " cursor-not-allowed opacity-10" : " cursor-pointer")
               }
-            ></div>
-          </div>
+              onClick={() => {
+                if (disabledTabs.includes(index)) return; // Don't allow clicks on disabled tabs
+                if (type) {
+                  onTabChange?.(index);
+                  onSortChange?.(index);
+                } else {
+                  setCurItem(index);
+                }
+              }}
+            >
+              <p className="text-center w-full flex text-nowrap">{ele}</p>
+              <div
+                className={
+                  (type == 3 ? curItem : selectedIndex ?? 3) === index
+                    ? "w-full h-1 !bg-[#E93249]"
+                    : ""
+                }
+              ></div>
+            </div>
+            {/* Add divider after "All" tab */}
+            {type === 1 && index === 1 && (
+              <div className="flex items-center justify-center lg:h-[63px] h-[55px] pt-4">
+                <div className="w-[1px] h-10 mb-5 bg-[#ffffff1a]"></div>
+              </div>
+            )}
+          </React.Fragment>
         ))}
       </motion.div>
     </div>

@@ -32,12 +32,15 @@ export default function OccupationPage() {
   } = useGetOccupationsByCategoryQuery(occupation);
   const { data: occupations = [] } = useGetAllCategoriesQuery();
   const [sortedOccupations, setSortedOccupations] = useState<Occupation[]>([]);
-  const [tabIndex, setTabIndex] = useState(3); // Default to Occupational Categories tab
+  const [tabIndex, setTabIndex] = useState(1); // Default to Occupational Categories tab (index 1)
   const { searchTerm } = useContext(SearchContext);
   const fullOccupationsList = [...mainCardInfo]; // Replace with actual list
 
   const handleTabChange = (index: number) => {
-    setTabIndex(index);
+    // Only allow Occupational Categories tab (index 1) to be selected
+    if (index === 1) {
+      setTabIndex(index);
+    }
   };
   useEffect(() => {
     let filtered = fullOccupationsList;
@@ -48,12 +51,23 @@ export default function OccupationPage() {
     }
     let sorted: Occupation[] = [];
     switch (tabIndex) {
-      case 0: // Alphabetical
+      case 0: // All (no sorting, just return as is)
+        sorted = [...filtered];
+        break;
+      case 1: // Occupational Categories - this will be handled separately
+        sorted = [];
+        break;
+      case 2: // Alphabetical
         sorted = [...filtered].sort((a, b) =>
           a.core_occupation.localeCompare(b.core_occupation)
         );
         break;
-      case 1: // Most Impacted
+      case 3: // Most Impacted (less to greater - ascending order by ranking)
+        sorted = [...filtered].sort(
+          (a, b) => (a?.ranking ?? 0) - (b?.ranking ?? 0)
+        );
+        break;
+      case 4: // Least Impact (greater to less - descending order by ranking)
         sorted = [...filtered].sort(
           (a, b) => (a?.ranking ?? 0) - (b?.ranking ?? 0)
         );
@@ -63,14 +77,13 @@ export default function OccupationPage() {
           (a, b) => (b?.ranking ?? 0) - (a?.ranking ?? 0)
         );
         break;
-      case 3: // Categories (optional or no sort)
       default:
         sorted = [];
     }
     setSortedOccupations(sorted);
   }, [mainCardInfo, searchTerm, tabIndex]);
   useEffect(() => {
-    setTabIndex(3);
+    setTabIndex(1); // Always set to Occupational Categories tab
   }, [occupation]);
   // const filteredCategories =
   //   searchTerm.trim() === ""
@@ -104,6 +117,7 @@ export default function OccupationPage() {
           selectedIndex={tabIndex}
           onTabChange={handleTabChange}
           onSortChange={handleTabChange}
+          disabledTabs={[0, 2, 3, 4]} // Disable All, Alphabetical, Most Impacted, Least Impacted
         />
       </div>
 
@@ -125,7 +139,7 @@ export default function OccupationPage() {
           //   } lg:gap-y-9 gap-y-5 gap-x-5 text-white font-bold lg:text-2xl text-[16px] leading-normal h-[800px] overflow-y-auto p-[40px] mb-[40px]`}
           className={`flex flex-col sm:flex-row flex-wrap sm:justify-around lg:gap-x-10 md:gap-x-5 gap-x-7 gap-y-7 lg:gap-y-10 md:gap-y-5 text-white font-bold lg:text-2xl text-[16px] leading-normal sm:h-[800px] h-[750px] overflow-y-auto p-[20px] sm:mb-[40px]`}
         >
-          {tabIndex === 3 ? (
+          {tabIndex === 1 ? (
             // Render categories as links, filtered by searchTerm
             (() => {
               const filteredCategories =
@@ -149,36 +163,10 @@ export default function OccupationPage() {
                 ))
               );
             })()
-          ) : mainCardInfo.length === 0 ? (
-            <p className="text-white">No data found for this occupation.</p>
-          ) : (
-            sortedOccupations.map((ele) => (
-              <Link
-                key={ele.id}
-                href={`/ai-impact/${encodeURIComponent(ele.core_occupation)}`}
-                className="main-small-box-1 flex flex-col items-center justify-center lg:h-90 md:h-54 h-79 md:w-[31%] sm:w-[48.5%] w-full"
-              >
-                <div className="color-pattern-bg-1"></div>
-                <p className="text-center mx-6">{ele.core_occupation}</p>
-                <div className="absolute flex items-center justify-center lg:bottom-[21px] lg:right-[22px] md:bottom-3 md:right-3 right-5 bottom-4 lg:w-[106px] lg:h-[49px] w-[63px] h-[29px] rounded-full overflow-hidden">
-                  <Image
-                    src={`/images/tag-back-${Math.floor(
-                      (ele.ranking ?? 0) / 1000
-                    )}.svg`}
-                    alt=""
-                    fill
-                    className="object-cover"
-                    priority
-                  />
-                  <span className="relative z-10 font-bold text-white">
-                    #{ele.ranking}
-                  </span>
-                </div>
-              </Link>
-            ))
-          )}
+          ) : null}
         </div>
       )}
     </div>
   );
 }
+
