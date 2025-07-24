@@ -108,7 +108,6 @@ export default function OccupationPage() {
           filterTabIndex={tabIndex}
           onMainTabChange={handleTabChange}
           onFilterTabChange={handleTabChange}
-          disabledTabs={[0, 2, 3, 4]}
         />
       </div>
 
