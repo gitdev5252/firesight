@@ -31,54 +31,46 @@ export default function OccupationPage() {
     error,
   } = useGetOccupationsByCategoryQuery(occupation);
   const { data: occupations = [] } = useGetAllCategoriesQuery();
-  const [sortedOccupations, setSortedOccupations] = useState<Occupation[]>([]);
-  const [tabIndex, setTabIndex] = useState(1); // Default to Occupational Categories tab (index 1)
+  // mainTabIndex: 0 = All, 1 = Occupational Categories
+  // filterTabIndex: 1 = Most Impacted, 2 = Least Impacted, 3 = Alphabetical
+  const [mainTabIndex, setMainTabIndex] = useState(0); // Default to All
+  const [filterTabIndex, setFilterTabIndex] = useState(1); // Default to Most Impacted
   const { searchTerm } = useContext(SearchContext);
   const fullOccupationsList = [...mainCardInfo]; // Replace with actual list
-  console.log(sortedOccupations);
 
-  const handleTabChange = (index: number) => {
-    // Allow all tabs to be selected now
-    setTabIndex(index);
+  // TabBar handlers
+  const handleMainTabChange = (index: number) => {
+    setMainTabIndex(index);
+    setFilterTabIndex(1); // Reset filter to Most Impacted when main tab changes
   };
-  useEffect(() => {
+  const handleFilterTabChange = (index: number) => {
+    setFilterTabIndex(index);
+  };
+
+  // Get sorted occupations for selected category
+  const getSortedOccupations = () => {
     let filtered = fullOccupationsList;
     if (searchTerm.trim() !== "") {
       filtered = filtered.filter((occ) =>
         occ.core_occupation.toLowerCase().includes(searchTerm.toLowerCase())
       );
     }
-    let sorted: Occupation[] = [];
-    switch (tabIndex) {
-      case 0: // All (no sorting, just return as is)
-        sorted = [...filtered];
-        break;
-      case 1: // Occupational Categories - this will be handled separately
-        sorted = [];
-        break;
-      case 2: // Most Impacted (less to greater - ascending order by ranking)
-        sorted = [...filtered].sort(
-          (a, b) => (a?.ranking ?? 0) - (b?.ranking ?? 0)
-        );
-        break;
-      case 3: // Least Impact (greater to less - descending order by ranking)
-        sorted = [...filtered].sort(
-          (a, b) => (a?.ranking ?? 0) - (b?.ranking ?? 0)
-        );
-        break;
-      case 2: // Most Impacted
-        sorted = [...filtered].sort(
-          (a, b) => (b?.ranking ?? 0) - (a?.ranking ?? 0)
-        );
-        break;
-      case 4: // Alphabetical
-        sorted = [...filtered].sort((a, b) =>
-          a.core_occupation.localeCompare(b.core_occupation)
-        );
-        break;
-      default:
-        sorted = [];
+    let sorted: Occupation[] = [...filtered];
+    if (filterTabIndex === 1) {
+      // Most Impacted
+      sorted.sort((a, b) => (a.ranking ?? 0) - (b.ranking ?? 0));
+    } else if (filterTabIndex === 2) {
+      // Least Impacted
+      sorted.sort((a, b) => (b.ranking ?? 0) - (a.ranking ?? 0));
+    } else if (filterTabIndex === 3) {
+      // Alphabetical
+      sorted.sort((a, b) =>
+        a.core_occupation.localeCompare(b.core_occupation)
+      );
     }
+    return sorted;
+  };
+
     setSortedOccupations(sorted);
   }, [mainCardInfo, searchTerm, tabIndex]);
   useEffect(() => {
@@ -104,10 +96,11 @@ export default function OccupationPage() {
       <div className="w-full my-0">
         <TabBar
           type={1}
-          mainTabIndex={tabIndex}
-          filterTabIndex={tabIndex}
-          onMainTabChange={handleTabChange}
-          onFilterTabChange={handleTabChange}
+          mainTabIndex={mainTabIndex}
+          filterTabIndex={filterTabIndex}
+          onMainTabChange={handleMainTabChange}
+          onFilterTabChange={handleFilterTabChange}
+
         />
       </div>
 
@@ -129,34 +122,11 @@ export default function OccupationPage() {
           //   } lg:gap-y-9 gap-y-5 gap-x-5 text-white font-bold lg:text-2xl text-[16px] leading-normal h-[800px] overflow-y-auto p-[40px] mb-[40px]`}
           className={`flex flex-col sm:flex-row flex-wrap sm:justify-around lg:gap-x-10 md:gap-x-5 gap-x-7 gap-y-7 lg:gap-y-10 md:gap-y-5 text-white font-bold lg:text-2xl text-[16px] leading-normal sm:h-[800px] h-[750px] overflow-y-auto p-[20px] sm:mb-[40px]`}
         >
-          {tabIndex === 1 ? (
-            // Render categories as links, filtered by searchTerm
-            (() => {
-              const filteredCategories =
-                searchTerm.trim() === ""
-                  ? occupations
-                  : occupations.filter((cat) =>
-                      cat.toLowerCase().includes(searchTerm.toLowerCase())
-                    );
-              return filteredCategories.length === 0 ? (
-                <p className="text-white">No categories found.</p>
-              ) : (
-                filteredCategories.map((cat) => (
-                  <Link
-                    key={cat}
-                    href={`/ai-impact/home/category/${encodeURIComponent(cat)}`}
-                    className="main-small-box-1 flex items-center justify-center lg:h-90 md:h-54 h-79 md:w-[31%] sm:w-[48.5%] w-full cursor-pointer"
-                  >
-                    <div className="color-pattern-bg-1"></div>
-                    <p className="text-center mx-6">{cat}</p>
-                  </Link>
-                ))
-              );
-            })()
-          ) : mainCardInfo.length === 0 ? (
+          {/* Always show occupations for selected category, filter and sort as needed */}
+          {mainCardInfo.length === 0 ? (
             <p className="text-white">No data found for this occupation.</p>
           ) : (
-            sortedOccupations.map((ele) => (
+            getSortedOccupations().map((ele) => (
               <Link
                 key={ele.id}
                 href={`/ai-impact/${encodeURIComponent(ele.core_occupation)}`}
