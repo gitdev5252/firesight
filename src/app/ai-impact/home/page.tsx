@@ -69,7 +69,7 @@ export default function Page() {
     }
 
     // For All tab and filter tabs, use occupations data
-    let sorted = [...occupations];
+    const sorted = [...occupations];
     if (filterTabIndex === 1) {
       // Most Impacted
       sorted.sort((a, b) => (a.ranking ?? 0) - (b.ranking ?? 0));
@@ -78,9 +78,7 @@ export default function Page() {
       sorted.sort((a, b) => (b.ranking ?? 0) - (a.ranking ?? 0));
     } else if (filterTabIndex === 3) {
       // Alphabetical
-      sorted.sort((a, b) =>
-        a.core_occupation.localeCompare(b.core_occupation)
-      );
+      sorted.sort((a, b) => a.core_occupation.localeCompare(b.core_occupation));
     }
     // Filter by search term
     if (searchTerm.trim() !== "") {
@@ -103,9 +101,7 @@ export default function Page() {
           onFilterTabChange={setFilterTabIndex}
         />
       </div>
-      <CategoryList
-        categories={getSortedOccupationsOrCategories()}
-      />
+      <CategoryList categories={getSortedOccupationsOrCategories()} />
     </>
   );
 }
