@@ -4,13 +4,10 @@ import { useParams } from "next/navigation";
 import { TabBar } from "../../layout";
 import Image from "next/image";
 import Link from "next/link";
-import {
-  useGetAllCategoriesQuery,
-  useGetOccupationsByCategoryQuery,
-} from "@/store/api/occupationApi";
+import { useGetOccupationsByCategoryQuery } from "@/store/api/occupationApi";
 
 import "../../page.css";
-import { useEffect, useState, useContext } from "react";
+import { useState, useContext } from "react";
 import { SearchContext } from "../../layout";
 import { Occupation } from "@/types/occupation";
 
@@ -30,7 +27,6 @@ export default function OccupationPage() {
     isLoading,
     error,
   } = useGetOccupationsByCategoryQuery(occupation);
-  const { data: occupations = [] } = useGetAllCategoriesQuery();
   // mainTabIndex: 0 = All, 1 = Occupational Categories
   // filterTabIndex: 1 = Most Impacted, 2 = Least Impacted, 3 = Alphabetical
   const [mainTabIndex, setMainTabIndex] = useState(0); // Default to All
@@ -55,7 +51,7 @@ export default function OccupationPage() {
         occ.core_occupation.toLowerCase().includes(searchTerm.toLowerCase())
       );
     }
-    let sorted: Occupation[] = [...filtered];
+    const sorted: Occupation[] = [...filtered];
     if (filterTabIndex === 1) {
       // Most Impacted
       sorted.sort((a, b) => (a.ranking ?? 0) - (b.ranking ?? 0));
