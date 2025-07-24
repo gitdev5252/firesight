@@ -18,7 +18,10 @@ const API_URL =
   "https://firesight-backend-3irx.onrender.com";
 
 export default function Page() {
-  const [sortIndex, setSortIndex] = useState(1); // Default to Occupational Categories tab (index 1)
+  // mainTabIndex: 0 = All, 1 = Occupational Categories
+  // filterTabIndex: 0 = None, 1 = Most Impacted, 2 = Least Impacted, 3 = Alphabetical
+  const [mainTabIndex, setMainTabIndex] = useState(0); // Default to All
+  const [filterTabIndex, setFilterTabIndex] = useState(1); // Default to Most Impacted
   const [categories, setCategories] = useState<string[]>(fallbackCategories);
   const [occupations, setOccupations] = useState<Occupation[]>([]);
   const { searchTerm } = useContext(SearchContext);
@@ -26,7 +29,7 @@ export default function Page() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        if (sortIndex === 1) {
+        if (mainTabIndex === 1) {
           // Occupational Categories → fetch just categories
           const res = await fetch(`${API_URL}/categories`, {
             // cache: "no-store",
@@ -36,7 +39,7 @@ export default function Page() {
           setCategories(data);
           setOccupations([]); // Clear occupations when on categories tab
         } else {
-          // All other tabs (All, Alphabetical, Most Impacted, Least Impacted) → fetch all occupations
+          // All and filter tabs → fetch all occupations
           const res = await fetch(`${API_URL}/categories/all-occupations`, {
             // cache: "no-store",
           });
@@ -50,14 +53,13 @@ export default function Page() {
         setCategories(fallbackCategories);
       }
     };
-
     fetchData();
-  }, [sortIndex]);
+  }, [mainTabIndex]);
   console.log(occupations, "fullOccupationsList");
 
   const getSortedOccupationsOrCategories = () => {
-    if (sortIndex === 1) {
-      // Occupational Categories
+    // If Occupational Categories tab is active
+    if (mainTabIndex === 1) {
       if (searchTerm.trim() !== "") {
         return categories.filter((cat) =>
           cat.toLowerCase().includes(searchTerm.toLowerCase())
@@ -66,23 +68,19 @@ export default function Page() {
       return categories;
     }
 
-    const sorted = [...occupations];
-    switch (sortIndex) {
-      case 0: // All (no sorting, just return as is)
-        break;
-      case 2: // Most Impacted (#1 to #4000)
-        sorted.sort((a, b) => (a.ranking ?? 0) - (b.ranking ?? 0));
-        break;
-      case 3: // Least Impacted (#4000 to #1)
-        sorted.sort((a, b) => (b.ranking ?? 0) - (a.ranking ?? 0));
-        break;
-      case 4: // Alphabetical
-        sorted.sort((a, b) =>
-          a.core_occupation.localeCompare(b.core_occupation)
-        );
-        break;
-      default:
-        break;
+    // For All tab and filter tabs, use occupations data
+    let sorted = [...occupations];
+    if (filterTabIndex === 1) {
+      // Most Impacted
+      sorted.sort((a, b) => (a.ranking ?? 0) - (b.ranking ?? 0));
+    } else if (filterTabIndex === 2) {
+      // Least Impacted
+      sorted.sort((a, b) => (b.ranking ?? 0) - (a.ranking ?? 0));
+    } else if (filterTabIndex === 3) {
+      // Alphabetical
+      sorted.sort((a, b) =>
+        a.core_occupation.localeCompare(b.core_occupation)
+      );
     }
     // Filter by search term
     if (searchTerm.trim() !== "") {
@@ -96,11 +94,13 @@ export default function Page() {
   return (
     <>
       <div className="w-full lg:my-29 md:mt-9 mt-11 md:mb-13 mb-7">
+        {/* Pass both active indices and handlers to TabBar */}
         <TabBar
           type={1}
-          selectedIndex={sortIndex}
-          onTabChange={setSortIndex}
-          onSortChange={setSortIndex}
+          mainTabIndex={mainTabIndex}
+          filterTabIndex={filterTabIndex}
+          onMainTabChange={setMainTabIndex}
+          onFilterTabChange={setFilterTabIndex}
         />
       </div>
       <CategoryList

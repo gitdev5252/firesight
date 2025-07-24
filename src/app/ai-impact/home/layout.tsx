@@ -301,15 +301,17 @@ export default function Page({
 
 export function TabBar({
   type,
-  onSortChange,
-  selectedIndex,
-  onTabChange,
+  mainTabIndex,
+  filterTabIndex,
+  onMainTabChange,
+  onFilterTabChange,
   disabledTabs = [],
 }: {
   type: number;
-  onSortChange?: (index: number) => void;
-  selectedIndex?: number;
-  onTabChange?: (index: number) => void;
+  mainTabIndex?: number;
+  filterTabIndex?: number;
+  onMainTabChange?: (index: number) => void;
+  onFilterTabChange?: (index: number) => void;
   disabledTabs?: number[];
 }) {
   const tabItems = [
@@ -376,26 +378,28 @@ export function TabBar({
             <div
               key={ele}
               className={
-                ((type == 0 ? curItem : selectedIndex ?? 3) === index
+                // Main tabs (0, 1) use mainTabIndex, filter tabs (2, 3, 4) use filterTabIndex
+                ((index <= 1 && mainTabIndex === index) || (index > 1 && filterTabIndex === index - 1)
                   ? "text-white font-bold "
                   : "text-[#fff] opacity-25 ") +
                 "lg:text-[18px] md:text-[13px] text-[12px] pt-4 flex flex-col items-center gap-4 lg:h-[63px] h-[55px]" +
                 (disabledTabs.includes(index) ? " cursor-not-allowed opacity-10" : " cursor-pointer")
               }
               onClick={() => {
-                if (disabledTabs.includes(index)) return; // Don't allow clicks on disabled tabs
-                if (type) {
-                  onTabChange?.(index);
-                  onSortChange?.(index);
+                if (disabledTabs.includes(index)) return;
+                if (index <= 1) {
+                  onMainTabChange?.(index);
+                  // Reset filter tab when main tab changes
+                  onFilterTabChange?.(0);
                 } else {
-                  setCurItem(index);
+                  onFilterTabChange?.(index - 1);
                 }
               }}
             >
               <p className="text-center w-full flex text-nowrap">{ele}</p>
               <div
                 className={
-                  (type == 3 ? curItem : selectedIndex ?? 3) === index
+                  ((index <= 1 && mainTabIndex === index) || (index > 1 && filterTabIndex === index - 1))
                     ? "w-full h-1 !bg-[#E93249]"
                     : ""
                 }
