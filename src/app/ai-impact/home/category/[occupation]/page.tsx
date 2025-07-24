@@ -29,7 +29,7 @@ export default function OccupationPage() {
   } = useGetOccupationsByCategoryQuery(occupation);
   // mainTabIndex: 0 = All, 1 = Occupational Categories
   // filterTabIndex: 1 = Most Impacted, 2 = Least Impacted, 3 = Alphabetical
-  const [mainTabIndex, setMainTabIndex] = useState(0); // Default to All
+  const [mainTabIndex, setMainTabIndex] = useState(1); // Default to Occupational Categories
   const [filterTabIndex, setFilterTabIndex] = useState(1); // Default to Most Impacted
   const { searchTerm } = useContext(SearchContext);
   const fullOccupationsList = [...mainCardInfo]; // Replace with actual list
