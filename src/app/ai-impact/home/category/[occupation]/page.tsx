@@ -64,18 +64,16 @@ export default function OccupationPage() {
       sorted.sort((a, b) => (b.ranking ?? 0) - (a.ranking ?? 0));
     } else if (filterTabIndex === 3) {
       // Alphabetical
-      sorted.sort((a, b) =>
-        a.core_occupation.localeCompare(b.core_occupation)
-      );
+      sorted.sort((a, b) => a.core_occupation.localeCompare(b.core_occupation));
     }
     return sorted;
   };
 
-    setSortedOccupations(sorted);
-  }, [mainCardInfo, searchTerm, tabIndex]);
-  useEffect(() => {
-    setTabIndex(1); // Always set to Occupational Categories tab
-  }, [occupation]);
+  //   setSortedOccupations(sorted);
+  // }, [mainCardInfo, searchTerm, tabIndex]);
+  // useEffect(() => {
+  //   setTabIndex(1); // Always set to Occupational Categories tab
+  // }, [occupation]);
   return (
     <div>
       {/* Back to AI Impact Home */}
@@ -100,7 +98,6 @@ export default function OccupationPage() {
           filterTabIndex={filterTabIndex}
           onMainTabChange={handleMainTabChange}
           onFilterTabChange={handleFilterTabChange}
-
         />
       </div>
 
