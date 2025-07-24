@@ -104,9 +104,11 @@ export default function OccupationPage() {
       <div className="w-full my-0">
         <TabBar
           type={1}
-          selectedIndex={tabIndex}
-          onTabChange={handleTabChange}
-          onSortChange={handleTabChange}
+          mainTabIndex={tabIndex}
+          filterTabIndex={tabIndex}
+          onMainTabChange={handleTabChange}
+          onFilterTabChange={handleTabChange}
+          disabledTabs={[0, 2, 3, 4]}
         />
       </div>
 
