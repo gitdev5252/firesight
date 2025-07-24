@@ -12,7 +12,7 @@ import AIImpactFooter from "@/layouts/AIImpactFooter";
 export const SearchContext = createContext<{
   searchTerm: string;
   setSearchTerm: (v: string) => void;
-}>({ searchTerm: "", setSearchTerm: () => { } });
+}>({ searchTerm: "", setSearchTerm: () => {} });
 
 export default function Page({
   children,
@@ -331,7 +331,6 @@ export function TabBar({
     ],
   ];
 
-  const [curItem, setCurItem] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const [constraints, setConstraints] = useState({ left: 0, right: 0 });
@@ -367,8 +366,9 @@ export function TabBar({
     >
       <motion.div
         ref={contentRef}
-        className={`cursor-grab flex justify-start sm:px-0 px-14 box-border w-full ${type ? " lg:pr-[16vw] lg:gap-15 gap-11" : " gap-10"
-          }`}
+        className={`cursor-grab flex justify-start sm:px-0 px-14 box-border w-full ${
+          type ? " lg:pr-[16vw] lg:gap-15 gap-11" : " gap-10"
+        }`}
         drag="x"
         dragConstraints={constraints}
         dragElastic={0.1}
@@ -379,11 +379,14 @@ export function TabBar({
               key={ele}
               className={
                 // Main tabs (0, 1) use mainTabIndex, filter tabs (2, 3, 4) use filterTabIndex
-                ((index <= 1 && mainTabIndex === index) || (index > 1 && filterTabIndex === index - 1)
+                ((index <= 1 && mainTabIndex === index) ||
+                (index > 1 && filterTabIndex === index - 1)
                   ? "text-white font-bold "
                   : "text-[#fff] opacity-25 ") +
                 "lg:text-[18px] md:text-[13px] text-[12px] pt-4 flex flex-col items-center gap-4 lg:h-[63px] h-[55px]" +
-                (disabledTabs.includes(index) ? " cursor-not-allowed opacity-10" : " cursor-pointer")
+                (disabledTabs.includes(index)
+                  ? " cursor-not-allowed opacity-10"
+                  : " cursor-pointer")
               }
               onClick={() => {
                 if (disabledTabs.includes(index)) return;
@@ -399,7 +402,8 @@ export function TabBar({
               <p className="text-center w-full flex text-nowrap">{ele}</p>
               <div
                 className={
-                  ((index <= 1 && mainTabIndex === index) || (index > 1 && filterTabIndex === index - 1))
+                  (index <= 1 && mainTabIndex === index) ||
+                  (index > 1 && filterTabIndex === index - 1)
                     ? "w-full h-1 !bg-[#E93249]"
                     : ""
                 }
