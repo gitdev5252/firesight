@@ -101,6 +101,7 @@ export default function Page() {
           onFilterTabChange={setFilterTabIndex}
         />
       </div>
+      {/* Component */}
       <CategoryList categories={getSortedOccupationsOrCategories()} />
     </>
   );
