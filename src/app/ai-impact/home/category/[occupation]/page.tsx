@@ -84,15 +84,6 @@ export default function OccupationPage() {
   useEffect(() => {
     setTabIndex(1); // Always set to Occupational Categories tab
   }, [occupation]);
-  // const filteredCategories =
-  //   searchTerm.trim() === ""
-  //     ? occupations
-  //     : occupations.filter((cat) =>
-  //         cat.toLowerCase().includes(searchTerm.toLowerCase())
-  //       );
-  // const renderedListLength =
-  //   tabIndex === 3 ? filteredCategories.length : sortedOccupations.length;
-
   return (
     <div>
       {/* Back to AI Impact Home */}
