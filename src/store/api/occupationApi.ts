@@ -95,9 +95,25 @@ export const occupationApi = baseApi.injectEndpoints({
       query: () => '/categories',
       providesTags: [{ type: 'Category', id: 'LIST' }],
     }),
-    
+    // Get Constitutional Occupations
+    getConstitutionalOccupationsByName: builder.query<
+      {
+        id: string;
+        category: string;
+        occupation: string;
+        constituents: string[];
+      },
+      string
+    >({
+      query: (name: string) =>
+        `/categories/occupation-constituents?occupation=${encodeURIComponent(name)}`,
+      providesTags: (result, error, name) => [
+        { type: 'Occupation', id: `related-${name}` },
+      ],
+    }),
+
   }),
-  
+
 
 
 });
@@ -112,5 +128,6 @@ export const {
   useGetOccupationByNameQuery,
   useGetRelatedOccupationsByNameQuery,
   useGetOccupationTaskByNameQuery,
-  useGetAllCategoriesQuery, 
-} = occupationApi; 
+  useGetAllCategoriesQuery,
+  useGetConstitutionalOccupationsByNameQuery
+} = occupationApi;

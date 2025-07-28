@@ -11,6 +11,7 @@ import {
   useGetOccupationByNameQuery,
   useGetRelatedOccupationsByNameQuery,
   useGetOccupationTaskByNameQuery,
+  useGetConstitutionalOccupationsByNameQuery,
 } from "@/store/api/occupationApi";
 
 import "../home/page.css";
@@ -58,9 +59,12 @@ export default function Page() {
     useGetRelatedOccupationsByNameQuery(occupation);
   const { data: taskData, isLoading: isTaskLoading } =
     useGetOccupationTaskByNameQuery(occupation);
+  const { data: constituents, isLoading: isConstituentsLoading } =
+    useGetConstitutionalOccupationsByNameQuery(occupation);
 
   // Related occupations & pagination
-  const relatedOccupations = categoryData?.relatedOccupations || [];
+  const relatedOccupations = constituents?.constituents || [];
+  console.log(relatedOccupations,"relatedOccupations")
   const totalSlides = Math.ceil(relatedOccupations.length / itemsPerSlide);
   // Responsive occupationsPerSlide
   const [occupationsPerSlide, setOccupationsPerSlide] = useState(3);
@@ -532,13 +536,18 @@ export default function Page() {
                 >
                   <div className="sm:w-full w-auto -mx-[50px] sm:mx-0">
                     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-2 gap-y-4 px-4 sm:px-0">
+                      {isConstituentsLoading && (
+                        <div className="col-span-4 flex items-center justify-center">
+                          Loading...
+                        </div>
+                      )}
                       {itemsToShow.map((occ, index) => (
                         <div
                           key={index}
                           className="flex items-center justify-center rounded-[50px] border border-[rgba(255,255,255,0.25)] bg-[rgba(255,255,255,0.04)] h-[45px] min-w-[90px] px-2 sm:min-w-[120px] sm:px-4 w-auto"
                         >
                           <span className="font-semibold text-center w-full block break-words whitespace-normal text-[12px] sm:text-[14px]">
-                            {occ.core_occupation}
+                            {occ?.core_occupation ?? occ}
                           </span>
                         </div>
                       ))}
