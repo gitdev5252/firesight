@@ -9,6 +9,7 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import {
   useGetOccupationByNameQuery,
+  useGetRelatedOccupationsByNameQuery,
   useGetOccupationTaskByNameQuery,
   useGetConstitutionalOccupationsByNameQuery,
 } from "@/store/api/occupationApi";
@@ -35,6 +36,10 @@ export default function Page() {
   const [occupationTab, setOccupationTab] = useState(0);
   const oecBtnRef = useRef<HTMLDivElement>(null);
 
+  const isMobile = useIsMobile();
+  const itemsPerPage = isMobile ? 4 : 8;
+  const itemsPerPageBottom = isMobile ? 2 : 3;
+
   const handleOECModalOpen = () => {
     setModalOpenOEC(true);
   };
@@ -54,23 +59,17 @@ export default function Page() {
   const taskProgress = [50, 0, 100, 0];
 
   const { data: impactData } = useGetOccupationByNameQuery(occupation);
+  const { data: categoryData } =
+    useGetRelatedOccupationsByNameQuery(occupation);
   const { data: taskData, isLoading: isTaskLoading } =
     useGetOccupationTaskByNameQuery(occupation);
-  const {
-    data: constituents,
-    isLoading: isConstituentsLoading,
-    error: constituentsError,
-  } = useGetConstitutionalOccupationsByNameQuery(occupation);
+  const { data: constituents, isLoading: isConstituentsLoading } =
+    useGetConstitutionalOccupationsByNameQuery(occupation);
 
   // Related occupations & pagination
-
-  const relatedOccupationsRaw = constituents?.constituents;
-  const relatedOccupations = Array.isArray(relatedOccupationsRaw)
-    ? relatedOccupationsRaw
-    : typeof relatedOccupationsRaw === "string"
-    ? JSON.parse(relatedOccupationsRaw)
-    : [];
-  console.log(relatedOccupations, "relatedOccupations");
+  // const constitutentRelatedOccupations = constituents?.constituents || [];
+  const relatedOccupations = categoryData?.relatedOccupations || [];
+  console.log(taskData, "relatedOccupations")
   const totalSlides = Math.ceil(relatedOccupations.length / itemsPerSlide);
   // Responsive occupationsPerSlide
   const [occupationsPerSlide, setOccupationsPerSlide] = useState(3);
@@ -96,6 +95,7 @@ export default function Page() {
 
   const [[page1, direction1], setPage1] = useState([0, 0]);
   const [[page2, direction2], setPage2] = useState([0, 0]);
+  const [[constituentPage, constituentDirection], setConstituentPage] = useState([0, 0]);
 
   const paginate1 = (newDirection: number) => {
     setPage1(([prevPage]) => {
@@ -111,7 +111,28 @@ export default function Page() {
       return [newPage, newDirection];
     });
   };
-  const sortedOccupations = relatedOccupations;
+  const paginateConstituents = (newDirection: number) => {
+    setConstituentPage(([prevPage]) => {
+      const newPage =
+        (prevPage + newDirection + totalConstituentSlides) %
+        totalConstituentSlides;
+      return [newPage, newDirection];
+    });
+  };
+  const constituentOccupations = constituents?.constituents || [];
+  const totalConstituentSlides = Math.ceil(constituentOccupations.length / itemsPerPage);
+
+  const constituentItemsToShow = constituentOccupations.slice(
+    constituentPage * itemsPerPage,
+    (constituentPage + 1) * itemsPerPage
+  );
+
+  const sortedOccupations =
+    occupationTab === 1
+      ? [...relatedOccupations].sort((a, b) => a.ranking - b.ranking)
+      : occupationTab === 2
+        ? [...relatedOccupations].sort((a, b) => b.ranking - a.ranking)
+        : relatedOccupations;
 
   useEffect(() => {
     setModalOpen(false);
@@ -121,10 +142,6 @@ export default function Page() {
     setModalOpenCO(false);
   }, [pathname]);
   const [selectedEconomy, setSelectedEconomy] = useState("Emerging");
-
-  const isMobile = useIsMobile();
-  const itemsPerPage = isMobile ? 4 : 8;
-  const itemsPerPageBottom = isMobile ? 2 : 3;
 
   const itemsToShow = relatedOccupations.slice(
     page1 * itemsPerPage,
@@ -537,30 +554,21 @@ export default function Page() {
                 >
                   <div className="sm:w-full w-auto -mx-[50px] sm:mx-0">
                     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-2 gap-y-4 px-4 sm:px-0">
-                      {isConstituentsLoading ? (
-                        <div className="col-span-4 flex items-center justify-center text-white opacity-60 py-4">
+                      {isConstituentsLoading && (
+                        <div className="col-span-4 flex items-center justify-center">
                           Loading...
                         </div>
-                      ) : constituentsError ? (
-                        <div className="col-span-4 flex items-center justify-center text-red-400 opacity-80 py-4">
-                          Failed to load related occupations.
-                        </div>
-                      ) : itemsToShow.length === 0 ? (
-                        <div className="col-span-4 flex items-center justify-center text-white opacity-60 py-4">
-                          No related occupations found.
-                        </div>
-                      ) : (
-                        itemsToShow.map((occ: string, index: number) => (
-                          <div
-                            key={index}
-                            className="flex items-center justify-center rounded-[50px] border border-[rgba(255,255,255,0.25)] bg-[rgba(255,255,255,0.04)] h-[45px] min-w-[90px] px-2 sm:min-w-[120px] sm:px-4 w-auto"
-                          >
-                            <span className="font-semibold text-center w-full block break-words whitespace-normal text-[12px] sm:text-[14px]">
-                              {occ}
-                            </span>
-                          </div>
-                        ))
                       )}
+                      {constituentItemsToShow && constituentItemsToShow?.map((occ, index) => (
+                        <div
+                          key={index}
+                          className="flex items-center justify-center rounded-[50px] border border-[rgba(255,255,255,0.25)] bg-[rgba(255,255,255,0.04)] h-[45px] min-w-[90px] px-2 sm:min-w-[120px] sm:px-4 w-auto"
+                        >
+                          <span className="font-semibold text-center w-full block break-words whitespace-normal text-[12px] sm:text-[14px]">
+                            {occ?.core_occupation ?? occ}
+                          </span>
+                        </div>
+                      ))}
                     </div>
                   </div>
                 </motion.div>
@@ -573,17 +581,17 @@ export default function Page() {
                   alt="Back Btn"
                   width={24}
                   height={24}
-                  onClick={() => paginate1(-1)}
+                  onClick={() => paginateConstituents(-1)}
                 />
               </div>
               <div className="flex justify-center gap-1">
-                {Array.from({ length: totalSlides }).map((_, index) => (
+                {Array.from({ length: totalConstituentSlides }).map((_, index) => (
                   <button
                     key={index}
-                    onClick={() => paginate1(index - page1)}
+                    onClick={() => paginateConstituents(index - constituentPage)}
                     className="w-[10px] h-[10px]"
                   >
-                    {page1 === index ? (
+                    {constituentPage === index ? (
                       <Image
                         src="/images/slide-show-btn-on.svg"
                         alt="ON"
@@ -607,7 +615,7 @@ export default function Page() {
                   alt="Arrow Right"
                   width={24}
                   height={24}
-                  onClick={() => paginate1(1)}
+                  onClick={() => paginateConstituents(1)}
                 />
               </div>
             </div>
@@ -976,8 +984,8 @@ export default function Page() {
                     selectedEconomy === "Low Income"
                       ? "/images/low income.svg"
                       : selectedEconomy === "Emerging"
-                      ? "/images/emerging.svg"
-                      : "/images/advanced.svg"
+                        ? "/images/emerging.svg"
+                        : "/images/advanced.svg"
                   }
                   style={{ maxWidth: "unset" }}
                   className="h-[230px] sm:h-[451px] !sm:width-[500px]"
@@ -1133,7 +1141,7 @@ export default function Page() {
                 <p className="text-[71px] font-bold leading-[130%] text-center mx-4">
                   {Math.floor(
                     taskProgress.reduce((s, ele) => s + ele) /
-                      taskProgress.length
+                    taskProgress.length
                   )}
                   %
                 </p>
@@ -1427,7 +1435,7 @@ export default function Page() {
                   {isTaskLoading
                     ? "Loading..."
                     : taskData?.firesight_observations ||
-                      `AI can suggest complementary colour palettes based on a
+                    `AI can suggest complementary colour palettes based on a
                   selected colour or image, ensuring aesthetically pleasing
                   design outcomes.AI can suggest complementary colour palettes
                   based on a selected colour or image, ensuring aesthetically
@@ -1499,7 +1507,7 @@ export default function Page() {
                   className="absolute w-full h-full flex items-center justify-stretch"
                 >
                   <div className="sm:w-full w-auto -mx-[50px] sm:mx-0">
-                    <div className="flex justify-around lg:gap-y-9 gap-y-4 text-white font-bold lg:text-2xl text-[16px] leading-normal w-full">
+                    <div className="flex justify-between lg:gap-y-9 gap-y-4 text-white font-bold lg:text-2xl text-[16px] leading-normal w-full">
                       {sortedOccupations
                         .slice(
                           page2 * itemsPerPageBottom,
@@ -1508,12 +1516,29 @@ export default function Page() {
                         .map((ele: string, index: number) => (
                           <Link
                             key={index}
-                            href={`/ai-impact/${encodeURIComponent(ele)}`}
+                            href={`/ai-impact/${encodeURIComponent(
+                              ele.core_occupation
+                            )}`}
                             className="main-small-box-1 relative overflow-hidden rounded-[...] flex items-center justify-center lg:h-90 md:h-54 h-79 md:w-[31%] w-full ml-7"
                           >
                             <div className="color-pattern-bg-1"></div>
-                            <p className="text-center mx-6">{ele}</p>
-                            {/* TODO: No ranking or tag-back image available for string[]; backend/type update needed for richer data */}
+                            <p className="text-center mx-6">
+                              {ele.core_occupation}
+                            </p>
+                            <div className="absolute flex items-center justify-center lg:bottom-[21px] lg:right-[22px] md:bottom-3 md:right-3 right-5 bottom-4 lg:w-[106px] lg:h-[49px] w-[63px] h-[29px] rounded-full overflow-hidden">
+                              <Image
+                                src={`/images/tag-back-${Math.floor(
+                                  ele.ranking / 1000
+                                )}.svg`}
+                                alt=""
+                                fill
+                                className="object-cover"
+                                priority
+                              />
+                              <span className="relative z-10 font-bold text-white">
+                                #{ele.ranking}
+                              </span>
+                            </div>
                           </Link>
                         ))}
                     </div>
