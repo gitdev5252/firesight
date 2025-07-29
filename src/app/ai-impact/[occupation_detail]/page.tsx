@@ -1513,7 +1513,7 @@ export default function Page() {
                           page2 * itemsPerPageBottom,
                           (page2 + 1) * itemsPerPageBottom
                         )
-                        .map((ele, index) => (
+                        .map((ele: string, index: number) => (
                           <Link
                             key={index}
                             href={`/ai-impact/${encodeURIComponent(
