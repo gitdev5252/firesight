@@ -23,11 +23,8 @@ export default function RootLayout({
 }>) {
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
-  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setMounted(true);
-
     const handleScroll = () => {
       setScrolled(window.scrollY > 50);
     };
