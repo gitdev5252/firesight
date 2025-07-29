@@ -95,8 +95,7 @@ export default function Page() {
 
   const [[page1, direction1], setPage1] = useState([0, 0]);
   const [[page2, direction2], setPage2] = useState([0, 0]);
-  const [[constituentPage, constituentDirection], setConstituentPage] =
-    useState([0, 0]);
+  const [[constituentPage], setConstituentPage] = useState([0, 0]);
 
   const paginate1 = (newDirection: number) => {
     setPage1(([prevPage]) => {
@@ -145,11 +144,6 @@ export default function Page() {
     setModalOpenCO(false);
   }, [pathname]);
   const [selectedEconomy, setSelectedEconomy] = useState("Emerging");
-
-  const itemsToShow = relatedOccupations.slice(
-    page1 * itemsPerPage,
-    (page1 + 1) * itemsPerPage
-  );
 
   return (
     <>
