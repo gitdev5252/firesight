@@ -569,7 +569,7 @@ export default function Page() {
                             className="flex items-center justify-center rounded-[50px] border border-[rgba(255,255,255,0.25)] bg-[rgba(255,255,255,0.04)] h-[45px] min-w-[90px] px-2 sm:min-w-[120px] sm:px-4 w-auto"
                           >
                             <span className="font-semibold text-center w-full block break-words whitespace-normal text-[12px] sm:text-[14px]">
-                              {occ?.core_occupation ?? occ}
+                              {occ}
                             </span>
                           </div>
                         ))}
