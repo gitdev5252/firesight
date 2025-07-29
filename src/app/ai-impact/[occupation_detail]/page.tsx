@@ -56,11 +56,20 @@ export default function Page() {
   const { data: impactData } = useGetOccupationByNameQuery(occupation);
   const { data: taskData, isLoading: isTaskLoading } =
     useGetOccupationTaskByNameQuery(occupation);
-  const { data: constituents, isLoading: isConstituentsLoading } =
-    useGetConstitutionalOccupationsByNameQuery(occupation);
+  const {
+    data: constituents,
+    isLoading: isConstituentsLoading,
+    error: constituentsError,
+  } = useGetConstitutionalOccupationsByNameQuery(occupation);
 
   // Related occupations & pagination
-  const relatedOccupations = constituents?.constituents || [];
+
+  const relatedOccupationsRaw = constituents?.constituents;
+  const relatedOccupations = Array.isArray(relatedOccupationsRaw)
+    ? relatedOccupationsRaw
+    : typeof relatedOccupationsRaw === "string"
+    ? JSON.parse(relatedOccupationsRaw)
+    : [];
   console.log(relatedOccupations, "relatedOccupations");
   const totalSlides = Math.ceil(relatedOccupations.length / itemsPerSlide);
   // Responsive occupationsPerSlide
@@ -528,21 +537,31 @@ export default function Page() {
                 >
                   <div className="sm:w-full w-auto -mx-[50px] sm:mx-0">
                     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-2 gap-y-4 px-4 sm:px-0">
-                      {isConstituentsLoading && (
-                        <div className="col-span-4 flex items-center justify-center">
+                      {isConstituentsLoading ? (
+                        <div className="col-span-4 flex items-center justify-center text-white opacity-60 py-4">
                           Loading...
                         </div>
-                      )}
-                      {itemsToShow.map((occ, index) => (
-                        <div
-                          key={index}
-                          className="flex items-center justify-center rounded-[50px] border border-[rgba(255,255,255,0.25)] bg-[rgba(255,255,255,0.04)] h-[45px] min-w-[90px] px-2 sm:min-w-[120px] sm:px-4 w-auto"
-                        >
-                          <span className="font-semibold text-center w-full block break-words whitespace-normal text-[12px] sm:text-[14px]">
-                            {occ}
-                          </span>
+                      ) : constituentsError ? (
+                        <div className="col-span-4 flex items-center justify-center text-red-400 opacity-80 py-4">
+                          Failed to load related occupations.
                         </div>
-                      ))}
+                      ) : itemsToShow.length === 0 ? (
+                        <div className="col-span-4 flex items-center justify-center text-white opacity-60 py-4">
+                          No related occupations found.
+
+                        </div>
+                      ) : (
+                        itemsToShow.map((occ: string, index: number) => (
+                          <div
+                            key={index}
+                            className="flex items-center justify-center rounded-[50px] border border-[rgba(255,255,255,0.25)] bg-[rgba(255,255,255,0.04)] h-[45px] min-w-[90px] px-2 sm:min-w-[120px] sm:px-4 w-auto"
+                          >
+                            <span className="font-semibold text-center w-full block break-words whitespace-normal text-[12px] sm:text-[14px]">
+                              {occ}
+                            </span>
+                          </div>
+                        ))
+                      )}
                     </div>
                   </div>
                 </motion.div>
@@ -1481,7 +1500,7 @@ export default function Page() {
                   className="absolute w-full h-full flex items-center justify-stretch"
                 >
                   <div className="sm:w-full w-auto -mx-[50px] sm:mx-0">
-                    <div className="flex justify-between lg:gap-y-9 gap-y-4 text-white font-bold lg:text-2xl text-[16px] leading-normal w-full">
+                    <div className="flex justify-around lg:gap-y-9 gap-y-4 text-white font-bold lg:text-2xl text-[16px] leading-normal w-full">
                       {sortedOccupations
                         .slice(
                           page2 * itemsPerPageBottom,
