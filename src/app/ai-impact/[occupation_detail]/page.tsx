@@ -9,7 +9,6 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import {
   useGetOccupationByNameQuery,
-  useGetRelatedOccupationsByNameQuery,
   useGetOccupationTaskByNameQuery,
   useGetConstitutionalOccupationsByNameQuery,
 } from "@/store/api/occupationApi";
@@ -55,8 +54,6 @@ export default function Page() {
   const taskProgress = [50, 0, 100, 0];
 
   const { data: impactData } = useGetOccupationByNameQuery(occupation);
-  const { data: categoryData } =
-    useGetRelatedOccupationsByNameQuery(occupation);
   const { data: taskData, isLoading: isTaskLoading } =
     useGetOccupationTaskByNameQuery(occupation);
   const { data: constituents, isLoading: isConstituentsLoading } =
@@ -64,7 +61,7 @@ export default function Page() {
 
   // Related occupations & pagination
   const relatedOccupations = constituents?.constituents || [];
-  console.log(relatedOccupations,"relatedOccupations")
+  console.log(relatedOccupations, "relatedOccupations");
   const totalSlides = Math.ceil(relatedOccupations.length / itemsPerSlide);
   // Responsive occupationsPerSlide
   const [occupationsPerSlide, setOccupationsPerSlide] = useState(3);
@@ -105,12 +102,7 @@ export default function Page() {
       return [newPage, newDirection];
     });
   };
-  const sortedOccupations =
-    occupationTab === 1
-      ? [...relatedOccupations].sort((a, b) => a.ranking - b.ranking)
-      : occupationTab === 2
-      ? [...relatedOccupations].sort((a, b) => b.ranking - a.ranking)
-      : relatedOccupations;
+  const sortedOccupations = relatedOccupations;
 
   useEffect(() => {
     setModalOpen(false);
@@ -547,7 +539,7 @@ export default function Page() {
                           className="flex items-center justify-center rounded-[50px] border border-[rgba(255,255,255,0.25)] bg-[rgba(255,255,255,0.04)] h-[45px] min-w-[90px] px-2 sm:min-w-[120px] sm:px-4 w-auto"
                         >
                           <span className="font-semibold text-center w-full block break-words whitespace-normal text-[12px] sm:text-[14px]">
-                            {occ?.core_occupation ?? occ}
+                            {occ}
                           </span>
                         </div>
                       ))}
@@ -1498,29 +1490,12 @@ export default function Page() {
                         .map((ele, index) => (
                           <Link
                             key={index}
-                            href={`/ai-impact/${encodeURIComponent(
-                              ele.core_occupation
-                            )}`}
+                            href={`/ai-impact/${encodeURIComponent(ele)}`}
                             className="main-small-box-1 relative overflow-hidden rounded-[...] flex items-center justify-center lg:h-90 md:h-54 h-79 md:w-[31%] w-full ml-7"
                           >
                             <div className="color-pattern-bg-1"></div>
-                            <p className="text-center mx-6">
-                              {ele.core_occupation}
-                            </p>
-                            <div className="absolute flex items-center justify-center lg:bottom-[21px] lg:right-[22px] md:bottom-3 md:right-3 right-5 bottom-4 lg:w-[106px] lg:h-[49px] w-[63px] h-[29px] rounded-full overflow-hidden">
-                              <Image
-                                src={`/images/tag-back-${Math.floor(
-                                  ele.ranking / 1000
-                                )}.svg`}
-                                alt=""
-                                fill
-                                className="object-cover"
-                                priority
-                              />
-                              <span className="relative z-10 font-bold text-white">
-                                #{ele.ranking}
-                              </span>
-                            </div>
+                            <p className="text-center mx-6">{ele}</p>
+                            {/* TODO: No ranking or tag-back image available for string[]; backend/type update needed for richer data */}
                           </Link>
                         ))}
                     </div>

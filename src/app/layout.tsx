@@ -23,20 +23,57 @@ export default function RootLayout({
 }>) {
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
+
     const handleScroll = () => {
       setScrolled(window.scrollY > 50);
     };
 
     window.addEventListener("scroll", handleScroll);
+
+    // Handle browser extension attributes that might be added to body
+    const body = document.body;
+    if (body) {
+      // Remove any browser extension attributes that might cause hydration issues
+      const observer = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+          if (
+            mutation.type === "attributes" &&
+            mutation.attributeName?.startsWith("sapling-")
+          ) {
+            // Suppress hydration warnings for browser extension attributes
+            console.warn(
+              "Browser extension attribute detected, suppressing hydration warning"
+            );
+          }
+        });
+      });
+
+      observer.observe(body, { attributes: true });
+
+      return () => {
+        observer.disconnect();
+        window.removeEventListener("scroll", handleScroll);
+      };
+    }
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
   }, []);
 
   const hideHeader =
     pathname.startsWith("/ai-impact") || pathname.startsWith("/sign");
+
   return (
     <html lang="en">
-      <body className={clsx(lekton.className, "bg-[#080B16] relative m-0")}>
+      <body
+        className={clsx(lekton.className, "bg-[#080B16] relative m-0")}
+        suppressHydrationWarning={true}
+      >
         <Provider store={store}>
           {!hideHeader && <Header scrolled={scrolled} />}
           <main
