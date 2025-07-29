@@ -366,8 +366,8 @@ export function TabBar({
     >
       <motion.div
         ref={contentRef}
-        className={`cursor-grab flex justify-start sm:px-0 px-14 box-border w-full ${
-          type ? " lg:pr-[16vw] lg:gap-15 gap-11" : " gap-10"
+        className={`cursor-grab flex justify-start sm:px-0 px-4 box-border w-full ${
+          type ? " lg:pr-[16vw] lg:gap-15 gap-6" : " gap-6"
         }`}
         drag="x"
         dragConstraints={constraints}
@@ -412,7 +412,7 @@ export function TabBar({
             {/* Add divider after "All" tab */}
             {type === 1 && index === 1 && (
               <div className="flex items-center justify-center lg:h-[63px] h-[55px] pt-4">
-                <div className="w-[1px] h-10 mb-5 bg-[#ffffff1a]"></div>
+                <div className="w-[1px] sm:h-10 h-5 mb-5 bg-[#ffffff1a]"></div>
               </div>
             )}
           </React.Fragment>
