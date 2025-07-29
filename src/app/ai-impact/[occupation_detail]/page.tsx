@@ -69,7 +69,7 @@ export default function Page() {
   // Related occupations & pagination
   // const constitutentRelatedOccupations = constituents?.constituents || [];
   const relatedOccupations = categoryData?.relatedOccupations || [];
-  console.log(taskData, "relatedOccupations")
+  console.log(taskData, "relatedOccupations");
   const totalSlides = Math.ceil(relatedOccupations.length / itemsPerSlide);
   // Responsive occupationsPerSlide
   const [occupationsPerSlide, setOccupationsPerSlide] = useState(3);
@@ -95,8 +95,7 @@ export default function Page() {
 
   const [[page1, direction1], setPage1] = useState([0, 0]);
   const [[page2, direction2], setPage2] = useState([0, 0]);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [[constituentPage, constituentDirection], setConstituentPage] = useState([0, 0]);
+  const [[constituentPage], setConstituentPage] = useState([0, 0]);
 
   const paginate1 = (newDirection: number) => {
     setPage1(([prevPage]) => {
@@ -121,7 +120,9 @@ export default function Page() {
     });
   };
   const constituentOccupations = constituents?.constituents || [];
-  const totalConstituentSlides = Math.ceil(constituentOccupations.length / itemsPerPage);
+  const totalConstituentSlides = Math.ceil(
+    constituentOccupations.length / itemsPerPage
+  );
 
   const constituentItemsToShow = constituentOccupations.slice(
     constituentPage * itemsPerPage,
@@ -132,8 +133,8 @@ export default function Page() {
     occupationTab === 1
       ? [...relatedOccupations].sort((a, b) => a.ranking - b.ranking)
       : occupationTab === 2
-        ? [...relatedOccupations].sort((a, b) => b.ranking - a.ranking)
-        : relatedOccupations;
+      ? [...relatedOccupations].sort((a, b) => b.ranking - a.ranking)
+      : relatedOccupations;
 
   useEffect(() => {
     setModalOpen(false);
@@ -143,11 +144,6 @@ export default function Page() {
     setModalOpenCO(false);
   }, [pathname]);
   const [selectedEconomy, setSelectedEconomy] = useState("Emerging");
-
-  // const itemsToShow = relatedOccupations.slice(
-  //   page1 * itemsPerPage,
-  //   (page1 + 1) * itemsPerPage
-  // );
 
   return (
     <>
@@ -560,16 +556,17 @@ export default function Page() {
                           Loading...
                         </div>
                       )}
-                      {constituentItemsToShow && constituentItemsToShow?.map((occ, index) => (
-                        <div
-                          key={index}
-                          className="flex items-center justify-center rounded-[50px] border border-[rgba(255,255,255,0.25)] bg-[rgba(255,255,255,0.04)] h-[45px] min-w-[90px] px-2 sm:min-w-[120px] sm:px-4 w-auto"
-                        >
-                          <span className="font-semibold text-center w-full block break-words whitespace-normal text-[12px] sm:text-[14px]">
-                            {occ}
-                          </span>
-                        </div>
-                      ))}
+                      {constituentItemsToShow &&
+                        constituentItemsToShow?.map((occ, index) => (
+                          <div
+                            key={index}
+                            className="flex items-center justify-center rounded-[50px] border border-[rgba(255,255,255,0.25)] bg-[rgba(255,255,255,0.04)] h-[45px] min-w-[90px] px-2 sm:min-w-[120px] sm:px-4 w-auto"
+                          >
+                            <span className="font-semibold text-center w-full block break-words whitespace-normal text-[12px] sm:text-[14px]">
+                              {occ}
+                            </span>
+                          </div>
+                        ))}
                     </div>
                   </div>
                 </motion.div>
@@ -586,29 +583,33 @@ export default function Page() {
                 />
               </div>
               <div className="flex justify-center gap-1">
-                {Array.from({ length: totalConstituentSlides }).map((_, index) => (
-                  <button
-                    key={index}
-                    onClick={() => paginateConstituents(index - constituentPage)}
-                    className="w-[10px] h-[10px]"
-                  >
-                    {constituentPage === index ? (
-                      <Image
-                        src="/images/slide-show-btn-on.svg"
-                        alt="ON"
-                        width={10}
-                        height={10}
-                      ></Image>
-                    ) : (
-                      <Image
-                        src="/images/slide-show-btn-off.svg"
-                        alt="OFF"
-                        width={10}
-                        height={10}
-                      ></Image>
-                    )}
-                  </button>
-                ))}
+                {Array.from({ length: totalConstituentSlides }).map(
+                  (_, index) => (
+                    <button
+                      key={index}
+                      onClick={() =>
+                        paginateConstituents(index - constituentPage)
+                      }
+                      className="w-[10px] h-[10px]"
+                    >
+                      {constituentPage === index ? (
+                        <Image
+                          src="/images/slide-show-btn-on.svg"
+                          alt="ON"
+                          width={10}
+                          height={10}
+                        ></Image>
+                      ) : (
+                        <Image
+                          src="/images/slide-show-btn-off.svg"
+                          alt="OFF"
+                          width={10}
+                          height={10}
+                        ></Image>
+                      )}
+                    </button>
+                  )
+                )}
               </div>
               <div>
                 <Image
@@ -985,8 +986,8 @@ export default function Page() {
                     selectedEconomy === "Low Income"
                       ? "/images/low income.svg"
                       : selectedEconomy === "Emerging"
-                        ? "/images/emerging.svg"
-                        : "/images/advanced.svg"
+                      ? "/images/emerging.svg"
+                      : "/images/advanced.svg"
                   }
                   style={{ maxWidth: "unset" }}
                   className="h-[230px] sm:h-[451px] !sm:width-[500px]"
@@ -1142,7 +1143,7 @@ export default function Page() {
                 <p className="text-[71px] font-bold leading-[130%] text-center mx-4">
                   {Math.floor(
                     taskProgress.reduce((s, ele) => s + ele) /
-                    taskProgress.length
+                      taskProgress.length
                   )}
                   %
                 </p>
@@ -1436,7 +1437,7 @@ export default function Page() {
                   {isTaskLoading
                     ? "Loading..."
                     : taskData?.firesight_observations ||
-                    `AI can suggest complementary colour palettes based on a
+                      `AI can suggest complementary colour palettes based on a
                   selected colour or image, ensuring aesthetically pleasing
                   design outcomes.AI can suggest complementary colour palettes
                   based on a selected colour or image, ensuring aesthetically
@@ -1514,7 +1515,7 @@ export default function Page() {
                           page2 * itemsPerPageBottom,
                           (page2 + 1) * itemsPerPageBottom
                         )
-                        .map((ele: string, index: number) => (
+                        .map((ele, index) => (
                           <Link
                             key={index}
                             href={`/ai-impact/${encodeURIComponent(
