@@ -95,6 +95,7 @@ export default function Page() {
 
   const [[page1, direction1], setPage1] = useState([0, 0]);
   const [[page2, direction2], setPage2] = useState([0, 0]);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [[constituentPage, constituentDirection], setConstituentPage] = useState([0, 0]);
 
   const paginate1 = (newDirection: number) => {
@@ -143,10 +144,10 @@ export default function Page() {
   }, [pathname]);
   const [selectedEconomy, setSelectedEconomy] = useState("Emerging");
 
-  const itemsToShow = relatedOccupations.slice(
-    page1 * itemsPerPage,
-    (page1 + 1) * itemsPerPage
-  );
+  // const itemsToShow = relatedOccupations.slice(
+  //   page1 * itemsPerPage,
+  //   (page1 + 1) * itemsPerPage
+  // );
 
   return (
     <>
@@ -565,7 +566,7 @@ export default function Page() {
                           className="flex items-center justify-center rounded-[50px] border border-[rgba(255,255,255,0.25)] bg-[rgba(255,255,255,0.04)] h-[45px] min-w-[90px] px-2 sm:min-w-[120px] sm:px-4 w-auto"
                         >
                           <span className="font-semibold text-center w-full block break-words whitespace-normal text-[12px] sm:text-[14px]">
-                            {occ?.core_occupation ?? occ}
+                            {occ}
                           </span>
                         </div>
                       ))}
