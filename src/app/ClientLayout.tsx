@@ -22,7 +22,9 @@ export default function ClientLayout({
   }, []);
 
   const hideHeader =
-    pathname.startsWith("/ai-impact") || pathname.startsWith("/sign");
+    pathname.startsWith("/ai-impact") || 
+    pathname.startsWith("/sign") || 
+    pathname.startsWith("/conference");
 
   return (
     <Provider store={store}>
