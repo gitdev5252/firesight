@@ -16,7 +16,6 @@ export function Header({ scrolled }: { scrolled: boolean }) {
     setMobileMenuOpen(false);
   }, [pathname]);
 
-  // Close desktop menu when clicking outside
   useEffect(() => {
     if (!menuOpen) return;
     function handleClickOutside(event: MouseEvent) {
@@ -54,25 +53,34 @@ export function Header({ scrolled }: { scrolled: boolean }) {
         </div>
         {/* Desktop Nav */}
         <nav className="hidden md:flex flex-auto items-center justify-end space-x-[5.56vw] font-medium !text-[18px]">
-          <div className="flex items-center relative">
+          <div className="flex items-center relative mr-17">
             <Button
               variant="ghost"
               className="px-2 text-white !text-[18px] !bg-transparent hover:text-white"
               onClick={() => setMenuOpen(!menuOpen)}
             >
-              <Image
-                src="/images/BlueBlurPolygon.svg"
-                alt=" "
-                width={116}
-                height={116}
-                className={
-                  pathname.substring(0, 6) === "/pulse"
-                    ? "inline mx-[-40px]"
-                    : "hidden"
-                }
-              />
-              {pathname.substring(0, 6) === "/pulse"
+              {pathname === "/pulse/overview" && (
+                <Image
+                  src="/images/BlueBlurPolygon.svg"
+                  alt="Pulse"
+                  width={116}
+                  height={116}
+                  className="inline mx-[-40px]"
+                />
+              )}
+              {pathname === "/session" && (
+                <Image
+                  src="/images/GreenBlurPolygon.svg"
+                  alt="Session"
+                  width={116}
+                  height={116}
+                  className="inline mx-[-40px]"
+                />
+              )}
+              {pathname === "/pulse/overview"
                 ? "FIRESIGHT | PULSE"
+                : pathname === "/session"
+                ? "FIRESIGHT | SESSION"
                 : "PRODUCTS"}
               <Image
                 src={
@@ -89,9 +97,9 @@ export function Header({ scrolled }: { scrolled: boolean }) {
             {menuOpen && (
               <div
                 ref={menuRef}
-                className="main-menu-box text-white !absolute w-[388px] h-[250px] left-0 top-13"
+                className="main-menu-box text-white !absolute w-[388px] h-[250px] left-0 top-13 mr-0"
               >
-                <div className="flex justify-end items-center mt-4 pr-[22px]">
+                <div className="flex justify-end items-center mt-4 pr-5">
                   <Button
                     onClick={() => setMenuOpen(false)}
                     variant="ghost"
@@ -122,6 +130,7 @@ export function Header({ scrolled }: { scrolled: boolean }) {
                       FIRESIGHT | PULSE
                     </div>
                   </Link>
+
                   <div className="flex items-center justify-start h-[52px]">
                     <Image
                       src="/images/GreenBlurPolygon.svg"
@@ -130,7 +139,7 @@ export function Header({ scrolled }: { scrolled: boolean }) {
                       height={116}
                       className={"mx-[-33px] my-[-48ox]"}
                     />
-                    <Link href="/sessions">
+                    <Link href="/session" onClick={() => setMenuOpen(false)}>
                       FIRESIGHT | SESSIONS{" "}
                       <small>
                         <i>(Comming Soon)</i>
@@ -145,7 +154,7 @@ export function Header({ scrolled }: { scrolled: boolean }) {
                       height={116}
                       className={"mx-[-33px] my-[-48ox]"}
                     />
-                    <Link href="/platform">
+                    <Link href="/platform" onClick={() => setMenuOpen(false)}>
                       FIRESIGHT | PLATFORM <small>(Comming Soon)</small>
                     </Link>
                   </div>
@@ -153,6 +162,19 @@ export function Header({ scrolled }: { scrolled: boolean }) {
               </div>
             )}
           </div>
+          {pathname === "/session" ? (
+            <div className="start-session-btn-bg mr-15">
+              <Link
+                href="/session/start-session"
+                className="nav-item active absolute -top-[8px] w-full h-full flex items-center justify-center"
+              >
+                Start Session Now
+              </Link>
+            </div>
+          ) : (
+            ""
+          )}
+
           <Link
             href="/about-us"
             className={
@@ -278,11 +300,8 @@ export function Header({ scrolled }: { scrolled: boolean }) {
               <div className="vertical-divider !h-[105px]"></div>
               {/* Main Nav */}
               <div className="flex flex-col flex-1 items-center gap-y-3">
-              <div>
-                  <Link
-                    href="/ai-impact"
-                    className="hover:underline"
-                  >
+                <div>
+                  <Link href="/ai-impact" className="hover:underline">
                     AI Impact Index
                   </Link>
                 </div>
@@ -304,7 +323,6 @@ export function Header({ scrolled }: { scrolled: boolean }) {
                     Blog
                   </Link>
                 </div>
-                
               </div>
             </div>
 
