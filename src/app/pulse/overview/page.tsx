@@ -811,10 +811,10 @@ export default function Overview() {
       {/* Explore1 section */}
       <section
         id="explore1"
-        className="relative mt-auto flex flex-col items-center justify-center w-full md:px-14 px-4 md:pb-[115px] pb-15"
+        className="relative mt-auto flex flex-col items-center justify-center w-full md:px-14 px-4 md:pb-[115px] pb-15 overflow-hidden"
       >
-        <div className="top-25 absolute bg-[url('/images/pulse-bg-2.svg')] bg-no-repeat bg-cover w-full h-[40.2778vw] opacity-50 md:block hidden"></div>
-        <div className="top-10 absolute bg-[url('/images/mobile/pulse-bg-0-mobile.svg')] bg-no-repeat bg-cover w-full h-[66.66vw] opacity-50 md:hidden block"></div>
+        <div className="absolute inset-0 bg-[url('/images/pulse-bg-2.svg')] bg-no-repeat bg-cover w-full h-[40.2778vw] opacity-50 md:block hidden -z-10"></div>
+        <div className="absolute inset-0 bg-[url('/images/mobile/pulse-bg-0-mobile.svg')] bg-no-repeat bg-cover w-full h-[66.66vw] opacity-50 md:hidden block -z-10"></div>
 
         <p className="sub-header-title md:text-[24px] text-[16px] md:mt-[104px] mt-8 md:mb-[50px] mb-3">
           EXPLORE
@@ -831,13 +831,6 @@ export default function Overview() {
           14 Day Trial | <span className="font-bold">Start Now</span>
         </Button>
       </section>
-
-      <FireSightFooter>
-        <div className="green-shine-footer-mobile md:hidden block z-[-2342]"></div>
-        <div className="blue-shine-pulse-overview w-[min(602px,41.8vw)] h-[min(602px,41.8vw)] bottom-[7.7vw] right-[19.3vw] md:block hidden"></div>
-        <div className="blue-shine-pulse-overview bottom-[-25.555vw] right-[-20.277vw] w-[min(602px,41.8vw)] h-[min(602px,41.8vw)] md:block hidden"></div>
-        <div className="blue-shine-pulse-overview bottom-[-32.847vw] left-[-16.666vw] w-[min(602px,41.8vw)] h-[min(602px,41.8vw)] md:block hidden"></div>
-      </FireSightFooter>
     </>
   );
 }

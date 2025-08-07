@@ -5,7 +5,6 @@ import Link from "next/link";
 import Image from "next/image";
 import "./page.css";
 import { Button } from "@/components/ui/button";
-import FireSightFooter from "@/layouts/FireSightFooter";
 
 const pages = [
   [0, 3],
@@ -819,12 +818,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
-      <FireSightFooter>
-        <div className="green-shine-footer-mobile md:hidden block z-[-2342]"></div>
-      </FireSightFooter>
-      <div className="green-shine-footer-small md:block hidden z-[-2342]"></div>
-      <div className="green-shine-footer-2nd-small md:block hidden z-[-2342]"></div>
     </>
   );
 }
