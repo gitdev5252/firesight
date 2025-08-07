@@ -1,5 +1,5 @@
-import SessionLobby from '@/components/session/SessionLobby';
+import SessionLobby from "@/components/session/SessionLobby";
 
 export default function SessionPage() {
-  return <SessionLobby />;
-} 
+  return <div>Hello this is session page</div>;
+}
