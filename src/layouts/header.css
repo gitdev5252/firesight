@@ -25,3 +25,14 @@
   border-radius: 20px;
   position: relative;
 }
+
+.start-session-btn-bg {
+  background: url("/images/start-session-btn-bg.svg") no-repeat center center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  width: 320px;
+  height: 100px;
+  color: white;
+  position: relative;
+  margin-top: 20px;
+}
