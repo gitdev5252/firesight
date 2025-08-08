@@ -1,4 +1,32 @@
+"use client";
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+
+// Total number of slides will be determined after slideData is defined
+
 export default function StartSessionPage() {
+  const [[page, direction], setPage] = useState([0, 0]);
+
+  const swipeConfidenceThreshold = 100;
+  const swipePower = (offset: number, velocity: number) => {
+    return Math.abs(offset) * velocity;
+  };
+
+  const paginate = (newDirection: number) => {
+    setPage(([prevPage]) => {
+      const newPage = (prevPage + newDirection + totalSlides) % totalSlides;
+      return [newPage, newDirection];
+    });
+  };
+
+  // Auto-slide effect
+  useEffect(() => {
+    const interval = setInterval(() => {
+      paginate(1);
+    }, 4000); // Change slide every 4 seconds
+    return () => clearInterval(interval);
+  }, []);
+
   const subData = [
     {
       icon: "/images/icons/green-pin.svg",
@@ -13,6 +41,28 @@ export default function StartSessionPage() {
       title: "Save as Desktop App",
     },
   ];
+
+  const slideData = [
+    { alt: "ai-co-pilot", image: "/images/session/ai-co-pilot.svg" },
+    {
+      alt: "meeting-summaries",
+      image: "/images/session/meeting-summaries.svg",
+    },
+    {
+      alt: "session-libraries",
+      image: "/images/session/session-libraries.svg",
+    },
+    {
+      alt: "intelligence-knowledge-base",
+      image: "/images/session/intelligence-knowledge-base.svg",
+    },
+    { alt: "meeting-flow", image: "/images/session/meeting-flow.svg" },
+    {
+      alt: "best-in-class-performance",
+      image: "/images/session/best-in-class-performance.svg",
+    },
+  ];
+  const totalSlides = slideData.length;
   return (
     <div className="w-full flex relative md:px-14 px-4 flex-col items-center justify-center min-h-screen overflow-hidden">
       <div className="absolute inset-0 pointer-events-none z-[-100]">
@@ -80,7 +130,87 @@ export default function StartSessionPage() {
             ))}
           </div>
         </div>
-        <div className="border border-[rgba(255,255,255,0.1)] px-[30px] pt-[30px] pb-[10px] md:w-4/9 w-full rounded-[20px]"></div>
+        <div className="border border-[rgba(255,255,255,0.1)] px-[30px] pt-[30px] pb-[10px] md:w-4/9 w-full rounded-[20px] relative flex flex-col items-center min-h-[450px] h-[450px] justify-between">
+          <div className="flex-1 w-full flex items-center justify-center">
+            <AnimatePresence initial={false} custom={direction}>
+              <motion.div
+                key={page}
+                custom={direction}
+                drag="x"
+                dragConstraints={{ left: 0, right: 0 }}
+                onDragEnd={(e, { offset, velocity }) => {
+                  const swipe = swipePower(offset.x, velocity.x);
+                  if (swipe < -swipeConfidenceThreshold) paginate(1);
+                  else if (swipe > swipeConfidenceThreshold) paginate(-1);
+                }}
+                variants={{
+                  enter: (dir: number) => ({
+                    x: dir > 0 ? 300 : -300,
+                    opacity: 0,
+                  }),
+                  center: {
+                    x: 0,
+                    opacity: 1,
+                  },
+                  exit: (dir: number) => ({
+                    x: dir < 0 ? 300 : -300,
+                    opacity: 0,
+                  }),
+                }}
+                initial="enter"
+                animate="center"
+                exit="exit"
+                transition={{ duration: 0.3, ease: "easeInOut" }}
+                className="w-full flex items-center justify-center"
+              >
+                {(() => {
+                  const currentIndex = page % slideData.length;
+                  const item = slideData[currentIndex];
+                  return (
+                    <img
+                      src={item.image}
+                      alt={item.alt}
+                      key={item.alt}
+                      className="mx-auto"
+                    />
+                  );
+                })()}
+              </motion.div>
+            </AnimatePresence>
+          </div>
+          {/* Custom Polygon Pagination */}
+          <div className="flex items-center justify-center gap-3 mt-6 mb-2 z-10">
+            {slideData.map((item, idx) => (
+              <button
+                key={item.alt}
+                onClick={() => setPage([idx, idx > page ? 1 : -1])}
+                className={`h-6 flex items-center justify-center bg-transparent border-none p-0 focus:outline-none transition-all duration-200 ${
+                  page === idx ? "w-[18px]" : "w-[10px]"
+                }`}
+                style={{ background: "none" }}
+                aria-label={`Go to slide ${idx + 1}`}
+              >
+                <img
+                  src={
+                    page === idx
+                      ? "/images/icons/polygon-active.svg"
+                      : "/images/icons/polygon.svg"
+                  }
+                  alt={page === idx ? "Active" : "Inactive"}
+                  width={page === idx ? 18 : 10}
+                  height={10}
+                  style={{
+                    display: "block",
+                    objectFit: "contain",
+                    width: "100%",
+                    height: "100%",
+                    transition: "width 0.2s",
+                  }}
+                />
+              </button>
+            ))}
+          </div>
+        </div>
       </div>
       <div
         style={{
