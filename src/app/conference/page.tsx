@@ -1,10 +1,12 @@
 "use client";
-import { BotMessageSquare, Calendar, Clock, Copy, Expand, Hand, Link, Mic, Monitor, PanelLeftClose, PhoneOff, Smile, Users, Video, MicOff, VideoOff } from "lucide-react";
+import { BotMessageSquare, Calendar, Clock, Copy, Hand, Link, Mic, Monitor, PanelLeftClose, PhoneOff, Smile, Users, Video, MicOff, VideoOff } from "lucide-react";
 import React, { useEffect } from "react";
 import {
   LiveKitRoom,
   useDisconnectButton,
   useParticipants,
+  useLocalParticipant,
+  useDataChannel,
 } from "@livekit/components-react";
 import "@livekit/components-styles"; // Required styles
 import { LIVEKIT_CONFIG } from "@/lib/livekit/config";
@@ -12,7 +14,7 @@ import { CustomVideoTiles } from "@/components/conference/CustomVideoTiles";
 import { useMediaControls } from "@/hooks/useMediaControls";
 
 // Sidebar Component
-const Sidebar = ({ participants, roomName }: { participants?: unknown[], roomName: string }) => {
+const Sidebar = ({ participants, roomName, raisedHands }: { participants?: unknown[], roomName: string, raisedHands: {[key: string]: boolean} }) => {
   const [activeTab, setActiveTab] = React.useState("People");
   const tabs = ["People", "Chat", "Transcript", "Summary", "Prompts"];
 
@@ -37,7 +39,7 @@ const Sidebar = ({ participants, roomName }: { participants?: unknown[], roomNam
 
       {/* Tab Content */}
       <div className="flex-1 p-4 overflow-y-auto">
-        {activeTab === "People" && <PeopleTab participants={participants} roomName={roomName} />}
+        {activeTab === "People" && <PeopleTab participants={participants} roomName={roomName} raisedHands={raisedHands} />}
         {activeTab === "Chat" && <ChatTab />}
         {activeTab === "Transcript" && <TranscriptTab />}
         {activeTab === "Summary" && <SummaryTab />}
@@ -56,7 +58,10 @@ type Participant = {
   sid: string;
 };
 
-const PeopleTab = ({ participants, roomName }: { participants?: unknown[], roomName: string }) => {
+const PeopleTab = ({ participants, roomName, raisedHands }: { participants?: unknown[], roomName: string, raisedHands: {[key: string]: boolean} }) => {
+  console.log('PeopleTab raisedHands:', raisedHands);
+  console.log('PeopleTab participants:', participants);
+  
   return (
     <div className="h-screen mt-8">
       <div className="bg-[rgba(255,255,255,0.02)] rounded-[20px] border border-[rgba(255,255,255,0.1)] backdrop-blur-[32px] p-2 mb-4 h-[70%]">
@@ -74,11 +79,17 @@ const PeopleTab = ({ participants, roomName }: { participants?: unknown[], roomN
                   {initials}
                 </div>
                 <div className="flex-1">
-                  <p className="text-white text-sm font-medium">
-                    {p.identity}                    {isLocal && "(Host)"}
-
-                  </p>
-                  {/* <p className="text-whiteÍ */}
+                  <div className="flex items-center gap-2">
+                    <p className="text-white text-sm font-medium">
+                      {p.identity} {isLocal && "(Host)"}
+                    </p>
+                    {(() => {
+                      console.log(`Checking hand for ${p.identity}:`, raisedHands[p.identity]);
+                      return raisedHands[p.identity] && (
+                        <Hand size={16} color="#fbbf24" className="animate-pulse" />
+                      );
+                    })()}
+                  </div>
                 </div>
                 <div className="flex gap-5 mr-4">
                   <div className={`w-5 h-5 rounded-full flex items-center justify-center`}>
@@ -144,6 +155,46 @@ const PromptsTab = () => (
   </div>
 );
 
+// Component to handle real-time messaging for emojis and hand raises
+const RealtimeMessaging = ({ 
+  onEmojiReceived, 
+  onHandRaiseReceived 
+}: { 
+  onEmojiReceived: (data: {emoji: string, timestamp: number, username: string}) => void;
+  onHandRaiseReceived: (data: {username: string, isRaised: boolean}) => void;
+}) => {
+  const { localParticipant } = useLocalParticipant();
+  
+  // Data channel for emojis
+  const { send: sendEmojiData } = useDataChannel('emoji', (message) => {
+    const data = JSON.parse(new TextDecoder().decode(message.payload));
+    onEmojiReceived(data);
+  });
+
+  // Data channel for hand raises
+  const { send: sendHandData } = useDataChannel('hand-raise', (message) => {
+    const data = JSON.parse(new TextDecoder().decode(message.payload));
+    onHandRaiseReceived(data);
+  });
+
+  // Expose send functions globally
+  React.useEffect(() => {
+    if (localParticipant) {
+      (window as unknown as { sendEmojiToAll?: (emoji: string, username: string) => void }).sendEmojiToAll = (emoji: string, username: string) => {
+        const data = { emoji, timestamp: Date.now(), username };
+        sendEmojiData(new TextEncoder().encode(JSON.stringify(data)), { reliable: true });
+      };
+
+      (window as unknown as { sendHandRaiseToAll?: (username: string, isRaised: boolean) => void }).sendHandRaiseToAll = (username: string, isRaised: boolean) => {
+        const data = { username, isRaised };
+        sendHandData(new TextEncoder().encode(JSON.stringify(data)), { reliable: true });
+      };
+    }
+  }, [localParticipant, sendEmojiData, sendHandData]);
+
+  return null;
+};
+
 // Component to bridge LiveKit context with sidebar
 const ParticipantProvider = ({ onParticipantsChange }: { onParticipantsChange: (participants: unknown[]) => void }) => {
   const participants = useParticipants();
@@ -154,7 +205,14 @@ const ParticipantProvider = ({ onParticipantsChange }: { onParticipantsChange: (
 
   return null;
 };
-const ConferenceControls = ({ onInvite, onToggleSidebar }: { onInvite: () => void; onToggleSidebar: () => void }) => {
+const ConferenceControls = ({ onInvite, onToggleSidebar, onSendEmoji, onToggleHandRaise, currentUser, raisedHands }: { 
+  onInvite: () => void; 
+  onToggleSidebar: () => void;
+  onSendEmoji: (username: string) => void;
+  onToggleHandRaise: (username: string) => void;
+  currentUser: string;
+  raisedHands: {[key: string]: boolean};
+}) => {
   const {
     isMicrophoneEnabled,
     isCameraEnabled,
@@ -204,9 +262,19 @@ const ConferenceControls = ({ onInvite, onToggleSidebar }: { onInvite: () => voi
             {/* Divider */}
             <div className="w-px h-8 bg-white/20"></div>
 
-            <button className="flex flex-col items-center gap-1 text-gray-400 hover:text-gray-400 transition-colors">
+            <button 
+              className={`flex flex-col items-center gap-1 transition-colors ${
+                raisedHands[currentUser] 
+                  ? 'text-yellow-400 hover:text-yellow-500' 
+                  : 'text-gray-400 hover:text-gray-400'
+              }`}
+              onClick={() => {
+                console.log('Hand button clicked, currentUser:', currentUser);
+                onToggleHandRaise(currentUser);
+              }}
+            >
               <div className="items-center justify-center">
-                <Hand color="white" />
+                <Hand color={raisedHands[currentUser] ? "#fbbf24" : "white"} />
               </div>
               <span className="text-xs mt-2">Hand</span>
             </button>
@@ -232,7 +300,10 @@ const ConferenceControls = ({ onInvite, onToggleSidebar }: { onInvite: () => voi
             </button>
             <div className="w-px h-8 bg-white/20"></div>
 
-            <button className="flex flex-col items-center gap-1 text-gray-400 hover:text-gray-400 transition-colors">
+            <button 
+              className="flex flex-col items-center gap-1 text-gray-400 hover:text-gray-400 transition-colors"
+              onClick={() => onSendEmoji(currentUser)}
+            >
               <div className="items-center justify-center">
                 <Smile color="white" />
               </div>
@@ -285,6 +356,87 @@ export default function SessionPage() {
   const [participants, setParticipants] = React.useState<unknown[]>([]);
   const [currentUser, setCurrentUser] = React.useState<string>("You");
   const [currentTime, setCurrentTime] = React.useState<string>("");
+  const [activeEmojis, setActiveEmojis] = React.useState<{[key: string]: {emoji: string, timestamp: number, username: string}}>({}); // Add emoji state
+  const [raisedHands, setRaisedHands] = React.useState<{[key: string]: boolean}>({}); // Add raised hands state
+
+  // for now i am adding the rnadom emojiss
+  const emojis = ['😀', '😂', '😍', '🤔', '😮', '👍', '👏', '❤️', '🔥', '💯', '😎', '🎉', '😊', '👋', '💪'];
+
+  // sending emoji on others
+  const sendEmoji = (username: string) => {
+    const randomEmoji = emojis[Math.floor(Math.random() * emojis.length)];
+    const timestamp = Date.now();
+    
+    // Update local state
+    setActiveEmojis(prev => ({
+      ...prev,
+      [username]: { emoji: randomEmoji, timestamp, username }
+    }));
+
+    // Send to all participants
+    if ((window as Window & { sendEmojiToAll?: (emoji: string, username: string) => void }).sendEmojiToAll) {
+      const sendEmojiToAll = (window as Window & { sendEmojiToAll?: (emoji: string, username: string) => void }).sendEmojiToAll;
+      if (sendEmojiToAll) {
+        sendEmojiToAll(randomEmoji, username);
+      }
+    }
+
+    // Remove emoji after 3 seconds
+    setTimeout(() => {
+      setActiveEmojis(prev => {
+        const newEmojis = { ...prev };
+        delete newEmojis[username];
+        return newEmojis;
+      });
+    }, 3000);
+  };
+
+  // Function to handle received emojis
+  const handleEmojiReceived = (data: {emoji: string, timestamp: number, username: string}) => {
+    setActiveEmojis(prev => ({
+      ...prev,
+      [data.username]: data
+    }));
+
+    // Remove emoji after 3 seconds
+    setTimeout(() => {
+      setActiveEmojis(prev => {
+        const newEmojis = { ...prev };
+        delete newEmojis[data.username];
+        return newEmojis;
+      });
+    }, 3000);
+  };
+
+  // Function to toggle hand raise
+  const toggleHandRaise = (username: string) => {
+    console.log('Toggling hand raise for:', username);
+    console.log('Current raisedHands state:', raisedHands);
+    const newState = !raisedHands[username];
+    
+    setRaisedHands(prev => {
+      const updatedState = {
+        ...prev,
+        [username]: newState
+      };
+      console.log('New raisedHands state:', updatedState);
+      return updatedState;
+    });
+
+    // Send to all participants
+    const sendHandRaiseToAll = (window as Window & { sendHandRaiseToAll?: (username: string, isRaised: boolean) => void }).sendHandRaiseToAll;
+    if (sendHandRaiseToAll) {
+      sendHandRaiseToAll(username, newState);
+    }
+  };
+
+  // Function to handle received hand raise
+  const handleHandRaiseReceived = (data: {username: string, isRaised: boolean}) => {
+    setRaisedHands(prev => ({
+      ...prev,
+      [data.username]: data.isRaised
+    }));
+  };
 
   // Update real time every second
   React.useEffect(() => {
@@ -306,7 +458,9 @@ export default function SessionPage() {
   React.useEffect(() => {
     const localParticipant = participants.find((p: unknown) => (p as Participant).isLocal);
     if (localParticipant) {
-      setCurrentUser((localParticipant as Participant).identity);
+      const identity = (localParticipant as Participant).identity;
+      console.log('Setting currentUser to:', identity);
+      setCurrentUser(identity);
     }
   }, [participants]);
 
@@ -335,7 +489,7 @@ export default function SessionPage() {
         {/* Sidebar - keep in original position */}
         {isSidebarOpen && (
           <div className="absolute right-0 top-0 bottom-0 w-120 z-30 rounded-r-[20px] overflow-hidden border-l-1 border-white/10 bg-[#0D101B]">
-            <Sidebar participants={participants} roomName={roomName} />
+            <Sidebar participants={participants} roomName={roomName} raisedHands={raisedHands} />
           </div>
         )}
 
@@ -378,17 +532,17 @@ export default function SessionPage() {
 
             {/* Fullscreen Button */}
             <div className="absolute top-6 right-6 flex gap-2 z-10">
-              <button
+              {/* <button
                 onClick={() => setIsModalOpen(true)}
                 className="w-8 h-8 bg-white/10 hover:bg-white/20 rounded-lg flex items-center justify-center text-white transition-colors"
               >
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M8 4v8M4 8h8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
                 </svg>
-              </button>
-              <button className="w-8 h-8 rounded-lg flex items-center justify-center text-white transition-colors">
+              </button> */}
+              {/* <button className="w-8 h-8 rounded-lg flex items-center justify-center text-white transition-colors">
                 <Expand color="white" />
-              </button>
+              </button> */}
             </div>
 
             {/* Session Ready Modal */}
@@ -443,13 +597,21 @@ export default function SessionPage() {
                 audio
                 className="w-full h-full"
               >
-                <CustomVideoTiles />
+                <CustomVideoTiles activeEmojis={activeEmojis} />
                 <ParticipantProvider onParticipantsChange={setParticipants} />
+                <RealtimeMessaging 
+                  onEmojiReceived={handleEmojiReceived}
+                  onHandRaiseReceived={handleHandRaiseReceived}
+                />
 
                 <div className="absolute bottom-0 left-0 right-0">
                   <ConferenceControls
                     onInvite={() => setIsModalOpen(true)}
                     onToggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)}
+                    onSendEmoji={sendEmoji}
+                    onToggleHandRaise={toggleHandRaise}
+                    currentUser={currentUser}
+                    raisedHands={raisedHands}
                   />
                 </div>
               </LiveKitRoom>
