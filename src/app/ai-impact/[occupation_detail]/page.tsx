@@ -69,7 +69,6 @@ export default function Page() {
   // Related occupations & pagination
   // const constitutentRelatedOccupations = constituents?.constituents || [];
   const relatedOccupations = categoryData?.relatedOccupations || [];
-  console.log(taskData, "relatedOccupations");
   const totalSlides = Math.ceil(relatedOccupations.length / itemsPerSlide);
   // Responsive occupationsPerSlide
   const [occupationsPerSlide, setOccupationsPerSlide] = useState(3);
