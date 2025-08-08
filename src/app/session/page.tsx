@@ -4,13 +4,16 @@ import "../page.css";
 
 export default function SessionPage() {
   return (
-    <div className="w-full flex relative md:px-14 px-4 flex-col items-center justify-center">
-      <div className="session-bg z-[-100] h-[66.66vw] top-[calc(27vw+125px)] md:top-[350px] md:h-[30vw]"></div>
-      <div className="green-shine-session-mobile md:hidden block z-[-100]"></div>
-      <div className="green-shine-session md:block hidden z-[-100]"></div>
-      <div className="green-shine-session-small md:block hidden z-[-100]"></div>
-      <div className="green-shine-session-2nd-small md:block hidden z-[-100]"></div>
-      <div className="green-shine-session-3rd-small md:block hidden z-[-100]"></div>
+    <div className="w-full flex relative md:px-14 px-4 flex-col items-center justify-center min-h-screen overflow-hidden">
+      {/* Backgrounds */}
+      <div className="absolute inset-0 pointer-events-none z-[-100]">
+        <div className="session-bg h-[66.66vw] top-[calc(27vw+125px)] md:top-[350px] md:h-[30vw]"></div>
+        <div className="green-shine-session-mobile md:hidden block"></div>
+        <div className="green-shine-session md:block hidden"></div>
+        <div className="green-shine-session-small md:block hidden"></div>
+        <div className="green-shine-session-2nd-small md:block hidden"></div>
+        <div className="green-shine-session-3rd-small md:block hidden"></div>
+      </div>
 
       <div className="flex md:gap-11 gap-3 text-white items-center justify-between md:mt-[185px] mt-20 mb-0 md:h-16 h-[30px]">
         <Link href="/">
