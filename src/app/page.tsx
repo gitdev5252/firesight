@@ -6,6 +6,12 @@ import Image from "next/image";
 import "./page.css";
 import { Button } from "@/components/ui/button";
 
+import {
+  pulseSectionCardInfo,
+  sessionSectionCardInfo,
+  platformSectionCardInfo,
+} from "@/utils/constant/firesight";
+
 const pages = [
   [0, 3],
   [3, 3],
@@ -16,80 +22,6 @@ const swipePower = (offset: number, velocity: number) => {
   return Math.abs(offset) * velocity;
 };
 export default function Home() {
-  const pulseSectionCardInfo: {
-    title: string;
-    content: string;
-    feature: string;
-  }[] = [
-    {
-      title: "Report",
-      content: "Your hub for workflows, insights, and productivity.",
-      feature: "",
-    },
-    {
-      title: "News",
-      content:
-        "AI-filtered media feed—monitor topics, brands, and trends in real time.",
-      feature: "",
-    },
-    {
-      title: "Intelligence",
-      content:
-        "Personalised intelligence compiled from internal and external information.",
-      feature: "",
-    },
-    {
-      title: "Signals",
-      content:
-        "State-of-the-Art keyword, phase and narrative tracking technology.",
-      feature: "(coming soon)",
-    },
-    {
-      title: "Spotlight",
-      content:
-        "Discover what’s trending, loved, or hated - by location, sector, or time period.",
-      feature: "(coming soon)",
-    },
-    {
-      title: "Surveillance",
-      content:
-        "self-guided media intelligence driving deeper comprehension of current events.",
-      feature: "(coming soon)",
-    },
-  ];
-
-  const sessionSectionCardInfo: { title: string; content: string }[] = [
-    {
-      title: "Agent",
-      content:
-        "A new medium of collaboration: You and an AI agent working together seamlessly",
-    },
-    {
-      title: "Conference Sessions",
-      content:
-        "Smarter, more efficient group calls -complete with prompts, summaries & Agents",
-    },
-    {
-      title: "Embedded Agents",
-      content: "AI-powered agents that actively participate in your meetings",
-    },
-    {
-      title: "Session Summaries",
-      content:
-        "Capture decisions and next steps instantly with actionable summaries",
-    },
-    {
-      title: "WorldShare",
-      content:
-        "AI agents listen, retrieve (RAG), present and share in real time",
-    },
-    {
-      title: "Embedded Prompts",
-      content:
-        "Intuitive prompts that guide your meetings and ensure no opportunity is overlooked",
-    },
-  ];
-
   const [[page, direction], setPage] = useState([0, 0]);
   const [[page1, direction1], setPage1] = useState([0, 0]);
   const [[page2, direction2], setPage2] = useState([0, 0]);
@@ -113,44 +45,6 @@ export default function Home() {
     });
   };
 
-  const platformSectionCardInfo: {
-    title: string;
-    content: string;
-    icon: string;
-  }[] = [
-    {
-      title: "Dashboard",
-      content: "Your hub for workflows, insights, and productivity",
-      icon: "/images/icons/dashboard.svg",
-    },
-    {
-      title: "Chat",
-      content: "A multi-modal, multi-agent AI-powered chat region",
-      icon: "/images/icons/chat.svg",
-    },
-    {
-      title: "Page",
-      content: "AI-assisted writing editor with multi-agent collaboration",
-      icon: "/images/icons/page.svg",
-    },
-    {
-      title: "Sessions",
-      content:
-        "Transform meetings with AI-native conferencing with embedded AI Agents",
-      icon: "/images/icons/sessions.svg",
-    },
-    {
-      title: "Graph",
-      content: "Interactive knowledge graph for advanced knowledge management",
-      icon: "/images/icons/graph.svg",
-    },
-    {
-      title: "Projects",
-      content:
-        "Effortless organisational control for your workflows and projects",
-      icon: "/images/icons/projects.svg",
-    },
-  ];
   return (
     <>
       <div className="w-full relative overflow-x-hidden">
@@ -164,6 +58,7 @@ export default function Home() {
           height={53}
           priority
           className="md:w-[214px] md:h-[53px] w-[141px] h-[35px]"
+          style={{ width: "auto", height: "auto" }}
         />
       </Link>
       <section className="relative w-full flex flex-col items-center justify-center z-50 md:pb-32 pb-[34px]">
@@ -221,6 +116,7 @@ export default function Home() {
               height={64}
               priority
               className="md:w-[264px] md:h-[64px] w-[124px] h-[30px]"
+              style={{ width: "auto", height: "auto" }}
             />
           </Link>
           <span className="md:text-[45px] text-[20px]">|</span>
@@ -334,7 +230,7 @@ export default function Home() {
               >
                 <div className="flex flex-col w-full h-full justify-stretch gap-3 items-stretch">
                   {pulseSectionCardInfo
-                    .splice(pages[page1][0], pages[page1][1])
+                    .slice(pages[page1][0], pages[page1][0] + pages[page1][1])
                     .map((item, index) => (
                       <div
                         className="main-small-box w-full relative cursor-pointer"
@@ -419,6 +315,7 @@ export default function Home() {
               height={53}
               priority
               className="md:w-[264px] md:h-[64px] w-[124px] h-[38px]"
+              style={{ width: "auto", height: "auto" }}
             />
           </Link>
           <span className="md:text-[45px] text-[20px]">|</span>
@@ -540,7 +437,7 @@ export default function Home() {
               >
                 <div className="flex flex-col w-full h-full justify-stretch gap-3 items-stretch">
                   {sessionSectionCardInfo
-                    .splice(pages[page2][0], pages[page2][1])
+                    .slice(pages[page2][0], pages[page2][0] + pages[page2][1])
                     .map((item, index) => (
                       <div
                         className="main-small-box w-full relative cursor-pointer"
@@ -616,6 +513,7 @@ export default function Home() {
               height={53}
               priority
               className="md:w-[264px] md:h-[64px] w-[124px] h-[30px]"
+              style={{ width: "auto", height: "auto" }}
             />
           </Link>
           <span className="md:text-[45px] text-[20px]">|</span>
@@ -701,6 +599,7 @@ export default function Home() {
                       width={23}
                       height={23}
                       className="md:mr-4 mr-1 md:h-[23px] h-[20px]"
+                      style={{ width: "auto", height: "auto" }}
                     />
                   </div>
                   <p className="md:text-[15px] text-[12px]">{item.content}</p>
@@ -744,7 +643,7 @@ export default function Home() {
               >
                 <div className="flex flex-col w-full h-full justify-stretch gap-3 items-stretch">
                   {platformSectionCardInfo
-                    .splice(pages[page][0], pages[page][1])
+                    .slice(pages[page][0], pages[page][0] + pages[page][1])
                     .map((item, index) => (
                       <div
                         className="main-small-box lg:!w-[30%] sm:!w-[46%] !w-full relative cursor-pointer"
@@ -761,6 +660,7 @@ export default function Home() {
                               width={23}
                               height={23}
                               className="md:mr-4 mr-1 md:h-[23px] h-[20px]"
+                              style={{ width: "auto", height: "auto" }}
                             />
                           </div>
                           <p className="md:text-[15px] text-[12px]">
