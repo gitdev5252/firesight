@@ -39,8 +39,8 @@ export function Header({ scrolled }: { scrolled: boolean }) {
       }}
     >
       <div className="flex h-16 items-center md:mx-14 px-4">
-        <div className="mr-16 flex items-center">
-          <Link href="/" className="flex items-center space-x-2">
+        <div className="mr-16 flex items-center lg:flex-1/6">
+          <Link href="/" className="flex items-center">
             <Image
               src="/images/logo.svg"
               alt="Logo"
@@ -52,8 +52,8 @@ export function Header({ scrolled }: { scrolled: boolean }) {
           </Link>
         </div>
         {/* Desktop Nav */}
-        <nav className="hidden md:flex flex-auto items-center justify-end space-x-[5.56vw] font-medium !text-[18px]">
-          <div className="flex items-center relative mr-17">
+        <nav className="hidden md:flex md:flex-5/6 flex-auto items-center justify-end font-medium !text-[18px] w-full">
+          <div className="flex items-center relative ">
             <Button
               variant="ghost"
               className="px-2 text-white !text-[18px] !bg-transparent hover:text-white"
@@ -163,7 +163,7 @@ export function Header({ scrolled }: { scrolled: boolean }) {
             )}
           </div>
           {pathname === "/session" ? (
-            <div className="start-session-btn-bg mr-15">
+            <div className="start-session-btn-bg">
               <Link
                 href="/session/start-session"
                 className="nav-item active absolute -top-[8px] w-full h-full flex items-center justify-center"
@@ -288,14 +288,6 @@ export function Header({ scrolled }: { scrolled: boolean }) {
                     Pricing
                   </Link>
                 </div>
-                {/* <li>
-                    <Link
-                      href="/pulse/network-brands"
-                      className="hover:underline"
-                    >
-                      Network Partners
-                    </Link>
-                  </li> */}
               </div>
               <div className="vertical-divider !h-[105px]"></div>
               {/* Main Nav */}

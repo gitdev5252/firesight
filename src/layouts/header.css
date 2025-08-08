@@ -7,6 +7,11 @@
   font-weight: 400;
   line-height: 150%; /* 27px */
   text-transform: uppercase;
+  margin-left: 50px;
+}
+
+.nav-item:first-child {
+  margin-left: 0;
 }
 
 .nav-item.active {
