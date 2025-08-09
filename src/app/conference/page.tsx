@@ -14,7 +14,13 @@ import { CustomVideoTiles } from "@/components/conference/CustomVideoTiles";
 import { useMediaControls } from "@/hooks/useMediaControls";
 
 // Sidebar Component
-const Sidebar = ({ participants, roomName, raisedHands }: { participants?: unknown[], roomName: string, raisedHands: {[key: string]: boolean} }) => {
+const Sidebar = ({ participants, roomName, raisedHands, chatMessages, onSendMessage }: { 
+  participants?: unknown[], 
+  roomName: string, 
+  raisedHands: {[key: string]: boolean},
+  chatMessages: {message: string, timestamp: number, username: string}[],
+  onSendMessage: (message: string) => void
+}) => {
   const [activeTab, setActiveTab] = React.useState("People");
   const tabs = ["People", "Chat", "Transcript", "Summary", "Prompts"];
 
@@ -40,7 +46,7 @@ const Sidebar = ({ participants, roomName, raisedHands }: { participants?: unkno
       {/* Tab Content */}
       <div className="flex-1 p-4 overflow-y-auto">
         {activeTab === "People" && <PeopleTab participants={participants} roomName={roomName} raisedHands={raisedHands} />}
-        {activeTab === "Chat" && <ChatTab />}
+        {activeTab === "Chat" && <ChatTab messages={chatMessages} onSendMessage={onSendMessage} />}
         {activeTab === "Transcript" && <TranscriptTab />}
         {activeTab === "Summary" && <SummaryTab />}
         {activeTab === "Prompts" && <PromptsTab />}
@@ -124,18 +130,80 @@ const PeopleTab = ({ participants, roomName, raisedHands }: { participants?: unk
   );
 };
 
-const ChatTab = () => (
-  <div>
-    <p className="text-white/60 text-sm mb-4">No messages yet</p>
-    <div className="border-t border-white/10 pt-4">
-      <input
-        type="text"
-        placeholder="Type a message..."
-        className="w-full bg-white/10 border border-white/20 rounded-lg px-3 py-2 text-white text-sm placeholder-white/50"
-      />
+const ChatTab = ({ messages, onSendMessage }: { 
+  messages: {message: string, timestamp: number, username: string}[], 
+  onSendMessage: (message: string) => void 
+}) => {
+  const [inputMessage, setInputMessage] = React.useState("");
+  const messagesEndRef = React.useRef<HTMLDivElement>(null);
+
+  // Auto-scroll to bottom when new messages arrive
+  React.useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
+
+  const handleSendMessage = () => {
+    if (inputMessage.trim()) {
+      onSendMessage(inputMessage.trim());
+      setInputMessage("");
+    }
+  };
+
+  const handleKeyPress = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      handleSendMessage();
+    }
+  };
+
+  const formatTime = (timestamp: number) => {
+    const date = new Date(timestamp);
+    return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  };
+
+  return (
+    <div className="flex flex-col h-full">
+      {/* Messages container */}
+      <div className="flex-1 overflow-y-auto mb-4 space-y-3">
+        {messages.length > 0 ? (
+          messages.map((msg, index) => (
+            <div key={index} className="bg-white/5 rounded-lg p-3 border border-white/10">
+              <div className="flex items-center justify-between mb-1">
+                <span className="text-white/90 text-sm font-medium">{msg.username}</span>
+                <span className="text-white/50 text-xs">{formatTime(msg.timestamp)}</span>
+              </div>
+              <p className="text-white/80 text-sm">{msg.message}</p>
+            </div>
+          ))
+        ) : (
+          <p className="text-white/60 text-sm text-center py-8">No messages yet. Start the conversation!</p>
+        )}
+        <div ref={messagesEndRef} />
+      </div>
+
+      {/* Input area */}
+      <div className="border-t border-white/10 pt-4">
+        <div className="flex gap-2">
+          <input
+            type="text"
+            value={inputMessage}
+            onChange={(e) => setInputMessage(e.target.value)}
+            onKeyPress={handleKeyPress}
+            placeholder="Type a message..."
+            className="flex-1 bg-white/10 border border-white/20 rounded-lg px-3 py-2 text-white text-sm placeholder-white/50 focus:outline-none focus:border-blue-500"
+          />
+          <button
+            onClick={handleSendMessage}
+            disabled={!inputMessage.trim()}
+            className="px-4 py-2 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-800 disabled:opacity-50 text-white rounded-lg text-sm font-medium transition-colors"
+          >
+            Send
+          </button>
+        </div>
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 const TranscriptTab = () => (
   <div>
@@ -158,10 +226,12 @@ const PromptsTab = () => (
 // Component to handle real-time messaging for emojis and hand raises
 const RealtimeMessaging = ({ 
   onEmojiReceived, 
-  onHandRaiseReceived 
+  onHandRaiseReceived,
+  onChatReceived 
 }: { 
   onEmojiReceived: (data: {emoji: string, timestamp: number, username: string}) => void;
   onHandRaiseReceived: (data: {username: string, isRaised: boolean}) => void;
+  onChatReceived: (data: {message: string, timestamp: number, username: string}) => void;
 }) => {
   const { localParticipant } = useLocalParticipant();
   
@@ -177,6 +247,12 @@ const RealtimeMessaging = ({
     onHandRaiseReceived(data);
   });
 
+  // Data channel for chat messages
+  const { send: sendChatData } = useDataChannel('chat', (message) => {
+    const data = JSON.parse(new TextDecoder().decode(message.payload));
+    onChatReceived(data);
+  });
+
   // Expose send functions globally
   React.useEffect(() => {
     if (localParticipant) {
@@ -189,8 +265,13 @@ const RealtimeMessaging = ({
         const data = { username, isRaised };
         sendHandData(new TextEncoder().encode(JSON.stringify(data)), { reliable: true });
       };
+
+      (window as unknown as { sendChatToAll?: (message: string, username: string) => void }).sendChatToAll = (message: string, username: string) => {
+        const data = { message, timestamp: Date.now(), username };
+        sendChatData(new TextEncoder().encode(JSON.stringify(data)), { reliable: true });
+      };
     }
-  }, [localParticipant, sendEmojiData, sendHandData]);
+  }, [localParticipant, sendEmojiData, sendHandData, sendChatData]);
 
   return null;
 };
@@ -219,6 +300,7 @@ const ConferenceControls = ({ onInvite, onToggleSidebar, onSendEmoji, onToggleHa
     toggleMicrophone,
     toggleCamera,
     startScreenShare,
+    stopScreenShare,
     isScreenSharing
   } = useMediaControls();
 
@@ -288,15 +370,16 @@ const ConferenceControls = ({ onInvite, onToggleSidebar, onSendEmoji, onToggleHa
             </button>
             <div className="w-px h-8 bg-white/20"></div>
 
-            <button onClick={startScreenShare}
+            <button 
+              onClick={isScreenSharing ? stopScreenShare : startScreenShare}
               className={`flex flex-col items-center gap-1 transition-colors ${isScreenSharing
                 ? 'text-green-400 hover:text-green-300'
                 : 'text-gray-400 hover:text-gray-400'
                 }`}>
               <div className="items-center justify-center">
-                <Monitor color="white" />
+                <Monitor color={isScreenSharing ? "#10b981" : "white"} />
               </div>
-              <span className="text-xs mt-2">Present</span>
+              <span className="text-xs mt-2">{isScreenSharing ? "Stop" : "Present"}</span>
             </button>
             <div className="w-px h-8 bg-white/20"></div>
 
@@ -358,6 +441,7 @@ export default function SessionPage() {
   const [currentTime, setCurrentTime] = React.useState<string>("");
   const [activeEmojis, setActiveEmojis] = React.useState<{[key: string]: {emoji: string, timestamp: number, username: string}}>({}); // Add emoji state
   const [raisedHands, setRaisedHands] = React.useState<{[key: string]: boolean}>({}); // Add raised hands state
+  const [chatMessages, setChatMessages] = React.useState<{message: string, timestamp: number, username: string}[]>([]); // Add chat state
 
   // for now i am adding the rnadom emojiss
   const emojis = ['😀', '😂', '😍', '🤔', '😮', '👍', '👏', '❤️', '🔥', '💯', '😎', '🎉', '😊', '👋', '💪'];
@@ -438,6 +522,26 @@ export default function SessionPage() {
     }));
   };
 
+  // Function to send chat message
+  const sendChatMessage = (message: string) => {
+    const timestamp = Date.now();
+    const chatData = { message, timestamp, username: currentUser };
+    
+    // Add to local state
+    setChatMessages(prev => [...prev, chatData]);
+
+    // Send to all participants
+    const sendChatToAll = (window as Window & { sendChatToAll?: (message: string, username: string) => void }).sendChatToAll;
+    if (sendChatToAll) {
+      sendChatToAll(message, currentUser);
+    }
+  };
+
+  // Function to handle received chat message
+  const handleChatReceived = (data: {message: string, timestamp: number, username: string}) => {
+    setChatMessages(prev => [...prev, data]);
+  };
+
   // Update real time every second
   React.useEffect(() => {
     const updateTime = () => {
@@ -489,7 +593,13 @@ export default function SessionPage() {
         {/* Sidebar - keep in original position */}
         {isSidebarOpen && (
           <div className="absolute right-0 top-0 bottom-0 w-120 z-30 rounded-r-[20px] overflow-hidden border-l-1 border-white/10 bg-[#0D101B]">
-            <Sidebar participants={participants} roomName={roomName} raisedHands={raisedHands} />
+            <Sidebar 
+              participants={participants} 
+              roomName={roomName} 
+              raisedHands={raisedHands} 
+              chatMessages={chatMessages}
+              onSendMessage={sendChatMessage}
+            />
           </div>
         )}
 
@@ -602,6 +712,7 @@ export default function SessionPage() {
                 <RealtimeMessaging 
                   onEmojiReceived={handleEmojiReceived}
                   onHandRaiseReceived={handleHandRaiseReceived}
+                  onChatReceived={handleChatReceived}
                 />
 
                 <div className="absolute bottom-0 left-0 right-0">

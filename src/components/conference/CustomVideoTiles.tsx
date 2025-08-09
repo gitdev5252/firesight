@@ -1,6 +1,6 @@
 import { useTracks, useParticipants } from "@livekit/components-react";
 import { Participant, Track } from "livekit-client";
-import { Expand, Mic, MicOff } from "lucide-react";
+import { Expand, Mic, MicOff, Monitor } from "lucide-react";
 import { useEffect, useRef } from "react";
 
 // Random names to assign to participants
@@ -58,6 +58,11 @@ export const CustomVideoTiles = ({ activeEmojis }: { activeEmojis?: { [key: stri
   if (participants.length > 1) {
     const mainParticipant = participants.find(p => !p.isLocal) || participants[0];
     const otherParticipants = participants.filter(p => p !== mainParticipant);
+    
+    // Google Meet style: Show max 3 individual tiles, rest in overflow tile
+    const maxIndividualTiles = 3;
+    const displayedParticipants = otherParticipants.slice(0, maxIndividualTiles);
+    const overflowParticipants = otherParticipants.slice(maxIndividualTiles);
 
     return (
       <div className="w-full h-full flex ">
@@ -70,9 +75,15 @@ export const CustomVideoTiles = ({ activeEmojis }: { activeEmojis?: { [key: stri
 
         {/* Right side participant tiles - fixed width */}
         <div className="w-56 flex flex-col gap-2 mr-4">
-          {otherParticipants.map((participant) => (
+          {/* Individual tiles for first 3 participants */}
+          {displayedParticipants.map((participant) => (
             <SmallVideoTile key={participant.identity} participant={participant} />
           ))}
+          
+          {/* Overflow tile for remaining participants */}
+          {overflowParticipants.length > 0 && (
+            <OverflowTile participants={overflowParticipants} />
+          )}
         </div>
       </div>
     );
@@ -102,9 +113,13 @@ const MainVideoTile = ({ participant, activeEmojis }: {
   const displayName = participant.name || getRandomName(participant.identity);
   const initials = getInitials(displayName);
 
-  // Find the video track for this participant
-  const tracks = useTracks([Track.Source.Camera]);
-  const participantTrack = tracks.find(track => track.participant.identity === participant.identity);
+  // Find the video track for this participant (prioritize screen share over camera)
+  const tracks = useTracks([Track.Source.Camera, Track.Source.ScreenShare]);
+  const participantTracks = tracks.filter(track => track.participant.identity === participant.identity);
+  
+  // Prioritize screen share track if available, otherwise use camera
+  const participantTrack = participantTracks.find(track => track.source === Track.Source.ScreenShare) || 
+                          participantTracks.find(track => track.source === Track.Source.Camera);
 
   useEffect(() => {
     const videoElement = videoRef.current;
@@ -158,25 +173,18 @@ const MainVideoTile = ({ participant, activeEmojis }: {
         </div>
       ))}
 
-      {/* Audio indicator */}
-      <div className="absolute top-4 right-4">
-        <div className="w-7 h-7 bg-[#080B16] rounded-full flex items-center justify-center shadow-lg mt-2">
+      {/* Indicators */}
+      <div className="absolute top-4 right-4 flex flex-col gap-2">
+        {/* Screen share indicator */}
+        {participantTrack?.source === Track.Source.ScreenShare && (
+          <div className="w-7 h-7 bg-green-600 rounded-full flex items-center justify-center shadow-lg">
+            <Monitor size={14} color="white" />
+          </div>
+        )}
+        
+        <div className="w-7 h-7 bg-[#080B16] rounded-full flex items-center justify-center shadow-lg">
           <Expand color="white" />
         </div>
-        {/* {participant.isMicrophoneEnabled ? (
-          <div className="w-7 h-7 bg-green-500 rounded-full flex items-center justify-center shadow-lg">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M12 1c-1.66 0-3 1.34-3 3v8c0 1.66 1.34 3 3 3s3-1.34 3-3V4c0-1.66-1.34-3-3-3z" fill="white" />
-            </svg>
-          </div>
-        ) : (
-          <div className="w-7 h-7 bg-red-500 rounded-full flex items-center justify-center shadow-lg">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M12 1c-1.66 0-3 1.34-3 3v8c0 1.66 1.34 3 3 3s3-1.34 3-3V4c0-1.66-1.34-3-3-3z" fill="white" />
-              <line x1="1" y1="1" x2="23" y2="23" stroke="white" strokeWidth="2" />
-            </svg>
-          </div>
-        )} */}
       </div>
     </div>
   );
@@ -190,9 +198,13 @@ const SmallVideoTile = ({ participant }: {
   const displayName = participant.name || getRandomName(participant.identity);
   const initials = getInitials(displayName);
 
-  // Find the video track for this participant
-  const tracks = useTracks([Track.Source.Camera]);
-  const participantTrack = tracks.find(track => track.participant.identity === participant.identity);
+  // Find the video track for this participant (prioritize screen share over camera)
+  const tracks = useTracks([Track.Source.Camera, Track.Source.ScreenShare]);
+  const participantTracks = tracks.filter(track => track.participant.identity === participant.identity);
+  
+  // Prioritize screen share track if available, otherwise use camera
+  const participantTrack = participantTracks.find(track => track.source === Track.Source.ScreenShare) || 
+                          participantTracks.find(track => track.source === Track.Source.Camera);
 
   useEffect(() => {
     const videoElement = videoRef.current;
@@ -230,8 +242,16 @@ const SmallVideoTile = ({ participant }: {
         {participant.isLocal && " (You)"}
       </div>
 
-      {/* Audio indicator */}
-      <div className="absolute top-2 right-2">
+      {/* Indicators */}
+      <div className="absolute top-2 right-2 flex flex-col gap-1">
+        {/* Screen share indicator */}
+        {participantTrack?.source === Track.Source.ScreenShare && (
+          <div className="w-6 h-6 bg-green-600 rounded-full flex items-center justify-center shadow-lg">
+            <Monitor size={12} color="white" />
+          </div>
+        )}
+        
+        {/* Audio indicator */}
         {participant.isMicrophoneEnabled ? (
           <div className="w-8 h-8 bg-[#080B16]  rounded-full flex items-center justify-center shadow-lg">
             <Mic size={16} color="white" />
@@ -242,6 +262,50 @@ const SmallVideoTile = ({ participant }: {
           </div>
         )}
       </div>
+    </div>
+  );
+};
+
+// Overflow tile component (for showing remaining participants)
+const OverflowTile = ({ participants }: {
+  participants: Participant[];
+}) => {
+  const totalCount = participants.length;
+  const displayParticipants = participants.slice(0, 4); // Show max 4 avatars in the overflow tile
+  
+  return (
+    <div className="w-full h-32 bg-gradient-to-br from-gray-800 to-gray-900 rounded-lg flex items-center justify-center text-white relative overflow-hidden cursor-pointer hover:ring-2 hover:ring-blue-500/50 transition-all border border-white/10">
+      <div className="flex flex-col items-center justify-center gap-2">
+        {/* Grid of small avatars */}
+        <div className="grid grid-cols-2 gap-1">
+          {displayParticipants.map((participant) => {
+            const displayName = participant.name || getRandomName(participant.identity);
+            const initials = getInitials(displayName);
+            
+            return (
+              <div
+                key={participant.identity}
+                className="w-6 h-6 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-[10px] font-bold uppercase text-white shadow-sm"
+              >
+                {initials}
+              </div>
+            );
+          })}
+        </div>
+        
+        {/* Count indicator */}
+        <div className="text-center">
+          <span className="text-lg font-bold text-white">
+            +{totalCount}
+          </span>
+          <p className="text-xs text-white/70 mt-1">
+            more
+          </p>
+        </div>
+      </div>
+      
+      {/* Background pattern for visual appeal */}
+      <div className="absolute inset-0 bg-gradient-to-br from-blue-600/20 to-purple-600/20 rounded-lg"></div>
     </div>
   );
 };
