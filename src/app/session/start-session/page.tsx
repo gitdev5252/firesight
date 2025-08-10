@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import Link from "next/link";
 
 // Total number of slides will be determined after slideData is defined
 
@@ -86,23 +87,21 @@ export default function StartSessionPage() {
             decision faster with Firesight | Sessions.
           </p>
           <div className="flex flex-wrap mt-[50px] gap-4">
-            <button
-              className="flex items-center text-[18px] px-[36px] py-[14px] text-white font-bold"
-              style={{
-                border: "1px solid rgba(15, 251, 73, 0.59)",
-                borderRadius: "55px",
-                background:
-                  "linear-gradient(88deg, rgba(3, 139, 152, 0.06) 5.46%, rgba(15, 251, 73, 0.06) 71.42%)",
-                boxShadow: "0 3.131px 46.972px 0 rgba(13, 63, 46, 0.5)",
-              }}
-            >
-              <img
-                src="/images/icons/camera.svg"
-                alt="New Session"
-                className="pr-2"
-              />
-              New Session
-            </button>
+            <Link href="/conference">
+              <button
+                className="flex items-center text-[18px] px-[36px] py-[14px] text-white font-bold cursor-pointer"
+                style={{
+                  border: "1px solid rgba(15, 251, 73, 0.59)",
+                  borderRadius: "55px",
+                  background:
+                    "linear-gradient(88deg, rgba(3, 139, 152, 0.06) 5.46%, rgba(15, 251, 73, 0.06) 71.42%)",
+                  boxShadow: "0 3.131px 46.972px 0 rgba(13, 63, 46, 0.5)",
+                }}
+              >
+                <img src="/images/icons/camera.svg" alt="New Session" className="pr-2" />
+                New Session
+              </button>
+            </Link>
             <button
               className="flex items-center text-[18px] px-[36px] py-[14px] text-white font-bold"
               style={{
@@ -184,9 +183,8 @@ export default function StartSessionPage() {
               <button
                 key={item.alt}
                 onClick={() => setPage([idx, idx > page ? 1 : -1])}
-                className={`h-6 flex items-center justify-center bg-transparent border-none p-0 focus:outline-none transition-all duration-200 ${
-                  page === idx ? "w-[18px]" : "w-[10px]"
-                }`}
+                className={`h-6 flex items-center justify-center bg-transparent border-none p-0 focus:outline-none transition-all duration-200 ${page === idx ? "w-[18px]" : "w-[10px]"
+                  }`}
                 style={{ background: "none" }}
                 aria-label={`Go to slide ${idx + 1}`}
               >
