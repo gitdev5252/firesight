@@ -1,6 +1,6 @@
 "use client";
 import { BotMessageSquare, Calendar, Clock, Copy, Hand, Link, Mic, Monitor, PanelLeftClose, PhoneOff, Smile, Users, Video, MicOff, VideoOff } from "lucide-react";
-import React, { useEffect } from "react";
+import React from "react";
 import {
   LiveKitRoom,
   useDisconnectButton,
@@ -437,11 +437,14 @@ export default function SessionPage() {
   const [roomName, setRoomName] = React.useState<string>("");
   const [isSidebarOpen, setIsSidebarOpen] = React.useState(false);
   const [participants, setParticipants] = React.useState<unknown[]>([]);
-  const [currentUser, setCurrentUser] = React.useState<string>("You");
+  const [currentUser, setCurrentUser] = React.useState<string>("");
   const [currentTime, setCurrentTime] = React.useState<string>("");
   const [activeEmojis, setActiveEmojis] = React.useState<{[key: string]: {emoji: string, timestamp: number, username: string}}>({}); // Add emoji state
   const [raisedHands, setRaisedHands] = React.useState<{[key: string]: boolean}>({}); // Add raised hands state
   const [chatMessages, setChatMessages] = React.useState<{message: string, timestamp: number, username: string}[]>([]); // Add chat state
+  const [nameModalOpen, setNameModalOpen] = React.useState(false);
+  const [userNameInput, setUserNameInput] = React.useState("");
+  const [nameError, setNameError] = React.useState("");
 
   // for now i am adding the rnadom emojiss
   const emojis = ['😀', '😂', '😍', '🤔', '😮', '👍', '👏', '❤️', '🔥', '💯', '😎', '🎉', '😊', '👋', '💪'];
@@ -568,27 +571,71 @@ export default function SessionPage() {
     }
   }, [participants]);
 
-  useEffect(() => {
-    const fetchToken = async () => {
-      const userName = `user-${Math.random().toString(36).slice(2, 8)}`;
-
+  React.useEffect(() => {
+    // Always ask for name on page load
+    const urlParams = new URLSearchParams(window.location.search);
+    const nameFromUrl = urlParams.get('name');
+    if (!nameFromUrl) {
+      setNameModalOpen(true);
+    } else {
+      setCurrentUser(nameFromUrl);
       // Get room from URL params or create new one
-      const urlParams = new URLSearchParams(window.location.search);
       const roomFromUrl = urlParams.get('room');
       const currentRoom = roomFromUrl || `room-${Math.random().toString(36).slice(2, 8)}`;
-
       setRoomName(currentRoom);
-      const res = await fetch(`/api/livekit-token?room=${currentRoom}&identity=${userName}`);
-      const data = await res.json();
-      console.log(data, "LiveKit Token Data");
-      setToken(data.token);
-    };
-    fetchToken();
+      fetch(`/api/livekit-token?room=${currentRoom}&identity=${nameFromUrl}`)
+        .then(res => res.json())
+        .then(data => {
+          setToken(data.token);
+        });
+    }
   }, []);
+  // Modal for name input before joining
+  const handleNameSubmit = () => {
+    if (!userNameInput.trim()) {
+      setNameError("Name is required");
+      return;
+    }
+  setCurrentUser(userNameInput.trim());
+  setNameModalOpen(false);
+    // Get room from URL params or create new one
+    const urlParams = new URLSearchParams(window.location.search);
+    const roomFromUrl = urlParams.get('room');
+    const currentRoom = roomFromUrl || `room-${Math.random().toString(36).slice(2, 8)}`;
+    setRoomName(currentRoom);
+    fetch(`/api/livekit-token?room=${currentRoom}&identity=${userNameInput.trim()}`)
+      .then(res => res.json())
+      .then(data => {
+        setToken(data.token);
+      });
+  };
 
 
   return (
     <div className="p-8 bg-[#080B16]">
+      {/* Name Input Modal */}
+      {nameModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-[rgba(0,0,0,0.35)] backdrop-blur-[8px]">
+          <div className="bg-[#1e2328] border border-white/20 rounded-xl max-w-md w-full mx-6 relative p-8 flex flex-col items-center">
+            <h2 className="text-white text-lg font-medium mb-2">Enter Your Name</h2>
+            <p className="text-white/70 text-sm mb-6 text-center">Please enter your name before joining the session.</p>
+            <input
+              type="text"
+              value={userNameInput}
+              onChange={e => { setUserNameInput(e.target.value); setNameError(""); }}
+              placeholder="Your Name"
+              className="w-full px-4 py-3 rounded-lg border border-gray-700 bg-black/30 text-white mb-2 focus:outline-none focus:border-green-400"
+            />
+            {nameError && <span className="text-red-400 text-sm mb-2">{nameError}</span>}
+            <button
+              className="w-full mt-2 flex items-center justify-center gap-2 text-lg px-6 py-3 font-semibold rounded-[16px] bg-gradient-to-r from-green-400/30 to-cyan-400/30 border border-green-400/40 text-white shadow hover:from-green-400/50 hover:to-cyan-400/50 transition"
+              onClick={handleNameSubmit}
+            >
+              Join Session
+            </button>
+          </div>
+        </div>
+      )}
       <div className={`w-full h-[950px] flex flex-col bg-[#0D101B] rounded-[20px] border border-[rgba(255,255,255,0.1)] backdrop-blur-[32px] relative transition-all duration-300 ${isSidebarOpen ? 'pr-120' : ''}`}>
         {/* Sidebar - keep in original position */}
         {isSidebarOpen && (

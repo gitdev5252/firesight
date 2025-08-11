@@ -4,21 +4,8 @@ import { Expand, Mic, MicOff, Monitor } from "lucide-react";
 import { useEffect, useRef } from "react";
 
 // Random names to assign to participants
-const randomNames = [
-  "Alex Chen", "Sarah Johnson", "Mike Rodriguez", "Emma Davis", "David Kim",
-  "Lisa Wang", "James Wilson", "Maria Garcia", "Ryan Thompson", "Priya Patel",
-  "John Smith", "Amy Lee", "Chris Brown", "Jessica Miller", "Kevin Zhang"
-];
 
-// Function to get a random name based on participant identity
-const getRandomName = (identity: string) => {
-  const hash = identity.split('').reduce((a, b) => {
-    a = ((a << 5) - a) + b.charCodeAt(0);
-    return a & a;
-  }, 0);
-  const index = Math.abs(hash) % randomNames.length;
-  return randomNames[index];
-};
+// Use participant.identity directly for display name
 
 // Function to get initials from name
 const getInitials = (name: string) => {
@@ -27,28 +14,62 @@ const getInitials = (name: string) => {
 
 export const CustomVideoTiles = ({ activeEmojis }: { activeEmojis?: { [key: string]: { emoji: string, timestamp: number, username: string } } }) => {
   const participants = useParticipants();
-
-  // Show large centered avatar if only one participant
+  const tracks = useTracks([Track.Source.Camera, Track.Source.ScreenShare]);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  // For single participant case
+  let singleParticipantTrack: ReturnType<typeof useTracks>[number] | null = null;
+  let singleParticipant: Participant | null = null;
+  let singleInitials = "";
+  let singleDisplayName = "";
   if (participants.length === 1) {
-    const participant = participants[0];
-    const displayName = participant.name || getRandomName(participant.identity);
-    const initials = getInitials(displayName);
-
+    singleParticipant = participants[0];
+    singleDisplayName = singleParticipant.identity;
+    singleInitials = getInitials(singleDisplayName);
+    const participantTracks = singleParticipant && singleParticipant.identity
+      ? tracks.filter(track => track.participant.identity === singleParticipant?.identity)
+      : [];
+    singleParticipantTrack = participantTracks.find(track => track.source === Track.Source.ScreenShare) ??
+                            participantTracks.find(track => track.source === Track.Source.Camera) ??
+                            null;
+  }
+  useEffect(() => {
+    if (participants.length === 1 && singleParticipantTrack) {
+      const videoElement = videoRef.current;
+      if (videoElement && singleParticipantTrack.publication?.track) {
+        singleParticipantTrack.publication.track.attach(videoElement);
+        return () => {
+          if (singleParticipantTrack.publication?.track) {
+            singleParticipantTrack.publication.track.detach(videoElement);
+          }
+        };
+      }
+    }
+  }, [participants, singleParticipantTrack]);
+  // Show large centered avatar or video if only one participant
+  if (participants.length === 1) {
+    const isCameraOn = singleParticipant?.isCameraEnabled ?? false;
     return (
-      <div className="w-full h-full flex items-center justify-center">
-        <div className="text-center">
-          <div className="w-32 h-32 mx-auto mb-6 rounded-full bg-[#232626] flex items-center justify-center text-white text-4xl font-bold shadow-2xl">
-            {initials}
-          </div>
-          <h2 className="text-white text-2xl font-semibold mb-2">{displayName}</h2>
-          <p className="text-white/70 text-lg">
-            {/* {participant.isLocal ? "You're the only one here" : "Waiting for others to join..."} */}
-          </p>
-
-          {/* Audio indicator */}
-          <div className="flex items-center justify-center mt-4">
-            {/* Audio indicators commented out */}
-          </div>
+      <div className="w-full h-full min-h-[320px] flex items-center justify-center">
+        <div className="text-center w-full h-full flex items-center justify-center">
+          {isCameraOn && singleParticipantTrack?.publication?.track ? (
+            <video
+              ref={videoRef}
+              autoPlay
+              playsInline
+              muted={singleParticipant?.isLocal ?? false}
+              className="w-full h-full object-cover rounded-xl"
+            />
+          ) : (
+            <div className="flex flex-col items-center justify-center h-full w-full min-h-[320px]">
+              <div className="w-32 h-32 mb-6 rounded-full bg-[#232626] flex items-center justify-center text-white text-4xl font-bold shadow-2xl">
+                {singleInitials}
+              </div>
+              <h2 className="text-white text-2xl font-semibold mb-2">{singleDisplayName}</h2>
+              <p className="text-white/70 text-lg">
+                {/* {singleParticipant.isLocal ? "You're the only one here" : "Waiting for others to join..."} */}
+              </p>
+            </div>
+          )}
         </div>
       </div>
     );
@@ -110,7 +131,7 @@ const MainVideoTile = ({ participant, activeEmojis }: {
   activeEmojis?: { [key: string]: { emoji: string, timestamp: number, username: string } }
 }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const displayName = participant.name || getRandomName(participant.identity);
+  const displayName = participant.identity;
   const initials = getInitials(displayName);
 
   // Find the video track for this participant (prioritize screen share over camera)
@@ -134,7 +155,7 @@ const MainVideoTile = ({ participant, activeEmojis }: {
   }, [participantTrack]);
 
   return (
-    <div className="w-full h-full bg-black rounded-xl flex items-center justify-center text-white relative overflow-hidden">
+    <div className="w-full h-full min-h-[320px] bg-black rounded-xl flex items-center justify-center text-white relative overflow-hidden">
       {participantTrack?.publication?.track ? (
         <video
           ref={videoRef}
@@ -144,11 +165,11 @@ const MainVideoTile = ({ participant, activeEmojis }: {
           className="w-full h-full object-cover"
         />
       ) : (
-        <div className="flex flex-col items-center justify-center h-full w-full">
-          <div className="w-16 h-16 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-lg font-bold uppercase text-white shadow-lg">
+        <div className="flex flex-col items-center justify-center h-full w-full min-h-[320px]">
+          <div className="w-24 h-24 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-2xl font-bold uppercase text-white shadow-lg">
             {initials}
           </div>
-          <p className="mt-3 text-sm text-white/70 font-medium">
+          <p className="mt-3 text-lg text-white/70 font-medium">
             {displayName}
           </p>
         </div>
@@ -195,7 +216,7 @@ const SmallVideoTile = ({ participant }: {
   participant: Participant;
 }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const displayName = participant.name || getRandomName(participant.identity);
+  const displayName = participant.identity;
   const initials = getInitials(displayName);
 
   // Find the video track for this participant (prioritize screen share over camera)
@@ -219,7 +240,7 @@ const SmallVideoTile = ({ participant }: {
   }, [participantTrack]);
 
   return (
-    <div className="w-full h-32 bg-black rounded-lg flex items-center justify-center text-white relative overflow-hidden cursor-pointer hover:ring-2 hover:ring-blue-500/50 transition-all">
+    <div className="w-full h-32 min-h-[128px] bg-black rounded-lg flex items-center justify-center text-white relative overflow-hidden cursor-pointer hover:ring-2 hover:ring-blue-500/50 transition-all">
       {participantTrack?.publication?.track ? (
         <video
           ref={videoRef}
@@ -229,8 +250,8 @@ const SmallVideoTile = ({ participant }: {
           className="w-full h-full object-cover"
         />
       ) : (
-        <div className="flex flex-col items-center justify-center">
-          <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-xs font-bold uppercase text-white">
+        <div className="flex flex-col items-center justify-center h-full w-full min-h-[128px]">
+          <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-base font-bold uppercase text-white">
             {initials}
           </div>
         </div>
@@ -279,7 +300,7 @@ const OverflowTile = ({ participants }: {
         {/* Grid of small avatars */}
         <div className="grid grid-cols-2 gap-1">
           {displayParticipants.map((participant) => {
-            const displayName = participant.name || getRandomName(participant.identity);
+            const displayName = participant.identity;
             const initials = getInitials(displayName);
             
             return (
