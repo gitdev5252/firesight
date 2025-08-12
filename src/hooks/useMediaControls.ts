@@ -1,17 +1,24 @@
 import { useLocalParticipant } from "@livekit/components-react";
 import { useState, useEffect } from "react";
+import { useParticipants } from "@livekit/components-react";
+import { Participant } from "livekit-client";
 
 export const useMediaControls = () => {
   const { localParticipant } = useLocalParticipant();
-  const [isMicrophoneEnabled, setIsMicrophoneEnabled] = useState(true);
-  const [isCameraEnabled, setIsCameraEnabled] = useState(true);
+  const participants = useParticipants();
+  let singleParticipant: Participant | null = null;
+  singleParticipant = participants[0];
+  const isCameraOn = singleParticipant?.isCameraEnabled ?? false;
 
+  const [isMicrophoneEnabled, setIsMicrophoneEnabled] = useState(true);
+  const [isCameraEnabled, setIsCameraEnabled] = useState(isCameraOn);
+  console.log( isCameraOn, "localParticipantlocalParticipant")
   useEffect(() => {
     if (localParticipant) {
       setIsMicrophoneEnabled(localParticipant.isMicrophoneEnabled);
-      setIsCameraEnabled(localParticipant.isCameraEnabled);
+      setIsCameraEnabled(isCameraOn);
     }
-  }, [localParticipant]);
+  }, [isCameraOn,localParticipant]);
 
   const toggleMicrophone = async () => {
     if (localParticipant) {
