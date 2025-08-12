@@ -21,17 +21,35 @@ export const CustomVideoTiles = ({ activeEmojis }: { activeEmojis?: { [key: stri
   let singleParticipant: Participant | null = null;
   let singleInitials = "";
   let singleDisplayName = "";
+  // if (participants.length === 1) {
+  //   singleParticipant = participants[0];
+  //   singleDisplayName = singleParticipant.identity;
+  //   singleInitials = getInitials(singleDisplayName);
+  //   const participantTracks = singleParticipant && singleParticipant.identity
+  //     ? tracks.filter(track => track.participant.identity === singleParticipant?.identity)
+  //     : [];
+  //   singleParticipantTrack = participantTracks.find(track => track.source === Track.Source.ScreenShare) ??
+  //                           participantTracks.find(track => track.source === Track.Source.Camera) ??
+  //                           null;
+  // }
   if (participants.length === 1) {
-    singleParticipant = participants[0];
-    singleDisplayName = singleParticipant.identity;
-    singleInitials = getInitials(singleDisplayName);
-    const participantTracks = singleParticipant && singleParticipant.identity
-      ? tracks.filter(track => track.participant.identity === singleParticipant?.identity)
-      : [];
-    singleParticipantTrack = participantTracks.find(track => track.source === Track.Source.ScreenShare) ??
-                            participantTracks.find(track => track.source === Track.Source.Camera) ??
-                            null;
-  }
+  singleParticipant = participants[0];
+  singleDisplayName = singleParticipant.identity;
+  singleInitials = getInitials(singleDisplayName);
+  const participantTracks = singleParticipant && singleParticipant.identity
+    ? tracks.filter(track => track.participant.identity === singleParticipant?.identity)
+    : [];
+  // Prioritize screen share over camera
+  singleParticipantTrack = participantTracks.find(track => track.source === Track.Source.ScreenShare) ??
+                          participantTracks.find(track => track.source === Track.Source.Camera) ??
+                          null;
+
+  // Check if screen share or camera is enabled
+}
+// const isScreenSharing = !!participantTracks.find(track => track.source === Track.Source.ScreenShare && track.publication?.track);
+const isCameraOn = singleParticipant?.isCameraEnabled ?? false;
+const isScreenSharing = singleParticipant?.isScreenShareEnabled ?? false;
+
   useEffect(() => {
     if (participants.length === 1 && singleParticipantTrack) {
       const videoElement = videoRef.current;
@@ -47,11 +65,11 @@ export const CustomVideoTiles = ({ activeEmojis }: { activeEmojis?: { [key: stri
   }, [participants, singleParticipantTrack]);
   // Show large centered avatar or video if only one participant
   if (participants.length === 1) {
-    const isCameraOn = singleParticipant?.isCameraEnabled ?? false;
+    // const isCameraOn = singleParticipant?.isCameraEnabled ?? false;
     return (
       <div className="w-full h-full min-h-[320px] flex items-center justify-center">
         <div className="text-center w-full h-full flex items-center justify-center">
-          {isCameraOn && singleParticipantTrack?.publication?.track ? (
+        {(isScreenSharing || isCameraOn) && singleParticipantTrack?.publication?.track ? (
             <video
               ref={videoRef}
               autoPlay
@@ -60,7 +78,7 @@ export const CustomVideoTiles = ({ activeEmojis }: { activeEmojis?: { [key: stri
               className="w-full h-full object-cover rounded-xl"
             />
           ) : (
-            <div className="flex flex-col items-center justify-center h-full w-full min-h-[320px]">
+            <div className="flex flex-col items-center justify-center h-[960px] w-full min-h-full">
               <div className="w-32 h-32 mb-6 rounded-full bg-[#232626] flex items-center justify-center text-white text-4xl font-bold shadow-2xl">
                 {singleInitials}
               </div>
