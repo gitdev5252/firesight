@@ -8,6 +8,7 @@ import {
   useLocalParticipant,
   useDataChannel,
 } from "@livekit/components-react";
+import { useRouter } from "next/navigation";
 import "@livekit/components-styles"; // Required styles
 import { LIVEKIT_CONFIG } from "@/lib/livekit/config";
 import { CustomVideoTiles } from "@/components/conference/CustomVideoTiles";
@@ -304,7 +305,18 @@ const ConferenceControls = ({ onInvite, onToggleSidebar, onSendEmoji, onToggleHa
     isScreenSharing
   } = useMediaControls();
 
-  const { buttonProps: disconnectButtonProps } = useDisconnectButton({});
+  const { buttonProps: disconnectButtonProps, disconnect } = useDisconnectButton({});
+  const router = useRouter();
+
+  // Custom handler for End Call
+  const handleEndCall = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    if (disconnectButtonProps.onClick) {
+      await disconnectButtonProps.onClick(e);
+    } else if (disconnect) {
+      await disconnect();
+    }
+    router.push("/session");
+  };
 
   return (
     <div className="px-6 pb-6">
@@ -404,6 +416,7 @@ const ConferenceControls = ({ onInvite, onToggleSidebar, onSendEmoji, onToggleHa
 
             <button
               {...disconnectButtonProps}
+              onClick={handleEndCall}
               className="flex flex-col items-center gap-1 transition-colors text-gray-400 hover:text-gray-400"
             >
               <div className="items-center justify-center">

@@ -1,138 +1,147 @@
 import { useTracks, useParticipants } from "@livekit/components-react";
 import { Participant, Track } from "livekit-client";
 import { Expand, Mic, MicOff, Monitor } from "lucide-react";
-import { useEffect, useRef } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
-// Random names to assign to participants
+/* utils */
+const getInitials = (name: string) =>
+  name.split(" ").map(w => w[0]).join("").toUpperCase().slice(0, 2);
 
-// Use participant.identity directly for display name
-
-// Function to get initials from name
-const getInitials = (name: string) => {
-  return name.split(' ').map(word => word.charAt(0)).join('').toUpperCase().slice(0, 2);
+/** Pick the preferred source for a participant */
+const pickSource = (p: Participant): Track.Source | null => {
+  if (p.isScreenShareEnabled) return Track.Source.ScreenShare;
+  if (p.isCameraEnabled) return Track.Source.Camera;
+  return null;
 };
 
-export const CustomVideoTiles = ({ activeEmojis }: { activeEmojis?: { [key: string]: { emoji: string, timestamp: number, username: string } } }) => {
-  const participants = useParticipants();
+export const CustomVideoTiles = ({
+  activeEmojis,
+}: {
+  activeEmojis?: { [key: string]: { emoji: string; timestamp: number; username: string } };
+}) => {
+  const participantsRaw = useParticipants();
   const tracks = useTracks([Track.Source.Camera, Track.Source.ScreenShare]);
-  const videoRef = useRef<HTMLVideoElement>(null);
-  // For single participant case
-  let singleParticipantTrack: ReturnType<typeof useTracks>[number] | null = null;
-  let singleParticipant: Participant | null = null;
-  let singleInitials = "";
-  let singleDisplayName = "";
-  // if (participants.length === 1) {
-  //   singleParticipant = participants[0];
-  //   singleDisplayName = singleParticipant.identity;
-  //   singleInitials = getInitials(singleDisplayName);
-  //   const participantTracks = singleParticipant && singleParticipant.identity
-  //     ? tracks.filter(track => track.participant.identity === singleParticipant?.identity)
-  //     : [];
-  //   singleParticipantTrack = participantTracks.find(track => track.source === Track.Source.ScreenShare) ??
-  //                           participantTracks.find(track => track.source === Track.Source.Camera) ??
-  //                           null;
-  // }
-  if (participants.length === 1) {
-  singleParticipant = participants[0];
-  singleDisplayName = singleParticipant.identity;
-  singleInitials = getInitials(singleDisplayName);
-  const participantTracks = singleParticipant && singleParticipant.identity
-    ? tracks.filter(track => track.participant.identity === singleParticipant?.identity)
-    : [];
-  // Prioritize screen share over camera
-  singleParticipantTrack = participantTracks.find(track => track.source === Track.Source.ScreenShare) ??
-                          participantTracks.find(track => track.source === Track.Source.Camera) ??
-                          null;
 
-  // Check if screen share or camera is enabled
-}
-// const isScreenSharing = !!participantTracks.find(track => track.source === Track.Source.ScreenShare && track.publication?.track);
-const isCameraOn = singleParticipant?.isCameraEnabled ?? false;
-const isScreenSharing = singleParticipant?.isScreenShareEnabled ?? false;
+  /** 1) Stable participant ordering (no reshuffle) */
+  const participants = useMemo(() => {
+    return [...participantsRaw].sort((a, b) => {
+      // local last, then by identity (stable & deterministic)
+      if (a.isLocal && !b.isLocal) return 1;
+      if (!a.isLocal && b.isLocal) return -1;
+      return String(a.identity).localeCompare(String(b.identity));
+    });
+  }, [participantsRaw]);
 
-  useEffect(() => {
-    if (participants.length === 1 && singleParticipantTrack) {
-      const videoElement = videoRef.current;
-      if (videoElement && singleParticipantTrack.publication?.track) {
-        singleParticipantTrack.publication.track.attach(videoElement);
-        return () => {
-          if (singleParticipantTrack.publication?.track) {
-            singleParticipantTrack.publication.track.detach(videoElement);
-          }
-        };
-      }
+  /** 2) Track lookup map for O(1) access */
+  const trackByParticipantAndSource = useMemo(() => {
+    const map = new Map<string, ReturnType<typeof useTracks>[number]>();
+    for (const t of tracks) {
+      const key = `${t.participant.identity}:${t.source}`;
+      map.set(key, t);
     }
-  }, [participants, singleParticipantTrack]);
-  // Show large centered avatar or video if only one participant
+    return map;
+  }, [tracks]);
+
+  /** 3) Decide & keep a stable main tile */
+  const [mainId, setMainId] = useState<string | null>(null);
+  const promoteTimer = useRef<number | null>(null);
+
+  // set initial main
+  useEffect(() => {
+    if (!mainId && participants.length > 0) {
+      const firstRemote = participants.find(p => !p.isLocal) ?? participants[0];
+      setMainId(firstRemote.identity);
+    }
+  }, [participants, mainId]);
+
+  // promote/demote on screenshare with debounce to avoid flicker
+  useEffect(() => {
+    if (promoteTimer.current) {
+      window.clearTimeout(promoteTimer.current);
+      promoteTimer.current = null;
+    }
+    promoteTimer.current = window.setTimeout(() => {
+      const sharer = participants.find(p => p.isScreenShareEnabled);
+      if (sharer && sharer.identity !== mainId) {
+        setMainId(sharer.identity);
+      } else if (!sharer && mainId && !participants.find(p => p.identity === mainId)) {
+        // main left the room -> choose next stable remote
+        const next = participants.find(p => !p.isLocal) ?? participants[0] ?? null;
+        setMainId(next ? next.identity : null);
+      }
+    }, 250); // 250ms debounce feels snappy but stable
+    return () => {
+      if (promoteTimer.current) window.clearTimeout(promoteTimer.current);
+    };
+  }, [participants, mainId]);
+
+  /** Single-participant layout (kept stable; no conditional container mounts) */
   if (participants.length === 1) {
-    // const isCameraOn = singleParticipant?.isCameraEnabled ?? false;
+    const p = participants[0];
+    const displayName = p.identity;
+    const initials = getInitials(displayName);
+    const preferred = pickSource(p);
+    const t = preferred ? trackByParticipantAndSource.get(`${p.identity}:${preferred}`) : undefined;
+
     return (
       <div className="w-full h-full min-h-[320px] flex items-center justify-center">
         <div className="text-center w-full h-full flex items-center justify-center">
-        {(isScreenSharing || isCameraOn) && singleParticipantTrack?.publication?.track ? (
-            <video
-              ref={videoRef}
-              autoPlay
-              playsInline
-              muted={singleParticipant?.isLocal ?? false}
-              className="w-full h-full object-cover rounded-xl"
-            />
-          ) : (
-            <div className="flex flex-col items-center justify-center h-[960px] w-full min-h-full">
-              <div className="w-32 h-32 mb-6 rounded-full bg-[#232626] flex items-center justify-center text-white text-4xl font-bold shadow-2xl">
-                {singleInitials}
-              </div>
-              <h2 className="text-white text-2xl font-semibold mb-2">{singleDisplayName}</h2>
-              <p className="text-white/70 text-lg">
-                {/* {singleParticipant.isLocal ? "You're the only one here" : "Waiting for others to join..."} */}
-              </p>
-            </div>
-          )}
+          <VideoSurface
+            participant={p}
+            trackRef={t}
+            fallbackInitials={initials}
+            fallbackName={displayName}
+            fillClass="w-full h-full object-cover rounded-xl"
+          />
         </div>
       </div>
     );
   }
 
-  // Google Meet style layout for multiple participants
+  /** Multi-participant layout (Meet-like) */
   if (participants.length > 1) {
-    const mainParticipant = participants.find(p => !p.isLocal) || participants[0];
-    const otherParticipants = participants.filter(p => p !== mainParticipant);
-    
-    // Google Meet style: Show max 3 individual tiles, rest in overflow tile
+    const mainParticipant =
+      participants.find(p => p.identity === mainId) ||
+      participants.find(p => !p.isLocal) ||
+      participants[0];
+
+    const others = participants.filter(p => p.identity !== mainParticipant.identity);
     const maxIndividualTiles = 3;
-    const displayedParticipants = otherParticipants.slice(0, maxIndividualTiles);
-    const overflowParticipants = otherParticipants.slice(maxIndividualTiles);
+    const displayed = others.slice(0, maxIndividualTiles);
+    const overflow = others.slice(maxIndividualTiles);
 
     return (
-      <div className="w-full h-full flex ">
-        {/* Main video area (left side) - takes most space with aspect ratio control */}
+      <div className="w-full h-full flex">
+        {/* Main area with locked aspect to avoid height jitter */}
         <div className="flex-1 pr-3 flex">
-          <div className="w-full max-w-8xl h-full max-h-[720px]">
-            <MainVideoTile participant={mainParticipant} activeEmojis={activeEmojis} />
+          <div className="w-full h-full max-h-[720px]">
+            <div className="w-full h-full aspect-[16/9] max-h-[720px]">
+              <MainVideoTile
+                participant={mainParticipant}
+                activeEmojis={activeEmojis}
+                trackMap={trackByParticipantAndSource}
+              />
+            </div>
           </div>
         </div>
 
-        {/* Right side participant tiles - fixed width */}
+        {/* Right rail – fixed width prevents width reflow */}
         <div className="w-56 flex flex-col gap-2 mr-4">
-          {/* Individual tiles for first 3 participants */}
-          {displayedParticipants.map((participant) => (
-            <SmallVideoTile key={participant.identity} participant={participant} />
+          {displayed.map((p) => (
+            <SmallVideoTile key={p.identity} participant={p} trackMap={trackByParticipantAndSource} />
           ))}
-          
-          {/* Overflow tile for remaining participants */}
-          {overflowParticipants.length > 0 && (
-            <OverflowTile participants={overflowParticipants} />
-          )}
+          {overflow.length > 0 && <OverflowTile participants={overflow} />}
         </div>
       </div>
     );
   }
 
-  // Fallback for no participants
+  // No participants
   return (
     <div className="flex items-center justify-center h-full">
       <div className="text-center">
         <div className="w-20 h-20 mx-auto mb-4 rounded-full bg-white/10 flex items-center justify-center">
+          {/* user icon */}
           <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" fill="currentColor" />
           </svg>
@@ -143,156 +152,169 @@ const isScreenSharing = singleParticipant?.isScreenShareEnabled ?? false;
   );
 };
 
-// Main video tile component (for the primary speaker)
-const MainVideoTile = ({ participant, activeEmojis }: {
+/* ---------- Shared surface that never unmounts (prevents reflow) ---------- */
+const VideoSurface = ({
+  participant,
+  trackRef,
+  fallbackInitials,
+  fallbackName,
+  fillClass,
+}: {
   participant: Participant;
-  activeEmojis?: { [key: string]: { emoji: string, timestamp: number, username: string } }
+  trackRef?: ReturnType<typeof useTracks>[number];
+  fallbackInitials: string;
+  fallbackName?: string;
+  fillClass?: string;
 }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const displayName = participant.identity;
-  const initials = getInitials(displayName);
-
-  // Find the video track for this participant (prioritize screen share over camera)
-  const tracks = useTracks([Track.Source.Camera, Track.Source.ScreenShare]);
-  const participantTracks = tracks.filter(track => track.participant.identity === participant.identity);
-  
-  // Prioritize screen share track if available, otherwise use camera
-  const participantTrack = participantTracks.find(track => track.source === Track.Source.ScreenShare) || 
-                          participantTracks.find(track => track.source === Track.Source.Camera);
+  const [hasMedia, setHasMedia] = useState<boolean>(!!trackRef?.publication?.track);
 
   useEffect(() => {
-    const videoElement = videoRef.current;
-    if (videoElement && participantTrack?.publication?.track) {
-      participantTrack.publication.track.attach(videoElement);
+    const el = videoRef.current;
+    const track = trackRef?.publication?.track;
+    if (!el) return;
+
+    if (track) {
+      track.attach(el);
+      setHasMedia(true);
       return () => {
-        if (participantTrack.publication?.track) {
-          participantTrack.publication.track.detach(videoElement);
-        }
+        track.detach(el);
       };
+    } else {
+      setHasMedia(false);
     }
-  }, [participantTrack]);
+  }, [trackRef?.publication?.track]);
 
   return (
-    <div className="w-full h-full min-h-[320px] bg-black rounded-xl flex items-center justify-center text-white relative overflow-hidden">
-      {participantTrack?.publication?.track ? (
-        <video
-          ref={videoRef}
-          autoPlay
-          playsInline
-          muted={participant.isLocal}
-          className="w-full h-full object-cover"
-        />
-      ) : (
-        <div className="flex flex-col items-center justify-center h-full w-full min-h-[320px]">
-          <div className="w-24 h-24 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-2xl font-bold uppercase text-white shadow-lg">
-            {initials}
-          </div>
-          <p className="mt-3 text-lg text-white/70 font-medium">
-            {displayName}
-          </p>
-        </div>
-      )}
+    <div className="relative w-full h-[800px] min-h-[128px] bg-black rounded-xl overflow-hidden">
+      {/* Keep the video element mounted always */}
+      <video ref={videoRef} autoPlay playsInline muted={participant.isLocal} className={fillClass ?? "w-full h-full object-cover"} />
 
-      {/* Participant name overlay */}
-      {/* <div className="absolute bottom-4 left-4 bg-black/60 px-3 py-1 rounded text-sm text-white backdrop-blur-sm">
-        {displayName}
-        {participant.isLocal && " (You)"}
-      </div> */}
-
-      {/* Emoji overlay - Show ALL emojis on the main big tile */}
-      {activeEmojis && Object.values(activeEmojis).map((emojiData, index) => (
-        <div key={`${emojiData.username}-${emojiData.timestamp}`} className={`absolute bottom-16 z-30 pointer-events-none`} style={{ left: `${8 + (index * 120)}px` }}>
-          <div className="animate-float-up">
-            <div className="bg-[#080B16] backdrop-blur-lg rounded-full px-5 py-3 gap-3 shadow-2xl items-center flex flex-col">
-              <span className="text-5xl">{emojiData.emoji}</span>
-              {/* <span className="text-black font-bold text-lg">{emojiData.username}</span> */}
-              <p className="text-white font-bold text-lg">{emojiData.username}</p>
-            </div>
-          </div>
+      {/* Soft fade placeholder instead of unmounting */}
+      <div className={`absolute inset-0 flex flex-col items-center justify-center transition-opacity duration-200 ${hasMedia ? "opacity-0 pointer-events-none" : "opacity-100"}`}>
+        <div className="w-24 h-24 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-2xl font-bold uppercase text-white shadow-lg">
+          {fallbackInitials}
         </div>
-      ))}
-
-      {/* Indicators */}
-      <div className="absolute top-4 right-4 flex flex-col gap-2">
-        {/* Screen share indicator */}
-        {participantTrack?.source === Track.Source.ScreenShare && (
-          <div className="w-7 h-7 bg-green-600 rounded-full flex items-center justify-center shadow-lg">
-            <Monitor size={14} color="white" />
-          </div>
-        )}
-        
-        <div className="w-7 h-7 bg-[#080B16] rounded-full flex items-center justify-center shadow-lg">
-          <Expand color="white" />
-        </div>
+        {fallbackName && <p className="mt-3 text-lg text-white/70 font-medium">{fallbackName}</p>}
       </div>
     </div>
   );
 };
 
-// Small video tile component (for participants on the right side)
-const SmallVideoTile = ({ participant }: {
+/* ---------- Main tile ---------- */
+const MainVideoTile = ({
+  participant,
+  activeEmojis,
+  trackMap,
+}: {
   participant: Participant;
+  activeEmojis?: { [key: string]: { emoji: string; timestamp: number; username: string } };
+  trackMap: Map<string, ReturnType<typeof useTracks>[number]>;
 }) => {
-  const videoRef = useRef<HTMLVideoElement>(null);
+  // Debounced preferred source
+  const [source, setSource] = useState<Track.Source | null>(pickSource(participant));
+  const sourceTimer = useRef<number | null>(null);
+
+  useEffect(() => {
+    if (sourceTimer.current) window.clearTimeout(sourceTimer.current);
+    sourceTimer.current = window.setTimeout(() => setSource(pickSource(participant)), 200);
+    return () => {
+      if (sourceTimer.current) window.clearTimeout(sourceTimer.current);
+    };
+  }, [participant.isScreenShareEnabled, participant.isCameraEnabled]);
+
+  const t = source ? trackMap.get(`${participant.identity}:${source}`) : undefined;
   const displayName = participant.identity;
   const initials = getInitials(displayName);
 
-  // Find the video track for this participant (prioritize screen share over camera)
-  const tracks = useTracks([Track.Source.Camera, Track.Source.ScreenShare]);
-  const participantTracks = tracks.filter(track => track.participant.identity === participant.identity);
-  
-  // Prioritize screen share track if available, otherwise use camera
-  const participantTrack = participantTracks.find(track => track.source === Track.Source.ScreenShare) || 
-                          participantTracks.find(track => track.source === Track.Source.Camera);
+  return (
+    <div className="relative w-full h-full rounded-xl text-white">
+      <VideoSurface
+        participant={participant}
+        trackRef={t}
+        fallbackInitials={initials}
+        fallbackName={displayName}
+        fillClass="w-full h-full object-cover rounded-xl"
+      />
 
+      {/* Indicators */}
+      <div className="absolute top-4 right-4 flex flex-col gap-2 z-30">
+        {source === Track.Source.ScreenShare && (
+          <div className="w-7 h-7 bg-green-600 rounded-full flex items-center justify-center shadow-lg">
+            <Monitor size={14} color="white" />
+          </div>
+        )}
+        <div className="w-7 h-7 bg-[#080B16] rounded-full flex items-center justify-center shadow-lg">
+          <Expand color="white" />
+        </div>
+      </div>
+
+      {/* Emoji overlay (unchanged) */}
+      {activeEmojis &&
+        Object.values(activeEmojis).map((emojiData, index) => (
+          <div
+            key={`${emojiData.username}-${emojiData.timestamp}`}
+            className="absolute bottom-16 z-30 pointer-events-none"
+            style={{ left: `${8 + index * 120}px` }}
+          >
+            <div className="animate-float-up">
+              <div className="bg-[#080B16] backdrop-blur-lg rounded-full px-5 py-3 gap-3 shadow-2xl items-center flex flex-col">
+                <span className="text-5xl">{emojiData.emoji}</span>
+                <p className="text-white font-bold text-lg">{emojiData.username}</p>
+              </div>
+            </div>
+          </div>
+        ))}
+    </div>
+  );
+};
+
+/* ---------- Small tiles ---------- */
+const SmallVideoTile = ({
+  participant,
+  trackMap,
+}: {
+  participant: Participant;
+  trackMap: Map<string, ReturnType<typeof useTracks>[number]>;
+}) => {
+  const [source, setSource] = useState<Track.Source | null>(pickSource(participant));
+  const debounceRef = useRef<number | null>(null);
   useEffect(() => {
-    const videoElement = videoRef.current;
-    if (videoElement && participantTrack?.publication?.track) {
-      participantTrack.publication.track.attach(videoElement);
-      return () => {
-        if (participantTrack.publication?.track) {
-          participantTrack.publication.track.detach(videoElement);
-        }
-      };
-    }
-  }, [participantTrack]);
+    if (debounceRef.current) window.clearTimeout(debounceRef.current);
+    debounceRef.current = window.setTimeout(() => setSource(pickSource(participant)), 200);
+    return () => {
+      if (debounceRef.current) window.clearTimeout(debounceRef.current);
+    };
+  }, [participant.isScreenShareEnabled, participant.isCameraEnabled]);
+
+  const t = source ? trackMap.get(`${participant.identity}:${source}`) : undefined;
+  const displayName = participant.identity;
+  const initials = getInitials(displayName);
 
   return (
-    <div className="w-full h-32 min-h-[128px] bg-black rounded-lg flex items-center justify-center text-white relative overflow-hidden cursor-pointer hover:ring-2 hover:ring-blue-500/50 transition-all">
-      {participantTrack?.publication?.track ? (
-        <video
-          ref={videoRef}
-          autoPlay
-          playsInline
-          muted={participant.isLocal}
-          className="w-full h-full object-cover"
-        />
-      ) : (
-        <div className="flex flex-col items-center justify-center h-full w-full min-h-[128px]">
-          <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-base font-bold uppercase text-white">
-            {initials}
-          </div>
-        </div>
-      )}
+    <div className="w-full h-32 min-h-[128px] bg-black rounded-lg relative overflow-hidden cursor-pointer hover:ring-2 hover:ring-blue-500/50 transition-all">
+      <VideoSurface
+        participant={participant}
+        trackRef={t}
+        fallbackInitials={initials}
+        fillClass="w-full h-full object-cover"
+      />
 
-      {/* Participant name overlay */}
-      <div className="absolute bottom-1 left-1 bg-black/60 px-2 py-0.5 rounded text-xs text-white backdrop-blur-sm">
-        {displayName.split(' ')[0]}
+      {/* Name */}
+      <div className="absolute bottom-1 left-1 bg-black/60 px-2 py-0.5 rounded text-xs text-white backdrop-blur-sm z-20">
+        {displayName.split(" ")[0]}
         {participant.isLocal && " (You)"}
       </div>
 
       {/* Indicators */}
-      <div className="absolute top-2 right-2 flex flex-col gap-1">
-        {/* Screen share indicator */}
-        {participantTrack?.source === Track.Source.ScreenShare && (
+      <div className="absolute top-2 right-2 flex flex-col gap-1 z-20">
+        {source === Track.Source.ScreenShare && (
           <div className="w-6 h-6 bg-green-600 rounded-full flex items-center justify-center shadow-lg">
-            <Monitor size={12} color="white" />
-          </div>
+          <Monitor size={12} color="white" />
+        </div>
         )}
-        
-        {/* Audio indicator */}
         {participant.isMicrophoneEnabled ? (
-          <div className="w-8 h-8 bg-[#080B16]  rounded-full flex items-center justify-center shadow-lg">
+          <div className="w-8 h-8 bg-[#080B16] rounded-full flex items-center justify-center shadow-lg">
             <Mic size={16} color="white" />
           </div>
         ) : (
@@ -305,46 +327,29 @@ const SmallVideoTile = ({ participant }: {
   );
 };
 
-// Overflow tile component (for showing remaining participants)
-const OverflowTile = ({ participants }: {
-  participants: Participant[];
-}) => {
+/* ---------- Overflow ---------- */
+const OverflowTile = ({ participants }: { participants: Participant[] }) => {
   const totalCount = participants.length;
-  const displayParticipants = participants.slice(0, 4); // Show max 4 avatars in the overflow tile
-  
+  const displayParticipants = participants.slice(0, 4);
   return (
     <div className="w-full h-32 bg-gradient-to-br from-gray-800 to-gray-900 rounded-lg flex items-center justify-center text-white relative overflow-hidden cursor-pointer hover:ring-2 hover:ring-blue-500/50 transition-all border border-white/10">
       <div className="flex flex-col items-center justify-center gap-2">
-        {/* Grid of small avatars */}
         <div className="grid grid-cols-2 gap-1">
-          {displayParticipants.map((participant) => {
-            const displayName = participant.identity;
-            const initials = getInitials(displayName);
-            
+          {displayParticipants.map((p) => {
+            const initials = getInitials(p.identity);
             return (
-              <div
-                key={participant.identity}
-                className="w-6 h-6 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-[10px] font-bold uppercase text-white shadow-sm"
-              >
+              <div key={p.identity} className="w-6 h-6 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-[10px] font-bold uppercase text-white shadow-sm">
                 {initials}
               </div>
             );
           })}
         </div>
-        
-        {/* Count indicator */}
         <div className="text-center">
-          <span className="text-lg font-bold text-white">
-            +{totalCount}
-          </span>
-          <p className="text-xs text-white/70 mt-1">
-            more
-          </p>
+          <span className="text-lg font-bold text-white">+{totalCount}</span>
+          <p className="text-xs text-white/70 mt-1">more</p>
         </div>
       </div>
-      
-      {/* Background pattern for visual appeal */}
-      <div className="absolute inset-0 bg-gradient-to-br from-blue-600/20 to-purple-600/20 rounded-lg"></div>
+      <div className="absolute inset-0 bg-gradient-to-br from-blue-600/20 to-purple-600/20 rounded-lg" />
     </div>
   );
 };
