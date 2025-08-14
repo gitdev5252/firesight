@@ -15,11 +15,11 @@ import { CustomVideoTiles } from "@/components/conference/CustomVideoTiles";
 import { useMediaControls } from "@/hooks/useMediaControls";
 
 // Sidebar Component
-const Sidebar = ({ participants, roomName, raisedHands, chatMessages, onSendMessage }: { 
-  participants?: unknown[], 
-  roomName: string, 
-  raisedHands: {[key: string]: boolean},
-  chatMessages: {message: string, timestamp: number, username: string}[],
+const Sidebar = ({ participants, roomName, raisedHands, chatMessages, onSendMessage }: {
+  participants?: unknown[],
+  roomName: string,
+  raisedHands: { [key: string]: boolean },
+  chatMessages: { message: string, timestamp: number, username: string }[],
   onSendMessage: (message: string) => void
 }) => {
   const [activeTab, setActiveTab] = React.useState("People");
@@ -65,10 +65,10 @@ type Participant = {
   sid: string;
 };
 
-const PeopleTab = ({ participants, roomName, raisedHands }: { participants?: unknown[], roomName: string, raisedHands: {[key: string]: boolean} }) => {
+const PeopleTab = ({ participants, roomName, raisedHands }: { participants?: unknown[], roomName: string, raisedHands: { [key: string]: boolean } }) => {
   console.log('PeopleTab raisedHands:', raisedHands);
   console.log('PeopleTab participants:', participants);
-  
+
   return (
     <div className="h-screen mt-8">
       <div className="bg-[rgba(255,255,255,0.02)] rounded-[20px] border border-[rgba(255,255,255,0.1)] backdrop-blur-[32px] p-2 mb-4 h-[70%]">
@@ -131,9 +131,9 @@ const PeopleTab = ({ participants, roomName, raisedHands }: { participants?: unk
   );
 };
 
-const ChatTab = ({ messages, onSendMessage }: { 
-  messages: {message: string, timestamp: number, username: string}[], 
-  onSendMessage: (message: string) => void 
+const ChatTab = ({ messages, onSendMessage }: {
+  messages: { message: string, timestamp: number, username: string }[],
+  onSendMessage: (message: string) => void
 }) => {
   const [inputMessage, setInputMessage] = React.useState("");
   const messagesEndRef = React.useRef<HTMLDivElement>(null);
@@ -207,35 +207,65 @@ const ChatTab = ({ messages, onSendMessage }: {
 };
 
 const TranscriptTab = () => (
-  <div>
-    <p className="text-white/60 text-sm">Transcript will appear here when the session starts...</p>
+  <div className="flex flex-col items-center h-full min-h-[500px] w-full mt-10">
+    <div className="bg-[#181C23] border border-white/10 rounded-2xl p-8 w-full max-w-md flex flex-col items-center shadow-lg h-[90%]">
+      <span className="text-green-400 text-base font-mono mb-4">Coming Soon</span>
+      <h2 className="text-white text-2xl font-bold mb-2 text-center tracking-wide">Create an Account</h2>
+      <p className="text-white/70 text-base mb-8 text-center">To be among the first to use <span className="font-semibold">Transcript</span></p>
+      <button className="w-full py-4 mb-12 rounded-full border border-green-400 text-green-200 text-lg font-mono font-semibold bg-gradient-to-r from-green-400/10 to-cyan-400/10 hover:from-green-400/20 hover:to-cyan-400/20 transition">
+        14 Day Trial | <span className="font-bold text-white">Start Now</span>
+      </button>
+      <div className="w-full border-t border-white/10 my-8"></div>
+      <p className="text-white/60 text-center mb-4">If you already have an account</p>
+      <button className="w-full py-3 rounded-full border border-white/20 text-white/80 text-lg font-mono bg-[#10131A] hover:bg-white/10 transition">Log In</button>
+    </div>
   </div>
 );
 
 const SummaryTab = () => (
-  <div>
-    <p className="text-white/60 text-sm">Session summary will be generated automatically...</p>
+  <div className="flex flex-col items-center h-full min-h-[500px] w-full mt-10">
+    <div className="bg-[#181C23] border border-white/10 rounded-2xl p-8 w-full max-w-md flex flex-col items-center shadow-lg h-[90%]">
+      <span className="text-green-400 text-base font-mono mb-4">Coming Soon</span>
+      <h2 className="text-white text-2xl font-bold mb-2 text-center tracking-wide">Create an Account</h2>
+      <p className="text-white/70 text-base mb-8 text-center">To be among the first to use <span className="font-semibold">Transcript</span></p>
+      <button className="w-full py-4 mb-12 rounded-full border border-green-400 text-green-200 text-lg font-mono font-semibold bg-gradient-to-r from-green-400/10 to-cyan-400/10 hover:from-green-400/20 hover:to-cyan-400/20 transition">
+        14 Day Trial | <span className="font-bold text-white">Start Now</span>
+      </button>
+      <div className="w-full border-t border-white/10 my-8"></div>
+      <p className="text-white/60 text-center mb-4">If you already have an account</p>
+      <button className="w-full py-3 rounded-full border border-white/20 text-white/80 text-lg font-mono bg-[#10131A] hover:bg-white/10 transition">Log In</button>
+    </div>
   </div>
 );
 
 const PromptsTab = () => (
-  <div>
-    <p className="text-white/60 text-sm">AI prompts and suggestions will appear here...</p>
+  <div className="flex flex-col items-center h-full min-h-[500px] w-full mt-10">
+    <div className="bg-[#181C23] border border-white/10 rounded-2xl p-8 w-full max-w-md flex flex-col items-center shadow-lg h-[90%]">
+      <span className="text-green-400 text-base font-mono mb-4">Coming Soon</span>
+      <h2 className="text-white text-2xl font-bold mb-2 text-center tracking-wide">Create an Account</h2>
+      <p className="text-white/70 text-base mb-8 text-center">To be among the first to use <span className="font-semibold">Transcript</span></p>
+      <button className="w-full py-4 mb-12 rounded-full border border-green-400 text-green-200 text-lg font-mono font-semibold bg-gradient-to-r from-green-400/10 to-cyan-400/10 hover:from-green-400/20 hover:to-cyan-400/20 transition">
+        14 Day Trial | <span className="font-bold text-white">Start Now</span>
+      </button>
+      <div className="w-full border-t border-white/10 my-8"></div>
+      <p className="text-white/60 text-center mb-4">If you already have an account</p>
+      <button className="w-full py-3 rounded-full border border-white/20 text-white/80 text-lg font-mono bg-[#10131A] hover:bg-white/10 transition">Log In</button>
+    </div>
   </div>
 );
 
 // Component to handle real-time messaging for emojis and hand raises
-const RealtimeMessaging = ({ 
-  onEmojiReceived, 
+const RealtimeMessaging = ({
+  onEmojiReceived,
   onHandRaiseReceived,
-  onChatReceived 
-}: { 
-  onEmojiReceived: (data: {emoji: string, timestamp: number, username: string}) => void;
-  onHandRaiseReceived: (data: {username: string, isRaised: boolean}) => void;
-  onChatReceived: (data: {message: string, timestamp: number, username: string}) => void;
+  onChatReceived
+}: {
+  onEmojiReceived: (data: { emoji: string, timestamp: number, username: string }) => void;
+  onHandRaiseReceived: (data: { username: string, isRaised: boolean }) => void;
+  onChatReceived: (data: { message: string, timestamp: number, username: string }) => void;
 }) => {
   const { localParticipant } = useLocalParticipant();
-  
+
   // Data channel for emojis
   const { send: sendEmojiData } = useDataChannel('emoji', (message) => {
     const data = JSON.parse(new TextDecoder().decode(message.payload));
@@ -287,13 +317,13 @@ const ParticipantProvider = ({ onParticipantsChange }: { onParticipantsChange: (
 
   return null;
 };
-const ConferenceControls = ({ onInvite, onToggleSidebar, onSendEmoji, onToggleHandRaise, currentUser, raisedHands }: { 
-  onInvite: () => void; 
+const ConferenceControls = ({ onInvite, onToggleSidebar, onSendEmoji, onToggleHandRaise, currentUser, raisedHands }: {
+  onInvite: () => void;
   onToggleSidebar: () => void;
   onSendEmoji: (username: string) => void;
   onToggleHandRaise: (username: string) => void;
   currentUser: string;
-  raisedHands: {[key: string]: boolean};
+  raisedHands: { [key: string]: boolean };
 }) => {
   const {
     isMicrophoneEnabled,
@@ -305,15 +335,13 @@ const ConferenceControls = ({ onInvite, onToggleSidebar, onSendEmoji, onToggleHa
     isScreenSharing
   } = useMediaControls();
 
-  const { buttonProps: disconnectButtonProps, disconnect } = useDisconnectButton({});
+  const { buttonProps: disconnectButtonProps } = useDisconnectButton({});
   const router = useRouter();
 
   // Custom handler for End Call
   const handleEndCall = async (e: React.MouseEvent<HTMLButtonElement>) => {
     if (disconnectButtonProps.onClick) {
       await disconnectButtonProps.onClick(e);
-    } else if (disconnect) {
-      await disconnect();
     }
     router.push("/session");
   };
@@ -356,12 +384,11 @@ const ConferenceControls = ({ onInvite, onToggleSidebar, onSendEmoji, onToggleHa
             {/* Divider */}
             <div className="w-px h-8 bg-white/20"></div>
 
-            <button 
-              className={`flex flex-col items-center gap-1 transition-colors ${
-                raisedHands[currentUser] 
-                  ? 'text-yellow-400 hover:text-yellow-500' 
+            <button
+              className={`flex flex-col items-center gap-1 transition-colors ${raisedHands[currentUser]
+                  ? 'text-yellow-400 hover:text-yellow-500'
                   : 'text-gray-400 hover:text-gray-400'
-              }`}
+                }`}
               onClick={() => {
                 console.log('Hand button clicked, currentUser:', currentUser);
                 onToggleHandRaise(currentUser);
@@ -382,7 +409,7 @@ const ConferenceControls = ({ onInvite, onToggleSidebar, onSendEmoji, onToggleHa
             </button>
             <div className="w-px h-8 bg-white/20"></div>
 
-            <button 
+            <button
               onClick={isScreenSharing ? stopScreenShare : startScreenShare}
               className={`flex flex-col items-center gap-1 transition-colors ${isScreenSharing
                 ? 'text-green-400 hover:text-green-300'
@@ -395,7 +422,7 @@ const ConferenceControls = ({ onInvite, onToggleSidebar, onSendEmoji, onToggleHa
             </button>
             <div className="w-px h-8 bg-white/20"></div>
 
-            <button 
+            <button
               className="flex flex-col items-center gap-1 text-gray-400 hover:text-gray-400 transition-colors"
               onClick={() => onSendEmoji(currentUser)}
             >
@@ -452,9 +479,9 @@ export default function SessionPage() {
   const [participants, setParticipants] = React.useState<unknown[]>([]);
   const [currentUser, setCurrentUser] = React.useState<string>("");
   const [currentTime, setCurrentTime] = React.useState<string>("");
-  const [activeEmojis, setActiveEmojis] = React.useState<{[key: string]: {emoji: string, timestamp: number, username: string}}>({}); // Add emoji state
-  const [raisedHands, setRaisedHands] = React.useState<{[key: string]: boolean}>({}); // Add raised hands state
-  const [chatMessages, setChatMessages] = React.useState<{message: string, timestamp: number, username: string}[]>([]); // Add chat state
+  const [activeEmojis, setActiveEmojis] = React.useState<{ [key: string]: { emoji: string, timestamp: number, username: string } }>({}); // Add emoji state
+  const [raisedHands, setRaisedHands] = React.useState<{ [key: string]: boolean }>({}); // Add raised hands state
+  const [chatMessages, setChatMessages] = React.useState<{ message: string, timestamp: number, username: string }[]>([]); // Add chat state
   const [nameModalOpen, setNameModalOpen] = React.useState(false);
   const [userNameInput, setUserNameInput] = React.useState("");
   const [nameError, setNameError] = React.useState("");
@@ -466,7 +493,7 @@ export default function SessionPage() {
   const sendEmoji = (username: string) => {
     const randomEmoji = emojis[Math.floor(Math.random() * emojis.length)];
     const timestamp = Date.now();
-    
+
     // Update local state
     setActiveEmojis(prev => ({
       ...prev,
@@ -492,7 +519,7 @@ export default function SessionPage() {
   };
 
   // Function to handle received emojis
-  const handleEmojiReceived = (data: {emoji: string, timestamp: number, username: string}) => {
+  const handleEmojiReceived = (data: { emoji: string, timestamp: number, username: string }) => {
     setActiveEmojis(prev => ({
       ...prev,
       [data.username]: data
@@ -513,7 +540,7 @@ export default function SessionPage() {
     console.log('Toggling hand raise for:', username);
     console.log('Current raisedHands state:', raisedHands);
     const newState = !raisedHands[username];
-    
+
     setRaisedHands(prev => {
       const updatedState = {
         ...prev,
@@ -531,7 +558,7 @@ export default function SessionPage() {
   };
 
   // Function to handle received hand raise
-  const handleHandRaiseReceived = (data: {username: string, isRaised: boolean}) => {
+  const handleHandRaiseReceived = (data: { username: string, isRaised: boolean }) => {
     setRaisedHands(prev => ({
       ...prev,
       [data.username]: data.isRaised
@@ -542,7 +569,7 @@ export default function SessionPage() {
   const sendChatMessage = (message: string) => {
     const timestamp = Date.now();
     const chatData = { message, timestamp, username: currentUser };
-    
+
     // Add to local state
     setChatMessages(prev => [...prev, chatData]);
 
@@ -554,7 +581,7 @@ export default function SessionPage() {
   };
 
   // Function to handle received chat message
-  const handleChatReceived = (data: {message: string, timestamp: number, username: string}) => {
+  const handleChatReceived = (data: { message: string, timestamp: number, username: string }) => {
     setChatMessages(prev => [...prev, data]);
   };
 
@@ -609,8 +636,8 @@ export default function SessionPage() {
       setNameError("Name is required");
       return;
     }
-  setCurrentUser(userNameInput.trim());
-  setNameModalOpen(false);
+    setCurrentUser(userNameInput.trim());
+    setNameModalOpen(false);
     // Get room from URL params or create new one
     const urlParams = new URLSearchParams(window.location.search);
     const roomFromUrl = urlParams.get('room');
@@ -654,10 +681,10 @@ export default function SessionPage() {
         {/* Sidebar - keep in original position */}
         {isSidebarOpen && (
           <div className="absolute right-0 top-0 bottom-0 w-120 z-30 rounded-r-[20px] overflow-hidden border-l-1 border-white/10 bg-[#0D101B]">
-            <Sidebar 
-              participants={participants} 
-              roomName={roomName} 
-              raisedHands={raisedHands} 
+            <Sidebar
+              participants={participants}
+              roomName={roomName}
+              raisedHands={raisedHands}
               chatMessages={chatMessages}
               onSendMessage={sendChatMessage}
             />
@@ -770,7 +797,7 @@ export default function SessionPage() {
               >
                 <CustomVideoTiles activeEmojis={activeEmojis} />
                 <ParticipantProvider onParticipantsChange={setParticipants} />
-                <RealtimeMessaging 
+                <RealtimeMessaging
                   onEmojiReceived={handleEmojiReceived}
                   onHandRaiseReceived={handleHandRaiseReceived}
                   onChatReceived={handleChatReceived}
