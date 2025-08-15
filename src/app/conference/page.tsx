@@ -13,6 +13,7 @@ import "@livekit/components-styles"; // Required styles
 import { LIVEKIT_CONFIG } from "@/lib/livekit/config";
 import { CustomVideoTiles } from "@/components/conference/CustomVideoTiles";
 import { useMediaControls } from "@/hooks/useMediaControls";
+import { HexAvatar } from "@/components/HexAvatar/HexAvatar";
 
 // Sidebar Component
 const Sidebar = ({ participants, roomName, raisedHands, chatMessages, onSendMessage }: {
@@ -82,9 +83,11 @@ const PeopleTab = ({ participants, roomName, raisedHands }: { participants?: unk
 
             return (
               <div key={p.sid} className="flex items-center gap-3 p-3 rounded-lg mb-2 ">
-                <div className="w-8 h-8 bg-teal-500 rounded-full flex items-center justify-center text-white font-semibold text-sm">
+                <HexAvatar initials={initials} size={32} fontSize={12} />
+
+                {/* <div className="w-8 h-8 bg-teal-500 rounded-full flex items-center justify-center text-white font-semibold text-sm">
                   {initials}
-                </div>
+                </div> */}
                 <div className="flex-1">
                   <div className="flex items-center gap-2">
                     <p className="text-white text-sm font-medium">
@@ -721,9 +724,12 @@ export default function SessionPage() {
             {/* User Avatar */}
             <div className="absolute top-6 left-6 bg-[#080B16] pb-2 pt-2 pl-4 pr-4 rounded-[11px] border border-[rgba(211,211,211,0.1)] z-10">
               <div className="flex items-center gap-3">
-                <div className="w-6 h-6 bg-teal-500 rounded-full flex items-center justify-center text-white font-semibold text-xs">
+                {/* <div className="w-6 h-6 bg-teal-500 rounded-full flex items-center justify-center text-white font-semibold text-xs">
+                  
                   {currentUser.slice(0, 2).toUpperCase()}
-                </div>
+                </div> */}
+                <HexAvatar initials={currentUser.slice(0, 2).toUpperCase()} size={24} fontSize={10} />
+
                 <span className="text-white text-sm font-medium">{currentUser}</span>
               </div>
             </div>
