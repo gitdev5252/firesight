@@ -15,6 +15,10 @@ import {
   Video,
   MicOff,
   VideoOff,
+  Expand,
+  RefreshCcwDot,
+  Volume2,
+  EllipsisVertical,
 } from "lucide-react";
 import React from "react";
 import {
@@ -31,6 +35,7 @@ import { CustomVideoTiles } from "@/components/conference/CustomVideoTiles";
 import { useMediaControls } from "@/hooks/useMediaControls";
 import { HexAvatar } from "@/components/HexAvatar/HexAvatar";
 
+const mobileTabs = ["Session","People", "Chat", "Transcript", "Summary"];
 
 const Sidebar = ({ participants, roomName, raisedHands, chatMessages, onSendMessage }: {
   participants?: unknown[],
@@ -51,11 +56,10 @@ const Sidebar = ({ participants, roomName, raisedHands, chatMessages, onSendMess
           <button
             key={tab}
             onClick={() => setActiveTab(tab)}
-            className={`flex-1 px-2 py-3 text-xs font-medium transition-colors ${
-              activeTab === tab
-                ? "text-white border-b-2 border-green-500 bg-white/5"
-                : "text-white/60 hover:text-white/80"
-            }`}
+            className={`flex-1 px-2 py-3 text-xs font-medium transition-colors ${activeTab === tab
+              ? "text-white border-b-2 border-green-500 bg-white/5"
+              : "text-white/60 hover:text-white/80"
+              }`}
           >
             {tab}
           </button>
@@ -456,11 +460,10 @@ const ConferenceControls = ({ onInvite, onToggleSidebar, onSendEmoji, onToggleHa
           {/* Center Controls */}
           <div className="flex items-center gap-6">
             <button
-              className={`flex flex-col items-center gap-1 transition-colors ${
-                isMicrophoneEnabled
-                  ? "text-gray-400 hover:text-gray-400"
-                  : "text-red-400 hover:text-red-300"
-              }`}
+              className={`flex flex-col items-center gap-1 transition-colors ${isMicrophoneEnabled
+                ? "text-gray-400 hover:text-gray-400"
+                : "text-red-400 hover:text-red-300"
+                }`}
               onClick={toggleMicrophone}
             >
               <div className="items-center justify-center">
@@ -474,11 +477,10 @@ const ConferenceControls = ({ onInvite, onToggleSidebar, onSendEmoji, onToggleHa
             </button>
             <div className="w-px h-8 bg-white/20"></div>
             <button
-              className={`flex flex-col items-center gap-1 transition-colors ${
-                isCameraEnabled
-                  ? "text-gray-400 hover:text-gray-400"
-                  : "text-red-400 hover:text-red-300"
-              }`}
+              className={`flex flex-col items-center gap-1 transition-colors ${isCameraEnabled
+                ? "text-gray-400 hover:text-gray-400"
+                : "text-red-400 hover:text-red-300"
+                }`}
               onClick={toggleCamera}
             >
               <div className="items-center justify-center">
@@ -497,8 +499,8 @@ const ConferenceControls = ({ onInvite, onToggleSidebar, onSendEmoji, onToggleHa
             <button
 
               className={`flex flex-col items-center gap-1 transition-colors ${raisedHands[currentUser]
-                  ? 'text-yellow-400 hover:text-yellow-500'
-                  : 'text-gray-400 hover:text-gray-400'
+                ? 'text-yellow-400 hover:text-yellow-500'
+                : 'text-gray-400 hover:text-gray-400'
                 }`}
 
               onClick={() => {
@@ -523,11 +525,10 @@ const ConferenceControls = ({ onInvite, onToggleSidebar, onSendEmoji, onToggleHa
 
             <button
               onClick={isScreenSharing ? stopScreenShare : startScreenShare}
-              className={`flex flex-col items-center gap-1 transition-colors ${
-                isScreenSharing
-                  ? "text-green-400 hover:text-green-300"
-                  : "text-gray-400 hover:text-gray-400"
-              }`}
+              className={`flex flex-col items-center gap-1 transition-colors ${isScreenSharing
+                ? "text-green-400 hover:text-green-300"
+                : "text-gray-400 hover:text-gray-400"
+                }`}
             >
               <div className="items-center justify-center">
                 <Monitor color={isScreenSharing ? "#10b981" : "white"} />
@@ -583,6 +584,228 @@ const ConferenceControls = ({ onInvite, onToggleSidebar, onSendEmoji, onToggleHa
           </div>
         </div>
       </div>
+    </div>
+  );
+};
+const MobileConferenceControls = ({ onInvite, onToggleHandRaise, currentUser, raisedHands }: {
+
+  onInvite: () => void;
+  onToggleSidebar: () => void;
+  onSendEmoji: (username: string) => void;
+  onToggleHandRaise: (username: string) => void;
+  currentUser: string;
+  raisedHands: { [key: string]: boolean };
+}) => {
+  const {
+    
+    toggleCamera,
+  } = useMediaControls();
+
+  // const { buttonProps: disconnectButtonProps } = useDisconnectButton({});
+
+  // Custom handler for End Call
+
+  return (
+    <div className="px-6 pb-6">
+      <div className="px-2 py-4">
+        <div className="flex items-center justify-between">
+          {/* Left Controls */}
+          <div className="flex items-center gap-4">
+            <button
+              className="flex flex-col items-center gap-1 text-gray-400/60 hover:text-gray-400 transition-colors"
+              onClick={onInvite}
+            >
+              <div className=" flex items-center justify-center">
+                <Expand color="white" />
+              </div>
+            </button>
+          </div>
+
+          {/* Center Controls */}
+          <div className="flex items-center gap-6">
+            {/* <button
+              className={`flex flex-col items-center gap-1 transition-colors ${isMicrophoneEnabled
+                  ? "text-gray-400 hover:text-gray-400"
+                  : "text-red-400 hover:text-red-300"
+                }`}
+              onClick={toggleMicrophone}
+            >
+              <div className="items-center justify-center">
+                {isMicrophoneEnabled ? (
+                  <Mic color="white" />
+                ) : (
+                  <MicOff color="red" />
+                )}{" "}
+              </div>
+              <span className="text-xs mt-2">Mic</span>
+            </button> */}
+            <div className="w-px h-8 bg-white/20"></div>
+            <button
+              className={`flex flex-col items-center gap-1 transition-colors text-white hover:text-gray-400`}
+              onClick={toggleCamera}
+            >
+              <div className="items-center justify-center">
+                <RefreshCcwDot color="white" />
+              </div>
+            </button>
+
+            {/* Divider */}
+
+            <button
+
+              className={`flex flex-col items-center gap-1 transition-colors ${raisedHands[currentUser]
+                ? 'text-yellow-400 hover:text-yellow-500'
+                : 'text-gray-400 hover:text-gray-400'
+                }`}
+
+              onClick={() => {
+                console.log("Hand button clicked, currentUser:", currentUser);
+                onToggleHandRaise(currentUser);
+              }}
+            >
+              <div className="items-center justify-center">
+                <Hand color={raisedHands[currentUser] ? "#fbbf24" : "white"} />
+              </div>
+            </button>
+
+            <button className="flex flex-col items-center gap-1 text-gray-400 hover:text-gray-400 transition-colors">
+              <div className="items-center justify-center">
+                {/* <BotMessageSquare color="white" /> */}
+                <Volume2 color="white" />
+              </div>
+            </button>
+            <div className="w-px h-8 bg-white/20"></div>
+
+            
+          </div>
+
+          {/* Right Controls */}
+          <div className="flex items-center gap-4">
+            <button
+              // {...disconnectButtonProps}
+              // onClick={handleEndCall}
+              className="flex flex-col items-center gap-1 transition-colors text-gray-400 hover:text-gray-400"
+            >
+              <div className="items-center justify-center">
+                <EllipsisVertical color="white" />
+              </div>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div className="flex border-b border-white/10">
+        {mobileTabs.map((tab) => (
+          <button
+            key={tab}
+            // onClick={() => setActiveTab(tab)}
+            className={`flex-1 px-2 py-3 text-xs font-medium transition-colors ${'Session' === tab
+              ? "text-white border-b-2 border-green-500 bg-white/5"
+              : "text-white/60 hover:text-white/80"
+              }`}
+          >
+            {tab}
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+};
+const MobileTabBarControls = ({ onSendEmoji, currentUser,  }: {
+
+  onInvite: () => void;
+  onToggleSidebar: () => void;
+  onSendEmoji: (username: string) => void;
+  onToggleHandRaise: (username: string) => void;
+  currentUser: string;
+  raisedHands: { [key: string]: boolean };
+}) => {
+  const {
+    isMicrophoneEnabled,
+    isCameraEnabled,
+    toggleMicrophone,
+    toggleCamera,
+  } = useMediaControls();
+
+  const { buttonProps: disconnectButtonProps } = useDisconnectButton({});
+  const router = useRouter();
+
+  // Custom handler for End Call
+  const handleEndCall = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    if (disconnectButtonProps.onClick) {
+      await disconnectButtonProps.onClick(e);
+    }
+    router.push("/session");
+  };
+
+  return (
+    <div className="px-6 pb-6 ">
+      <div className="px-2 py-4 bg-[#080B1680] border-1 border-[#FFFFFF1A] rounded-[15px]">
+        <div className="flex items-center justify-center ">
+          <div className="flex items-center gap-6">
+            <button
+              className={`flex flex-col items-center gap-1 transition-colors ${isMicrophoneEnabled
+                ? "text-gray-400 hover:text-gray-400"
+                : "text-red-400 hover:text-red-300"
+                }`}
+              onClick={toggleMicrophone}
+            >
+              <div className="items-center justify-center">
+                {isMicrophoneEnabled ? (
+                  <Mic color="white" />
+                ) : (
+                  <MicOff color="red" />
+                )}{" "}
+              </div>
+            </button>
+            <div className="w-px h-8 bg-white/20"></div>
+            <button
+              className={`flex flex-col items-center gap-1 transition-colors ${isCameraEnabled
+                ? "text-gray-400 hover:text-gray-400"
+                : "text-red-400 hover:text-red-300"
+                }`}
+              onClick={toggleCamera}
+            >
+              <div className="items-center justify-center">
+                {isCameraEnabled ? (
+                  <Video color="white" />
+                ) : (
+                  <VideoOff color="red" />
+                )}
+              </div>
+            </button>
+            <div className="w-px h-8 bg-white/20"></div>
+            <button
+              className="flex flex-col items-center gap-1 text-gray-400 hover:text-gray-400 transition-colors"
+              onClick={() => onSendEmoji(currentUser)}
+            >
+              <div className="items-center justify-center">
+                <Smile color="white" />
+              </div>
+            </button>
+            <div className="w-px h-8 bg-white/20"></div>
+            <button
+              className="flex flex-col items-center gap-1 text-gray-400 hover:text-gray-400 transition-colors"
+              onClick={() => onSendEmoji(currentUser)}
+            >
+              <div className="items-center justify-center">
+                <Link color="white" />
+              </div>
+            </button>
+            <div className="w-px h-8 bg-white/20"></div>
+            <button
+              {...disconnectButtonProps}
+              onClick={handleEndCall}
+              className="flex flex-col items-center gap-1 transition-colors text-gray-400 hover:text-gray-400"
+            >
+              <div className="items-center justify-center">
+                <PhoneOff color="white" />
+              </div>
+            </button>
+
+          </div>
+        </div>
+      </div>
+
     </div>
   );
 };
@@ -851,9 +1074,8 @@ export default function SessionPage() {
       )}
       {/* <div className={`w-full h-[950px] flex flex-col bg-[#0D101B] rounded-[20px] border border-[rgba(255,255,255,0.1)] backdrop-blur-[32px] relative transition-all duration-300 ${isSidebarOpen ? 'pr-120' : ''}`}> */}
       <div
-        className={`w-full flex flex-col bg-[#0D101B] rounded-[20px] border border-[rgba(255,255,255,0.1)] backdrop-blur-[32px] relative transition-all duration-300 ${
-          isSidebarOpen ? "pr-120" : ""
-        }`}
+        className={`w-full flex flex-col bg-[#0D101B] rounded-[20px] border border-[rgba(255,255,255,0.1)] backdrop-blur-[32px] relative transition-all duration-300 ${isSidebarOpen ? "pr-120" : ""
+          }`}
       >
         {/* Sidebar - keep in original position */}
         {isSidebarOpen && (
@@ -868,8 +1090,8 @@ export default function SessionPage() {
           </div>
         )}
 
-        {/* Top Header */}
-        <div className="flex items-center justify-between px-6 py-4 text-white mb-4 mt-3">
+        {/* Top Header - Desktop */}
+        <div className="hidden md:flex items-center justify-between px-6 py-4 text-white mb-4 mt-3">
           <div className="flex items-center gap-2 ml-4">
             <div className="w-4 h-4 rounded-full flex items-center justify-center">
               <Clock color="white" />
@@ -878,7 +1100,6 @@ export default function SessionPage() {
             <span className="mx-2 text-gray-400 ml-20">|</span>
           </div>
 
-          {/* Soundwave visualization */}
           <div className="flex items-center gap-[2px] h-8">
             <img src="/images/icons/soundwave.png" alt="" />
           </div>
@@ -892,11 +1113,16 @@ export default function SessionPage() {
           </div>
         </div>
 
+        {/* Top Header - Mobile */}
+        {/* <div className="flex md:hidden items-center justify-between px-4 py-3 text-white mb-4 mt-3 bg-[#10131A] rounded-lg">
+          <span className="text-base font-semibold">Conference</span>
+        </div> */}
+
         {/* Main Video Area */}
-        <div className="flex-1 relative mx-6 mb-6">
+        <div className="flex-1 relative mx-0 md:mx-6 mb-6">
           <div className="w-full h-full rounded-2xl border border-white/20 relative overflow-hidden">
             {/* User Avatar */}
-            <div className="absolute top-6 left-6 bg-[#080B16] pb-2 pt-2 pl-4 pr-4 rounded-[11px] border border-[rgba(211,211,211,0.1)] z-10">
+            <div className="hidden md:block absolute top-6 left-6 bg-[#080B16] pb-2 pt-2 pl-4 pr-4 rounded-[11px] border border-[rgba(211,211,211,0.1)] z-10">
               <div className="flex items-center gap-3">
 
                 <HexAvatar initials={currentUser.slice(0, 2).toUpperCase()} size={24} fontSize={10} />
@@ -982,6 +1208,18 @@ export default function SessionPage() {
                 className="w-full h-full"
               >
                 <CustomVideoTiles activeEmojis={activeEmojis} />
+                {/* Mobile controls */}
+                <div className="absolute bottom-160 left-0 right-0 block md:hidden">
+                  <MobileConferenceControls
+                    onInvite={() => setIsModalOpen(true)}
+                    onToggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)}
+                    onSendEmoji={sendEmoji}
+                    onToggleHandRaise={toggleHandRaise}
+                    currentUser={currentUser}
+                    raisedHands={raisedHands}
+                  />
+                </div>
+
                 <ParticipantProvider onParticipantsChange={setParticipants} />
                 <RealtimeMessaging
                   onEmojiReceived={handleEmojiReceived}
@@ -989,7 +1227,8 @@ export default function SessionPage() {
                   onChatReceived={handleChatReceived}
                 />
 
-                <div className="absolute bottom-0 left-0 right-0">
+                {/* Desktop controls */}
+                <div className="absolute bottom-0 left-0 right-0 hidden md:block">
                   <ConferenceControls
                     onInvite={() => setIsModalOpen(true)}
                     onToggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)}
@@ -999,7 +1238,38 @@ export default function SessionPage() {
                     raisedHands={raisedHands}
                   />
                 </div>
+                {participants && participants.length > 0 && (
+                  <div className="absolute bottom-32 left-0 right-0 z-20 block md:hidden px-3 pb-2 items-center justify-center">
+                    <div className="flex gap-3 overflow-x-auto scrollbar-hide items-center justify-center ">
+                      {participants.map((p) => {
+                        const participant = p as Participant;
+                        return (
+                          <div
+                            key={participant.sid}
+                            className="backdrop-blur-[16px] bg-white/10 border border-white/20 rounded-xl flex flex-col items-center  min-w-[130px] max-w-[130px] h-[140px] shadow-lg justify-center text-center"
+                            style={{ flex: '0 0 auto' }}
+                          >
+                            <HexAvatar initials={participant.identity.slice(0, 2).toUpperCase()} size={84} fontSize={24} />
+                            <span className="text-white text-xs font-medium mt-1 truncate max-w-[60px] text-center">{participant.identity}</span>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
+                <div className="absolute bottom-0 left-0 right-0 block md:hidden">
+                  
+                  <MobileTabBarControls
+                    onInvite={() => setIsModalOpen(true)}
+                    onToggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)}
+                    onSendEmoji={sendEmoji}
+                    onToggleHandRaise={toggleHandRaise}
+                    currentUser={currentUser}
+                    raisedHands={raisedHands}
+                  />
+                </div>
               </LiveKitRoom>
+
             ) : (
               <div className="w-full h-full flex items-center justify-center">
                 <div className="text-white text-lg animate-pulse">
