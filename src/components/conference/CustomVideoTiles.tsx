@@ -22,6 +22,15 @@ export const CustomVideoTiles = ({
 }) => {
   const participantsRaw = useParticipants();
   const tracks = useTracks([Track.Source.Camera, Track.Source.ScreenShare]);
+// detect if we're on mobile
+const [isMobile, setIsMobile] = useState(false);
+
+useEffect(() => {
+  const check = () => setIsMobile(window.innerWidth < 768);
+  check();
+  window.addEventListener("resize", check);
+  return () => window.removeEventListener("resize", check);
+}, []);
 
   /** 1) Stable participant ordering (no reshuffle) */
   const participants = useMemo(() => {
@@ -77,7 +86,7 @@ export const CustomVideoTiles = ({
   }, [participants, mainId]);
 
   /** Single-participant layout (kept stable; no conditional container mounts) */
-  if (participants.length === 1) {
+ if (participants.length === 1 || isMobile) {
     const p = participants[0];
     const displayName = p.identity;
     const initials = getInitials(displayName);
@@ -127,7 +136,7 @@ export const CustomVideoTiles = ({
         </div>
 
         {/* Right rail – fixed width prevents width reflow */}
-        <div className="w-56 flex flex-col gap-2 mr-4">
+        <div className="w-56 flex flex-col gap-2 mr-4 hidden md:block">
           {displayed.map((p) => (
             <SmallVideoTile key={p.identity} participant={p} trackMap={trackByParticipantAndSource} />
           ))}
@@ -187,17 +196,24 @@ const VideoSurface = ({
   }, [trackRef?.publication?.track]);
 
   return (
-    <div className="relative w-full h-[800px] min-h-[128px] bg-black rounded-xl overflow-hidden">
+    <div className="relative w-full h-[800px] min-h-[128px] bg-transparent rounded-xl overflow-hidden">
       {/* Keep the video element mounted always */}
       <video ref={videoRef} autoPlay playsInline muted={participant.isLocal} className={fillClass ?? "w-full h-full object-cover"} />
 
       {/* Soft fade placeholder instead of unmounting */}
       <div className={`absolute inset-0 flex flex-col items-center justify-center transition-opacity duration-200 ${hasMedia ? "opacity-0 pointer-events-none" : "opacity-100"}`}>
-        {/* <div className="w-24 h-24 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-2xl font-bold uppercase text-white shadow-lg">
-          {fallbackInitials}
-        </div> */}
-        <HexAvatar initials={fallbackInitials} size={150} fontSize={28} borderColor=""  />
-        {fallbackName && <p className="mt-3 text-lg text-white/70 font-medium">{fallbackName}</p>}
+        {/* Single HexAvatar with responsive size */}
+        <div className="block">
+          <HexAvatar
+            initials={fallbackInitials}
+            size={typeof window !== 'undefined' && window.innerWidth < 768 ? 130 : window.innerWidth < 1024 ? 110 : 150}
+            fontSize={typeof window !== 'undefined' && window.innerWidth < 768 ? 58 : window.innerWidth < 1024 ? 22 : 28}
+            borderColor=""
+          />
+        </div>
+        {fallbackName && (
+          <p className="mt-3 text-lg text-white/80 font-semibold">{fallbackName}</p>
+        )}
       </div>
     </div>
   );
@@ -294,7 +310,7 @@ const SmallVideoTile = ({
   const initials = getInitials(displayName);
 
   return (
-    <div className="w-full h-32 min-h-[128px] bg-black rounded-lg relative overflow-hidden cursor-pointer hover:ring-2 hover:ring-blue-500/50 transition-all">
+    <div className="w-full h-32 min-h-[128px] bg-black rounded-lg relative overflow-hidden cursor-pointer hover:ring-2 hover:ring-blue-500/50 transition-all hidden md:block">
       <VideoSurface
         participant={participant}
         trackRef={t}
