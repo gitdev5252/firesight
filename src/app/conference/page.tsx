@@ -29,20 +29,16 @@ import "@livekit/components-styles"; // Required styles
 import { LIVEKIT_CONFIG } from "@/lib/livekit/config";
 import { CustomVideoTiles } from "@/components/conference/CustomVideoTiles";
 import { useMediaControls } from "@/hooks/useMediaControls";
+import { HexAvatar } from "@/components/HexAvatar/HexAvatar";
 
-// Sidebar Component
-const Sidebar = ({
-  participants,
-  roomName,
-  raisedHands,
-  chatMessages,
-  onSendMessage,
-}: {
-  participants?: unknown[];
-  roomName: string;
-  raisedHands: { [key: string]: boolean };
-  chatMessages: { message: string; timestamp: number; username: string }[];
-  onSendMessage: (message: string) => void;
+
+const Sidebar = ({ participants, roomName, raisedHands, chatMessages, onSendMessage }: {
+  participants?: unknown[],
+  roomName: string,
+  raisedHands: { [key: string]: boolean },
+  chatMessages: { message: string, timestamp: number, username: string }[],
+  onSendMessage: (message: string) => void
+
 }) => {
   const [activeTab, setActiveTab] = React.useState("People");
   const tabs = ["People", "Chat", "Transcript", "Summary", "Prompts"];
@@ -95,17 +91,9 @@ type Participant = {
   sid: string;
 };
 
-const PeopleTab = ({
-  participants,
-  roomName,
-  raisedHands,
-}: {
-  participants?: unknown[];
-  roomName: string;
-  raisedHands: { [key: string]: boolean };
-}) => {
-  console.log("PeopleTab raisedHands:", raisedHands);
-  console.log("PeopleTab participants:", participants);
+
+const PeopleTab = ({ participants, roomName, raisedHands }: { participants?: unknown[], roomName: string, raisedHands: { [key: string]: boolean } }) => {
+
 
   return (
     <div className="h-screen mt-8">
@@ -119,13 +107,10 @@ const PeopleTab = ({
             const isCameraEnabled = !p.isCameraEnabled === false;
 
             return (
-              <div
-                key={p.sid}
-                className="flex items-center gap-3 p-3 rounded-lg mb-2 "
-              >
-                <div className="w-8 h-8 bg-teal-500 rounded-full flex items-center justify-center text-white font-semibold text-sm">
-                  {initials}
-                </div>
+
+              <div key={p.sid} className="flex items-center gap-3 p-3 rounded-lg mb-2 ">
+                <HexAvatar initials={initials} size={32} fontSize={12} />
+
                 <div className="flex-1">
                   <div className="flex items-center gap-2">
                     <p className="text-white text-sm font-medium">
@@ -195,12 +180,11 @@ const PeopleTab = ({
   );
 };
 
-const ChatTab = ({
-  messages,
-  onSendMessage,
-}: {
-  messages: { message: string; timestamp: number; username: string }[];
-  onSendMessage: (message: string) => void;
+
+const ChatTab = ({ messages, onSendMessage }: {
+  messages: { message: string, timestamp: number, username: string }[],
+  onSendMessage: (message: string) => void
+
 }) => {
   const [inputMessage, setInputMessage] = React.useState("");
   const messagesEndRef = React.useRef<HTMLDivElement>(null);
@@ -283,26 +267,55 @@ const ChatTab = ({
 };
 
 const TranscriptTab = () => (
-  <div>
-    <p className="text-white/60 text-sm">
-      Transcript will appear here when the session starts...
-    </p>
+
+  <div className="flex flex-col items-center h-full min-h-[500px] w-full mt-10">
+    <div className="bg-[#181C23] border border-white/10 rounded-2xl p-8 w-full max-w-md flex flex-col items-center shadow-lg h-[90%]">
+      <span className="text-green-400 text-base font-mono mb-4">Coming Soon</span>
+      <h2 className="text-white text-2xl font-bold mb-2 text-center tracking-wide">Create an Account</h2>
+      <p className="text-white/70 text-base mb-8 text-center">To be among the first to use <span className="font-semibold">Transcript</span></p>
+      <button className="w-full py-4 mb-12 rounded-full border border-green-400 text-green-200 text-lg font-mono font-semibold bg-gradient-to-r from-green-400/10 to-cyan-400/10 hover:from-green-400/20 hover:to-cyan-400/20 transition">
+        14 Day Trial | <span className="font-bold text-white">Start Now</span>
+      </button>
+      <div className="w-full border-t border-white/10 my-8"></div>
+      <p className="text-white/60 text-center mb-4">If you already have an account</p>
+      <button className="w-full py-3 rounded-full border border-white/20 text-white/80 text-lg font-mono bg-[#10131A] hover:bg-white/10 transition">Log In</button>
+    </div>
+
   </div>
 );
 
 const SummaryTab = () => (
-  <div>
-    <p className="text-white/60 text-sm">
-      Session summary will be generated automatically...
-    </p>
+  <div className="flex flex-col items-center h-full min-h-[500px] w-full mt-10">
+    <div className="bg-[#181C23] border border-white/10 rounded-2xl p-8 w-full max-w-md flex flex-col items-center shadow-lg h-[90%]">
+      <span className="text-green-400 text-base font-mono mb-4">Coming Soon</span>
+      <h2 className="text-white text-2xl font-bold mb-2 text-center tracking-wide">Create an Account</h2>
+      <p className="text-white/70 text-base mb-8 text-center">To be among the first to use <span className="font-semibold">Transcript</span></p>
+      <button className="w-full py-4 mb-12 rounded-full border border-green-400 text-green-200 text-lg font-mono font-semibold bg-gradient-to-r from-green-400/10 to-cyan-400/10 hover:from-green-400/20 hover:to-cyan-400/20 transition">
+        14 Day Trial | <span className="font-bold text-white">Start Now</span>
+      </button>
+      <div className="w-full border-t border-white/10 my-8"></div>
+      <p className="text-white/60 text-center mb-4">If you already have an account</p>
+      <button className="w-full py-3 rounded-full border border-white/20 text-white/80 text-lg font-mono bg-[#10131A] hover:bg-white/10 transition">Log In</button>
+    </div>
+
   </div>
 );
 
 const PromptsTab = () => (
-  <div>
-    <p className="text-white/60 text-sm">
-      AI prompts and suggestions will appear here...
-    </p>
+
+  <div className="flex flex-col items-center h-full min-h-[500px] w-full mt-10">
+    <div className="bg-[#181C23] border border-white/10 rounded-2xl p-8 w-full max-w-md flex flex-col items-center shadow-lg h-[90%]">
+      <span className="text-green-400 text-base font-mono mb-4">Coming Soon</span>
+      <h2 className="text-white text-2xl font-bold mb-2 text-center tracking-wide">Create an Account</h2>
+      <p className="text-white/70 text-base mb-8 text-center">To be among the first to use <span className="font-semibold">Transcript</span></p>
+      <button className="w-full py-4 mb-12 rounded-full border border-green-400 text-green-200 text-lg font-mono font-semibold bg-gradient-to-r from-green-400/10 to-cyan-400/10 hover:from-green-400/20 hover:to-cyan-400/20 transition">
+        14 Day Trial | <span className="font-bold text-white">Start Now</span>
+      </button>
+      <div className="w-full border-t border-white/10 my-8"></div>
+      <p className="text-white/60 text-center mb-4">If you already have an account</p>
+      <button className="w-full py-3 rounded-full border border-white/20 text-white/80 text-lg font-mono bg-[#10131A] hover:bg-white/10 transition">Log In</button>
+    </div>
+
   </div>
 );
 
@@ -310,19 +323,12 @@ const PromptsTab = () => (
 const RealtimeMessaging = ({
   onEmojiReceived,
   onHandRaiseReceived,
-  onChatReceived,
+  onChatReceived
 }: {
-  onEmojiReceived: (data: {
-    emoji: string;
-    timestamp: number;
-    username: string;
-  }) => void;
-  onHandRaiseReceived: (data: { username: string; isRaised: boolean }) => void;
-  onChatReceived: (data: {
-    message: string;
-    timestamp: number;
-    username: string;
-  }) => void;
+  onEmojiReceived: (data: { emoji: string, timestamp: number, username: string }) => void;
+  onHandRaiseReceived: (data: { username: string, isRaised: boolean }) => void;
+  onChatReceived: (data: { message: string, timestamp: number, username: string }) => void;
+
 }) => {
   const { localParticipant } = useLocalParticipant();
 
@@ -399,14 +405,9 @@ const ParticipantProvider = ({
 
   return null;
 };
-const ConferenceControls = ({
-  onInvite,
-  onToggleSidebar,
-  onSendEmoji,
-  onToggleHandRaise,
-  currentUser,
-  raisedHands,
-}: {
+
+const ConferenceControls = ({ onInvite, onToggleSidebar, onSendEmoji, onToggleHandRaise, currentUser, raisedHands }: {
+
   onInvite: () => void;
   onToggleSidebar: () => void;
   onSendEmoji: (username: string) => void;
@@ -494,11 +495,12 @@ const ConferenceControls = ({
             <div className="w-px h-8 bg-white/20"></div>
 
             <button
-              className={`flex flex-col items-center gap-1 transition-colors ${
-                raisedHands[currentUser]
-                  ? "text-yellow-400 hover:text-yellow-500"
-                  : "text-gray-400 hover:text-gray-400"
-              }`}
+
+              className={`flex flex-col items-center gap-1 transition-colors ${raisedHands[currentUser]
+                  ? 'text-yellow-400 hover:text-yellow-500'
+                  : 'text-gray-400 hover:text-gray-400'
+                }`}
+
               onClick={() => {
                 console.log("Hand button clicked, currentUser:", currentUser);
                 onToggleHandRaise(currentUser);
@@ -593,15 +595,11 @@ export default function SessionPage() {
   const [participants, setParticipants] = React.useState<unknown[]>([]);
   const [currentUser, setCurrentUser] = React.useState<string>("");
   const [currentTime, setCurrentTime] = React.useState<string>("");
-  const [activeEmojis, setActiveEmojis] = React.useState<{
-    [key: string]: { emoji: string; timestamp: number; username: string };
-  }>({}); // Add emoji state
-  const [raisedHands, setRaisedHands] = React.useState<{
-    [key: string]: boolean;
-  }>({}); // Add raised hands state
-  const [chatMessages, setChatMessages] = React.useState<
-    { message: string; timestamp: number; username: string }[]
-  >([]); // Add chat state
+
+  const [activeEmojis, setActiveEmojis] = React.useState<{ [key: string]: { emoji: string, timestamp: number, username: string } }>({}); // Add emoji state
+  const [raisedHands, setRaisedHands] = React.useState<{ [key: string]: boolean }>({}); // Add raised hands state
+  const [chatMessages, setChatMessages] = React.useState<{ message: string, timestamp: number, username: string }[]>([]); // Add chat state
+
   const [nameModalOpen, setNameModalOpen] = React.useState(false);
   const [userNameInput, setUserNameInput] = React.useState("");
   const [nameError, setNameError] = React.useState("");
@@ -665,12 +663,10 @@ export default function SessionPage() {
   };
 
   // Function to handle received emojis
-  const handleEmojiReceived = (data: {
-    emoji: string;
-    timestamp: number;
-    username: string;
-  }) => {
-    setActiveEmojis((prev) => ({
+
+  const handleEmojiReceived = (data: { emoji: string, timestamp: number, username: string }) => {
+    setActiveEmojis(prev => ({
+
       ...prev,
       [data.username]: data,
     }));
@@ -691,7 +687,8 @@ export default function SessionPage() {
     console.log("Current raisedHands state:", raisedHands);
     const newState = !raisedHands[username];
 
-    setRaisedHands((prev) => {
+    setRaisedHands(prev => {
+
       const updatedState = {
         ...prev,
         [username]: newState,
@@ -712,11 +709,10 @@ export default function SessionPage() {
   };
 
   // Function to handle received hand raise
-  const handleHandRaiseReceived = (data: {
-    username: string;
-    isRaised: boolean;
-  }) => {
-    setRaisedHands((prev) => ({
+
+  const handleHandRaiseReceived = (data: { username: string, isRaised: boolean }) => {
+    setRaisedHands(prev => ({
+
       ...prev,
       [data.username]: data.isRaised,
     }));
@@ -742,12 +738,10 @@ export default function SessionPage() {
   };
 
   // Function to handle received chat message
-  const handleChatReceived = (data: {
-    message: string;
-    timestamp: number;
-    username: string;
-  }) => {
-    setChatMessages((prev) => [...prev, data]);
+
+  const handleChatReceived = (data: { message: string, timestamp: number, username: string }) => {
+    setChatMessages(prev => [...prev, data]);
+
   };
 
   // Update real time every second
@@ -904,28 +898,17 @@ export default function SessionPage() {
             {/* User Avatar */}
             <div className="absolute top-6 left-6 bg-[#080B16] pb-2 pt-2 pl-4 pr-4 rounded-[11px] border border-[rgba(211,211,211,0.1)] z-10">
               <div className="flex items-center gap-3">
-                <div className="w-6 h-6 bg-teal-500 rounded-full flex items-center justify-center text-white font-semibold text-xs">
-                  {currentUser.slice(0, 2).toUpperCase()}
-                </div>
-                <span className="text-white text-sm font-medium">
-                  {currentUser}
-                </span>
+
+                <HexAvatar initials={currentUser.slice(0, 2).toUpperCase()} size={24} fontSize={10} />
+
+                <span className="text-white text-sm font-medium">{currentUser}</span>
+
               </div>
             </div>
 
             {/* Fullscreen Button */}
             <div className="absolute top-6 right-6 flex gap-2 z-10">
-              {/* <button
-                onClick={() => setIsModalOpen(true)}
-                className="w-8 h-8 bg-white/10 hover:bg-white/20 rounded-lg flex items-center justify-center text-white transition-colors"
-              >
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M8 4v8M4 8h8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-                </svg>
-              </button> */}
-              {/* <button className="w-8 h-8 rounded-lg flex items-center justify-center text-white transition-colors">
-                <Expand color="white" />
-              </button> */}
+
             </div>
 
             {/* Session Ready Modal */}

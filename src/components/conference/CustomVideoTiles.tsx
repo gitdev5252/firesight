@@ -2,6 +2,7 @@ import { useTracks, useParticipants } from "@livekit/components-react";
 import { Participant, Track } from "livekit-client";
 import { Expand, Mic, MicOff, Monitor } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
+import { HexAvatar } from "../HexAvatar/HexAvatar";
 
 /* utils */
 const getInitials = (name: string) =>
@@ -192,9 +193,10 @@ const VideoSurface = ({
 
       {/* Soft fade placeholder instead of unmounting */}
       <div className={`absolute inset-0 flex flex-col items-center justify-center transition-opacity duration-200 ${hasMedia ? "opacity-0 pointer-events-none" : "opacity-100"}`}>
-        <div className="w-24 h-24 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-2xl font-bold uppercase text-white shadow-lg">
+        {/* <div className="w-24 h-24 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-2xl font-bold uppercase text-white shadow-lg">
           {fallbackInitials}
-        </div>
+        </div> */}
+        <HexAvatar initials={fallbackInitials} size={150} fontSize={28} borderColor=""  />
         {fallbackName && <p className="mt-3 text-lg text-white/70 font-medium">{fallbackName}</p>}
       </div>
     </div>
@@ -310,8 +312,8 @@ const SmallVideoTile = ({
       <div className="absolute top-2 right-2 flex flex-col gap-1 z-20">
         {source === Track.Source.ScreenShare && (
           <div className="w-6 h-6 bg-green-600 rounded-full flex items-center justify-center shadow-lg">
-          <Monitor size={12} color="white" />
-        </div>
+            <Monitor size={12} color="white" />
+          </div>
         )}
         {participant.isMicrophoneEnabled ? (
           <div className="w-8 h-8 bg-[#080B16] rounded-full flex items-center justify-center shadow-lg">
