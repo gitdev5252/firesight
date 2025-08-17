@@ -1,3 +1,5 @@
+
+
 "use client";
 import {
   BotMessageSquare,
@@ -29,28 +31,40 @@ import {
   useDataChannel,
 } from "@livekit/components-react";
 import { useRouter } from "next/navigation";
-import "@livekit/components-styles"; // Required styles
+import "@livekit/components-styles";
 import { LIVEKIT_CONFIG } from "@/lib/livekit/config";
 import { CustomVideoTiles } from "@/components/conference/CustomVideoTiles";
 import { useMediaControls } from "@/hooks/useMediaControls";
 import { HexAvatar } from "@/components/HexAvatar/HexAvatar";
 
-const mobileTabs = ["Session","People", "Chat", "Transcript", "Summary"];
+const mobileTabs = ["Session", "People", "Chat", "Transcript", "Summary"];
 
-const Sidebar = ({ participants, roomName, raisedHands, chatMessages, onSendMessage }: {
-  participants?: unknown[],
-  roomName: string,
-  raisedHands: { [key: string]: boolean },
-  chatMessages: { message: string, timestamp: number, username: string }[],
-  onSendMessage: (message: string) => void
+type Participant = {
+  identity: string;
+  isLocal: boolean;
+  isMicrophoneEnabled: boolean;
+  isCameraEnabled: boolean;
+  sid: string;
+};
 
+const Sidebar = ({
+  participants,
+  roomName,
+  raisedHands,
+  chatMessages,
+  onSendMessage,
+}: {
+  participants?: unknown[];
+  roomName: string;
+  raisedHands: { [key: string]: boolean };
+  chatMessages: { message: string; timestamp: number; username: string }[];
+  onSendMessage: (message: string) => void;
 }) => {
   const [activeTab, setActiveTab] = React.useState("People");
   const tabs = ["People", "Chat", "Transcript", "Summary", "Prompts"];
 
   return (
-    <div className="h-full flex flex-col">
-      {/* Tabs - moved to top without header */}
+    <div className="h-full flex flex-col min-h-0">
       <div className="flex border-b border-white/10">
         {tabs.map((tab) => (
           <button
@@ -66,8 +80,7 @@ const Sidebar = ({ participants, roomName, raisedHands, chatMessages, onSendMess
         ))}
       </div>
 
-      {/* Tab Content */}
-      <div className="flex-1 p-4 overflow-y-auto">
+      <div className="flex-1 p-4 overflow-y-auto min-h-0">
         {activeTab === "People" && (
           <PeopleTab
             participants={participants}
@@ -86,22 +99,18 @@ const Sidebar = ({ participants, roomName, raisedHands, chatMessages, onSendMess
   );
 };
 
-// Tab Components
-type Participant = {
-  identity: string;
-  isLocal: boolean;
-  isMicrophoneEnabled: boolean;
-  isCameraEnabled: boolean;
-  sid: string;
-};
-
-
-const PeopleTab = ({ participants, roomName, raisedHands }: { participants?: unknown[], roomName: string, raisedHands: { [key: string]: boolean } }) => {
-
-
+const PeopleTab = ({
+  participants,
+  roomName,
+  raisedHands,
+}: {
+  participants?: unknown[];
+  roomName: string;
+  raisedHands: { [key: string]: boolean };
+}) => {
   return (
-    <div className="h-screen mt-8">
-      <div className="bg-[rgba(255,255,255,0.02)] rounded-[20px] border border-[rgba(255,255,255,0.1)] backdrop-blur-[32px] p-2 mb-4 h-[70%]">
+    <div className="mt-8">
+      <div className="bg-[rgba(255,255,255,0.02)] rounded-[20px] border border-[rgba(255,255,255,0.1)] backdrop-blur-[32px] p-2 mb-4 max-h-[56vh] overflow-auto">
         {participants && participants.length > 0 ? (
           participants.map((participant) => {
             const p = participant as Participant;
@@ -111,8 +120,10 @@ const PeopleTab = ({ participants, roomName, raisedHands }: { participants?: unk
             const isCameraEnabled = !p.isCameraEnabled === false;
 
             return (
-
-              <div key={p.sid} className="flex items-center gap-3 p-3 rounded-lg mb-2 ">
+              <div
+                key={p.sid}
+                className="flex items-center gap-3 p-3 rounded-lg mb-2"
+              >
                 <HexAvatar initials={initials} size={32} fontSize={12} />
 
                 <div className="flex-1">
@@ -120,36 +131,24 @@ const PeopleTab = ({ participants, roomName, raisedHands }: { participants?: unk
                     <p className="text-white text-sm font-medium">
                       {p.identity} {isLocal && "(Host)"}
                     </p>
-                    {(() => {
-                      console.log(
-                        `Checking hand for ${p.identity}:`,
-                        raisedHands[p.identity]
-                      );
-                      return (
-                        raisedHands[p.identity] && (
-                          <Hand
-                            size={16}
-                            color="#fbbf24"
-                            className="animate-pulse"
-                          />
-                        )
-                      );
-                    })()}
+                    {raisedHands[p.identity] && (
+                      <Hand
+                        size={16}
+                        color="#fbbf24"
+                        className="animate-pulse"
+                      />
+                    )}
                   </div>
                 </div>
                 <div className="flex gap-5 mr-4">
-                  <div
-                    className={`w-5 h-5 rounded-full flex items-center justify-center`}
-                  >
+                  <div className="w-5 h-5 rounded-full flex items-center justify-center">
                     {isMicEnabled ? (
                       <Mic size={24} color="white" />
                     ) : (
                       <MicOff size={24} color="white" />
                     )}
                   </div>
-                  <div
-                    className={`w-5 h-5 rounded-full flex items-center justify-center `}
-                  >
+                  <div className="w-5 h-5 rounded-full flex items-center justify-center">
                     {isCameraEnabled ? (
                       <Video size={24} color="white" />
                     ) : (
@@ -164,6 +163,7 @@ const PeopleTab = ({ participants, roomName, raisedHands }: { participants?: unk
           <p className="text-white/60 text-sm">No participants yet</p>
         )}
       </div>
+
       <div className="flex items-center gap-3 p-2 bg-[#0f1419] rounded-lg border border-white/10">
         <Link color="white" />
         <span className="text-white/80 text-sm flex-1 font-mono">
@@ -184,16 +184,16 @@ const PeopleTab = ({ participants, roomName, raisedHands }: { participants?: unk
   );
 };
 
-
-const ChatTab = ({ messages, onSendMessage }: {
-  messages: { message: string, timestamp: number, username: string }[],
-  onSendMessage: (message: string) => void
-
+const ChatTab = ({
+  messages,
+  onSendMessage,
+}: {
+  messages: { message: string; timestamp: number; username: string }[];
+  onSendMessage: (message: string) => void;
 }) => {
   const [inputMessage, setInputMessage] = React.useState("");
   const messagesEndRef = React.useRef<HTMLDivElement>(null);
 
-  // Auto-scroll to bottom when new messages arrive
   React.useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
@@ -218,9 +218,8 @@ const ChatTab = ({ messages, onSendMessage }: {
   };
 
   return (
-    <div className="flex flex-col h-full">
-      {/* Messages container */}
-      <div className="flex-1 overflow-y-auto mb-4 space-y-3">
+    <div className="flex flex-col h-full min-h-0">
+      <div className="flex-1 overflow-y-auto mb-4 space-y-3 min-h-0">
         {messages.length > 0 ? (
           messages.map((msg, index) => (
             <div
@@ -246,7 +245,6 @@ const ChatTab = ({ messages, onSendMessage }: {
         <div ref={messagesEndRef} />
       </div>
 
-      {/* Input area */}
       <div className="border-t border-white/10 pt-4">
         <div className="flex gap-2">
           <input
@@ -271,147 +269,111 @@ const ChatTab = ({ messages, onSendMessage }: {
 };
 
 const TranscriptTab = () => (
-
   <div className="flex flex-col items-center h-full min-h-[500px] w-full mt-10">
     <div className="bg-[#181C23] border border-white/10 rounded-2xl p-8 w-full max-w-md flex flex-col items-center shadow-lg h-[90%]">
       <span className="text-green-400 text-base font-mono mb-4">Coming Soon</span>
-      <h2 className="text-white text-2xl font-bold mb-2 text-center tracking-wide">Create an Account</h2>
-      <p className="text-white/70 text-base mb-8 text-center">To be among the first to use <span className="font-semibold">Transcript</span></p>
+      <h2 className="text-white text-2xl font-bold mb-2 text-center tracking-wide">
+        Create an Account
+      </h2>
+      <p className="text-white/70 text-base mb-8 text-center">
+        To be among the first to use <span className="font-semibold">Transcript</span>
+      </p>
       <button className="w-full py-4 mb-12 rounded-full border border-green-400 text-green-200 text-lg font-mono font-semibold bg-gradient-to-r from-green-400/10 to-cyan-400/10 hover:from-green-400/20 hover:to-cyan-400/20 transition">
         14 Day Trial | <span className="font-bold text-white">Start Now</span>
       </button>
       <div className="w-full border-t border-white/10 my-8"></div>
-      <p className="text-white/60 text-center mb-4">If you already have an account</p>
-      <button className="w-full py-3 rounded-full border border-white/20 text-white/80 text-lg font-mono bg-[#10131A] hover:bg-white/10 transition">Log In</button>
-    </div>
-
-  </div>
-);
-
-const SummaryTab = () => (
-  <div className="flex flex-col items-center h-full min-h-[500px] w-full mt-10">
-    <div className="bg-[#181C23] border border-white/10 rounded-2xl p-8 w-full max-w-md flex flex-col items-center shadow-lg h-[90%]">
-      <span className="text-green-400 text-base font-mono mb-4">Coming Soon</span>
-      <h2 className="text-white text-2xl font-bold mb-2 text-center tracking-wide">Create an Account</h2>
-      <p className="text-white/70 text-base mb-8 text-center">To be among the first to use <span className="font-semibold">Transcript</span></p>
-      <button className="w-full py-4 mb-12 rounded-full border border-green-400 text-green-200 text-lg font-mono font-semibold bg-gradient-to-r from-green-400/10 to-cyan-400/10 hover:from-green-400/20 hover:to-cyan-400/20 transition">
-        14 Day Trial | <span className="font-bold text-white">Start Now</span>
+      <p className="text-white/60 text-center mb-4">
+        If you already have an account
+      </p>
+      <button className="w-full py-3 rounded-full border border-white/20 text-white/80 text-lg font-mono bg-[#10131A] hover:bg-white/10 transition">
+        Log In
       </button>
-      <div className="w-full border-t border-white/10 my-8"></div>
-      <p className="text-white/60 text-center mb-4">If you already have an account</p>
-      <button className="w-full py-3 rounded-full border border-white/20 text-white/80 text-lg font-mono bg-[#10131A] hover:bg-white/10 transition">Log In</button>
     </div>
-
   </div>
 );
 
-const PromptsTab = () => (
+const SummaryTab = () => <TranscriptTab />;
+const PromptsTab = () => <TranscriptTab />;
 
-  <div className="flex flex-col items-center h-full min-h-[500px] w-full mt-10">
-    <div className="bg-[#181C23] border border-white/10 rounded-2xl p-8 w-full max-w-md flex flex-col items-center shadow-lg h-[90%]">
-      <span className="text-green-400 text-base font-mono mb-4">Coming Soon</span>
-      <h2 className="text-white text-2xl font-bold mb-2 text-center tracking-wide">Create an Account</h2>
-      <p className="text-white/70 text-base mb-8 text-center">To be among the first to use <span className="font-semibold">Transcript</span></p>
-      <button className="w-full py-4 mb-12 rounded-full border border-green-400 text-green-200 text-lg font-mono font-semibold bg-gradient-to-r from-green-400/10 to-cyan-400/10 hover:from-green-400/20 hover:to-cyan-400/20 transition">
-        14 Day Trial | <span className="font-bold text-white">Start Now</span>
-      </button>
-      <div className="w-full border-t border-white/10 my-8"></div>
-      <p className="text-white/60 text-center mb-4">If you already have an account</p>
-      <button className="w-full py-3 rounded-full border border-white/20 text-white/80 text-lg font-mono bg-[#10131A] hover:bg-white/10 transition">Log In</button>
-    </div>
-
-  </div>
-);
-
-// Component to handle real-time messaging for emojis and hand raises
+/* ----------------- Realtime Messaging ----------------- */
 const RealtimeMessaging = ({
   onEmojiReceived,
   onHandRaiseReceived,
-  onChatReceived
+  onChatReceived,
 }: {
-  onEmojiReceived: (data: { emoji: string, timestamp: number, username: string }) => void;
-  onHandRaiseReceived: (data: { username: string, isRaised: boolean }) => void;
-  onChatReceived: (data: { message: string, timestamp: number, username: string }) => void;
-
+  onEmojiReceived: (data: {
+    emoji: string;
+    timestamp: number;
+    username: string;
+  }) => void;
+  onHandRaiseReceived: (data: { username: string; isRaised: boolean }) => void;
+  onChatReceived: (data: {
+    message: string;
+    timestamp: number;
+    username: string;
+  }) => void;
 }) => {
   const { localParticipant } = useLocalParticipant();
 
-  // Data channel for emojis
   const { send: sendEmojiData } = useDataChannel("emoji", (message) => {
     const data = JSON.parse(new TextDecoder().decode(message.payload));
     onEmojiReceived(data);
   });
-
-  // Data channel for hand raises
   const { send: sendHandData } = useDataChannel("hand-raise", (message) => {
     const data = JSON.parse(new TextDecoder().decode(message.payload));
     onHandRaiseReceived(data);
   });
-
-  // Data channel for chat messages
   const { send: sendChatData } = useDataChannel("chat", (message) => {
     const data = JSON.parse(new TextDecoder().decode(message.payload));
     onChatReceived(data);
   });
 
-  // Expose send functions globally
   React.useEffect(() => {
-    if (localParticipant) {
-      (
-        window as unknown as {
-          sendEmojiToAll?: (emoji: string, username: string) => void;
-        }
-      ).sendEmojiToAll = (emoji: string, username: string) => {
-        const data = { emoji, timestamp: Date.now(), username };
-        sendEmojiData(new TextEncoder().encode(JSON.stringify(data)), {
-          reliable: true,
-        });
-      };
-
-      (
-        window as unknown as {
-          sendHandRaiseToAll?: (username: string, isRaised: boolean) => void;
-        }
-      ).sendHandRaiseToAll = (username: string, isRaised: boolean) => {
-        const data = { username, isRaised };
-        sendHandData(new TextEncoder().encode(JSON.stringify(data)), {
-          reliable: true,
-        });
-      };
-
-      (
-        window as unknown as {
-          sendChatToAll?: (message: string, username: string) => void;
-        }
-      ).sendChatToAll = (message: string, username: string) => {
-        const data = { message, timestamp: Date.now(), username };
-        sendChatData(new TextEncoder().encode(JSON.stringify(data)), {
-          reliable: true,
-        });
-      };
-    }
+    if (!localParticipant) return;
+    window.sendEmojiToAll = (emoji: string, username: string) => {
+      const data = { emoji, timestamp: Date.now(), username };
+      sendEmojiData(new TextEncoder().encode(JSON.stringify(data)), {
+        reliable: true,
+      });
+    };
+    window.sendHandRaiseToAll = (username: string, isRaised: boolean) => {
+      const data = { username, isRaised };
+      sendHandData(new TextEncoder().encode(JSON.stringify(data)), {
+        reliable: true,
+      });
+    };
+    window.sendChatToAll = (message: string, username: string) => {
+      const data = { message, timestamp: Date.now(), username };
+      sendChatData(new TextEncoder().encode(JSON.stringify(data)), {
+        reliable: true,
+      });
+    };
   }, [localParticipant, sendEmojiData, sendHandData, sendChatData]);
 
   return null;
 };
 
-// Component to bridge LiveKit context with sidebar
 const ParticipantProvider = ({
   onParticipantsChange,
 }: {
   onParticipantsChange: (participants: unknown[]) => void;
 }) => {
   const participants = useParticipants();
-
   React.useEffect(() => {
     onParticipantsChange(participants);
   }, [participants, onParticipantsChange]);
-
   return null;
 };
 
-const ConferenceControls = ({ onInvite, onToggleSidebar, onSendEmoji, onToggleHandRaise, currentUser, raisedHands }: {
-
+/* ----------------- Desktop Controls ----------------- */
+const ConferenceControls = ({
+  onInvite,
+  onToggleSidebar,
+  onSendEmoji,
+  onToggleHandRaise,
+  currentUser,
+  raisedHands,
+}: {
   onInvite: () => void;
   onToggleSidebar: () => void;
   onSendEmoji: (username: string) => void;
@@ -432,11 +394,8 @@ const ConferenceControls = ({ onInvite, onToggleSidebar, onSendEmoji, onToggleHa
   const { buttonProps: disconnectButtonProps } = useDisconnectButton({});
   const router = useRouter();
 
-  // Custom handler for End Call
   const handleEndCall = async (e: React.MouseEvent<HTMLButtonElement>) => {
-    if (disconnectButtonProps.onClick) {
-      await disconnectButtonProps.onClick(e);
-    }
+    if (disconnectButtonProps.onClick) await disconnectButtonProps.onClick(e);
     router.push("/session");
   };
 
@@ -444,20 +403,18 @@ const ConferenceControls = ({ onInvite, onToggleSidebar, onSendEmoji, onToggleHa
     <div className="px-6 pb-6">
       <div className="px-2 py-4">
         <div className="flex items-center justify-between">
-          {/* Left Controls */}
           <div className="flex items-center gap-4">
             <button
               className="flex flex-col items-center gap-1 text-gray-400/60 hover:text-gray-400 transition-colors"
               onClick={onInvite}
             >
-              <div className=" flex items-center justify-center">
+              <div className="flex items-center justify-center">
                 <Link color="white" />
               </div>
               <span className="text-xs mt-2">Invite</span>
             </button>
           </div>
 
-          {/* Center Controls */}
           <div className="flex items-center gap-6">
             <button
               className={`flex flex-col items-center gap-1 transition-colors ${isMicrophoneEnabled
@@ -471,11 +428,13 @@ const ConferenceControls = ({ onInvite, onToggleSidebar, onSendEmoji, onToggleHa
                   <Mic color="white" />
                 ) : (
                   <MicOff color="red" />
-                )}{" "}
+                )}
               </div>
               <span className="text-xs mt-2">Mic</span>
             </button>
+
             <div className="w-px h-8 bg-white/20"></div>
+
             <button
               className={`flex flex-col items-center gap-1 transition-colors ${isCameraEnabled
                 ? "text-gray-400 hover:text-gray-400"
@@ -493,26 +452,21 @@ const ConferenceControls = ({ onInvite, onToggleSidebar, onSendEmoji, onToggleHa
               <span className="text-xs mt-2">Camera</span>
             </button>
 
-            {/* Divider */}
             <div className="w-px h-8 bg-white/20"></div>
 
             <button
-
               className={`flex flex-col items-center gap-1 transition-colors ${raisedHands[currentUser]
-                ? 'text-yellow-400 hover:text-yellow-500'
-                : 'text-gray-400 hover:text-gray-400'
+                ? "text-yellow-400 hover:text-yellow-500"
+                : "text-gray-400 hover:text-gray-400"
                 }`}
-
-              onClick={() => {
-                console.log("Hand button clicked, currentUser:", currentUser);
-                onToggleHandRaise(currentUser);
-              }}
+              onClick={() => onToggleHandRaise(currentUser)}
             >
               <div className="items-center justify-center">
                 <Hand color={raisedHands[currentUser] ? "#fbbf24" : "white"} />
               </div>
               <span className="text-xs mt-2">Hand</span>
             </button>
+
             <div className="w-px h-8 bg-white/20"></div>
 
             <button className="flex flex-col items-center gap-1 text-gray-400 hover:text-gray-400 transition-colors">
@@ -521,6 +475,7 @@ const ConferenceControls = ({ onInvite, onToggleSidebar, onSendEmoji, onToggleHa
               </div>
               <span className="text-xs mt-2">AI Worker</span>
             </button>
+
             <div className="w-px h-8 bg-white/20"></div>
 
             <button
@@ -537,6 +492,7 @@ const ConferenceControls = ({ onInvite, onToggleSidebar, onSendEmoji, onToggleHa
                 {isScreenSharing ? "Stop" : "Present"}
               </span>
             </button>
+
             <div className="w-px h-8 bg-white/20"></div>
 
             <button
@@ -548,6 +504,7 @@ const ConferenceControls = ({ onInvite, onToggleSidebar, onSendEmoji, onToggleHa
               </div>
               <span className="text-xs mt-2">Emoji</span>
             </button>
+
             <div className="w-px h-8 bg-white/20"></div>
 
             <button className="flex flex-col items-center gap-1 text-gray-400 hover:text-gray-400 transition-colors">
@@ -556,6 +513,7 @@ const ConferenceControls = ({ onInvite, onToggleSidebar, onSendEmoji, onToggleHa
               </div>
               <span className="text-xs mt-2">Roles</span>
             </button>
+
             <div className="w-px h-8 bg-white/20"></div>
 
             <button
@@ -570,13 +528,12 @@ const ConferenceControls = ({ onInvite, onToggleSidebar, onSendEmoji, onToggleHa
             </button>
           </div>
 
-          {/* Right Controls */}
           <div className="flex items-center gap-4">
             <button
               className="flex flex-col items-center gap-1 text-gray-400/60 hover:text-gray-400 transition-colors"
               onClick={onToggleSidebar}
             >
-              <div className=" flex items-center justify-center">
+              <div className="flex items-center justify-center">
                 <PanelLeftClose color="white" />
               </div>
               <span className="text-xs mt-2">Sidebar</span>
@@ -587,61 +544,44 @@ const ConferenceControls = ({ onInvite, onToggleSidebar, onSendEmoji, onToggleHa
     </div>
   );
 };
-const MobileConferenceControls = ({ onInvite, onToggleHandRaise, currentUser, raisedHands }: {
 
+/* ----------------- Mobile Controls (unchanged look) ----------------- */
+const MobileConferenceControls = ({
+  onInvite,
+  onToggleHandRaise,
+  currentUser,
+  raisedHands,
+  setActiveTab,
+  activeTab
+}: {
   onInvite: () => void;
-  onToggleSidebar: () => void;
-  onSendEmoji: (username: string) => void;
   onToggleHandRaise: (username: string) => void;
   currentUser: string;
   raisedHands: { [key: string]: boolean };
+  setActiveTab: (tab: string) => void;
+  activeTab: string;
 }) => {
-  const {
-    
-    toggleCamera,
-  } = useMediaControls();
-
-  // const { buttonProps: disconnectButtonProps } = useDisconnectButton({});
-
-  // Custom handler for End Call
+  const { toggleCamera } = useMediaControls();
 
   return (
     <div className="px-6 pb-6">
       <div className="px-2 py-4">
         <div className="flex items-center justify-between">
-          {/* Left Controls */}
           <div className="flex items-center gap-4">
             <button
               className="flex flex-col items-center gap-1 text-gray-400/60 hover:text-gray-400 transition-colors"
               onClick={onInvite}
             >
-              <div className=" flex items-center justify-center">
+              <div className="flex items-center justify-center">
                 <Expand color="white" />
               </div>
             </button>
           </div>
 
-          {/* Center Controls */}
           <div className="flex items-center gap-6">
-            {/* <button
-              className={`flex flex-col items-center gap-1 transition-colors ${isMicrophoneEnabled
-                  ? "text-gray-400 hover:text-gray-400"
-                  : "text-red-400 hover:text-red-300"
-                }`}
-              onClick={toggleMicrophone}
-            >
-              <div className="items-center justify-center">
-                {isMicrophoneEnabled ? (
-                  <Mic color="white" />
-                ) : (
-                  <MicOff color="red" />
-                )}{" "}
-              </div>
-              <span className="text-xs mt-2">Mic</span>
-            </button> */}
             <div className="w-px h-8 bg-white/20"></div>
             <button
-              className={`flex flex-col items-center gap-1 transition-colors text-white hover:text-gray-400`}
+              className="flex flex-col items-center gap-1 transition-colors text-white hover:text-gray-400"
               onClick={toggleCamera}
             >
               <div className="items-center justify-center">
@@ -649,19 +589,12 @@ const MobileConferenceControls = ({ onInvite, onToggleHandRaise, currentUser, ra
               </div>
             </button>
 
-            {/* Divider */}
-
             <button
-
               className={`flex flex-col items-center gap-1 transition-colors ${raisedHands[currentUser]
-                ? 'text-yellow-400 hover:text-yellow-500'
-                : 'text-gray-400 hover:text-gray-400'
+                ? "text-yellow-400 hover:text-yellow-500"
+                : "text-gray-400 hover:text-gray-400"
                 }`}
-
-              onClick={() => {
-                console.log("Hand button clicked, currentUser:", currentUser);
-                onToggleHandRaise(currentUser);
-              }}
+              onClick={() => onToggleHandRaise(currentUser)}
             >
               <div className="items-center justify-center">
                 <Hand color={raisedHands[currentUser] ? "#fbbf24" : "white"} />
@@ -670,22 +603,14 @@ const MobileConferenceControls = ({ onInvite, onToggleHandRaise, currentUser, ra
 
             <button className="flex flex-col items-center gap-1 text-gray-400 hover:text-gray-400 transition-colors">
               <div className="items-center justify-center">
-                {/* <BotMessageSquare color="white" /> */}
                 <Volume2 color="white" />
               </div>
             </button>
             <div className="w-px h-8 bg-white/20"></div>
-
-            
           </div>
 
-          {/* Right Controls */}
           <div className="flex items-center gap-4">
-            <button
-              // {...disconnectButtonProps}
-              // onClick={handleEndCall}
-              className="flex flex-col items-center gap-1 transition-colors text-gray-400 hover:text-gray-400"
-            >
+            <button className="flex flex-col items-center gap-1 transition-colors text-gray-400 hover:text-gray-400">
               <div className="items-center justify-center">
                 <EllipsisVertical color="white" />
               </div>
@@ -693,15 +618,16 @@ const MobileConferenceControls = ({ onInvite, onToggleHandRaise, currentUser, ra
           </div>
         </div>
       </div>
+
       <div className="flex border-b border-white/10">
         {mobileTabs.map((tab) => (
           <button
             key={tab}
-            // onClick={() => setActiveTab(tab)}
-            className={`flex-1 px-2 py-3 text-xs font-medium transition-colors ${'Session' === tab
+            className={`flex-1 px-2 py-3 text-xs font-medium transition-colors ${activeTab === tab
               ? "text-white border-b-2 border-green-500 bg-white/5"
               : "text-white/60 hover:text-white/80"
               }`}
+            onClick={() => setActiveTab(tab)}
           >
             {tab}
           </button>
@@ -710,37 +636,30 @@ const MobileConferenceControls = ({ onInvite, onToggleHandRaise, currentUser, ra
     </div>
   );
 };
-const MobileTabBarControls = ({ onSendEmoji, currentUser,  }: {
 
-  onInvite: () => void;
-  onToggleSidebar: () => void;
+const MobileTabBarControls = ({
+  onSendEmoji,
+  currentUser,
+  onInvite
+}: {
   onSendEmoji: (username: string) => void;
-  onToggleHandRaise: (username: string) => void;
   currentUser: string;
-  raisedHands: { [key: string]: boolean };
+  onInvite: () => void;
 }) => {
-  const {
-    isMicrophoneEnabled,
-    isCameraEnabled,
-    toggleMicrophone,
-    toggleCamera,
-  } = useMediaControls();
+  const { isMicrophoneEnabled, isCameraEnabled, toggleMicrophone, toggleCamera } =
+    useMediaControls();
 
   const { buttonProps: disconnectButtonProps } = useDisconnectButton({});
   const router = useRouter();
-
-  // Custom handler for End Call
   const handleEndCall = async (e: React.MouseEvent<HTMLButtonElement>) => {
-    if (disconnectButtonProps.onClick) {
-      await disconnectButtonProps.onClick(e);
-    }
+    if (disconnectButtonProps.onClick) await disconnectButtonProps.onClick(e);
     router.push("/session");
   };
 
   return (
-    <div className="px-6 pb-6 ">
-      <div className="px-2 py-4 bg-[#080B1680] border-1 border-[#FFFFFF1A] rounded-[15px]">
-        <div className="flex items-center justify-center ">
+    <div className="px-6 pb-6">
+      <div className="px-2 py-4 bg-[#080B1680] border border-[#FFFFFF1A] rounded-[15px]">
+        <div className="flex items-center justify-center">
           <div className="flex items-center gap-6">
             <button
               className={`flex flex-col items-center gap-1 transition-colors ${isMicrophoneEnabled
@@ -754,10 +673,12 @@ const MobileTabBarControls = ({ onSendEmoji, currentUser,  }: {
                   <Mic color="white" />
                 ) : (
                   <MicOff color="red" />
-                )}{" "}
+                )}
               </div>
             </button>
+
             <div className="w-px h-8 bg-white/20"></div>
+
             <button
               className={`flex flex-col items-center gap-1 transition-colors ${isCameraEnabled
                 ? "text-gray-400 hover:text-gray-400"
@@ -773,7 +694,9 @@ const MobileTabBarControls = ({ onSendEmoji, currentUser,  }: {
                 )}
               </div>
             </button>
+
             <div className="w-px h-8 bg-white/20"></div>
+
             <button
               className="flex flex-col items-center gap-1 text-gray-400 hover:text-gray-400 transition-colors"
               onClick={() => onSendEmoji(currentUser)}
@@ -782,16 +705,19 @@ const MobileTabBarControls = ({ onSendEmoji, currentUser,  }: {
                 <Smile color="white" />
               </div>
             </button>
+
             <div className="w-px h-8 bg-white/20"></div>
+
             <button
-              className="flex flex-col items-center gap-1 text-gray-400 hover:text-gray-400 transition-colors"
-              onClick={() => onSendEmoji(currentUser)}
+              onClick={onInvite}
+              className="flex flex-col items-center gap-1 transition-colors text-gray-400 hover:text-gray-400"
             >
               <div className="items-center justify-center">
                 <Link color="white" />
               </div>
             </button>
             <div className="w-px h-8 bg-white/20"></div>
+
             <button
               {...disconnectButtonProps}
               onClick={handleEndCall}
@@ -801,15 +727,14 @@ const MobileTabBarControls = ({ onSendEmoji, currentUser,  }: {
                 <PhoneOff color="white" />
               </div>
             </button>
-
           </div>
         </div>
       </div>
-
     </div>
   );
 };
 
+/* ----------------- Page ----------------- */
 export default function SessionPage() {
   const [isModalOpen, setIsModalOpen] = React.useState(false);
   const [token, setToken] = React.useState<string | null>(null);
@@ -819,155 +744,78 @@ export default function SessionPage() {
   const [currentUser, setCurrentUser] = React.useState<string>("");
   const [currentTime, setCurrentTime] = React.useState<string>("");
 
-  const [activeEmojis, setActiveEmojis] = React.useState<{ [key: string]: { emoji: string, timestamp: number, username: string } }>({}); // Add emoji state
-  const [raisedHands, setRaisedHands] = React.useState<{ [key: string]: boolean }>({}); // Add raised hands state
-  const [chatMessages, setChatMessages] = React.useState<{ message: string, timestamp: number, username: string }[]>([]); // Add chat state
+  const [activeEmojis, setActiveEmojis] = React.useState<{
+    [key: string]: { emoji: string; timestamp: number; username: string };
+  }>({});
+  const [raisedHands, setRaisedHands] = React.useState<{ [key: string]: boolean }>(
+    {}
+  );
+  const [chatMessages, setChatMessages] = React.useState<
+    { message: string; timestamp: number; username: string }[]
+  >([]);
 
   const [nameModalOpen, setNameModalOpen] = React.useState(false);
   const [userNameInput, setUserNameInput] = React.useState("");
   const [nameError, setNameError] = React.useState("");
+  const [activeTab, setActiveTab] = React.useState("Session");
 
-  // for now i am adding the rnadom emojiss
-  const emojis = [
-    "😀",
-    "😂",
-    "😍",
-    "🤔",
-    "😮",
-    "👍",
-    "👏",
-    "❤️",
-    "🔥",
-    "💯",
-    "😎",
-    "🎉",
-    "😊",
-    "👋",
-    "💪",
-  ];
+  const emojis = ["😀", "😂", "😍", "🤔", "😮", "👍", "👏", "❤️", "🔥", "💯", "😎", "🎉", "😊", "👋", "💪"];
 
-  // sending emoji on others
   const sendEmoji = (username: string) => {
     const randomEmoji = emojis[Math.floor(Math.random() * emojis.length)];
     const timestamp = Date.now();
-
-    // Update local state
     setActiveEmojis((prev) => ({
       ...prev,
       [username]: { emoji: randomEmoji, timestamp, username },
     }));
-
-    // Send to all participants
-    if (
-      (
-        window as Window & {
-          sendEmojiToAll?: (emoji: string, username: string) => void;
-        }
-      ).sendEmojiToAll
-    ) {
-      const sendEmojiToAll = (
-        window as Window & {
-          sendEmojiToAll?: (emoji: string, username: string) => void;
-        }
-      ).sendEmojiToAll;
-      if (sendEmojiToAll) {
-        sendEmojiToAll(randomEmoji, username);
-      }
-    }
-
-    // Remove emoji after 3 seconds
+    window.sendEmojiToAll?.(randomEmoji, username);
     setTimeout(() => {
       setActiveEmojis((prev) => {
-        const newEmojis = { ...prev };
-        delete newEmojis[username];
-        return newEmojis;
+        const next = { ...prev };
+        delete next[username];
+        return next;
       });
     }, 3000);
   };
 
-  // Function to handle received emojis
-
-  const handleEmojiReceived = (data: { emoji: string, timestamp: number, username: string }) => {
-    setActiveEmojis(prev => ({
-
-      ...prev,
-      [data.username]: data,
-    }));
-
-    // Remove emoji after 3 seconds
+  const handleEmojiReceived = (data: {
+    emoji: string;
+    timestamp: number;
+    username: string;
+  }) => {
+    setActiveEmojis((prev) => ({ ...prev, [data.username]: data }));
     setTimeout(() => {
       setActiveEmojis((prev) => {
-        const newEmojis = { ...prev };
-        delete newEmojis[data.username];
-        return newEmojis;
+        const next = { ...prev };
+        delete next[data.username];
+        return next;
       });
     }, 3000);
   };
 
-  // Function to toggle hand raise
   const toggleHandRaise = (username: string) => {
-    console.log("Toggling hand raise for:", username);
-    console.log("Current raisedHands state:", raisedHands);
     const newState = !raisedHands[username];
-
-    setRaisedHands(prev => {
-
-      const updatedState = {
-        ...prev,
-        [username]: newState,
-      };
-      console.log("New raisedHands state:", updatedState);
-      return updatedState;
-    });
-
-    // Send to all participants
-    const sendHandRaiseToAll = (
-      window as Window & {
-        sendHandRaiseToAll?: (username: string, isRaised: boolean) => void;
-      }
-    ).sendHandRaiseToAll;
-    if (sendHandRaiseToAll) {
-      sendHandRaiseToAll(username, newState);
-    }
+    setRaisedHands((prev) => ({ ...prev, [username]: newState }));
+    window.sendHandRaiseToAll?.(username, newState);
   };
 
-  // Function to handle received hand raise
-
-  const handleHandRaiseReceived = (data: { username: string, isRaised: boolean }) => {
-    setRaisedHands(prev => ({
-
-      ...prev,
-      [data.username]: data.isRaised,
-    }));
+  const handleHandRaiseReceived = (data: { username: string; isRaised: boolean }) => {
+    setRaisedHands((prev) => ({ ...prev, [data.username]: data.isRaised }));
   };
 
-  // Function to send chat message
   const sendChatMessage = (message: string) => {
     const timestamp = Date.now();
     const chatData = { message, timestamp, username: currentUser };
-
-    // Add to local state
     setChatMessages((prev) => [...prev, chatData]);
-
-    // Send to all participants
-    const sendChatToAll = (
-      window as Window & {
-        sendChatToAll?: (message: string, username: string) => void;
-      }
-    ).sendChatToAll;
-    if (sendChatToAll) {
-      sendChatToAll(message, currentUser);
-    }
+    window.sendChatToAll?.(message, currentUser);
   };
 
-  // Function to handle received chat message
+  const handleChatReceived = (data: {
+    message: string;
+    timestamp: number;
+    username: string;
+  }) => setChatMessages((prev) => [...prev, data]);
 
-  const handleChatReceived = (data: { message: string, timestamp: number, username: string }) => {
-    setChatMessages(prev => [...prev, data]);
-
-  };
-
-  // Update real time every second
   React.useEffect(() => {
     const updateTime = () => {
       const now = new Date();
@@ -976,46 +824,32 @@ export default function SessionPage() {
       const seconds = now.getSeconds().toString().padStart(2, "0");
       setCurrentTime(`${hours}:${minutes}:${seconds}`);
     };
-
-    updateTime(); // Set initial time
-    const interval = setInterval(updateTime, 1000);
-
-    return () => clearInterval(interval);
+    updateTime();
+    const t = setInterval(updateTime, 1000);
+    return () => clearInterval(t);
   }, []);
 
-  // Get current user from participants
   React.useEffect(() => {
-    const localParticipant = participants.find(
-      (p: unknown) => (p as Participant).isLocal
-    );
-    if (localParticipant) {
-      const identity = (localParticipant as Participant).identity;
-      console.log("Setting currentUser to:", identity);
-      setCurrentUser(identity);
-    }
+    const local = participants.find((p: unknown) => (p as Participant).isLocal);
+    if (local) setCurrentUser((local as Participant).identity);
   }, [participants]);
 
   React.useEffect(() => {
-    // Always ask for name on page load
     const urlParams = new URLSearchParams(window.location.search);
     const nameFromUrl = urlParams.get("name");
     if (!nameFromUrl) {
       setNameModalOpen(true);
-    } else {
-      setCurrentUser(nameFromUrl);
-      // Get room from URL params or create new one
-      const roomFromUrl = urlParams.get("room");
-      const currentRoom =
-        roomFromUrl || `room-${Math.random().toString(36).slice(2, 8)}`;
-      setRoomName(currentRoom);
-      fetch(`/api/livekit-token?room=${currentRoom}&identity=${nameFromUrl}`)
-        .then((res) => res.json())
-        .then((data) => {
-          setToken(data.token);
-        });
+      return;
     }
+    setCurrentUser(nameFromUrl);
+    const roomFromUrl = urlParams.get("room");
+    const currentRoom = roomFromUrl || `room-${Math.random().toString(36).slice(2, 8)}`;
+    setRoomName(currentRoom);
+    fetch(`/api/livekit-token?room=${currentRoom}&identity=${nameFromUrl}`)
+      .then((res) => res.json())
+      .then((data) => setToken(data.token));
   }, []);
-  // Modal for name input before joining
+
   const handleNameSubmit = () => {
     if (!userNameInput.trim()) {
       setNameError("Name is required");
@@ -1023,30 +857,22 @@ export default function SessionPage() {
     }
     setCurrentUser(userNameInput.trim());
     setNameModalOpen(false);
-    // Get room from URL params or create new one
     const urlParams = new URLSearchParams(window.location.search);
     const roomFromUrl = urlParams.get("room");
-    const currentRoom =
-      roomFromUrl || `room-${Math.random().toString(36).slice(2, 8)}`;
+    const currentRoom = roomFromUrl || `room-${Math.random().toString(36).slice(2, 8)}`;
     setRoomName(currentRoom);
-    fetch(
-      `/api/livekit-token?room=${currentRoom}&identity=${userNameInput.trim()}`
-    )
+    fetch(`/api/livekit-token?room=${currentRoom}&identity=${userNameInput.trim()}`)
       .then((res) => res.json())
-      .then((data) => {
-        setToken(data.token);
-      });
+      .then((data) => setToken(data.token));
   };
 
   return (
-    <div className="p-8 bg-[#080B16]">
+    <div className="p-4 md:p-8 bg-[#080B16] min-h-screen flex flex-col">
       {/* Name Input Modal */}
       {nameModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-[rgba(0,0,0,0.35)] backdrop-blur-[8px]">
           <div className="bg-[#1e2328] border border-white/20 rounded-xl max-w-md w-full mx-6 relative p-8 flex flex-col items-center">
-            <h2 className="text-white text-lg font-medium mb-2">
-              Enter Your Name
-            </h2>
+            <h2 className="text-white text-lg font-medium mb-2">Enter Your Name</h2>
             <p className="text-white/70 text-sm mb-6 text-center">
               Please enter your name before joining the session.
             </p>
@@ -1072,14 +898,14 @@ export default function SessionPage() {
           </div>
         </div>
       )}
-      {/* <div className={`w-full h-[950px] flex flex-col bg-[#0D101B] rounded-[20px] border border-[rgba(255,255,255,0.1)] backdrop-blur-[32px] relative transition-all duration-300 ${isSidebarOpen ? 'pr-120' : ''}`}> */}
+
       <div
         className={`w-full flex flex-col bg-[#0D101B] rounded-[20px] border border-[rgba(255,255,255,0.1)] backdrop-blur-[32px] relative transition-all duration-300 ${isSidebarOpen ? "pr-120" : ""
-          }`}
+          } flex-1 min-h-0`}
       >
-        {/* Sidebar - keep in original position */}
+        {/* Sidebar */}
         {isSidebarOpen && (
-          <div className="absolute right-0 top-0 bottom-0 w-120 z-30 rounded-r-[20px] overflow-hidden border-l-1 border-white/10 bg-[#0D101B]">
+          <div className="absolute right-0 top-0 bottom-0 w-120 z-30 rounded-r-[20px] overflow-hidden border-l border-white/10 bg-[#0D101B]">
             <Sidebar
               participants={participants}
               roomName={roomName}
@@ -1090,8 +916,8 @@ export default function SessionPage() {
           </div>
         )}
 
-        {/* Top Header - Desktop */}
-        <div className="hidden md:flex items-center justify-between px-6 py-4 text-white mb-4 mt-3">
+        {/* Header (desktop) */}
+        <div className="hidden md:flex items-center justify-between px-6 py-4 text-white mb-2 mt-3">
           <div className="flex items-center gap-2 ml-4">
             <div className="w-4 h-4 rounded-full flex items-center justify-center">
               <Clock color="white" />
@@ -1113,31 +939,22 @@ export default function SessionPage() {
           </div>
         </div>
 
-        {/* Top Header - Mobile */}
-        {/* <div className="flex md:hidden items-center justify-between px-4 py-3 text-white mb-4 mt-3 bg-[#10131A] rounded-lg">
-          <span className="text-base font-semibold">Conference</span>
-        </div> */}
-
         {/* Main Video Area */}
-        <div className="flex-1 relative mx-0 md:mx-6 mb-6">
-          <div className="w-full h-full rounded-2xl border border-white/20 relative overflow-hidden">
-            {/* User Avatar */}
+        <div className="flex-1  relative mx-0 md:mx-6 mb-4 md:mb-6 min-h-0">
+          <div className="w-full h-[1000px] md:h-[calc(100vh-20px)] max-h-[97vh] rounded-2xl border border-white/20 relative overflow-hidden min-h-[300px] ">
+            {/* User Avatar (desktop) */}
             <div className="hidden md:block absolute top-6 left-6 bg-[#080B16] pb-2 pt-2 pl-4 pr-4 rounded-[11px] border border-[rgba(211,211,211,0.1)] z-10">
               <div className="flex items-center gap-3">
-
-                <HexAvatar initials={currentUser.slice(0, 2).toUpperCase()} size={24} fontSize={10} />
-
-                <span className="text-white text-sm font-medium">{currentUser}</span>
-
+                <HexAvatar
+                  initials={currentUser.slice(0, 2).toUpperCase()}
+                  size={24}
+                  fontSize={10}
+                />
+                <span className="text-white text-sm font-medium">
+                  {currentUser}
+                </span>
               </div>
             </div>
-
-            {/* Fullscreen Button */}
-            <div className="absolute top-6 right-6 flex gap-2 z-10">
-
-            </div>
-
-            {/* Session Ready Modal */}
             {isModalOpen && (
               <div className="absolute inset-0 flex items-center justify-center z-20 bg-black/50">
                 <div className="bg-[#1e2328] border border-white/20 rounded-xl max-w-md w-full mx-6 relative">
@@ -1171,10 +988,8 @@ export default function SessionPage() {
                   <div className="p-4">
                     <p className="text-white/70 text-sm mb-6 leading-relaxed">
                       Send this link to people you want to invite to the
-                      Session.
-                      <br />
-                      Don&apos;t forget to save the link, so you can use it
-                      later.
+                      Session. <br /> Don&apos;t forget to save the link, so you
+                      can use it later.
                     </p>
                     <div className="flex items-center gap-3 p-2 bg-[#0f1419] rounded-lg border border-white/10">
                       <Link color="white" />
@@ -1196,7 +1011,6 @@ export default function SessionPage() {
                 </div>
               </div>
             )}
-
             {/* LiveKit Video Area */}
             {token ? (
               <LiveKitRoom
@@ -1207,19 +1021,74 @@ export default function SessionPage() {
                 audio
                 className="w-full h-full"
               >
-                <CustomVideoTiles activeEmojis={activeEmojis} />
-                {/* Mobile controls */}
-                <div className="absolute bottom-160 left-0 right-0 block md:hidden">
+                {/* DESKTOP / TABLET TILES */}
+                <div className="hidden md:block w-full h-full">
+                  <CustomVideoTiles activeEmojis={activeEmojis} />
+                </div>
+
+                {/* MOBILE stage stays your custom layout */}
+                <div className="block md:hidden w-full h-full">
+                  {activeTab === "Session" && (
+                    <CustomVideoTiles activeEmojis={activeEmojis} />
+
+                  )}
+                  {/* <div className="mt-[120px] p-3"> */}
+                    {activeTab === "People" && (
+                      <div className="mt-50 p-3">
+                        <PeopleTab
+                          participants={participants}
+                          roomName={roomName}
+                          raisedHands={raisedHands}
+                        />
+                      </div>
+                    )}
+                    {activeTab === "Chat" && (
+                      <div className="mt-50 p-3">
+                        <ChatTab messages={chatMessages} onSendMessage={sendChatMessage} />
+                      </div>
+                    )}
+                    {activeTab === "Transcript" && (
+                      <div className="mt-50 p-3">
+                        <TranscriptTab />
+                      </div>
+                    )}
+                    {activeTab === "Summary" && (<div className="mt-50 p-3">
+                      <SummaryTab />
+                    </div>)}
+                  {/* </div> */}
+
+                  {/* <CustomVideoTiles activeEmojis={activeEmojis} /> */}
+                  {/* <PeopleTab
+            participants={participants}
+            roomName={roomName}
+            raisedHands={raisedHands}
+          /> */}
+                </div>
+
+                {/* Mobile controls (top cluster) */}
+                {/* <div className="sticky top-0 left-0 right-0 z-20 block md:hidden">
                   <MobileConferenceControls
                     onInvite={() => setIsModalOpen(true)}
-                    onToggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)}
-                    onSendEmoji={sendEmoji}
                     onToggleHandRaise={toggleHandRaise}
                     currentUser={currentUser}
                     raisedHands={raisedHands}
+                    setActiveTab={setActiveTab}
+                    activeTab={activeTab}
+                  />
+                </div> */}
+                {/* <div className="sticky top-0 z-20 bg-[#0D101B] border-b border-white/10"> */}
+                <div className="md:hidden fixed top-0 left-0 right-0 z-40 
+                bg-[#0D101B]/80 backdrop-blur border-b border-white/10
+                pt-[env(safe-area-inset-top)]">
+                  <MobileConferenceControls
+                    onInvite={() => setIsModalOpen(true)}
+                    onToggleHandRaise={toggleHandRaise}
+                    currentUser={currentUser}
+                    raisedHands={raisedHands}
+                    setActiveTab={setActiveTab}
+                    activeTab={activeTab}
                   />
                 </div>
-
                 <ParticipantProvider onParticipantsChange={setParticipants} />
                 <RealtimeMessaging
                   onEmojiReceived={handleEmojiReceived}
@@ -1228,48 +1097,53 @@ export default function SessionPage() {
                 />
 
                 {/* Desktop controls */}
-                <div className="absolute bottom-0 left-0 right-0 hidden md:block">
-                  <ConferenceControls
-                    onInvite={() => setIsModalOpen(true)}
-                    onToggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)}
-                    onSendEmoji={sendEmoji}
-                    onToggleHandRaise={toggleHandRaise}
-                    currentUser={currentUser}
-                    raisedHands={raisedHands}
-                  />
-                </div>
-                {participants && participants.length > 0 && (
-                  <div className="absolute bottom-32 left-0 right-0 z-20 block md:hidden px-3 pb-2 items-center justify-center">
-                    <div className="flex gap-3 overflow-x-auto scrollbar-hide items-center justify-center ">
+
+                <div className="absolute bottom-0 left-0 right-0 hidden md:block"> <ConferenceControls onInvite={() => setIsModalOpen(true)} onToggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)} onSendEmoji={sendEmoji} onToggleHandRaise={toggleHandRaise} currentUser={currentUser} raisedHands={raisedHands} /> </div>
+                <div className="md:hidden h-[72px]" />
+
+                {/* Mobile participant chips */}
+                {activeTab === "Session" && participants && participants.length > 0 && (
+                  <div className="absolute bottom-1 left-0 right-0 z-20 block md:hidden px-3 pb-2">
+                    <div className="flex gap-3 overflow-x-auto scrollbar-hide items-center justify-center">
                       {participants.map((p) => {
                         const participant = p as Participant;
                         return (
                           <div
                             key={participant.sid}
-                            className="backdrop-blur-[16px] bg-white/10 border border-white/20 rounded-xl flex flex-col items-center  min-w-[130px] max-w-[130px] h-[140px] shadow-lg justify-center text-center"
-                            style={{ flex: '0 0 auto' }}
+                            className="backdrop-blur-[16px] bg-white/10 border border-white/20 rounded-xl flex flex-col items-center min-w-[130px] max-w-[130px] h-[140px] shadow-lg justify-center text-center"
+                            style={{ flex: "0 0 auto" }}
                           >
-                            <HexAvatar initials={participant.identity.slice(0, 2).toUpperCase()} size={84} fontSize={24} />
-                            <span className="text-white text-xs font-medium mt-1 truncate max-w-[60px] text-center">{participant.identity}</span>
+                            <HexAvatar
+                              initials={participant.identity
+                                .slice(0, 2)
+                                .toUpperCase()}
+                              size={84}
+                              fontSize={24}
+                            />
+                            <span className="text-white text-xs font-medium mt-1 truncate max-w-[100px] text-center">
+                              {participant.identity}
+                            </span>
                           </div>
                         );
                       })}
                     </div>
+                     <div className=" mt-8">
+
+                    <MobileTabBarControls
+                      onSendEmoji={sendEmoji}
+                      currentUser={currentUser}
+                      onInvite={() => setIsModalOpen(true)}
+
+                    />
+                  </div>
                   </div>
                 )}
-                <div className="absolute bottom-0 left-0 right-0 block md:hidden">
-                  
-                  <MobileTabBarControls
-                    onInvite={() => setIsModalOpen(true)}
-                    onToggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)}
-                    onSendEmoji={sendEmoji}
-                    onToggleHandRaise={toggleHandRaise}
-                    currentUser={currentUser}
-                    raisedHands={raisedHands}
-                  />
-                </div>
-              </LiveKitRoom>
 
+                {/* Mobile bottom bar */}
+                {/* {activeTab === "Session" && (
+                 
+                )} */}
+              </LiveKitRoom>
             ) : (
               <div className="w-full h-full flex items-center justify-center">
                 <div className="text-white text-lg animate-pulse">
@@ -1285,9 +1159,7 @@ export default function SessionPage() {
           <div className="px-6 pb-6">
             <div className="px-2 py-4">
               <div className="flex items-center justify-center">
-                <div className="text-white/50 text-sm">
-                  Connecting to session...
-                </div>
+                <div className="text-white/50 text-sm">Connecting to session...</div>
               </div>
             </div>
           </div>
