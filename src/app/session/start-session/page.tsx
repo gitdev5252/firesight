@@ -85,15 +85,16 @@ export default function StartSessionPage() {
               exit={{ scale: 0.95, opacity: 0 }}
               transition={{ duration: 0.25 }}
               className="bg-[rgba(255,255,255,0.03)] border border-[rgba(255,255,255,0.12)] rounded-[10px] shadow-xl w-full max-w-md relative flex flex-col"
-              onClick={e => e.stopPropagation()}
+              onClick={(e) => e.stopPropagation()}
             >
-
-              {/* <img src="/images/session/ai-co-pilot.svg" alt="Session Modal" className="w-20 h-20 mb-4" /> */}
               <div className="flex flex-row justify-between items-center pl-8 pr-6 pt-6 ">
                 <div className="flex items-center gap-4">
-                  <img src="/images/icons/camera-green.png" alt="Start" className="" />
+                  <img
+                    src="/images/icons/camera-green.png"
+                    alt="Start"
+                    className=""
+                  />
                   <h3 className="text-2xl font-bold text-white">New Session</h3>
-
                 </div>
                 <button
                   className=" text-gray-400 text-5xl flex items-center justify-center transition"
@@ -106,33 +107,42 @@ export default function StartSessionPage() {
               <div className="border-t border-[rgba(255,255,255,0.12)] my-4" />
               {/* divider */}
               <div className="pl-8 pr-6 pt-2 pb-4 gap-3 flex flex-col">
-                <div className="flex items-center gap-4 cursor-pointer" onClick={() => setModalOpenFuture(true)}>
-                  <img src="/images/icons/clock-green.svg" alt="Start" className="" />
-                  <h3 className="text-[18px] font-normal text-gray-200">Schedule a Session</h3>
+                <div
+                  className="flex items-center gap-4 cursor-pointer"
+                  onClick={() => setModalOpenFuture(true)}
+                >
+                  <img
+                    src="/images/icons/clock-green.svg"
+                    alt="Start"
+                    className=""
+                  />
+                  <h3 className="text-[18px] font-normal text-gray-200">
+                    Schedule a Session
+                  </h3>
                 </div>
                 <NextLink href="/conference">
-                <div className="flex items-center gap-4">
-                  <img src="/images/icons/send-green.svg" alt="Start" className="" />
-                  <h3 className="text-[18px] font-normal text-gray-200">Start a Session</h3>
-                </div>
+                  <div className="flex items-center gap-4">
+                    <img
+                      src="/images/icons/send-green.svg"
+                      alt="Start"
+                      className=""
+                    />
+                    <h3 className="text-[18px] font-normal text-gray-200">
+                      Start a Session
+                    </h3>
+                  </div>
                 </NextLink>
                 <div className="flex items-center gap-4">
-                  <img src="/images/icons/calendar-green.svg" alt="Start" className="" />
-                  <h3 className="text-[18px] font-normal text-gray-200">Schedule a Session in Google Calendar</h3>
+                  <img
+                    src="/images/icons/calendar-green.svg"
+                    alt="Start"
+                    className=""
+                  />
+                  <h3 className="text-[18px] font-normal text-gray-200">
+                    Schedule a Session in Google Calendar
+                  </h3>
                 </div>
               </div>
-              {/* <div className="flex flex-col gap-4 w-full ">
-                <Link href="/conference" className="w-full">
-                  <button className="w-full flex items-center justify-center gap-2 text-lg px-6 py-3 font-semibold rounded-[16px] bg-gradient-to-r from-green-400/30 to-cyan-400/30 border border-green-400/40 text-white shadow hover:from-green-400/50 hover:to-cyan-400/50 transition">
-                    <img src="/images/icons/camera.svg" alt="Start" className="w-6 h-6" />
-                    Start Video Call
-                  </button>
-                </Link>
-                <button className="w-full flex items-center justify-center gap-2 text-lg px-6 py-3 font-semibold rounded-[16px] bg-[rgba(8,11,22,0.50)] border border-gray-700 text-white shadow hover:bg-[rgba(8,11,22,0.70)] transition">
-                  <img src="/images/icons/link.svg" alt="Link" className="w-6 h-6" />
-                  Enter Session Link
-                </button>
-              </div> */}
             </motion.div>
           </motion.div>
         )}
@@ -151,15 +161,18 @@ export default function StartSessionPage() {
               exit={{ scale: 0.95, opacity: 0 }}
               transition={{ duration: 0.25 }}
               className="bg-[rgba(255,255,255,0.03)] border border-[rgba(255,255,255,0.12)] rounded-[10px] shadow-xl w-full max-w-2xl relative flex flex-col"
-              onClick={e => e.stopPropagation()}
+              onClick={(e) => e.stopPropagation()}
             >
-
-              {/* <img src="/images/session/ai-co-pilot.svg" alt="Session Modal" className="w-20 h-20 mb-4" /> */}
               <div className="flex flex-row justify-between items-center pl-8 pr-8 pt-6 ">
                 <div className="flex items-center gap-4">
-                  <img src="/images/icons/clock-green.svg" alt="Start" className="" />
-                  <h3 className="text-2xl font-bold text-white">Create a Session For Future</h3>
-
+                  <img
+                    src="/images/icons/clock-green.svg"
+                    alt="Start"
+                    className=""
+                  />
+                  <h3 className="text-2xl font-bold text-white">
+                    Create a Session For Future
+                  </h3>
                 </div>
                 <button
                   className=" text-gray-400 text-5xl flex items-center justify-center transition"
@@ -172,45 +185,32 @@ export default function StartSessionPage() {
               <div className="border-t border-[rgba(255,255,255,0.12)] my-4" />
               {/* divider */}
               <div className="pl-8 pr-6 pt-2 pb-4 gap-3 flex flex-col">
-                <div className="flex items-center gap-4" onClick={() => setModalOpenFuture(true)}>
-                  <h3 className="text-[16px] font-normal text-gray-200">Send this link to people you want to invite to the Session.
-                    Don’t forget to save the link, so you can use it later</h3>
+                <div
+                  className="flex items-center gap-4"
+                  onClick={() => setModalOpenFuture(true)}
+                >
+                  <h3 className="text-[16px] font-normal text-gray-200">
+                    Send this link to people you want to invite to the Session.
+                    Don’t forget to save the link, so you can use it later
+                  </h3>
                 </div>
-                  <div className="flex items-center gap-3 p-2 bg-[#0f1419] rounded-lg border border-white/10">
-                                      <Link color="white" />
-                                      <span className="text-white/80 text-sm flex-1 font-mono">
-                                        {`${window.location.origin}/conference?room=${'abc'}`}
-                                      </span>
-                                      <button
-                                        className="p-1 hover:bg-white/10 rounded"
-                                        onClick={() => {
-                                          navigator.clipboard.writeText(`${window.location.origin}/conference?room=${'abc'}`);
-                                        }}
-                                      >
-                                        <Copy color="white" />
-                                      </button>
-                                    </div>
-                {/* <div className="flex items-center gap-4">
-                  <img src="/images/icons/send-green.svg" alt="Start" className="" />
-                  <h3 className="text-[18px] font-normal text-gray-200">Start a Session</h3>
-                </div>
-                <div className="flex items-center gap-4">
-                  <img src="/images/icons/calendar-green.svg" alt="Start" className="" />
-                  <h3 className="text-[18px] font-normal text-gray-200">Schedule a Session in Google Calendar</h3>
-                </div> */}
-              </div>
-              {/* <div className="flex flex-col gap-4 w-full ">
-                <Link href="/conference" className="w-full">
-                  <button className="w-full flex items-center justify-center gap-2 text-lg px-6 py-3 font-semibold rounded-[16px] bg-gradient-to-r from-green-400/30 to-cyan-400/30 border border-green-400/40 text-white shadow hover:from-green-400/50 hover:to-cyan-400/50 transition">
-                    <img src="/images/icons/camera.svg" alt="Start" className="w-6 h-6" />
-                    Start Video Call
+                <div className="flex items-center gap-3 p-2 bg-[#0f1419] rounded-lg border border-white/10">
+                  <Link color="white" />
+                  <span className="text-white/80 text-sm flex-1 font-mono">
+                    {`${window.location.origin}/conference?room=${"abc"}`}
+                  </span>
+                  <button
+                    className="p-1 hover:bg-white/10 rounded"
+                    onClick={() => {
+                      navigator.clipboard.writeText(
+                        `${window.location.origin}/conference?room=${"abc"}`
+                      );
+                    }}
+                  >
+                    <Copy color="white" />
                   </button>
-                </Link>
-                <button className="w-full flex items-center justify-center gap-2 text-lg px-6 py-3 font-semibold rounded-[16px] bg-[rgba(8,11,22,0.50)] border border-gray-700 text-white shadow hover:bg-[rgba(8,11,22,0.70)] transition">
-                  <img src="/images/icons/link.svg" alt="Link" className="w-6 h-6" />
-                  Enter Session Link
-                </button>
-              </div> */}
+                </div>
+              </div>
             </motion.div>
           </motion.div>
         )}
@@ -247,7 +247,11 @@ export default function StartSessionPage() {
               }}
               onClick={() => setModalOpen(true)}
             >
-              <img src="/images/icons/camera.svg" alt="New Session" className="pr-2" />
+              <img
+                src="/images/icons/camera.svg"
+                alt="New Session"
+                className="pr-2"
+              />
               New Session
             </button>
             <button
@@ -331,8 +335,9 @@ export default function StartSessionPage() {
               <button
                 key={item.alt}
                 onClick={() => setPage([idx, idx > page ? 1 : -1])}
-                className={`h-6 flex items-center justify-center bg-transparent border-none p-0 focus:outline-none transition-all duration-200 ${page === idx ? "w-[18px]" : "w-[10px]"
-                  }`}
+                className={`h-6 flex items-center justify-center bg-transparent border-none p-0 focus:outline-none transition-all duration-200 ${
+                  page === idx ? "w-[18px]" : "w-[10px]"
+                }`}
                 style={{ background: "none" }}
                 aria-label={`Go to slide ${idx + 1}`}
               >
