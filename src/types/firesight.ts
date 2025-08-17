@@ -16,3 +16,8 @@ export interface PlatformSectionCardInfo {
   content: string;
   icon: string;
 }
+
+export interface ImageInfo{
+  title: string,
+  image: string
+}

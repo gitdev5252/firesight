@@ -1,9 +1,11 @@
 "use client";
-import { useState, useEffect } from "react";
+import NextLink from "next/link";
+import Image from "next/image";
+import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Copy, Link } from "lucide-react";
-import NextLink from "next/link";
-// Total number of slides will be determined after slideData is defined
+
+import { subData, slideData } from "@/utils/constant/firesight";
 
 export default function StartSessionPage() {
   const [[page, direction], setPage] = useState([0, 0]);
@@ -15,57 +17,25 @@ export default function StartSessionPage() {
     return Math.abs(offset) * velocity;
   };
 
-  const paginate = (newDirection: number) => {
-    setPage(([prevPage]) => {
-      const newPage = (prevPage + newDirection + totalSlides) % totalSlides;
-      return [newPage, newDirection];
-    });
-  };
+  const totalSlides = slideData.length;
 
-  // Auto-slide effect
+  const paginate = useCallback(
+    (newDirection: number) => {
+      setPage(([prevPage]) => {
+        const newPage = (prevPage + newDirection + totalSlides) % totalSlides;
+        return [newPage, newDirection];
+      });
+    },
+    [totalSlides]
+  );
+
   useEffect(() => {
     const interval = setInterval(() => {
       paginate(1);
-    }, 4000); // Change slide every 4 seconds
+    }, 4000);
     return () => clearInterval(interval);
-  }, []);
+  }, [paginate]);
 
-  const subData = [
-    {
-      icon: "/images/icons/green-pin.svg",
-      title: "Pin to Toolbar",
-    },
-    {
-      icon: "/images/icons/green-pin.svg",
-      title: "Pin to Startbar",
-    },
-    {
-      icon: "/images/icons/green-download.svg",
-      title: "Save as Desktop App",
-    },
-  ];
-
-  const slideData = [
-    { alt: "ai-co-pilot", image: "/images/session/ai-co-pilot.svg" },
-    {
-      alt: "meeting-summaries",
-      image: "/images/session/meeting-summaries.svg",
-    },
-    {
-      alt: "session-libraries",
-      image: "/images/session/session-libraries.svg",
-    },
-    {
-      alt: "intelligence-knowledge-base",
-      image: "/images/session/intelligence-knowledge-base.svg",
-    },
-    { alt: "meeting-flow", image: "/images/session/meeting-flow.svg" },
-    {
-      alt: "best-in-class-performance",
-      image: "/images/session/best-in-class-performance.svg",
-    },
-  ];
-  const totalSlides = slideData.length;
   return (
     <div className="w-full flex relative md:px-14 px-4 flex-col items-center justify-center min-h-screen overflow-hidden">
       {/* Modal Overlay */}
@@ -89,7 +59,7 @@ export default function StartSessionPage() {
             >
               <div className="flex flex-row justify-between items-center pl-8 pr-6 pt-6 ">
                 <div className="flex items-center gap-4">
-                  <img
+                  <Image
                     src="/images/icons/camera-green.png"
                     alt="Start"
                     className=""
@@ -111,7 +81,7 @@ export default function StartSessionPage() {
                   className="flex items-center gap-4 cursor-pointer"
                   onClick={() => setModalOpenFuture(true)}
                 >
-                  <img
+                  <Image
                     src="/images/icons/clock-green.svg"
                     alt="Start"
                     className=""
@@ -122,7 +92,7 @@ export default function StartSessionPage() {
                 </div>
                 <NextLink href="/conference">
                   <div className="flex items-center gap-4">
-                    <img
+                    <Image
                       src="/images/icons/send-green.svg"
                       alt="Start"
                       className=""
@@ -133,7 +103,7 @@ export default function StartSessionPage() {
                   </div>
                 </NextLink>
                 <div className="flex items-center gap-4">
-                  <img
+                  <Image
                     src="/images/icons/calendar-green.svg"
                     alt="Start"
                     className=""
@@ -165,7 +135,7 @@ export default function StartSessionPage() {
             >
               <div className="flex flex-row justify-between items-center pl-8 pr-8 pt-6 ">
                 <div className="flex items-center gap-4">
-                  <img
+                  <Image
                     src="/images/icons/clock-green.svg"
                     alt="Start"
                     className=""
@@ -247,7 +217,7 @@ export default function StartSessionPage() {
               }}
               onClick={() => setModalOpen(true)}
             >
-              <img
+              <Image
                 src="/images/icons/camera.svg"
                 alt="New Session"
                 className="pr-2"
@@ -263,7 +233,7 @@ export default function StartSessionPage() {
                 boxShadow: "0 3.131px 46.972px 0 rgba(13, 63, 46, 0.5)",
               }}
             >
-              <img
+              <Image
                 src="/images/icons/link.svg"
                 alt="New Session"
                 className="pr-2"
@@ -275,7 +245,7 @@ export default function StartSessionPage() {
           <div className="flex flex-wrap mt-[50px] gap-4">
             {subData.map((item, index) => (
               <div key={index} className="flex items-center gap-2 p-2 ">
-                <img src={item.icon} alt={item.title} className="w-6 h-6" />
+                <Image src={item.image} alt={item.title} className="w-6 h-6" />
                 <span className="text-[14px]">{item.title}</span>
               </div>
             ))}
@@ -318,10 +288,10 @@ export default function StartSessionPage() {
                   const currentIndex = page % slideData.length;
                   const item = slideData[currentIndex];
                   return (
-                    <img
+                    <Image
                       src={item.image}
-                      alt={item.alt}
-                      key={item.alt}
+                      alt={item.title}
+                      key={item.title}
                       className="mx-auto"
                     />
                   );
@@ -333,7 +303,7 @@ export default function StartSessionPage() {
           <div className="flex items-center justify-center gap-3 mt-6 mb-2 z-10">
             {slideData.map((item, idx) => (
               <button
-                key={item.alt}
+                key={item.title}
                 onClick={() => setPage([idx, idx > page ? 1 : -1])}
                 className={`h-6 flex items-center justify-center bg-transparent border-none p-0 focus:outline-none transition-all duration-200 ${
                   page === idx ? "w-[18px]" : "w-[10px]"
@@ -341,7 +311,7 @@ export default function StartSessionPage() {
                 style={{ background: "none" }}
                 aria-label={`Go to slide ${idx + 1}`}
               >
-                <img
+                <Image
                   src={
                     page === idx
                       ? "/images/icons/polygon-active.svg"
