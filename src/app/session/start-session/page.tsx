@@ -220,6 +220,8 @@ export default function StartSessionPage() {
               <Image
                 src="/images/icons/camera.svg"
                 alt="New Session"
+                width={24}
+                height={24}
                 className="pr-2"
               />
               New Session
@@ -235,7 +237,9 @@ export default function StartSessionPage() {
             >
               <Image
                 src="/images/icons/link.svg"
-                alt="New Session"
+                alt="session link"
+                width={24}
+                height={24}
                 className="pr-2"
               />
               Enter Session Link
