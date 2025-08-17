@@ -302,7 +302,7 @@ const MainVideoTile = ({
     return () => {
       if (sourceTimer.current) window.clearTimeout(sourceTimer.current);
     };
-  }, [participant.isScreenShareEnabled, participant.isCameraEnabled]);
+  }, [participant]);
 
   const t = source
     ? trackMap.get(`${participant.identity}:${source}`)
@@ -375,7 +375,7 @@ const SmallVideoTile = ({
     return () => {
       if (debounceRef.current) window.clearTimeout(debounceRef.current);
     };
-  }, [participant.isScreenShareEnabled, participant.isCameraEnabled]);
+  }, [participant]);
 
   const t = source
     ? trackMap.get(`${participant.identity}:${source}`)

@@ -5,7 +5,12 @@ import { HexAvatar } from "../HexAvatar/HexAvatar";
 
 /* utils */
 const getInitials = (name: string) =>
-  name.split(" ").map(w => w[0]).join("").toUpperCase().slice(0, 2);
+  name
+    .split(" ")
+    .map((w) => w[0])
+    .join("")
+    .toUpperCase()
+    .slice(0, 2);
 
 const pickSource = (p: Participant): Track.Source | null => {
   if (p.isScreenShareEnabled) return Track.Source.ScreenShare;
@@ -16,7 +21,9 @@ const pickSource = (p: Participant): Track.Source | null => {
 export const MobileVideoTiles = ({
   activeEmojis,
 }: {
-  activeEmojis?: { [key: string]: { emoji: string; timestamp: number; username: string } };
+  activeEmojis?: {
+    [key: string]: { emoji: string; timestamp: number; username: string };
+  };
 }) => {
   const participantsRaw = useParticipants();
   const tracks = useTracks([Track.Source.Camera, Track.Source.ScreenShare]);
@@ -44,7 +51,8 @@ export const MobileVideoTiles = ({
   // initial main
   useEffect(() => {
     if (!mainId && participants.length > 0) {
-      const firstRemote = participants.find(p => !p.isLocal) ?? participants[0];
+      const firstRemote =
+        participants.find((p) => !p.isLocal) ?? participants[0];
       setMainId(firstRemote.identity);
     }
   }, [participants, mainId]);
@@ -53,11 +61,12 @@ export const MobileVideoTiles = ({
   useEffect(() => {
     if (promoteTimer.current) window.clearTimeout(promoteTimer.current);
     promoteTimer.current = window.setTimeout(() => {
-      const sharer = participants.find(p => p.isScreenShareEnabled);
+      const sharer = participants.find((p) => p.isScreenShareEnabled);
       if (sharer && sharer.identity !== mainId) {
         setMainId(sharer.identity);
-      } else if (mainId && !participants.find(p => p.identity === mainId)) {
-        const next = participants.find(p => !p.isLocal) ?? participants[0] ?? null;
+      } else if (mainId && !participants.find((p) => p.identity === mainId)) {
+        const next =
+          participants.find((p) => !p.isLocal) ?? participants[0] ?? null;
         setMainId(next ? next.identity : null);
       }
     }, 150);
@@ -67,8 +76,8 @@ export const MobileVideoTiles = ({
   }, [participants, mainId]);
 
   const main =
-    (mainId && participants.find(p => p.identity === mainId)) ||
-    participants.find(p => !p.isLocal) ||
+    (mainId && participants.find((p) => p.identity === mainId)) ||
+    participants.find((p) => !p.isLocal) ||
     participants[0];
 
   return (
@@ -97,21 +106,30 @@ const MobileMainTile = ({
   trackMap,
 }: {
   participant: Participant;
-  activeEmojis?: { [key: string]: { emoji: string; timestamp: number; username: string } };
+  activeEmojis?: {
+    [key: string]: { emoji: string; timestamp: number; username: string };
+  };
   trackMap: Map<string, ReturnType<typeof useTracks>[number]>;
 }) => {
-  const [source, setSource] = useState<Track.Source | null>(pickSource(participant));
+  const [source, setSource] = useState<Track.Source | null>(
+    pickSource(participant)
+  );
   const timer = useRef<number | null>(null);
 
   useEffect(() => {
     if (timer.current) window.clearTimeout(timer.current);
-    timer.current = window.setTimeout(() => setSource(pickSource(participant)), 150);
+    timer.current = window.setTimeout(
+      () => setSource(pickSource(participant)),
+      150
+    );
     return () => {
       if (timer.current) window.clearTimeout(timer.current);
     };
-  }, [participant.isScreenShareEnabled, participant.isCameraEnabled]);
+  }, [participant]);
 
-  const t = source ? trackMap.get(`${participant.identity}:${source}`) : undefined;
+  const t = source
+    ? trackMap.get(`${participant.identity}:${source}`)
+    : undefined;
   const initials = getInitials(participant.identity);
 
   return (
@@ -149,7 +167,9 @@ const VideoSurface = ({
   fallbackInitials: string;
 }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [hasMedia, setHasMedia] = useState<boolean>(!!trackRef?.publication?.track);
+  const [hasMedia, setHasMedia] = useState<boolean>(
+    !!trackRef?.publication?.track
+  );
 
   useEffect(() => {
     const el = videoRef.current;
@@ -177,7 +197,11 @@ const VideoSurface = ({
         muted={participant.isLocal}
         className="w-full h-full object-cover"
       />
-      <div className={`absolute inset-0 flex items-center justify-center transition-opacity duration-200 ${hasMedia ? "opacity-0 pointer-events-none" : "opacity-100"}`}>
+      <div
+        className={`absolute inset-0 flex items-center justify-center transition-opacity duration-200 ${
+          hasMedia ? "opacity-0 pointer-events-none" : "opacity-100"
+        }`}
+      >
         <HexAvatar initials={fallbackInitials} size={120} fontSize={52} />
       </div>
     </div>
