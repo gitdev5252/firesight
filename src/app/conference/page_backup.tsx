@@ -1,6 +1,21 @@
-import { BotMessageSquare, Calendar, Clock, Copy, Expand, Hand, Link, Mic, Monitor, PanelLeftClose, PhoneOff, Smile, Users, Video } from "lucide-react";
+import {
+  BotMessageSquare,
+  Calendar,
+  Clock,
+  Copy,
+  Expand,
+  Hand,
+  Link,
+  Mic,
+  Monitor,
+  PanelLeftClose,
+  PhoneOff,
+  Smile,
+  Users,
+  Video,
+} from "lucide-react";
 import { useState } from "react";
-
+import Image from "next/image";
 export default function SessionPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -19,7 +34,7 @@ export default function SessionPage() {
 
           {/* Soundwave visualization */}
           <div className="flex items-center gap-[2px] h-8">
-            <img src="/images/icons/soundwave.png" alt="" />
+            <Image src="/images/icons/soundwave.png" alt="" />
           </div>
 
           <div className="flex items-center gap-2 mr-4">
@@ -46,12 +61,23 @@ export default function SessionPage() {
 
             {/* Fullscreen Button */}
             <div className="absolute top-6 right-6 flex gap-2">
-              <button 
+              <button
                 onClick={() => setIsModalOpen(true)}
                 className="w-8 h-8 bg-white/10 hover:bg-white/20 rounded-lg flex items-center justify-center text-white transition-colors"
               >
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M8 4v8M4 8h8" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 16 16"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M8 4v8M4 8h8"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                  />
                 </svg>
               </button>
               <button className="w-8 h-8 rounded-lg flex items-center justify-center text-white transition-colors">
@@ -65,26 +91,44 @@ export default function SessionPage() {
                 <div className="border border-white/20 rounded-xl max-w-md w-full mx-6 relative">
                   <div className="flex items-center p-4">
                     {/* Close Button */}
-                    <button 
+                    <button
                       onClick={() => setIsModalOpen(false)}
                       className="absolute right-4 w-6 h-6 flex items-center justify-center text-white/60 hover:text-white"
                     >
-                      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M1 1l12 12M1 13L13 1" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                      <svg
+                        width="14"
+                        height="14"
+                        viewBox="0 0 14 14"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M1 1l12 12M1 13L13 1"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                        />
                       </svg>
                     </button>
-                    <h2 className="text-white text-lg font-medium">Your Session is ready</h2>
+                    <h2 className="text-white text-lg font-medium">
+                      Your Session is ready
+                    </h2>
                   </div>
                   {/* divider */}
                   <div className="border-b border-white/10 mb-4"></div>
                   <div className="p-4">
                     <p className="text-white/70 text-sm mb-6 leading-relaxed">
-                      Send this link to people you want to invite to the Session.<br />
-                      Don&apos;t forget to save the link, so you can use it later.
+                      Send this link to people you want to invite to the
+                      Session.
+                      <br />
+                      Don&apos;t forget to save the link, so you can use it
+                      later.
                     </p>
                     <div className="flex items-center gap-3 p-2 bg-[#0f1419] rounded-lg border border-white/10">
                       <Link color="white" />
-                      <span className="text-white/80 text-sm flex-1 font-mono">sessions.firesight.ai/lijy-oznc</span>
+                      <span className="text-white/80 text-sm flex-1 font-mono">
+                        sessions.firesight.ai/lijy-oznc
+                      </span>
                       <button className="p-1 hover:bg-white/10 rounded">
                         <Copy color="white" />
                       </button>
@@ -118,7 +162,7 @@ export default function SessionPage() {
                   </div>
                   <span className="text-xs mt-2">Mic</span>
                 </button>
-                
+
                 <button className="flex flex-col items-center gap-1 text-gray-400 hover:text-gray-400 transition-colors">
                   <div className="items-center justify-center">
                     <Video color="white" />

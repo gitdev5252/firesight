@@ -1,4 +1,9 @@
-import { PulseSectionCardInfo, SessionSectionCardInfo, PlatformSectionCardInfo } from "@/types/firesight";
+import {
+  PulseSectionCardInfo,
+  SessionSectionCardInfo,
+  PlatformSectionCardInfo,
+  ImageInfo,
+} from "@/types/firesight";
 
 export const pulseSectionCardInfo: PulseSectionCardInfo[] = [
   {
@@ -8,27 +13,32 @@ export const pulseSectionCardInfo: PulseSectionCardInfo[] = [
   },
   {
     title: "News",
-    content: "AI-filtered media feed—monitor topics, brands, and trends in real time.",
+    content:
+      "AI-filtered media feed—monitor topics, brands, and trends in real time.",
     feature: "",
   },
   {
     title: "Intelligence",
-    content: "Personalised intelligence compiled from internal and external information.",
+    content:
+      "Personalised intelligence compiled from internal and external information.",
     feature: "",
   },
   {
     title: "Signals",
-    content: "State-of-the-Art keyword, phase and narrative tracking technology.",
+    content:
+      "State-of-the-Art keyword, phase and narrative tracking technology.",
     feature: "(coming soon)",
   },
   {
     title: "Spotlight",
-    content: "Discover what’s trending, loved, or hated - by location, sector, or time period.",
+    content:
+      "Discover what’s trending, loved, or hated - by location, sector, or time period.",
     feature: "(coming soon)",
   },
   {
     title: "Surveillance",
-    content: "self-guided media intelligence driving deeper comprehension of current events.",
+    content:
+      "self-guided media intelligence driving deeper comprehension of current events.",
     feature: "(coming soon)",
   },
 ];
@@ -36,11 +46,13 @@ export const pulseSectionCardInfo: PulseSectionCardInfo[] = [
 export const sessionSectionCardInfo: SessionSectionCardInfo[] = [
   {
     title: "Agent",
-    content: "A new medium of collaboration: You and an AI agent working together seamlessly",
+    content:
+      "A new medium of collaboration: You and an AI agent working together seamlessly",
   },
   {
     title: "Conference Sessions",
-    content: "Smarter, more efficient group calls -complete with prompts, summaries & Agents",
+    content:
+      "Smarter, more efficient group calls -complete with prompts, summaries & Agents",
   },
   {
     title: "Embedded Agents",
@@ -48,7 +60,8 @@ export const sessionSectionCardInfo: SessionSectionCardInfo[] = [
   },
   {
     title: "Session Summaries",
-    content: "Capture decisions and next steps instantly with actionable summaries",
+    content:
+      "Capture decisions and next steps instantly with actionable summaries",
   },
   {
     title: "WorldShare",
@@ -56,7 +69,8 @@ export const sessionSectionCardInfo: SessionSectionCardInfo[] = [
   },
   {
     title: "Embedded Prompts",
-    content: "Intuitive prompts that guide your meetings and ensure no opportunity is overlooked",
+    content:
+      "Intuitive prompts that guide your meetings and ensure no opportunity is overlooked",
   },
 ];
 
@@ -78,7 +92,8 @@ export const platformSectionCardInfo: PlatformSectionCardInfo[] = [
   },
   {
     title: "Sessions",
-    content: "Transform meetings with AI-native conferencing with embedded AI Agents",
+    content:
+      "Transform meetings with AI-native conferencing with embedded AI Agents",
     icon: "/images/icons/sessions.svg",
   },
   {
@@ -88,7 +103,44 @@ export const platformSectionCardInfo: PlatformSectionCardInfo[] = [
   },
   {
     title: "Projects",
-    content: "Effortless organisational control for your workflows and projects",
+    content:
+      "Effortless organisational control for your workflows and projects",
     icon: "/images/icons/projects.svg",
+  },
+];
+
+export const subData: ImageInfo[] = [
+  {
+    image: "/images/icons/green-pin.svg",
+    title: "Pin to Toolbar",
+  },
+  {
+    image: "/images/icons/green-pin.svg",
+    title: "Pin to Startbar",
+  },
+  {
+    image: "/images/icons/green-download.svg",
+    title: "Save as Desktop App",
+  },
+];
+
+export const slideData: ImageInfo[] = [
+  { title: "ai-co-pilot", image: "/images/session/ai-co-pilot.svg" },
+  {
+    title: "meeting-summaries",
+    image: "/images/session/meeting-summaries.svg",
+  },
+  {
+    title: "session-libraries",
+    image: "/images/session/session-libraries.svg",
+  },
+  {
+    title: "intelligence-knowledge-base",
+    image: "/images/session/intelligence-knowledge-base.svg",
+  },
+  { title: "meeting-flow", image: "/images/session/meeting-flow.svg" },
+  {
+    title: "best-in-class-performance",
+    image: "/images/session/best-in-class-performance.svg",
   },
 ];
