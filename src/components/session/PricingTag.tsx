@@ -1,6 +1,5 @@
 "use client";
 
-import "./session.css";
 import { Button } from "@/components/ui/button";
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
@@ -437,9 +436,16 @@ export default function PricingTag() {
           {pricingTiers.map((tier, index) => (
             <div
               key={index}
-              className="main-box lg:min-w-[40.9vw] sm:min-w-[60vw] min-w-[84vw] bg-[linear-gradient(86deg, rgba(3, 139, 152, 0.16) 9.54%, rgba(15, 251, 73, 0.15) 72.65%)]"
+              className="lg:min-w-[40.9vw] sm:min-w-[60vw] min-w-[84vw] "
             >
-              <div className="my-9 mx-[50px] gap-9 flex flex-col items-center justify-start">
+              <div
+                className={`my-9 mx-[50px] md:px-[82px] px-[20px] md:py-[70px] py-[30px] gap-9 flex flex-col items-center justify-start border border-[rgba(255,255,255,0.1)] rounded-[20px] relative w-full backdrop-blur-[32px]
+                  ${
+                    index === 0
+                      ? "bg-[linear-gradient(86deg, rgba(3, 139, 152, 0.16) 9.54%, rgba(15, 251, 73, 0.15) 72.65%)]"
+                      : "bg-[rgba(255,255,255,0.01)]"
+                  }`}
+              >
                 <p className="text-white text-[20px]">
                   Firesight | <b>Session</b>
                 </p>
