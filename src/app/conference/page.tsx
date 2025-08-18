@@ -636,11 +636,10 @@ const MobileConferenceControls = ({
     </div>
   );
 };
-
 const MobileTabBarControls = ({
   onSendEmoji,
   currentUser,
-  onInvite
+  onInvite,
 }: {
   onSendEmoji: (username: string) => void;
   currentUser: string;
@@ -648,91 +647,94 @@ const MobileTabBarControls = ({
 }) => {
   const { isMicrophoneEnabled, isCameraEnabled, toggleMicrophone, toggleCamera } =
     useMediaControls();
-
   const { buttonProps: disconnectButtonProps } = useDisconnectButton({});
   const router = useRouter();
+
   const handleEndCall = async (e: React.MouseEvent<HTMLButtonElement>) => {
     if (disconnectButtonProps.onClick) await disconnectButtonProps.onClick(e);
     router.push("/session");
   };
 
   return (
-    <div className="px-6 pb-6">
-      <div className="px-2 py-4 bg-[#080B1680] border border-[#FFFFFF1A] rounded-[15px]">
-        <div className="flex items-center justify-center">
-          <div className="flex items-center gap-6">
-            <button
-              className={`flex flex-col items-center gap-1 transition-colors ${isMicrophoneEnabled
-                ? "text-gray-400 hover:text-gray-400"
-                : "text-red-400 hover:text-red-300"
-                }`}
-              onClick={toggleMicrophone}
-            >
-              <div className="items-center justify-center">
-                {isMicrophoneEnabled ? (
-                  <Mic color="white" />
-                ) : (
-                  <MicOff color="red" />
-                )}
-              </div>
-            </button>
+    <div className="px-4 pb-[max(env(safe-area-inset-bottom),1rem)]">
+      <div className="w-full rounded-2xl border border-white/10 bg-[#080B1680] backdrop-blur-md">
+        {/* GRID that auto-fits items and wraps on tiny screens */}
+        <div
+          className="
+            flex gap-3 p-3 overflow-x-auto snap-x no-scrollbar items-center
+          "
+        >
+          {/* mic */}
+          <button
+            onClick={toggleMicrophone}
+            className={`group flex h-12 w-full items-center justify-center rounded-xl  transition
+           
+            `}
+            aria-label="Toggle microphone"
+          >
+            {isMicrophoneEnabled ? (
+              <Mic color="white" size={22} />
+            ) : (
+              <MicOff color="red" size={22} />
+            )}
+          </button>
+<div className="w-px h-8 bg-white/20 "></div>
+          {/* camera */}
+          <button
+            onClick={toggleCamera}
+            className={`group flex h-12 w-full items-center justify-center rounded-xl  transition
+             
+            `}
+            aria-label="Toggle camera"
+          >
+            {isCameraEnabled ? (
+              <Video color="white" size={22} />
+            ) : (
+              <VideoOff color="red" size={22} />
+            )}
+          </button>
+<div className="w-px h-8 bg-white/20 "></div>
 
-            <div className="w-px h-8 bg-white/20"></div>
+          {/* emoji */}
+          <button
+            onClick={() => onSendEmoji(currentUser)}
+            className="flex h-12 w-full items-center justify-center rounded-xl transition"
+            aria-label="Send emoji"
+          >
+            <Smile color="white" size={22} />
+          </button>
+<div className="w-px h-8 bg-white/20 "></div>
 
-            <button
-              className={`flex flex-col items-center gap-1 transition-colors ${isCameraEnabled
-                ? "text-gray-400 hover:text-gray-400"
-                : "text-red-400 hover:text-red-300"
-                }`}
-              onClick={toggleCamera}
-            >
-              <div className="items-center justify-center">
-                {isCameraEnabled ? (
-                  <Video color="white" />
-                ) : (
-                  <VideoOff color="red" />
-                )}
-              </div>
-            </button>
+          {/* invite */}
+          <button
+            onClick={onInvite}
+            className="flex h-12 w-full items-center justify-center rounded-xl transition"
+            aria-label="Invite link"
+          >
+            <Link color="white" size={22} />
+          </button>
+<div className="w-px h-8 bg-white/20 "></div>
 
-            <div className="w-px h-8 bg-white/20"></div>
-
-            <button
-              className="flex flex-col items-center gap-1 text-gray-400 hover:text-gray-400 transition-colors"
-              onClick={() => onSendEmoji(currentUser)}
-            >
-              <div className="items-center justify-center">
-                <Smile color="white" />
-              </div>
-            </button>
-
-            <div className="w-px h-8 bg-white/20"></div>
-
-            <button
-              onClick={onInvite}
-              className="flex flex-col items-center gap-1 transition-colors text-gray-400 hover:text-gray-400"
-            >
-              <div className="items-center justify-center">
-                <Link color="white" />
-              </div>
-            </button>
-            <div className="w-px h-8 bg-white/20"></div>
-
-            <button
-              {...disconnectButtonProps}
-              onClick={handleEndCall}
-              className="flex flex-col items-center gap-1 transition-colors text-gray-400 hover:text-gray-400"
-            >
-              <div className="items-center justify-center">
-                <PhoneOff color="white" />
-              </div>
-            </button>
-          </div>
+          {/* end call */}
+          <button
+            {...disconnectButtonProps}
+            onClick={handleEndCall}
+            className="flex h-12 w-full items-center justify-center rounded-xl transition"
+            aria-label="End call"
+          >
+            <PhoneOff color="white" size={22} />
+          </button>
         </div>
       </div>
+
+      {/* Fallback horizontal scroll if someone adds more buttons later */}
+      {/* <div className="mt-2 overflow-x-auto sm:hidden no-scrollbar">
+        ...optional secondary row...
+      </div> */}
     </div>
   );
 };
+
 
 /* ----------------- Page ----------------- */
 export default function SessionPage() {
@@ -1033,28 +1035,34 @@ export default function SessionPage() {
 
                   )}
                   {/* <div className="mt-[120px] p-3"> */}
-                    {activeTab === "People" && (
-                      <div className="mt-50 p-3">
-                        <PeopleTab
-                          participants={participants}
-                          roomName={roomName}
-                          raisedHands={raisedHands}
-                        />
-                      </div>
-                    )}
-                    {activeTab === "Chat" && (
-                      <div className="mt-50 p-3">
-                        <ChatTab messages={chatMessages} onSendMessage={sendChatMessage} />
-                      </div>
-                    )}
-                    {activeTab === "Transcript" && (
-                      <div className="mt-50 p-3">
-                        <TranscriptTab />
-                      </div>
-                    )}
-                    {activeTab === "Summary" && (<div className="mt-50 p-3">
-                      <SummaryTab />
-                    </div>)}
+                  {activeTab === "People" && (
+                    <div className="mt-50 p-3">
+                      <PeopleTab
+                        participants={participants}
+                        roomName={roomName}
+                        raisedHands={raisedHands}
+                      />
+                    </div>
+                  )}
+                  {activeTab === "Chat" && (
+                    <div className="mt-50 p-3">
+                      <ChatTab messages={chatMessages} onSendMessage={sendChatMessage} />
+                      {/* <PeopleTab
+                        participants={participants}
+                        roomName={roomName}
+                        raisedHands={raisedHands}
+                      /> */}
+
+                    </div>
+                  )}
+                  {activeTab === "Transcript" && (
+                    <div className="mt-50 p-3">
+                      <TranscriptTab />
+                    </div>
+                  )}
+                  {activeTab === "Summary" && (<div className="mt-50 p-3">
+                    <SummaryTab />
+                  </div>)}
                   {/* </div> */}
 
                   {/* <CustomVideoTiles activeEmojis={activeEmojis} /> */}
@@ -1127,15 +1135,15 @@ export default function SessionPage() {
                         );
                       })}
                     </div>
-                     <div className=" mt-8">
+                    <div className=" mt-8">
 
-                    <MobileTabBarControls
-                      onSendEmoji={sendEmoji}
-                      currentUser={currentUser}
-                      onInvite={() => setIsModalOpen(true)}
+                      <MobileTabBarControls
+                        onSendEmoji={sendEmoji}
+                        currentUser={currentUser}
+                        onInvite={() => setIsModalOpen(true)}
 
-                    />
-                  </div>
+                      />
+                    </div>
                   </div>
                 )}
 
