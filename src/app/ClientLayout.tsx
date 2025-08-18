@@ -22,8 +22,8 @@ export default function ClientLayout({
   }, []);
 
   const hideHeader =
-    pathname.startsWith("/ai-impact") || 
-    pathname.startsWith("/sign") || 
+    pathname.startsWith("/ai-impact") ||
+    pathname.startsWith("/sign") ||
     pathname.startsWith("/conference");
 
   return (
@@ -32,7 +32,7 @@ export default function ClientLayout({
       <main
         className={
           (hideHeader ? "overflow-y-hidden" : "overflow-x-hidden ") +
-          "flex flex-col w-full justify-center items-center relative overflow-x-hidden"
+          "flex flex-col w-full justify-center items-center relative overflow-hidden"
         }
       >
         {children}

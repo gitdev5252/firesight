@@ -74,6 +74,53 @@ export const sessionSectionCardInfo: SessionSectionCardInfo[] = [
   },
 ];
 
+export const sessionFeaturedCardInfo: SessionSectionCardInfo[] = [
+  {
+    title: "Agent Sessions",
+    content:
+      "A new medium of collaboration: You and an AI agent working together seamlessly",
+  },
+  {
+    title: "Conference Sessions",
+    content:
+      "Smarter, more efficient group calls -complete with prompts, summaries & Agents",
+  },
+  {
+    title: "Embedded Agents",
+    content: "AI-powered agents that actively participate in your meetings",
+  },
+  {
+    title: "Session Summaries",
+    content:
+      "Capture decisions and next steps instantly with actionable summaries",
+  },
+  {
+    title: "WorldShare",
+    content: "AI agents listen, retrieve (RAG), present and share in real time",
+  },
+  {
+    title: "Personalised Prompts",
+    content:
+      "Intuitive prompts that guide your meetings and ensure no opportunity is overlooked",
+  },
+  {
+    title: "Autonomous Work",
+    content:
+      "AI Agents perform tasks & duties through 3rd party integrations and tool access.",
+  },
+  {
+    title: "Sessions Library",
+    content: "Knowledge Base for call recordings, transcripts & Sessions data. Effortlessly searchable; organised.",
+  },
+  {
+    title: "Sessions Recordings",
+    content:
+      "High-fidelity video and audio captures preserved for future reference, with intuitive UI navigation.",
+  },
+];
+
+
+
 export const platformSectionCardInfo: PlatformSectionCardInfo[] = [
   {
     title: "Dashboard",
