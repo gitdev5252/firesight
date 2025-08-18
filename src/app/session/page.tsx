@@ -5,6 +5,7 @@ import FireSightFooter from "@/layouts/FireSightFooter";
 import "../page.css";
 import { sessionFeaturedCardInfo } from "@/utils/constant/firesight";
 import { Button } from "@/components/ui/button";
+import PricingTag from "@/components/session/PricingTag";
 export const dynamic = "force-static";
 
 export default function SessionPage() {
@@ -193,6 +194,14 @@ export default function SessionPage() {
         >
           Try for Free
         </Button>
+      </div>
+
+      <div className="absolute inset-0 pointer-events-none z-[-100]">
+        <div className="session-bg h-[106.66vw] top-[calc(27vw+125px)] md:top-[2900px] md:h-[30vw]"></div>
+      </div>
+
+      <div className=" w-full md:px-14 px-4 md:mb-[58px] mb-[20px]">
+        <PricingTag />
       </div>
 
       <div className="w-full">
