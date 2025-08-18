@@ -4,6 +4,23 @@ import { Expand, Mic, MicOff, Monitor } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { HexAvatar } from "../HexAvatar/HexAvatar";
 
+/* Helper to attach/detach audio track to <audio> element */
+function AudioTrackRenderer({ track }: { track: Track | undefined }) {
+  const audioRef = useRef<HTMLAudioElement>(null);
+  useEffect(() => {
+    const audioEl = audioRef.current;
+    if (track && audioEl) {
+      track.attach(audioEl);
+      return () => {
+        if (audioEl) {
+          track.detach(audioEl);
+        }
+      };
+    }
+  }, [track]);
+  return <audio ref={audioRef} autoPlay />;
+}
+
 /* utils */
 const getInitials = (name: string) =>
   name.split(" ").map((w) => w[0]).join("").toUpperCase().slice(0, 2);
@@ -23,6 +40,8 @@ export const CustomVideoTiles = ({
 }) => {
   const participantsRaw = useParticipants();
   const tracks = useTracks([Track.Source.Camera, Track.Source.ScreenShare]);
+  // Get all microphone tracks (audio)
+  const audioTracks = useTracks([Track.Source.Microphone]);
 
   /* stable sort: local last (so a remote is main if available) */
   const participants = useMemo(() => {
@@ -117,32 +136,40 @@ export const CustomVideoTiles = ({
   const overflow = others.slice(maxIndividualTiles);
 
   return (
-    <div className="w-full h-full flex gap-3 min-h-0">
-      {/* Main area */}
-      <div className="flex-1 min-w-0 min-h-0">
-        <div className="w-full h-full max-h-[78vh]">
-          <div className="w-full h-full aspect-video">
-            <MainVideoTile
-              participant={mainParticipant}
-              activeEmojis={activeEmojis}
-              trackMap={trackByParticipantAndSource}
-            />
+    <>
+      {/* Render remote audio tracks so you can hear other participants */}
+      {audioTracks.map((t) => {
+        // Only render for remote participants
+        if (t.participant.isLocal) return null;
+        return <AudioTrackRenderer key={t.publication.trackSid} track={t.publication.track} />;
+      })}
+      <div className="w-full h-full flex gap-3 min-h-0">
+        {/* Main area */}
+        <div className="flex-1 min-w-0 min-h-0">
+          <div className="w-full h-full max-h-[78vh]">
+            <div className="w-full h-full aspect-video">
+              <MainVideoTile
+                participant={mainParticipant}
+                activeEmojis={activeEmojis}
+                trackMap={trackByParticipantAndSource}
+              />
+            </div>
           </div>
         </div>
-      </div>
 
-      {/* Right rail: lg+ only */}
-      <div className="hidden lg:flex w-56 flex-col gap-2 mr-1 shrink-0">
-        {displayed.map((p) => (
-          <SmallVideoTile
-            key={p.identity}
-            participant={p}
-            trackMap={trackByParticipantAndSource}
-          />
-        ))}
-        {overflow.length > 0 && <OverflowTile participants={overflow} />}
+        {/* Right rail: lg+ only */}
+        <div className="hidden lg:flex w-56 flex-col gap-2 mr-1 shrink-0">
+          {displayed.map((p) => (
+            <SmallVideoTile
+              key={p.identity}
+              participant={p}
+              trackMap={trackByParticipantAndSource}
+            />
+          ))}
+          {overflow.length > 0 && <OverflowTile participants={overflow} />}
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
