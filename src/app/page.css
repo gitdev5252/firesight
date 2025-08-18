@@ -100,6 +100,32 @@
   pointer-events: none;
 }
 
+.green-gradient-border-btn {
+  position: relative;
+  z-index: 0;
+  border-radius: 9999px;
+  background: transparent;
+  border: 1px solid transparent;
+}
+
+.green-gradient-border-btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  padding: 1px; /* border thickness */
+  background: linear-gradient(
+    180deg,
+    rgba(20, 255, 0, 0.55) 0%,
+    rgba(0, 240, 255, 0.62) 100%
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  z-index: -1;
+  pointer-events: none;
+}
+
 .green-btn-bg {
   background-image: url("/images/green-btn-bg.svg");
   background-repeat: no-repeat;
@@ -433,4 +459,70 @@
     rgba(8, 11, 22, 0.93) 80.91%,
     #080b16 100%
   );
+}
+
+.try-for-free-btn {
+  /* Transparent inner background */
+  background: transparent;
+
+  /* Gradient border effect */
+  border: 2px solid transparent;
+  border-radius: 50px;
+
+  background-image: linear-gradient(
+    180deg,
+    rgba(20, 255, 0, 0.55),
+    rgba(0, 240, 255, 0.62)
+  );
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  -webkit-background-clip: padding-box, border-box;
+
+  /* Shadow */
+  box-shadow: 0 3px 30px rgba(13, 63, 46, 0.5);
+
+  /* Button text */
+  padding: 12px 32px;
+  color: white;
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+  text-align: center;
+  display: inline-block;
+}
+
+/* Responsive button sizing */
+@media (max-width: 768px) {
+  .try-for-free-btn {
+    min-width: 200px;
+    min-height: 44px;
+  }
+}
+
+@media (max-width: 480px) {
+  .try-for-free-btn {
+    min-width: 180px;
+    min-height: 40px;
+  }
+}
+
+/* Custom button sizes */
+.try-for-free-btn.large {
+  min-width: 500px;
+  min-height: 100px;
+}
+
+.try-for-free-btn.medium {
+  min-width: 350px;
+  min-height: 70px;
+}
+
+.try-for-free-btn.small {
+  min-width: 250px;
+  min-height: 55px;
+}
+
+.try-for-free-btn.custom {
+  min-width: var(--button-width, 400px);
+  min-height: var(--button-height, 80px);
 }
