@@ -1,5 +1,3 @@
-
-
 "use client";
 import {
   BotMessageSquare,
@@ -636,11 +634,10 @@ const MobileConferenceControls = ({
     </div>
   );
 };
-
 const MobileTabBarControls = ({
   onSendEmoji,
   currentUser,
-  onInvite
+  onInvite,
 }: {
   onSendEmoji: (username: string) => void;
   currentUser: string;
@@ -648,91 +645,94 @@ const MobileTabBarControls = ({
 }) => {
   const { isMicrophoneEnabled, isCameraEnabled, toggleMicrophone, toggleCamera } =
     useMediaControls();
-
   const { buttonProps: disconnectButtonProps } = useDisconnectButton({});
   const router = useRouter();
+
   const handleEndCall = async (e: React.MouseEvent<HTMLButtonElement>) => {
     if (disconnectButtonProps.onClick) await disconnectButtonProps.onClick(e);
     router.push("/session");
   };
 
   return (
-    <div className="px-6 pb-6">
-      <div className="px-2 py-4 bg-[#080B1680] border border-[#FFFFFF1A] rounded-[15px]">
-        <div className="flex items-center justify-center">
-          <div className="flex items-center gap-6">
-            <button
-              className={`flex flex-col items-center gap-1 transition-colors ${isMicrophoneEnabled
-                ? "text-gray-400 hover:text-gray-400"
-                : "text-red-400 hover:text-red-300"
-                }`}
-              onClick={toggleMicrophone}
-            >
-              <div className="items-center justify-center">
-                {isMicrophoneEnabled ? (
-                  <Mic color="white" />
-                ) : (
-                  <MicOff color="red" />
-                )}
-              </div>
-            </button>
+    <div className="px-4 pb-[max(env(safe-area-inset-bottom),1rem)]">
+      <div className="w-full rounded-2xl border border-white/10 bg-[#080B1680] backdrop-blur-md">
+        {/* GRID that auto-fits items and wraps on tiny screens */}
+        <div
+          className="
+            flex gap-3 p-3 overflow-x-auto snap-x no-scrollbar items-center
+          "
+        >
+          {/* mic */}
+          <button
+            onClick={toggleMicrophone}
+            className={`group flex h-12 w-full items-center justify-center rounded-xl  transition
+           
+            `}
+            aria-label="Toggle microphone"
+          >
+            {isMicrophoneEnabled ? (
+              <Mic color="white" size={22} />
+            ) : (
+              <MicOff color="red" size={22} />
+            )}
+          </button>
+          <div className="w-px h-8 bg-white/20 "></div>
+          {/* camera */}
+          <button
+            onClick={toggleCamera}
+            className={`group flex h-12 w-full items-center justify-center rounded-xl  transition
+             
+            `}
+            aria-label="Toggle camera"
+          >
+            {isCameraEnabled ? (
+              <Video color="white" size={22} />
+            ) : (
+              <VideoOff color="red" size={22} />
+            )}
+          </button>
+          <div className="w-px h-8 bg-white/20 "></div>
 
-            <div className="w-px h-8 bg-white/20"></div>
+          {/* emoji */}
+          <button
+            onClick={() => onSendEmoji(currentUser)}
+            className="flex h-12 w-full items-center justify-center rounded-xl transition"
+            aria-label="Send emoji"
+          >
+            <Smile color="white" size={22} />
+          </button>
+          <div className="w-px h-8 bg-white/20 "></div>
 
-            <button
-              className={`flex flex-col items-center gap-1 transition-colors ${isCameraEnabled
-                ? "text-gray-400 hover:text-gray-400"
-                : "text-red-400 hover:text-red-300"
-                }`}
-              onClick={toggleCamera}
-            >
-              <div className="items-center justify-center">
-                {isCameraEnabled ? (
-                  <Video color="white" />
-                ) : (
-                  <VideoOff color="red" />
-                )}
-              </div>
-            </button>
+          {/* invite */}
+          <button
+            onClick={onInvite}
+            className="flex h-12 w-full items-center justify-center rounded-xl transition"
+            aria-label="Invite link"
+          >
+            <Link color="white" size={22} />
+          </button>
+          <div className="w-px h-8 bg-white/20 "></div>
 
-            <div className="w-px h-8 bg-white/20"></div>
-
-            <button
-              className="flex flex-col items-center gap-1 text-gray-400 hover:text-gray-400 transition-colors"
-              onClick={() => onSendEmoji(currentUser)}
-            >
-              <div className="items-center justify-center">
-                <Smile color="white" />
-              </div>
-            </button>
-
-            <div className="w-px h-8 bg-white/20"></div>
-
-            <button
-              onClick={onInvite}
-              className="flex flex-col items-center gap-1 transition-colors text-gray-400 hover:text-gray-400"
-            >
-              <div className="items-center justify-center">
-                <Link color="white" />
-              </div>
-            </button>
-            <div className="w-px h-8 bg-white/20"></div>
-
-            <button
-              {...disconnectButtonProps}
-              onClick={handleEndCall}
-              className="flex flex-col items-center gap-1 transition-colors text-gray-400 hover:text-gray-400"
-            >
-              <div className="items-center justify-center">
-                <PhoneOff color="white" />
-              </div>
-            </button>
-          </div>
+          {/* end call */}
+          <button
+            {...disconnectButtonProps}
+            onClick={handleEndCall}
+            className="flex h-12 w-full items-center justify-center rounded-xl transition"
+            aria-label="End call"
+          >
+            <PhoneOff color="white" size={22} />
+          </button>
         </div>
       </div>
+
+      {/* Fallback horizontal scroll if someone adds more buttons later */}
+      {/* <div className="mt-2 overflow-x-auto sm:hidden no-scrollbar">
+        ...optional secondary row...
+      </div> */}
     </div>
   );
 };
+
 
 /* ----------------- Page ----------------- */
 export default function SessionPage() {
@@ -865,6 +865,27 @@ export default function SessionPage() {
       .then((res) => res.json())
       .then((data) => setToken(data.token));
   };
+  const messagesEndRef = React.useRef<HTMLDivElement>(null);
+
+  React.useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [chatMessages]);
+  const [inputMessage, setInputMessage] = React.useState("");
+
+  const handleSendMessage = () => {
+    if (inputMessage.trim()) {
+      sendChatMessage(inputMessage.trim());
+      setInputMessage("");
+    }
+  };
+
+  const handleKeyPress = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      handleSendMessage();
+    }
+  };
+ 
 
   return (
     <div className="p-4 md:p-8 bg-[#080B16] min-h-screen flex flex-col">
@@ -978,6 +999,59 @@ export default function SessionPage() {
                           strokeLinecap="round"
                         />
                       </svg>
+                      <div className="bg-[rgba(255,255,255,0.02)] rounded-[20px] border border-[rgba(255,255,255,0.1)] backdrop-blur-[32px] p-2 mb-4 max-h-[56vh] overflow-auto">
+                        {participants && participants.length > 0 ? (
+                          participants.map((participant) => {
+                            const p = participant as Participant;
+                            const initials = p.identity.slice(0, 2).toUpperCase();
+                            const isLocal = p.isLocal;
+                            const isMicEnabled = !p.isMicrophoneEnabled === false;
+                            const isCameraEnabled = !p.isCameraEnabled === false;
+
+                            return (
+                              <div
+                                key={p.sid}
+                                className="flex items-center gap-3 p-3 rounded-lg mb-2"
+                              >
+                                <HexAvatar initials={initials} size={32} fontSize={12} />
+
+                                <div className="flex-1">
+                                  <div className="flex items-center gap-2">
+                                    <p className="text-white text-sm font-medium">
+                                      {p.identity} {isLocal && "(Host)"}
+                                    </p>
+                                    {raisedHands[p.identity] && (
+                                      <Hand
+                                        size={16}
+                                        color="#fbbf24"
+                                        className="animate-pulse"
+                                      />
+                                    )}
+                                  </div>
+                                </div>
+                                <div className="flex gap-5 mr-4">
+                                  <div className="w-5 h-5 rounded-full flex items-center justify-center">
+                                    {isMicEnabled ? (
+                                      <Mic size={24} color="white" />
+                                    ) : (
+                                      <MicOff size={24} color="white" />
+                                    )}
+                                  </div>
+                                  <div className="w-5 h-5 rounded-full flex items-center justify-center">
+                                    {isCameraEnabled ? (
+                                      <Video size={24} color="white" />
+                                    ) : (
+                                      <VideoOff size={24} color="white" />
+                                    )}
+                                  </div>
+                                </div>
+                              </div>
+                            );
+                          })
+                        ) : (
+                          <p className="text-white/60 text-sm">No participants yet</p>
+                        )}
+                      </div>
                     </button>
                     <h2 className="text-white text-lg font-medium">
                       Your Session is ready
@@ -1032,30 +1106,136 @@ export default function SessionPage() {
                     <CustomVideoTiles activeEmojis={activeEmojis} />
 
                   )}
-                  {/* <div className="mt-[120px] p-3"> */}
+                  <div className="p-1 ml-2 mr-2 ">
                     {activeTab === "People" && (
-                      <div className="mt-50 p-3">
-                        <PeopleTab
-                          participants={participants}
-                          roomName={roomName}
-                          raisedHands={raisedHands}
+                      <>
+                        <div className="bg-[rgba(255,255,255,0.02)] rounded-[20px] border border-[rgba(255,255,255,0.1)] backdrop-blur-[32px] p-2 mb-4 max-h-[56vh] overflow-auto mt-38">
+                          {participants && participants.length > 0 ? (
+                            participants.map((participant) => {
+                              const p = participant as Participant;
+                              const initials = p.identity.slice(0, 2).toUpperCase();
+                              const isLocal = p.isLocal;
+                              const isMicEnabled = !p.isMicrophoneEnabled === false;
+                              const isCameraEnabled = !p.isCameraEnabled === false;
+
+                              return (
+                                <div
+                                  key={p.sid}
+                                  className="flex items-center gap-3 p-3 rounded-lg"
+                                >
+                                  <HexAvatar initials={initials} size={32} fontSize={12} />
+
+                                  <div className="flex-1">
+                                    <div className="flex items-center gap-2">
+                                      <p className="text-white text-sm font-medium">
+                                        {p.identity} {isLocal && "(Host)"}
+                                      </p>
+                                      {raisedHands[p.identity] && (
+                                        <Hand
+                                          size={16}
+                                          color="#fbbf24"
+                                          className="animate-pulse"
+                                        />
+                                      )}
+                                    </div>
+                                  </div>
+                                  <div className="flex gap-5 mr-4">
+                                    <div className="w-5 h-5 rounded-full flex items-center justify-center">
+                                      {isMicEnabled ? (
+                                        <Mic size={24} color="white" />
+                                      ) : (
+                                        <MicOff size={24} color="white" />
+                                      )}
+                                    </div>
+                                    <div className="w-5 h-5 rounded-full flex items-center justify-center">
+                                      {isCameraEnabled ? (
+                                        <Video size={24} color="white" />
+                                      ) : (
+                                        <VideoOff size={24} color="white" />
+                                      )}
+                                    </div>
+                                  </div>
+                                </div>
+                              );
+                            })
+                          ) : (
+                            <p className="text-white/60 text-sm">No participants yet</p>
+                          )}
+                        </div>
+                        <div className="fixed bottom-0 left-0 right-0 z-50 md:hidden px-4 pb-6">
+                          <button
+                            onClick={() => {
+                              window.location.href = "/session";
+                            }}
+                            className="w-full flex items-center justify-between gap-3 p-4 bg-[#0f1419] rounded-lg border border-white/10 shadow focus:outline-none focus:ring-2 focus:ring-red-400 transition"
+                          >
+                            <span className="flex items-center gap-2">
+                              <span className="text-white font-mono text-base">Share Session Link</span>
+                            </span>
+                            <span className="flex items-center">
+                              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" /><path d="M5 15V5a2 2 0 0 1 2-2h10" /></svg>
+                            </span>
+                          </button>
+                        </div>
+                      </>
+
+                    )}
+
+                  </div>
+                  {activeTab === "Chat" && (
+                    <>
+                      <div className="flex-1 mb-4 space-y-3 min-h-0 mt-38">
+                        {chatMessages.length > 0 ? (
+                          chatMessages.map((msg, index) => (
+                            <div className="flex items-center gap-3 ml-2 mr-2" key={index}>
+                              <HexAvatar initials={msg.username.split(" ").map((w) => w[0]).join("").toUpperCase().slice(0, 2)} />
+                              <div className="bg-white/5 rounded-lg p-3 border border-white/10">
+                                <div className="flex items-center mb-1">
+                                  <p className="text-white/80 text-sm">{msg.message}</p>
+                                </div>
+                              </div>
+                            </div>
+                          ))
+                        ) : (
+                          <p className="text-white/60 text-sm text-center py-8">
+                            No messages yet. Start the conversation!
+                          </p>
+                        )}
+                        {/* <div ref={messagesEndRef} /> */}
+                      </div>
+                      <div className="fixed bottom-0 left-0 right-0 z-50 md:hidden px-4 pb-10">
+                        <input
+                          type="text"
+                          value={inputMessage}
+                          onChange={(e) => setInputMessage(e.target.value)}
+                          onKeyPress={handleKeyPress}
+                          placeholder="Type here..."
+                          className="flex-1 w-full bg-white/10 border border-white/20 rounded-lg px-3 py-2 text-white text-sm placeholder-white/50 focus:outline-none focus:border-blue-500"
                         />
+                        {/* <button
+                          onClick={handleSendMessage}
+                          disabled={!inputMessage.trim()}
+                          className="px-4 py-2 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-800 disabled:opacity-50 text-white rounded-lg text-sm font-medium transition-colors"
+                        >
+                          Send
+                        </button> */}
                       </div>
-                    )}
-                    {activeTab === "Chat" && (
-                      <div className="mt-50 p-3">
-                        <ChatTab messages={chatMessages} onSendMessage={sendChatMessage} />
-                      </div>
-                    )}
-                    {activeTab === "Transcript" && (
-                      <div className="mt-50 p-3">
-                        <TranscriptTab />
-                      </div>
-                    )}
-                    {activeTab === "Summary" && (<div className="mt-50 p-3">
+                    </>
+                    // <div className="mt-[200px] p-3">
+                    //   <ChatTab messages={chatMessages} onSendMessage={sendChatMessage} />
+                    // </div>
+                  )}
+                  {activeTab === "Transcript" && (
+                    <div className="mt-[200px] p-3">
+                      <TranscriptTab />
+                    </div>
+                  )}
+                  {activeTab === "Summary" && (
+                    <div className="mt-[200px] p-3">
                       <SummaryTab />
-                    </div>)}
-                  {/* </div> */}
+                    </div>
+                  )}
+
 
                   {/* <CustomVideoTiles activeEmojis={activeEmojis} /> */}
                   {/* <PeopleTab
@@ -1104,7 +1284,7 @@ export default function SessionPage() {
                 {/* Mobile participant chips */}
                 {activeTab === "Session" && participants && participants.length > 0 && (
                   <div className="absolute bottom-1 left-0 right-0 z-20 block md:hidden px-3 pb-2">
-                    <div className="flex gap-3 overflow-x-auto scrollbar-hide items-center justify-center">
+                    <div className={`flex gap-3 overflow-x-auto scrollbar-hide ${participants.length <= 2 && 'items-center justify-center'}`}>
                       {participants.map((p) => {
                         const participant = p as Participant;
                         return (
@@ -1127,15 +1307,15 @@ export default function SessionPage() {
                         );
                       })}
                     </div>
-                     <div className=" mt-8">
+                    <div className=" mt-8">
 
-                    <MobileTabBarControls
-                      onSendEmoji={sendEmoji}
-                      currentUser={currentUser}
-                      onInvite={() => setIsModalOpen(true)}
+                      <MobileTabBarControls
+                        onSendEmoji={sendEmoji}
+                        currentUser={currentUser}
+                        onInvite={() => setIsModalOpen(true)}
 
-                    />
-                  </div>
+                      />
+                    </div>
                   </div>
                 )}
 
@@ -1165,6 +1345,8 @@ export default function SessionPage() {
           </div>
         )}
       </div>
+      {/* End button for mobile */}
+
     </div>
   );
 }
