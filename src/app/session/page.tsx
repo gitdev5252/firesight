@@ -12,7 +12,8 @@ import "../page.css";
 export const dynamic = "force-static";
 
 export default function SessionPage() {
-  const [period, setPeriod] = useState(0);
+  const [toggle, setToggle] = useState(0);
+
   return (
     <>
       <Head>
@@ -191,123 +192,140 @@ export default function SessionPage() {
         </div>
       </div>
 
-      <div className="flex justify-start items-center w-full md:px-14 px-4 ">
+      <div className="flex w-full relative 2xl:h-[1500px] md:h-[1098px]">
         <Button
           variant="outline"
-          className="green-gradient-border-btn text-[22px] px-[35px] py-[25px] !text-white"
+          className="green-gradient-border-btn text-[22px] px-[35px] py-[25px] !text-white md:ml-14 z-[1000]"
         >
           Try for Free
         </Button>
-        <div
-          className="w-[51px] h-[31px]"
-          onClick={() => setPeriod((period + 1) % 2)}
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="59"
-            height="43"
-            viewBox="0 0 59 43"
-            fill="none"
+        <div className="flex justify-center items-center w-full absolute z-[1000]">
+          <div
+            className="w-[51px] h-[31px]"
+            onClick={() => setToggle((toggle + 1) % 2)}
           >
-            <path
-              fillRule="evenodd"
-              clipRule="evenodd"
-              d="M17.2554 3.09215C18.9954 2.99215 20.7334 3.00015 22.4734 3.00015C22.4854 3.00015 31.2904 3.00015 31.2904 3.00015C33.0644 3.00015 34.8024 2.99215 36.5414 3.09215C38.1224 3.18215 39.6624 3.37415 41.1954 3.80315C44.4224 4.70515 47.2404 6.58915 49.2774 9.26015C51.3024 11.9142 52.3984 15.1632 52.3984 18.4992C52.3984 21.8392 51.3024 25.0862 49.2774 27.7402C47.2404 30.4102 44.4224 32.2952 41.1954 33.1972C39.6624 33.6262 38.1224 33.8172 36.5414 33.9082C34.8024 34.0082 33.0644 33.9992 31.3244 33.9992C31.3124 33.9992 22.5054 34.0002 22.5054 34.0002C20.7334 33.9992 18.9954 34.0082 17.2554 33.9082C15.6754 33.8172 14.1354 33.6262 12.6024 33.1972C9.37544 32.2952 6.55744 30.4102 4.52044 27.7402C2.49544 25.0862 1.39844 21.8392 1.39844 18.5002C1.39844 15.1632 2.49544 11.9142 4.52044 9.26015C6.55744 6.58915 9.37544 4.70515 12.6024 3.80315C14.1354 3.37415 15.6754 3.18215 17.2554 3.09215Z"
-              fill="url(#paint0_linear_2002_30469)"
-              fillOpacity="0.5"
-              stroke="url(#paint1_linear_2002_30469)"
-            />
-            <g
-              filter="url(#filter0_dd_2002_30469)"
-              transform={period == 0 ? "translate(-20, 0)" : ""}
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="59"
+              height="43"
+              viewBox="0 0 59 43"
+              fill="none"
             >
               <path
                 fillRule="evenodd"
                 clipRule="evenodd"
-                d="M36.8984 32C44.3543 32 50.3984 25.9558 50.3984 18.5C50.3984 11.0442 44.3543 5 36.8984 5C29.4426 5 23.3984 11.0442 23.3984 18.5C23.3984 25.9558 29.4426 32 36.8984 32Z"
-                fill="white"
+                d="M17.2554 3.09215C18.9954 2.99215 20.7334 3.00015 22.4734 3.00015C22.4854 3.00015 31.2904 3.00015 31.2904 3.00015C33.0644 3.00015 34.8024 2.99215 36.5414 3.09215C38.1224 3.18215 39.6624 3.37415 41.1954 3.80315C44.4224 4.70515 47.2404 6.58915 49.2774 9.26015C51.3024 11.9142 52.3984 15.1632 52.3984 18.4992C52.3984 21.8392 51.3024 25.0862 49.2774 27.7402C47.2404 30.4102 44.4224 32.2952 41.1954 33.1972C39.6624 33.6262 38.1224 33.8172 36.5414 33.9082C34.8024 34.0082 33.0644 33.9992 31.3244 33.9992C31.3124 33.9992 22.5054 34.0002 22.5054 34.0002C20.7334 33.9992 18.9954 34.0082 17.2554 33.9082C15.6754 33.8172 14.1354 33.6262 12.6024 33.1972C9.37544 32.2952 6.55744 30.4102 4.52044 27.7402C2.49544 25.0862 1.39844 21.8392 1.39844 18.5002C1.39844 15.1632 2.49544 11.9142 4.52044 9.26015C6.55744 6.58915 9.37544 4.70515 12.6024 3.80315C14.1354 3.37415 15.6754 3.18215 17.2554 3.09215Z"
+                fill="url(#paint0_linear_2002_30469)"
+                fillOpacity="0.5"
+                stroke="url(#paint1_linear_2002_30469)"
               />
-            </g>
-            <defs>
-              <filter
-                id="filter0_dd_2002_30469"
-                x="15.3984"
-                y="0"
-                width="43"
-                height="43"
-                filterUnits="userSpaceOnUse"
-                colorInterpolationFilters="sRGB"
+              <g
+                filter="url(#filter0_dd_2002_30469)"
+                transform={toggle == 0 ? "translate(-20, 0)" : ""}
               >
-                <feFlood floodOpacity="0" result="BackgroundImageFix" />
-                <feColorMatrix
-                  in="SourceAlpha"
-                  type="matrix"
-                  values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-                  result="hardAlpha"
+                <path
+                  fillRule="evenodd"
+                  clipRule="evenodd"
+                  d="M36.8984 32C44.3543 32 50.3984 25.9558 50.3984 18.5C50.3984 11.0442 44.3543 5 36.8984 5C29.4426 5 23.3984 11.0442 23.3984 18.5C23.3984 25.9558 29.4426 32 36.8984 32Z"
+                  fill="white"
                 />
-                <feOffset dy="3" />
-                <feGaussianBlur stdDeviation="0.5" />
-                <feColorMatrix
-                  type="matrix"
-                  values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.06 0"
-                />
-                <feBlend
-                  in="SourceAlpha"
-                  type="matrix"
-                  values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-                  result="hardAlpha"
-                />
-                <feOffset dy="3" />
-                <feGaussianBlur stdDeviation="4" />
-                <feColorMatrix
-                  type="matrix"
-                  values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.15 0"
-                />
-                <feBlend
-                  mode="normal"
-                  in2="effect1_dropShadow_2002_30469"
-                  result="effect2_dropShadow_2002_30469"
-                />
-                <feBlend
-                  mode="normal"
-                  in="SourceGraphic"
-                  in2="effect2_dropShadow_2002_30469"
-                  result="shape"
-                />
-              </filter>
-              <linearGradient
-                id="paint0_linear_2002_30469"
-                x1="27.3811"
-                y1="3"
-                x2="27.3811"
-                y2="34.0002"
-                gradientUnits="userSpaceOnUse"
-              >
-                <stop stop-color="#038B98" stop-opacity="0.63" />
-                <stop
-                  offset="0.703125"
-                  stop-color="#0FFB49"
-                  stop-opacity="0.59"
-                />
-              </linearGradient>
-              <linearGradient
-                id="paint1_linear_2002_30469"
-                x1="26.8984"
-                y1="3"
-                x2="26.8984"
-                y2="34.0002"
-                gradientUnits="userSpaceOnUse"
-              >
-                <stop stop-color="#14FF00" stop-opacity="0.55" />
-                <stop offset="1" stop-color="#00F0FF" stop-opacity="0.62" />
-              </linearGradient>
-            </defs>
-          </svg>
+              </g>
+              <defs>
+                <filter
+                  id="filter0_dd_2002_30469"
+                  x="15.3984"
+                  y="0"
+                  width="43"
+                  height="43"
+                  filterUnits="userSpaceOnUse"
+                  colorInterpolationFilters="sRGB"
+                >
+                  <feFlood floodOpacity="0" result="BackgroundImageFix" />
+                  <feColorMatrix
+                    in="SourceAlpha"
+                    type="matrix"
+                    values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+                    result="hardAlpha"
+                  />
+                  <feOffset dy="3" />
+                  <feGaussianBlur stdDeviation="0.5" />
+                  <feColorMatrix
+                    type="matrix"
+                    values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.06 0"
+                  />
+                  <feBlend
+                    in="SourceAlpha"
+                    type="matrix"
+                    values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+                    result="hardAlpha"
+                  />
+                  <feOffset dy="3" />
+                  <feGaussianBlur stdDeviation="4" />
+                  <feColorMatrix
+                    type="matrix"
+                    values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.15 0"
+                  />
+                  <feBlend
+                    mode="normal"
+                    in2="effect1_dropShadow_2002_30469"
+                    result="effect2_dropShadow_2002_30469"
+                  />
+                  <feBlend
+                    mode="normal"
+                    in="SourceGraphic"
+                    in2="effect2_dropShadow_2002_30469"
+                    result="shape"
+                  />
+                </filter>
+                <linearGradient
+                  id="paint0_linear_2002_30469"
+                  x1="27.3811"
+                  y1="3"
+                  x2="27.3811"
+                  y2="34.0002"
+                  gradientUnits="userSpaceOnUse"
+                >
+                  <stop stop-color="#038B98" stop-opacity="0.63" />
+                  <stop
+                    offset="0.703125"
+                    stop-color="#0FFB49"
+                    stop-opacity="0.59"
+                  />
+                </linearGradient>
+                <linearGradient
+                  id="paint1_linear_2002_30469"
+                  x1="26.8984"
+                  y1="3"
+                  x2="26.8984"
+                  y2="34.0002"
+                  gradientUnits="userSpaceOnUse"
+                >
+                  <stop stop-color="#14FF00" stop-opacity="0.55" />
+                  <stop offset="1" stop-color="#00F0FF" stop-opacity="0.62" />
+                </linearGradient>
+              </defs>
+            </svg>
+          </div>
         </div>
+        {toggle === 0 ? (
+          <Image
+            src="/images/session/WorldShare.png"
+            fill
+            priority
+            alt="worldshare"
+          />
+        ) : (
+          <Image
+            src="/images/session/Session Summaries.png"
+            fill
+            priority
+            alt="worldshare"
+          />
+        )}
       </div>
 
       <div className="absolute inset-0 pointer-events-none z-[-100]">
-        <div className="session-bg h-[106.66vw] top-[calc(27vw+125px)] md:top-[2900px] md:h-[30vw]"></div>
+        <div className="session-bg h-[106.66vw] top-[calc(27vw+125px)] md:top-[3800px] md:h-[50vw]"></div>
       </div>
 
       <div className=" w-full md:px-14 px-4 md:mb-[58px] mb-[20px]">

@@ -11,7 +11,6 @@ const swipePower = (offset: number, velocity: number) => {
 
 export default function PricingTag() {
   const [period, setPeriod] = useState(0);
-
   const containerRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const [constraints, setConstraints] = useState({ left: 0, right: 0 });
@@ -269,9 +268,9 @@ export default function PricingTag() {
 
     updateConstraints();
     window.addEventListener("resize", updateConstraints);
-
     return () => window.removeEventListener("resize", updateConstraints);
   }, []);
+
   return (
     <>
       <div className="flex flex-wrap flex-col justify-center items-center w-full text-center">
