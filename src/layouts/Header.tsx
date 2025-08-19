@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import "./header.css";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
@@ -11,6 +11,7 @@ export function Header({ scrolled }: { scrolled: boolean }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
+  const router = useRouter();
 
   useEffect(() => {
     setMobileMenuOpen(false);
@@ -178,13 +179,14 @@ export function Header({ scrolled }: { scrolled: boolean }) {
             <>
               <Button
                 variant="outline"
-                className="green-gradient-border-btn text-[18px] px-[35px] py-[25px] !text-white 2xl:ml-10 md:ml-[16px]"
+                className="green-gradient-border-btn text-[18px] px-[35px] py-[25px] !text-white 2xl:ml-10 md:ml-[16px] cursor-pointer"
               >
                 14 Days Trial | <span className="font-bold ">Start Now</span>
               </Button>
               <Button
                 variant="outline"
-                className="2xl:ml-10 md:ml-[16px] !bg-[rgba(8,11,22,0.5)] rounded-[55px] py-[25px] px-[35px] text-[18px] !text-white border border-[#262933]"
+                className="cursor-pointer 2xl:ml-10 md:ml-[16px] !bg-[rgba(8,11,22,0.5)] rounded-[55px] py-[25px] px-[35px] text-[18px] !text-white border border-[#262933]"
+                onClick={() => router.push("/auth/signin")}
               >
                 Log In
               </Button>

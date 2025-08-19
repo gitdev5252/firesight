@@ -26,7 +26,7 @@ export default function RootLayout({
       <body className={clsx(lekton.className, "bg-[#080B16] relative m-0")}>
         <ClientLayout>{children}</ClientLayout>
         {pathname === "/" && (
-          <div className="w-full px-4 md:px-14">
+          <div className="w-full">
             <FireSightFooter>
               <div className="green-shine-footer-mobile md:hidden block z-[-2342]"></div>
               <div className="blue-shine-pulse-overview w-[min(602px,41.8vw)] h-[min(602px,41.8vw)] bottom-[7.7vw] right-[19.3vw] md:block hidden"></div>
@@ -36,7 +36,7 @@ export default function RootLayout({
           </div>
         )}
         {pathname === "/pulse/overview" && (
-          <div className="w-full px-4 md:px-14">
+          <div className="w-full">
             <FireSightFooter>
               <div className="green-shine-footer-mobile md:hidden block z-[-2342]"></div>
               <div className="blue-shine-pulse-overview w-[min(602px,41.8vw)] h-[min(602px,41.8vw)] bottom-[7.7vw] right-[19.3vw] md:block hidden"></div>
