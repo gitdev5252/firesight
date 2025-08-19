@@ -68,7 +68,7 @@ export function Header({ scrolled }: { scrolled: boolean }) {
                   className="inline mx-[-40px]"
                 />
               )}
-              {pathname === "/session" && (
+              {pathname.includes("/session") && (
                 <Image
                   src="/images/GreenBlurPolygon.svg"
                   alt="Session"
@@ -79,7 +79,7 @@ export function Header({ scrolled }: { scrolled: boolean }) {
               )}
               {pathname === "/pulse/overview"
                 ? "FIRESIGHT | PULSE"
-                : pathname === "/session"
+                : pathname.includes("/session")
                 ? "FIRESIGHT | SESSION"
                 : "PRODUCTS"}
               <Image
@@ -174,54 +174,78 @@ export function Header({ scrolled }: { scrolled: boolean }) {
           ) : (
             ""
           )}
-
-          <Link
-            href="/about-us"
-            className={
-              (pathname === "/about-us" ? "nav-item active" : "nav-item") +
-              " lg:block hidden"
-            }
-          >
-            <Image
-              className="mr-4 hidden"
-              src="/images/PurplePolygon.svg"
-              alt=" "
-              width={24}
-              height={24}
-            />
-            ABOUT US
-          </Link>
-          <Link
-            href="/ai-impact"
-            className={
-              pathname === "/ai-impact" ? "nav-item active" : "nav-item"
-            }
-          >
-            <Image
-              className="mr-4 hidden"
-              src="/images/PurplePolygon.svg"
-              alt=" "
-              width={24}
-              height={24}
-            />
-            AI IMPACT INDEX
-          </Link>
-          <Link
-            href="https://blog.firesight.ai/"
-            className={
-              (pathname === "/blog" ? "nav-item active" : "nav-item") +
-              " lg:block hidden"
-            }
-          >
-            <Image
-              className="mr-4 hidden"
-              src="/images/PurplePolygon.svg"
-              alt=" "
-              width={24}
-              height={24}
-            />
-            BLOG
-          </Link>
+          {pathname === "/session/start-session" ? (
+            <>
+              <Button
+                variant="outline"
+                className="green-gradient-border-btn text-[18px] px-[35px] py-[25px] !text-white 2xl:ml-10 md:ml-[16px]"
+              >
+                14 Days Trial | <span className="font-bold ">Start Now</span>
+              </Button>
+              <Button
+                variant="outline"
+                className="2xl:ml-10 md:ml-[16px] !bg-[rgba(8,11,22,0.5)] rounded-[55px] py-[25px] px-[35px] text-[18px] !text-white border border-[#262933]"
+              >
+                Log In
+              </Button>
+            </>
+          ) : (
+            ""
+          )}
+          {pathname !== "/session/start-session" && (
+            <div
+              className={`flex  ${pathname === "/session" ? "ml-0" : "ml-10"}`}
+            >
+              {" "}
+              <Link
+                href="/about-us"
+                className={
+                  (pathname === "/about-us" ? "nav-item active" : "nav-item") +
+                  " lg:block hidden"
+                }
+              >
+                <Image
+                  className="mr-4 hidden"
+                  src="/images/PurplePolygon.svg"
+                  alt=" "
+                  width={24}
+                  height={24}
+                />
+                ABOUT US
+              </Link>
+              <Link
+                href="/ai-impact"
+                className={
+                  pathname === "/ai-impact" ? "nav-item active" : "nav-item"
+                }
+              >
+                <Image
+                  className="mr-4 hidden"
+                  src="/images/PurplePolygon.svg"
+                  alt=" "
+                  width={24}
+                  height={24}
+                />
+                AI IMPACT INDEX
+              </Link>
+              <Link
+                href="https://blog.firesight.ai/"
+                className={
+                  (pathname === "/blog" ? "nav-item active" : "nav-item") +
+                  " lg:block hidden"
+                }
+              >
+                <Image
+                  className="mr-4 hidden"
+                  src="/images/PurplePolygon.svg"
+                  alt=" "
+                  width={24}
+                  height={24}
+                />
+                BLOG
+              </Link>
+            </div>
+          )}
         </nav>
         {/* Hamburger Icon for Mobile */}
         <button
