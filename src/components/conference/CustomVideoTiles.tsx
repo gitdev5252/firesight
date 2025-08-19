@@ -1,6 +1,6 @@
 import { useTracks, useParticipants } from "@livekit/components-react";
 import { Participant, Track } from "livekit-client";
-import { Expand, Mic, MicOff, Monitor } from "lucide-react";
+import { Expand, Mic, Monitor } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { HexAvatar } from "../HexAvatar/HexAvatar";
 
@@ -145,20 +145,25 @@ export const CustomVideoTiles = ({
       })}
       <div className="w-full h-full flex gap-3 min-h-0">
         {/* Main area */}
-        <div className="flex-1 min-w-0 min-h-0">
+        <div className="flex-1 min-w-0 min-h-0 p-2 ">
           <div className="w-full h-full max-h-[78vh]">
-            <div className="w-full h-full aspect-video">
-              <MainVideoTile
-                participant={mainParticipant}
-                activeEmojis={activeEmojis}
-                trackMap={trackByParticipantAndSource}
-              />
+            <div className="w-full h-full aspect-video rounded-[15px] 
+                p-0 sm:p-[2px] 
+                bg-none sm:bg-[linear-gradient(90deg,#14FF00_55%,#00F0FF_62%)]">
+              <div className="w-full h-full rounded-[12px] bg-[#141622]">
+                <MainVideoTile
+                  participant={mainParticipant}
+                  activeEmojis={activeEmojis}
+                  trackMap={trackByParticipantAndSource}
+                />
+              </div>
             </div>
+
           </div>
         </div>
 
         {/* Right rail: lg+ only */}
-        <div className="hidden lg:flex w-56 flex-col gap-2 mr-1 shrink-0">
+        <div className="hidden lg:flex w-56 flex-col gap-2 shrink-0 mr-3 ">
           {displayed.map((p) => (
             <SmallVideoTile
               key={p.identity}
@@ -209,7 +214,7 @@ const VideoSurface = ({
   }, [trackRef?.publication?.track]);
 
   return (
-    <div className="relative w-full h-full min-h-[180px] bg-transparent rounded-xl overflow-hidden">
+    <div className="relative w-full h-full min-h-[180px] bg-transparent rounded-xl overflow-hidden ">
       <video
         ref={videoRef}
         autoPlay
@@ -219,12 +224,11 @@ const VideoSurface = ({
       />
 
       <div
-        className={`absolute inset-0 flex flex-col items-center justify-center transition-opacity duration-200 ${
-          hasMedia ? "opacity-0 pointer-events-none" : "opacity-100"
-        }`}
+        className={`absolute inset-0 flex flex-col items-center justify-center transition-opacity duration-200 ${hasMedia ? "opacity-0 pointer-events-none" : "opacity-100"
+          }`}
       >
-        <div className={`${variant=="tiles" && "mb-15"}`}>
-        <HexAvatar initials={fallbackInitials} size={variant=="tiles" ? 50 : 150} fontSize={variant=="tiles" ?16 :28} borderColor="" />
+        <div className={`${variant == "tiles" && "mb-15"}`}>
+          <HexAvatar initials={fallbackInitials} size={variant == "tiles" ? 50 : 150} fontSize={variant == "tiles" ? 16 : 28} borderColor="" />
         </div>
         {fallbackName && (
           <p className="mt-3 text-lg text-white/80 font-semibold">{fallbackName}</p>
@@ -327,7 +331,10 @@ const SmallVideoTile = ({
   const initials = getInitials(displayName);
 
   return (
-    <div className="w-full h-32 min-h-[128px] bg-black/50 rounded-lg relative overflow-hidden cursor-pointer hover:ring-2 hover:ring-blue-500/50 transition-all">
+    <div
+      className="w-full h-[148px] min-h-[128px] bg-[#141622] rounded-lg relative overflow-hidden cursor-pointer hover:ring-2 hover:ring-blue-500/50 transition-all mt-4 border-[#FFFFFF1A] border"
+      style={{ boxShadow: '0px 25px 85px 0px rgba(8, 11, 22, 0.35)' }}
+    >
       <VideoSurface
         participant={participant}
         trackRef={t}
@@ -336,7 +343,7 @@ const SmallVideoTile = ({
         variant="tiles"
       />
 
-      <div className="absolute bottom-1 left-1 bg-black/60 px-2 py-0.5 rounded text-xs text-white backdrop-blur-sm z-20">
+      <div className="absolute bottom-1 left-20 bg-black/60 px-4 py-2 rounded-[11px] text-[14px] text-white backdrop-blur-sm z-20">
         {displayName.split(" ")[0]}
         {participant.isLocal && " (You)"}
       </div>
@@ -352,9 +359,7 @@ const SmallVideoTile = ({
             <Mic size={16} color="white" />
           </div>
         ) : (
-          <div className="w-8 h-8 bg-[#080B16] rounded-full flex items-center justify-center shadow-lg">
-            <MicOff size={16} color="white" />
-          </div>
+          <img src="/images/icons/mic-off-hex.svg" alt="" width={32} height={32} />
         )}
       </div>
     </div>
