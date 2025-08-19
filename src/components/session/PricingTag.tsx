@@ -27,46 +27,37 @@ export default function PricingTag() {
         bold: "Free Forever",
       },
       description: {
-        title: "Freelancers, Consultants & Independent Professionals",
         content:
-          "The Solo Plan is purpose-built for individual knowledge workers navigating complex industries alone. Whether you're a journalist, strategist, researcher, or SMM, this plan delivers occupation-specific intelligence through pre-tailored Modes",
+          "No sign-up. No setup. Just start. Sessions Instant Meetings is your zero-barrier entry point to smarter calls. Launch a secure video meeting instantly - no account required, no downloads, no delays.",
       },
       features: [
         {
-          name: "Pre-Tailored Mode Experience",
-          des: "- Choose your Mode (e.g., Freelancer, Marketing Consultant, Startup Advisor) and access intelligence pre-curated to your occupation.",
+          name: "One-click browser-based meetings",
+          des: "",
         },
         {
-          name: "Personalised Intelligence Reports",
-          des: "- AI-curated insights, forecasts, and suggested actions aligned to your occupational goals.",
+          name: "Shareable room link",
+          des: "",
         },
         {
-          name: "AI Journalism",
-          des: " (Human-in-the-Loop) - Editorial content crafted by AI and reviewed by subject-matter experts for quality and insight.",
+          name: "Live video + chat",
+          des: "",
         },
         {
-          name: "Smart News Feed",
-          des: "- Aggregated News Headlines, carefully assembled & relevant to your sector, and topics of interest.",
+          name: "Optional guest name entry",
+          des: "",
         },
         {
-          name: "News Briefing Technology",
-          des: "- State-of-the-art personalized news summaries – absorb critical stories fast with concise, context-rich summaries, tailored just for you.",
+          name: "No data saved, end-to-end encryption",
+          des: "",
         },
         {
-          name: "Use-Case Aligned Briefings",
-          des: "- Custom intelligence briefings by Mode (e.g., Sales Mode, Finance Mode, Creative Mode).",
+          name: "50 Participants",
+          des: " Per Call",
         },
         {
-          name: "Predictive Intelligence & Forecasting",
-          des: "- Anticipate trends and competitive shifts with real-time foresight.",
-        },
-        {
-          name: "Deep-Dive Intelligence Reports",
-          des: "- Access high-context, sector-specific analysis & insights.",
-        },
-        {
-          name: "User-Tailored Onboarding",
-          des: "- Onboarding Q/A powers Firesight’s ability to deliver personalised, context-rich intelligence experiences.",
+          name: "Unlimited Meeting Duration",
+          des: " (no annoying meeting caps)",
         },
       ],
     },
@@ -82,54 +73,41 @@ export default function PricingTag() {
         bold: "Try for Free",
       },
       description: {
-        title: "Startups, agencies + cross-functional teams",
         content:
-          "Each seat is tailored to the team member’s role through their own Mode, while shared projects, dashboards, briefings, and a collective knowledge base keep everyone aligned with collective clarity while maintaining individual depth.",
+          "Smarter calls, faster decisions - Sessions empowers individuals with a real-time AI co-pilot that enhances every conversation - helping you stay focused, move faster, and turn meetings into momentum.",
       },
       features: [
         {
-          name: "Multi-Mode Team Support",
-          des: "- Each seat activates its own Mode (e.g., Policy Strategist, Market Researcher). Access intelligence pre-curated to an occupation.",
+          name: "Enhanced productivity & workflow",
+          des: ": Real time AI-driven decision support, personalised workflow amplifier and   insights engine -Sessions transforms your workday ",
         },
         {
-          name: "Personalised Intelligence Reports",
-          des: "- Role-aware signals with smart consolidation across your team’s domains.",
+          name: "Access to Embedded AI Agents",
+          des: " (Solara and her specialized sub‐agents)",
         },
         {
-          name: "AI Journalism",
-          des: "(Human-in-the-Loop) — Editorial content crafted by AI and reviewed by subject-matter experts for every role in your team’s plan.",
+          name: "45 Minutes",
+          des: " of AI Agent Time Per Month",
         },
         {
-          name: "Smart News Feed",
-          des: "- Aggregated News Headlines, carefully assembled & relevant to your organizations sector and every memebr of your squad.",
+          name: "Unlimited Calls",
+          des: " After Agent Time",
         },
         {
-          name: "News Briefing Technology",
-          des: "- State-of-the-art personalized news summaries – absorb critical stories fast with concise, context-rich summaries, tailored for every team member and delivered to platform or 3rd party apps (e.g. Slack or Teams)",
+          name: "Access Sessions Library",
+          des: " (recordings, transcripts, and materials)",
         },
         {
-          name: "Use-Case Aligned Briefings",
-          des: "- Custom intelligence briefings by Mode (e.g., Sales Mode, Finance Mode, Creative Mode).",
+          name: "Access Recorded Sessions",
+          des: " (high-fidelity video/audio)",
         },
         {
-          name: "Predictive Intelligence & Forecasting",
-          des: "- Understand future shifts in each domain your team touches.",
+          name: "Full Transcripts",
+          des: " From All Calls",
         },
         {
-          name: "Deep-Dive Intelligence Reports",
-          des: "- Access high-context, sector-specific analysis & insights and research mapped to business goals.",
-        },
-        {
-          name: "User-Tailored Onboarding",
-          des: "- Smart onboarding for every team member, tailored by role, team size, and sector.",
-        },
-        {
-          name: "Shared Intelligence Workspace",
-          des: "- Unified dashboards with alert routing, easy sharing, priority pinning, and annotation tools.",
-        },
-        {
-          name: "Workflow Integrations",
-          des: "- Slack, Notion, Google Workspace, and more - FastTrack Pulse intelligence integration into your business to make better decisions faster.",
+          name: "100 Participants",
+          des: " Per Call",
         },
       ],
     },
@@ -145,54 +123,41 @@ export default function PricingTag() {
         bold: "Start Now",
       },
       description: {
-        title: "Large Organisations & Knowledge Teams",
         content:
-          "Designed for larger teams with complex needs. Includes Custom Mode Grouping, Advanced Signal Routing, and admin controls to better manage intelligence at scale.",
+          "Smarter calls, faster decisions - Sessions empowers individuals with a real-time AI co-pilot that enhances every conversation - helping you stay focused, move faster, and turn meetings into momentum.",
       },
       features: [
         {
-          name: "Multi-Mode Team Support",
-          des: "- Each seat activates its own Mode (e.g., Policy Strategist, Market Researcher). Access intelligence pre-curated to an occupation.",
+          name: "Adaptive AI Agents",
+          des: " (specialized sub‐agents on demand  and optimised to your working requirements)",
         },
         {
-          name: "Personalised Intelligence Reports",
-          des: "- Role-aware signals with smart consolidation across your team’s domains.",
+          name: "5 Hours",
+          des: " of AI Agent Time Per Month (delivering autonomous work capabilities transforming your work day)",
         },
         {
-          name: "AI Journalism",
-          des: "(Human-in-the-Loop) — Editorial content crafted by AI and reviewed by subject-matter experts for every role in your team’s plan.",
+          name: "250 Participants",
+          des: " Per Call",
         },
         {
-          name: "Smart News Feed",
-          des: "- Aggregated News Headlines, carefully assembled & relevant to your organizations sector and every memebr of your squad.",
+          name: "60 Minutes of WorldShare Access",
+          des: " (Solara listens, retrieves, and presents a world of contextualized information)",
         },
         {
-          name: "News Briefing Technology",
-          des: "- State-of-the-art personalized news summaries – absorb critical stories fast with concise, context-rich summaries, tailored for every team member and delivered to platform or 3rd party apps (e.g. Slack or Teams)",
+          name: "Full Access to Real-Time Prompts",
+          des: " (embedded prompts to guide meetings)",
         },
         {
-          name: "Use-Case Aligned Briefings",
-          des: "- Custom intelligence briefings by Mode (e.g., Sales Mode, Finance Mode, Creative Mode).",
-        },
-        {
-          name: "Predictive Intelligence & Forecasting",
-          des: "- Understand future shifts in each domain your team touches.",
-        },
-        {
-          name: "Deep-Dive Intelligence Reports",
-          des: "- Access high-context, sector-specific analysis & insights and research mapped to business goals.",
+          name: "Full Access to Sessions Summaries & Narratives",
+          des: " (Natural Language powered recaps and advanced insights)",
         },
         {
           name: "User-Tailored Onboarding",
-          des: "- Smart onboarding for every team member, tailored by role, team size, and sector.",
-        },
-        {
-          name: "Shared Intelligence Workspace",
-          des: "- Unified dashboards with alert routing, easy sharing, priority pinning, and annotation tools.",
+          des: " Onboarding Q/A powers Firesight’s ability to deliver personalised, context-rich intelligence experiences.",
         },
         {
           name: "Workflow Integrations",
-          des: "- Slack, Notion, Google Workspace, and more - FastTrack Pulse intelligence integration into your business to make better decisions faster.",
+          des: " - Slack, Notion, Google Workspace, and more - Fast-track Sessions intelligence into your business to make better decisions faster.",
         },
       ],
     },
@@ -208,30 +173,41 @@ export default function PricingTag() {
         bold: "Start Now",
       },
       description: {
-        title: "Platforms, Media Groups & Intelligence Providers",
         content:
-          "Deploy Firesight Pulse under your brand with full white-label control. Offer customers any combination of our connected intelligence product suite embedded in your platform. Powered by our engine, packaged as yours.",
+          "Smarter calls, faster decisions - Sessions empowers individuals with a real-time AI co-pilot that enhances every conversation - helping you stay focused, move faster, and turn meetings into momentum.",
       },
       features: [
         {
-          name: "Custom Branding",
-          des: "- Full UI/UX white-label implementation with your identity.",
+          name: "Adaptive AI Agents",
+          des: " of AI Agent Time Per Month (delivering autonomous work capabilities transforming your work day)",
         },
         {
-          name: "Feature Licensing",
+          name: "20 Hours",
           des: "- Modular access to Pulse intelligence across any or all Modes.",
         },
         {
-          name: "Enterprise Intelligence API",
-          des: "- Plug Pulse data into your existing SaaS stack.",
+          name: "1,000 Participants",
+          des: " Per Call",
         },
         {
-          name: "Tailored Support & Integration",
-          des: "- We work with you to align features, onboarding, and integrations to your needs.",
+          name: "10 Hours of WorldShare Access",
+          des: " (Solara listens, retrieves, and presents a world of contextualized information)",
         },
         {
-          name: "Flexible Licensing",
-          des: "- Scales with your business, clients, and growth stage.",
+          name: "Full Access to Sessions Prompts",
+          des: " (embedded prompts to guide meetings)",
+        },
+        {
+          name: "Full Access to Sessions Summaries & Narratives",
+          des: " (Natural Language powered recaps and advanced insights)",
+        },
+        {
+          name: "User-Tailored Onboarding:",
+          des: "Onboarding Q/A powers Firesight’s ability to deliver personalised, context-rich intelligence experiences.",
+        },
+        {
+          name: "Workflow Integrations",
+          des: " - Slack, Notion, Google Workspace, and more - Fast-track Sessions intelligence into your business to make better decisions faster.",
         },
       ],
     },
@@ -435,15 +411,15 @@ export default function PricingTag() {
           {pricingTiers.map((tier, index) => (
             <div
               key={index}
-              className="lg:min-w-[40.9vw] sm:min-w-[60vw] min-w-[84vw] "
+              className="lg:min-w-[40.9vw] sm:min-w-[60vw] min-w-[84vw]"
             >
               <div
-                className={`my-9 mx-[50px] md:px-[82px] px-[20px] md:py-[70px] py-[30px] gap-9 flex flex-col items-center justify-start border border-[rgba(255,255,255,0.1)] rounded-[20px] relative w-full backdrop-blur-[32px]
-                  ${
-                    index === 0
-                      ? "bg-[linear-gradient(86deg, rgba(3, 139, 152, 0.16) 9.54%, rgba(15, 251, 73, 0.15) 72.65%)]"
-                      : "bg-[rgba(255,255,255,0.01)]"
-                  }`}
+                className={`h-full my-9 mx-[50px] md:px-[82px] px-[20px] md:py-[70px] py-[30px] gap-9 flex flex-col items-center justify-start border border-[rgba(255,255,255,0.1)] rounded-[20px] relative w-full backdrop-blur-[32px]
+                ${
+                  index === 0
+                    ? "bg-[linear-gradient(86deg,rgba(3,139,152,0.16)_9.54%,rgba(15,251,73,0.15)_72.65%)]"
+                    : "bg-[rgba(255,255,255,0.01)]"
+                }`}
               >
                 <p className="text-white text-[20px]">
                   Firesight | <b>Session</b>
@@ -457,6 +433,130 @@ export default function PricingTag() {
                   </span>
                   <br />
                 </p>
+                {index > 1 && (
+                  <div className="flex items-center justify-center md:gap-[30px] gap-5 ">
+                    <span className="md:text-[22px] text-[16px] text-white">
+                      Monthly
+                    </span>
+                    <div
+                      className="w-[51px] h-[31px]"
+                      onClick={() => setPeriod((period + 1) % 2)}
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="59"
+                        height="43"
+                        viewBox="0 0 59 43"
+                        fill="none"
+                      >
+                        <path
+                          fillRule="evenodd"
+                          clipRule="evenodd"
+                          d="M17.2554 3.09215C18.9954 2.99215 20.7334 3.00015 22.4734 3.00015C22.4854 3.00015 31.2904 3.00015 31.2904 3.00015C33.0644 3.00015 34.8024 2.99215 36.5414 3.09215C38.1224 3.18215 39.6624 3.37415 41.1954 3.80315C44.4224 4.70515 47.2404 6.58915 49.2774 9.26015C51.3024 11.9142 52.3984 15.1632 52.3984 18.4992C52.3984 21.8392 51.3024 25.0862 49.2774 27.7402C47.2404 30.4102 44.4224 32.2952 41.1954 33.1972C39.6624 33.6262 38.1224 33.8172 36.5414 33.9082C34.8024 34.0082 33.0644 33.9992 31.3244 33.9992C31.3124 33.9992 22.5054 34.0002 22.5054 34.0002C20.7334 33.9992 18.9954 34.0082 17.2554 33.9082C15.6754 33.8172 14.1354 33.6262 12.6024 33.1972C9.37544 32.2952 6.55744 30.4102 4.52044 27.7402C2.49544 25.0862 1.39844 21.8392 1.39844 18.5002C1.39844 15.1632 2.49544 11.9142 4.52044 9.26015C6.55744 6.58915 9.37544 4.70515 12.6024 3.80315C14.1354 3.37415 15.6754 3.18215 17.2554 3.09215Z"
+                          fill="url(#paint0_linear_2002_30469)"
+                          fillOpacity="0.5"
+                          stroke="url(#paint1_linear_2002_30469)"
+                        />
+                        <g
+                          filter="url(#filter0_dd_2002_30469)"
+                          transform={period == 0 ? "translate(-20, 0)" : ""}
+                        >
+                          <path
+                            fillRule="evenodd"
+                            clipRule="evenodd"
+                            d="M36.8984 32C44.3543 32 50.3984 25.9558 50.3984 18.5C50.3984 11.0442 44.3543 5 36.8984 5C29.4426 5 23.3984 11.0442 23.3984 18.5C23.3984 25.9558 29.4426 32 36.8984 32Z"
+                            fill="white"
+                          />
+                        </g>
+                        <defs>
+                          <filter
+                            id="filter0_dd_2002_30469"
+                            x="15.3984"
+                            y="0"
+                            width="43"
+                            height="43"
+                            filterUnits="userSpaceOnUse"
+                            colorInterpolationFilters="sRGB"
+                          >
+                            <feFlood
+                              floodOpacity="0"
+                              result="BackgroundImageFix"
+                            />
+                            <feColorMatrix
+                              in="SourceAlpha"
+                              type="matrix"
+                              values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+                              result="hardAlpha"
+                            />
+                            <feOffset dy="3" />
+                            <feGaussianBlur stdDeviation="0.5" />
+                            <feColorMatrix
+                              type="matrix"
+                              values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.06 0"
+                            />
+                            <feBlend
+                              in="SourceAlpha"
+                              type="matrix"
+                              values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+                              result="hardAlpha"
+                            />
+                            <feOffset dy="3" />
+                            <feGaussianBlur stdDeviation="4" />
+                            <feColorMatrix
+                              type="matrix"
+                              values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.15 0"
+                            />
+                            <feBlend
+                              mode="normal"
+                              in2="effect1_dropShadow_2002_30469"
+                              result="effect2_dropShadow_2002_30469"
+                            />
+                            <feBlend
+                              mode="normal"
+                              in="SourceGraphic"
+                              in2="effect2_dropShadow_2002_30469"
+                              result="shape"
+                            />
+                          </filter>
+                          <linearGradient
+                            id="paint0_linear_2002_30469"
+                            x1="27.3811"
+                            y1="3"
+                            x2="27.3811"
+                            y2="34.0002"
+                            gradientUnits="userSpaceOnUse"
+                          >
+                            <stop stopColor="#0091FF" stopOpacity="0.55" />
+                            <stop
+                              offset="1"
+                              stopColor="#86A0D8"
+                              stopOpacity="0.62"
+                            />
+                          </linearGradient>
+                          <linearGradient
+                            id="paint1_linear_2002_30469"
+                            x1="26.8984"
+                            y1="3"
+                            x2="26.8984"
+                            y2="34.0002"
+                            gradientUnits="userSpaceOnUse"
+                          >
+                            <stop stopColor="#00FFE0" stopOpacity="0.55" />
+                            <stop
+                              offset="1"
+                              stopColor="#BCEFFF"
+                              stopOpacity="0.62"
+                            />
+                          </linearGradient>
+                        </defs>
+                      </svg>
+                    </div>
+                    <span className="md:text-[22px] text-[16px] text-white font-bold">
+                      Annual
+                    </span>
+                  </div>
+                )}
+
                 <Button
                   variant="outline"
                   className="cursor-pointer green-gradient-border-btn text-[16px] g-transparent rounded-full px-8 py-5 text-white hover:text-white"
@@ -469,19 +569,74 @@ export default function PricingTag() {
                 </Button>
 
                 <div className="border-y-[rgba(255,255,255,0.1)] border-y-[1px] text-white flex flex-col items-center justify-center py-[30px] px-[7px] gap-[30px]">
-                  <p className="text-center text-[16px] font-bold">
-                    {tier.description && tier.description.title}
-                  </p>
                   <p className="text-center text-[15px]">
                     {tier.description && tier.description.content}
                   </p>
+                  {index === 0 && (
+                    <div className="uppercase text-white text-[30px] font-bold px-[50px] py-[32px] w-full text-center green-gradient-border-btn">
+                      start session now
+                    </div>
+                  )}
                 </div>
 
                 <div className="flex flex-col gap-5 mt-8 mb-10">
+                  {index !== 0 && (
+                    <div className="flex gap-4">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="16"
+                        height="19"
+                        viewBox="0 0 16 19"
+                        fill="none"
+                      >
+                        <path
+                          d="M15.5065 5.48291V13.8979L8.00647 18.1167L0.50647 13.8979V5.48291L8.00647 1.26416L15.5065 5.48291Z"
+                          fill="url(#paint0_linear_133_51225)"
+                          fill-opacity="0.4"
+                          stroke="url(#paint1_linear_133_51225)"
+                        />
+                        <defs>
+                          <linearGradient
+                            id="paint0_linear_133_51225"
+                            x1="0.842291"
+                            y1="16.1195"
+                            x2="16.2387"
+                            y2="15.7592"
+                            gradientUnits="userSpaceOnUse"
+                          >
+                            <stop stop-color="#038B98" stop-opacity="0.63" />
+                            <stop
+                              offset="0.703125"
+                              stop-color="#0FFB49"
+                              stop-opacity="0.59"
+                            />
+                          </linearGradient>
+                          <linearGradient
+                            id="paint1_linear_133_51225"
+                            x1="8.00647"
+                            y1="0.690918"
+                            x2="8.00647"
+                            y2="18.6909"
+                            gradientUnits="userSpaceOnUse"
+                          >
+                            <stop stop-color="#14FF00" stop-opacity="0.55" />
+                            <stop
+                              offset="1"
+                              stop-color="#00F0FF"
+                              stop-opacity="0.62"
+                            />
+                          </linearGradient>
+                        </defs>
+                      </svg>
+                      <span className="font-bold text-[16px] text-white">
+                        All Sessions Instant Features +
+                      </span>{" "}
+                    </div>
+                  )}
                   {tier.features.map((feature, index) => (
                     <div
                       key={index}
-                      className="flex items-center justify-between gap-4"
+                      className="flex items-center justify-start gap-4"
                     >
                       <div>
                         <svg
@@ -583,10 +738,6 @@ export default function PricingTag() {
                   </Button>
 
                   <div className="border-y-[rgba(255,255,255,0.1)] border-y-[1px] text-white flex flex-col items-center justify-center py-6 px-[7px] gap-6">
-                    <p className="text-center text-[12px] font-bold">
-                      {pricingTiers[page].description &&
-                        pricingTiers[page].description.title}
-                    </p>
                     <p className="text-center text-[12px]">
                       {pricingTiers[page].description &&
                         pricingTiers[page].description.content}
