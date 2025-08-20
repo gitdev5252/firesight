@@ -226,3 +226,7 @@
 .animate-float-up {
   animation: float-up 3.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
 }
+/* Bottom sheet backdrop (styling the ::backdrop pseudo-element) */
+dialog.bottom-sheet::backdrop {
+  @apply bg-black/10 backdrop-blur-[40px];
+}

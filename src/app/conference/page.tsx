@@ -18,6 +18,7 @@ import {
   RefreshCcwDot,
   Volume2,
   EllipsisVertical,
+  Bot,
 } from "lucide-react";
 import React from "react";
 import {
@@ -33,6 +34,7 @@ import { LIVEKIT_CONFIG } from "@/lib/livekit/config";
 import { CustomVideoTiles } from "@/components/conference/CustomVideoTiles";
 import { useMediaControls } from "@/hooks/useMediaControls";
 import { HexAvatar } from "@/components/HexAvatar/HexAvatar";
+import BottomSheet from "@/components/BottomSheet/BottomSheet";
 
 const mobileTabs = ["Session", "People", "Chat", "Transcript", "Summary"];
 
@@ -557,7 +559,9 @@ const MobileConferenceControls = ({
   currentUser,
   raisedHands,
   setActiveTab,
-  activeTab
+  activeTab,
+  isBottomSheetOpen,
+  setIsBottomSheetOpen,
 }: {
   onInvite: () => void;
   onToggleHandRaise: (username: string) => void;
@@ -565,6 +569,8 @@ const MobileConferenceControls = ({
   raisedHands: { [key: string]: boolean };
   setActiveTab: (tab: string) => void;
   activeTab: string;
+  setIsBottomSheetOpen: (isOpen: boolean) => void;
+  isBottomSheetOpen?: boolean;
 }) => {
   const { toggleCamera } = useMediaControls();
 
@@ -615,9 +621,13 @@ const MobileConferenceControls = ({
           </div>
 
           <div className="flex items-center gap-4">
-            <button className="flex flex-col items-center gap-1 transition-colors text-gray-400 hover:text-gray-400">
+            <button className="flex flex-col items-center gap-1 transition-colors text-gray-400 hover:text-gray-400" onClick={() => setIsBottomSheetOpen(true)}>
               <div className="items-center justify-center">
-                <EllipsisVertical color="white" />
+                {!isBottomSheetOpen ?
+                  <EllipsisVertical color="white" />
+                  : (
+                    <img src="/images/icons/hex-options.svg" alt="" width={28} height={28} />
+                  )}
               </div>
             </button>
           </div>
@@ -750,6 +760,7 @@ export default function SessionPage() {
   const [participants, setParticipants] = React.useState<unknown[]>([]);
   const [currentUser, setCurrentUser] = React.useState<string>("");
   const [currentTime, setCurrentTime] = React.useState<string>("");
+  const [isBottomSheetOpen, setIsBottomSheetOpen] = React.useState<boolean>(false);
 
   const [activeEmojis, setActiveEmojis] = React.useState<{
     [key: string]: { emoji: string; timestamp: number; username: string };
@@ -893,7 +904,7 @@ export default function SessionPage() {
       handleSendMessage();
     }
   };
-console.log(participants,"participantsparticipants")
+  console.log(participants, "participantsparticipants")
   return (
     <div className="p-4 md:p-8 bg-[#080B16] min-h-screen flex flex-col">
       {/* Name Input Modal */}
@@ -1006,7 +1017,7 @@ console.log(participants,"participantsparticipants")
                           strokeLinecap="round"
                         />
                       </svg>
-                      <div className="bg-[rgba(255,255,255,0.02)] rounded-[20px] border border-[rgba(255,255,255,0.1)] backdrop-blur-[32px] p-2 mb-4 max-h-[56vh] overflow-auto">
+                      {/* <div className="bg-[rgba(255,255,255,0.02)] rounded-[20px] border border-[rgba(255,255,255,0.1)] backdrop-blur-[32px] p-2 mb-4 max-h-[56vh] overflow-auto">
                         {participants && participants.length > 0 ? (
                           participants.map((participant) => {
                             const p = participant as Participant;
@@ -1058,7 +1069,7 @@ console.log(participants,"participantsparticipants")
                         ) : (
                           <p className="text-white/60 text-sm">No participants yet</p>
                         )}
-                      </div>
+                      </div> */}
                     </button>
                     <h2 className="text-white text-lg font-medium">
                       Your Session is ready
@@ -1276,6 +1287,8 @@ console.log(participants,"participantsparticipants")
                     raisedHands={raisedHands}
                     setActiveTab={setActiveTab}
                     activeTab={activeTab}
+                    setIsBottomSheetOpen={setIsBottomSheetOpen}
+                    isBottomSheetOpen={isBottomSheetOpen}
                   />
                 </div>
                 <ParticipantProvider onParticipantsChange={setParticipants} />
@@ -1316,8 +1329,10 @@ console.log(participants,"participantsparticipants")
                         );
                       })}
                     </div>
-                    <div className=" mt-8">
-
+                    <div className="mt-4 mb-3 items-center justify-center flex">
+                      <img src="/images/icons/soundwave-small.svg" alt="" />
+                    </div>
+                    <div className="items-center justify-center">
                       <MobileTabBarControls
                         onSendEmoji={sendEmoji}
                         currentUser={currentUser}
@@ -1333,7 +1348,7 @@ console.log(participants,"participantsparticipants")
                     <div className={`flex gap-3 overflow-x-auto scrollbar-hide ${participants.length <= 2 && 'items-center justify-center'}`}>
                       {participants.map((p) => {
                         const participant = p as Participant;
-                        if(participant.isLocal) return null;
+                        if (participant.isLocal) return null;
                         return (
                           <div
                             key={participant.sid}
@@ -1384,6 +1399,46 @@ console.log(participants,"participantsparticipants")
         )}
       </div>
       {/* End button for mobile */}
+      <BottomSheet open={isBottomSheetOpen} onClose={() => { setIsBottomSheetOpen(false) }}>
+        <div className=" justify-center items-center flex flex-col gap-3 p-4">
+          <div
+            className="backdrop-blur-[16px] text-[#FFFFFF] bg-[#080B1680] rounded-[15px] gap-4 flex flex-row items-center h-[44px] w-auto p-6 shadow-lg justify-center text-center"
+            style={{ flex: "0 0 auto" }}
+          >
+            <Monitor size={18} />
+            <span>Present</span>
+          </div>
+          <div
+            className="backdrop-blur-[16px] text-[#FFFFFF] bg-[#080B1680] rounded-[15px] gap-4 flex flex-row items-center h-[44px] w-auto p-6 shadow-lg justify-center text-center"
+            style={{ flex: "0 0 auto" }}
+          >
+            <Users size={18} />
+            <span>Roles</span>
+          </div>
+          <div
+            className="backdrop-blur-[16px] text-[#FFFFFF] bg-[#080B1680] rounded-[15px] gap-4 flex flex-row items-center h-[44px] w-auto p-6 shadow-lg justify-center text-center"
+            style={{ flex: "0 0 auto" }}
+          >
+            <Bot size={18} />
+            <span>AI Worker</span>
+          </div>
+          <div
+            className="backdrop-blur-[16px] text-[#FFFFFF] bg-[#080B1680] rounded-[15px] gap-4 flex flex-row items-center h-[44px] w-auto p-6 shadow-lg justify-center text-center"
+            style={{ flex: "0 0 auto" }}
+          >
+            <Link size={18} />
+            <span>Share Session Link</span>
+          </div>
+        </div>
+        {/* Divider */}
+        <div className="border-t border-white/20 my-4" />
+        <div className=" justify-center items-center flex  flex-row gap-3 ">
+          <span className="text-[#86878D] text-sm">Session State: </span>
+          <span className="text-[#FFFFFF] font-bold text-sm">Active</span>
+          <span className="text-white/50 text-sm">|</span>
+          <span className="text-[#FFFFFF] font-bold text-sm">65:23</span>
+        </div>
+      </BottomSheet>
 
     </div>
   );
