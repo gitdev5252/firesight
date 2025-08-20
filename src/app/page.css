@@ -451,3 +451,15 @@
     #080b16 100%
   );
 }
+
+.green-gradient-text {
+  background: linear-gradient(
+    180deg,
+    rgba(20, 255, 0, 0.55) 0%,
+    rgba(0, 240, 255, 0.62) 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 100%;
+}

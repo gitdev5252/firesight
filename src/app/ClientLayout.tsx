@@ -24,6 +24,7 @@ export default function ClientLayout({
   const hideHeader =
     pathname.startsWith("/ai-impact") ||
     pathname.startsWith("/auth") ||
+    pathname.startsWith("/onboarding") ||
     pathname.startsWith("/conference");
 
   return (
