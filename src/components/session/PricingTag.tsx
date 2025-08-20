@@ -1,5 +1,5 @@
 "use client";
-
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
@@ -573,9 +573,11 @@ export default function PricingTag() {
                     {tier.description && tier.description.content}
                   </p>
                   {index === 0 && (
-                    <div className="uppercase text-white text-[30px] font-bold px-[50px] py-[32px] w-full text-center green-gradient-border-btn">
-                      start session now
-                    </div>
+                    <Link href="/session/start-session">
+                      <div className="uppercase text-white text-[30px] font-bold px-[50px] py-[32px] w-full text-center green-gradient-border-btn">
+                        start session now
+                      </div>
+                    </Link>
                   )}
                 </div>
 

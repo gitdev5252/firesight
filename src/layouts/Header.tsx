@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import "./header.css";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
@@ -11,7 +11,6 @@ export function Header({ scrolled }: { scrolled: boolean }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
-  const router = useRouter();
 
   useEffect(() => {
     setMobileMenuOpen(false);
@@ -183,13 +182,14 @@ export function Header({ scrolled }: { scrolled: boolean }) {
               >
                 14 Days Trial | <span className="font-bold ">Start Now</span>
               </Button>
-              <Button
-                variant="outline"
-                className="cursor-pointer 2xl:ml-10 md:ml-[16px] !bg-[rgba(8,11,22,0.5)] rounded-[55px] py-[25px] px-[35px] text-[18px] !text-white border border-[#262933]"
-                onClick={() => router.push("/auth/signin")}
-              >
-                Log In
-              </Button>
+              <Link href="/auth/signin">
+                <Button
+                  variant="outline"
+                  className="cursor-pointer 2xl:ml-10 md:ml-[16px] !bg-[rgba(8,11,22,0.5)] rounded-[55px] py-[25px] px-[35px] text-[18px] !text-white border border-[#262933]"
+                >
+                  Log In
+                </Button>
+              </Link>
             </>
           ) : (
             ""

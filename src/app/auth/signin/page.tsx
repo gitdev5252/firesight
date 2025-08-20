@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/form";
 import { signinSchema, type SigninFormData } from "@/lib/schemas";
 import "../auth.css";
+import Link from "next/link";
 
 export default function Page() {
   const router = useRouter();
@@ -171,12 +172,11 @@ export default function Page() {
           <div className="mt-[24px] w-full text-center">
             <p>
               Don&apos;t have an account?{" "}
-              <span
-                className="font-bold underline cursor-pointer hover:text-[rgb(8,11,22)]"
-                onClick={() => router.push("/auth/signup")}
-              >
-                Sign Up
-              </span>
+              <Link href="/auth/signup">
+                <span className="font-bold underline cursor-pointer hover:text-[rgb(8,11,22)]">
+                  Sign Up
+                </span>
+              </Link>
             </p>
           </div>
         </div>

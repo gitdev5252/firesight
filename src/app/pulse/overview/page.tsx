@@ -396,10 +396,8 @@ export default function Overview() {
                     (customer behavior, competitor strategies, economic trends,
                     and regulatory changes)
                   </i>{" "}
-                  into a seamless flow. By fusing
-                  <b className="text-[rgba(0,255,224,0.60)]">
-                    internal
-                  </b> and{" "}
+                  into a seamless flow. By fusing{" "}
+                  <b className="text-[rgba(0,255,224,0.60)]">internal</b> and{" "}
                   <b className="text-[rgba(0,255,224,0.60)]">external</b>{" "}
                   insights, Pulse amplifies the value of every source—creating a
                   unified perspective that reveals emerging trends, pinpoints
