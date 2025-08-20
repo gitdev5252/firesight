@@ -765,6 +765,7 @@ export default function SessionPage() {
   const [userNameInput, setUserNameInput] = React.useState("");
   const [nameError, setNameError] = React.useState("");
   const [activeTab, setActiveTab] = React.useState("Session");
+  const [showSideRail, setShowSideRail] = React.useState(true);
 
   const emojis = ["😀", "😂", "😍", "🤔", "😮", "👍", "👏", "❤️", "🔥", "💯", "😎", "🎉", "😊", "👋", "💪"];
 
@@ -892,8 +893,7 @@ export default function SessionPage() {
       handleSendMessage();
     }
   };
-
-
+console.log(participants,"participantsparticipants")
   return (
     <div className="p-4 md:p-8 bg-[#080B16] min-h-screen flex flex-col">
       {/* Name Input Modal */}
@@ -1104,7 +1104,9 @@ export default function SessionPage() {
               >
                 {/* DESKTOP / TABLET TILES */}
                 <div className="hidden md:block w-full h-full">
-                  <CustomVideoTiles activeEmojis={activeEmojis} />
+                  <CustomVideoTiles activeEmojis={activeEmojis} showSideRail={showSideRail}
+                    onToggleSideRail={() => setShowSideRail(v => !v)}
+                  />
                 </div>
 
                 {/* MOBILE stage stays your custom layout */}
@@ -1325,7 +1327,36 @@ export default function SessionPage() {
                     </div>
                   </div>
                 )}
+                {/* Desktop View Full Screen */}
+                {!showSideRail && participants && participants.length > 0 && (
+                  <div className="absolute bottom-28 left-0 right-0 z-20 px-3 pb-2 hidden md:block">
+                    <div className={`flex gap-3 overflow-x-auto scrollbar-hide ${participants.length <= 2 && 'items-center justify-center'}`}>
+                      {participants.map((p) => {
+                        const participant = p as Participant;
+                        if(participant.isLocal) return null;
+                        return (
+                          <div
+                            key={participant.sid}
+                            className="backdrop-blur-[16px] bg-white/10 border border-white/20 rounded-xl flex flex-col items-center min-w-[130px] max-w-[130px] h-[140px] shadow-lg justify-center text-center"
+                            style={{ flex: "0 0 auto" }}
+                          >
+                            <HexAvatar
+                              initials={participant.identity
+                                .slice(0, 2)
+                                .toUpperCase()}
+                              size={84}
+                              fontSize={24}
+                            />
+                            <span className="text-white text-xs font-medium mt-1 truncate max-w-[100px] text-center">
+                              {participant.identity}
+                            </span>
+                          </div>
+                        );
+                      })}
+                    </div>
 
+                  </div>
+                )}
                 {/* Mobile bottom bar */}
                 {/* {activeTab === "Session" && (
                  
