@@ -33,10 +33,16 @@ const pickSource = (p: Participant): Track.Source | null => {
 
 export const CustomVideoTiles = ({
   activeEmojis,
+  showSideRail = true,
+  onToggleSideRail,
+
 }: {
   activeEmojis?: {
     [key: string]: { emoji: string; timestamp: number; username: string };
   };
+  showSideRail?: boolean;
+  onToggleSideRail?: () => void;
+
 }) => {
   const participantsRaw = useParticipants();
   const tracks = useTracks([Track.Source.Camera, Track.Source.ScreenShare]);
@@ -145,29 +151,40 @@ export const CustomVideoTiles = ({
       })}
       <div className="w-full h-full flex gap-3 min-h-0">
         {/* Main area */}
-        <div className="flex-1 min-w-0 min-h-0">
-          <div className="w-full h-full max-h-[78vh]">
-            <div className="w-full h-full aspect-video">
-              <MainVideoTile
-                participant={mainParticipant}
-                activeEmojis={activeEmojis}
-                trackMap={trackByParticipantAndSource}
-              />
+        <div className="flex-1 min-w-0 min-h-0 p-2 ">
+          <div className="w-full h-full max-h-[95vh]">
+            <div className="w-full h-full aspect-video rounded-[15px] 
+                p-0 sm:p-[2px] 
+                bg-none sm:bg-[linear-gradient(90deg,#14FF00_55%,#00F0FF_62%)]">
+              <div className="w-full h-full rounded-[12px] bg-[#141622]">
+                <MainVideoTile
+                  participant={mainParticipant}
+                  activeEmojis={activeEmojis}
+                  trackMap={trackByParticipantAndSource}
+                  onToggleSideRail={onToggleSideRail}
+                  sideRailOpen={showSideRail}
+                />
+              </div>
             </div>
+
           </div>
         </div>
 
         {/* Right rail: lg+ only */}
-        <div className="hidden lg:flex w-56 flex-col gap-2 mr-1 shrink-0">
-          {displayed.map((p) => (
-            <SmallVideoTile
-              key={p.identity}
-              participant={p}
-              trackMap={trackByParticipantAndSource}
-            />
-          ))}
-          {overflow.length > 0 && <OverflowTile participants={overflow} />}
-        </div>
+        {showSideRail && (
+          <>
+            <div className="hidden lg:flex w-56 flex-col gap-2 shrink-0 mr-3 ">
+              {displayed.map((p) => (
+                <SmallVideoTile
+                  key={p.identity}
+                  participant={p}
+                  trackMap={trackByParticipantAndSource}
+                />
+              ))}
+              {overflow.length > 0 && <OverflowTile participants={overflow} />}
+            </div>
+          </>
+        )}
       </div>
     </>
   );
@@ -209,7 +226,7 @@ const VideoSurface = ({
   }, [trackRef?.publication?.track]);
 
   return (
-    <div className="relative w-full h-full min-h-[180px] bg-transparent rounded-xl overflow-hidden">
+    <div className="relative w-full h-full min-h-[180px] bg-transparent rounded-xl overflow-hidden ">
       <video
         ref={videoRef}
         autoPlay
@@ -219,12 +236,11 @@ const VideoSurface = ({
       />
 
       <div
-        className={`absolute inset-0 flex flex-col items-center justify-center transition-opacity duration-200 ${
-          hasMedia ? "opacity-0 pointer-events-none" : "opacity-100"
-        }`}
+        className={`absolute inset-0 flex flex-col items-center justify-center transition-opacity duration-200 ${hasMedia ? "opacity-0 pointer-events-none" : "opacity-100"
+          }`}
       >
-        <div className={`${variant=="tiles" && "mb-15"}`}>
-        <HexAvatar initials={fallbackInitials} size={variant=="tiles" ? 50 : 150} fontSize={variant=="tiles" ?16 :28} borderColor="" />
+        <div className={`${variant == "tiles" && "mb-15"}`}>
+          <HexAvatar initials={fallbackInitials} size={variant == "tiles" ? 50 : 150} fontSize={variant == "tiles" ? 16 : 28} borderColor="" />
         </div>
         {fallbackName && (
           <p className="mt-3 text-lg text-white/80 font-semibold">{fallbackName}</p>
@@ -239,12 +255,16 @@ const MainVideoTile = ({
   participant,
   activeEmojis,
   trackMap,
+  onToggleSideRail,
+  sideRailOpen,
 }: {
   participant: Participant;
   activeEmojis?: {
     [key: string]: { emoji: string; timestamp: number; username: string };
   };
   trackMap: Map<string, ReturnType<typeof useTracks>[number]>;
+  onToggleSideRail?: () => void;
+  sideRailOpen?: boolean;
 }) => {
   const [source, setSource] = useState<Track.Source | null>(pickSource(participant));
   const sourceTimer = useRef<number | null>(null);
@@ -280,9 +300,19 @@ const MainVideoTile = ({
             <Monitor size={14} color="white" />
           </div>
         )}
-        <div className="w-7 h-7 bg-[#080B16] rounded-full flex items-center justify-center shadow-lg">
+        {/* <div className="w-7 h-7 bg-[#080B16] rounded-full flex items-center justify-center shadow-lg">
           <Expand color="white" />
-        </div>
+        </div> */}
+        <button
+          type="button"
+          onClick={onToggleSideRail}
+          className="w-7 h-7 bg-[#080B16] rounded-full flex items-center justify-center shadow-lg hover:bg-white/10 transition"
+          title={sideRailOpen ? 'Hide participants' : 'Show participants'}
+        >
+          {/* You can swap icons if you prefer when open/closed */}
+          <Expand color="white" />
+        </button>
+
       </div>
 
       {activeEmojis &&
@@ -327,7 +357,10 @@ const SmallVideoTile = ({
   const initials = getInitials(displayName);
 
   return (
-    <div className="w-full h-32 min-h-[128px] bg-black/50 rounded-lg relative overflow-hidden cursor-pointer hover:ring-2 hover:ring-blue-500/50 transition-all">
+    <div
+      className="w-full h-[148px] min-h-[128px] bg-[#141622] rounded-lg relative overflow-hidden cursor-pointer hover:ring-2 hover:ring-blue-500/50 transition-all border-[#FFFFFF1A] border mt-1"
+      style={{ boxShadow: '0px 25px 85px 0px rgba(8, 11, 22, 0.35)' }}
+    >
       <VideoSurface
         participant={participant}
         trackRef={t}
@@ -336,10 +369,15 @@ const SmallVideoTile = ({
         variant="tiles"
       />
 
-      <div className="absolute bottom-1 left-1 bg-black/60 px-2 py-0.5 rounded text-xs text-white backdrop-blur-sm z-20">
+      <div
+        className="absolute bottom-2 left-1/2 -translate-x-1/2 
+             bg-black/60 px-4 py-2 rounded-[11px] text-[14px] 
+             text-white backdrop-blur-sm z-20"
+      >
         {displayName.split(" ")[0]}
         {participant.isLocal && " (You)"}
       </div>
+
 
       <div className="absolute top-2 right-2 flex flex-col gap-1 z-20">
         {source === Track.Source.ScreenShare && (
@@ -352,9 +390,7 @@ const SmallVideoTile = ({
             <Mic size={16} color="white" />
           </div>
         ) : (
-          <div className="w-8 h-8 bg-[#080B16] rounded-full flex items-center justify-center shadow-lg">
-            <MicOff size={16} color="white" />
-          </div>
+          <img src="/images/icons/mic-off-hex.svg" alt="" width={32} height={32} />
         )}
       </div>
     </div>
@@ -362,31 +398,66 @@ const SmallVideoTile = ({
 };
 
 /* ---------- Overflow ---------- */
+
 const OverflowTile = ({ participants }: { participants: Participant[] }) => {
-  const totalCount = participants.length;
-  const displayParticipants = participants.slice(0, 4);
+  // show at most 2 people + a "+N" tile if more remain
+  const maxSlots = 3;
+  const needsMoreTile = participants.length > 2;
+  const visible = participants.slice(0, needsMoreTile ? maxSlots : Math.min(3, participants.length));
+  const remaining = Math.max(0, participants.length - visible.length);
+
   return (
-    <div className="w-full h-32 bg-gradient-to-br from-gray-800 to-gray-900 rounded-lg flex items-center justify-center text-white relative overflow-hidden cursor-pointer hover:ring-2 hover:ring-blue-500/50 transition-all border border-white/10">
-      <div className="flex flex-col items-center justify-center gap-2">
-        <div className="grid grid-cols-2 gap-1">
-          {displayParticipants.map((p) => {
-            const initials = getInitials(p.identity);
-            return (
-              <div
-                key={p.identity}
-                className="w-6 h-6 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-[10px] font-bold uppercase text-white shadow-sm"
-              >
-                {initials}
-              </div>
-            );
-          })}
-        </div>
-        <div className="text-center">
-          <span className="text-lg font-bold text-white">+{totalCount}</span>
-          <p className="text-xs text-white/70 mt-1">more</p>
-        </div>
+    <div className="w-full h-48 rounded-xl backdrop-blur-sm mt-2 ">
+      <div className="grid grid-cols-2 gap-4 h-full">
+        {visible.map((p) => (
+          <MiniOverflowTile key={p.identity} participant={p} />
+        ))}
+
+        {needsMoreTile && <MoreCountTile count={remaining} />}
+
+        {!needsMoreTile && participants.length === 1 && (
+          // keep grid balanced if only 1 person
+          <div className="rounded-xl border border-white/5 bg-transparent" />
+        )}
       </div>
-      <div className="absolute inset-0 bg-gradient-to-br from-blue-600/20 to-purple-600/20 rounded-lg" />
     </div>
   );
 };
+
+const MiniOverflowTile = ({ participant }: { participant: Participant }) => {
+  const initials = getInitials(participant.identity);
+  const firstName = participant.identity.split(" ")[0];
+
+  return (
+    <div className="relative rounded-xl border border-white/10 bg-[#141622] overflow-hidden flex items-center justify-center">
+      {/* Mic status (top-left) */}
+      <div className="absolute top-1 right-1">
+        <div className="w-7 h-7 rounded-xl bg-black/40 border border-white/10 backdrop-blur flex items-center justify-center">
+          {participant.isMicrophoneEnabled ? (
+            <Mic size={14} className="text-white/90" />
+          ) : (
+            <MicOff size={14} className="text-white/70" />
+          )}
+        </div>
+      </div>
+
+      {/* Initials */}
+      <span className="text-white/90 text-2xl font-semibold tracking-wide select-none">
+        {initials}
+      </span>
+
+      {/* Name chip (bottom-center) */}
+      <div className="absolute bottom-2 left-1/2 -translate-x-1/2">
+        <div className="px-3 py-1 rounded-xl bg-black/40 border border-white/10 text-[11px] leading-none text-white/90 max-w-[90%] truncate">
+          {firstName}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const MoreCountTile = ({ count }: { count: number }) => (
+  <div className="rounded-xl border border-white/10 bg-[#141622] flex items-center justify-center">
+    <span className="text-white/80 text-2xl font-semibold">{count}+</span>
+  </div>
+);

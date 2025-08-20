@@ -8,7 +8,6 @@ import {
   Link,
   Mic,
   Monitor,
-  PanelLeftClose,
   PhoneOff,
   Smile,
   Users,
@@ -87,7 +86,9 @@ const Sidebar = ({
           />
         )}
         {activeTab === "Chat" && (
-          <ChatTab messages={chatMessages} onSendMessage={onSendMessage} />
+          <div className="flex flex-col h-full min-h-0 bg-[#141721] rounded-[10px] pt-4 mt-4 ml-3 mr-3 mb-3 border border-[#FFFFFF1A]">
+            <ChatTab messages={chatMessages} onSendMessage={onSendMessage} />
+          </div>
         )}
         {activeTab === "Transcript" && <TranscriptTab />}
         {activeTab === "Summary" && <SummaryTab />}
@@ -210,29 +211,23 @@ const ChatTab = ({
     }
   };
 
-  const formatTime = (timestamp: number) => {
-    const date = new Date(timestamp);
-    return date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
-  };
+  // const formatTime = (timestamp: number) => {
+  //   const date = new Date(timestamp);
+  //   return date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+  // };
 
   return (
-    <div className="flex flex-col h-full min-h-0">
-      <div className="flex-1 overflow-y-auto mb-4 space-y-3 min-h-0">
+    <div className="flex flex-col h-full min-h-0 bg-[#141721] rounded-[10px] p-3">
+      <div className="flex-1 overflow-y-auto mb-4 space-y-3 min-h-0 ">
         {messages.length > 0 ? (
           messages.map((msg, index) => (
-            <div
-              key={index}
-              className="bg-white/5 rounded-lg p-3 border border-white/10"
-            >
-              <div className="flex items-center justify-between mb-1">
-                <span className="text-white/90 text-sm font-medium">
-                  {msg.username}
-                </span>
-                <span className="text-white/50 text-xs">
-                  {formatTime(msg.timestamp)}
-                </span>
+            <div className="flex items-center gap-3 ml-2 mr-2" key={index}>
+              <HexAvatar initials={msg.username.split(" ").map((w) => w[0]).join("").toUpperCase().slice(0, 2)} />
+              <div className="bg-white/5 rounded-lg p-3 border border-white/10">
+                <div className="flex items-center mb-1">
+                  <p className="text-white/80 text-sm">{msg.message}</p>
+                </div>
               </div>
-              <p className="text-white/80 text-sm">{msg.message}</p>
             </div>
           ))
         ) : (
@@ -243,8 +238,16 @@ const ChatTab = ({
         <div ref={messagesEndRef} />
       </div>
 
-      <div className="border-t border-white/10 pt-4">
-        <div className="flex gap-2">
+      <div className="pt-4 pb-4">
+        <input
+          type="text"
+          value={inputMessage}
+          onChange={(e) => setInputMessage(e.target.value)}
+          onKeyPress={handleKeyPress}
+          placeholder="Type here..."
+          className="flex-1 w-full bg-[#080B1680] border border-white/20 rounded-lg px-3 py-4 text-white text-sm placeholder-white/50 focus:outline-none focus:border-blue-500"
+        />
+        {/* <div className="flex gap-2">
           <input
             type="text"
             value={inputMessage}
@@ -260,7 +263,7 @@ const ChatTab = ({
           >
             Send
           </button>
-        </div>
+        </div> */}
       </div>
     </div>
   );
@@ -371,6 +374,7 @@ const ConferenceControls = ({
   onToggleHandRaise,
   currentUser,
   raisedHands,
+  isSidebarOpen
 }: {
   onInvite: () => void;
   onToggleSidebar: () => void;
@@ -378,6 +382,7 @@ const ConferenceControls = ({
   onToggleHandRaise: (username: string) => void;
   currentUser: string;
   raisedHands: { [key: string]: boolean };
+  isSidebarOpen: boolean;
 }) => {
   const {
     isMicrophoneEnabled,
@@ -532,7 +537,9 @@ const ConferenceControls = ({
               onClick={onToggleSidebar}
             >
               <div className="flex items-center justify-center">
-                <PanelLeftClose color="white" />
+                {/* <PanelLeftClose color="white" /> */}
+                {isSidebarOpen ? <img src="/images/icons/sidebar-opened.svg" alt="" width={32} height={32} /> : <img src="/images/icons/sidebar-closed.svg" alt="" width={18} height={18} />}
+
               </div>
               <span className="text-xs mt-2">Sidebar</span>
             </button>
@@ -758,6 +765,7 @@ export default function SessionPage() {
   const [userNameInput, setUserNameInput] = React.useState("");
   const [nameError, setNameError] = React.useState("");
   const [activeTab, setActiveTab] = React.useState("Session");
+  const [showSideRail, setShowSideRail] = React.useState(true);
 
   const emojis = ["😀", "😂", "😍", "🤔", "😮", "👍", "👏", "❤️", "🔥", "💯", "😎", "🎉", "😊", "👋", "💪"];
 
@@ -885,8 +893,7 @@ export default function SessionPage() {
       handleSendMessage();
     }
   };
- 
-
+console.log(participants,"participantsparticipants")
   return (
     <div className="p-4 md:p-8 bg-[#080B16] min-h-screen flex flex-col">
       {/* Name Input Modal */}
@@ -1097,7 +1104,9 @@ export default function SessionPage() {
               >
                 {/* DESKTOP / TABLET TILES */}
                 <div className="hidden md:block w-full h-full">
-                  <CustomVideoTiles activeEmojis={activeEmojis} />
+                  <CustomVideoTiles activeEmojis={activeEmojis} showSideRail={showSideRail}
+                    onToggleSideRail={() => setShowSideRail(v => !v)}
+                  />
                 </div>
 
                 {/* MOBILE stage stays your custom layout */}
@@ -1278,7 +1287,7 @@ export default function SessionPage() {
 
                 {/* Desktop controls */}
 
-                <div className="absolute bottom-0 left-0 right-0 hidden md:block"> <ConferenceControls onInvite={() => setIsModalOpen(true)} onToggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)} onSendEmoji={sendEmoji} onToggleHandRaise={toggleHandRaise} currentUser={currentUser} raisedHands={raisedHands} /> </div>
+                <div className="absolute bottom-0 left-0 right-0 hidden md:block"> <ConferenceControls onInvite={() => setIsModalOpen(true)} onToggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)} onSendEmoji={sendEmoji} onToggleHandRaise={toggleHandRaise} currentUser={currentUser} raisedHands={raisedHands} isSidebarOpen={isSidebarOpen} /> </div>
                 <div className="md:hidden h-[72px]" />
 
                 {/* Mobile participant chips */}
@@ -1318,7 +1327,36 @@ export default function SessionPage() {
                     </div>
                   </div>
                 )}
+                {/* Desktop View Full Screen */}
+                {!showSideRail && participants && participants.length > 0 && (
+                  <div className="absolute bottom-28 left-0 right-0 z-20 px-3 pb-2 hidden md:block">
+                    <div className={`flex gap-3 overflow-x-auto scrollbar-hide ${participants.length <= 2 && 'items-center justify-center'}`}>
+                      {participants.map((p) => {
+                        const participant = p as Participant;
+                        if(participant.isLocal) return null;
+                        return (
+                          <div
+                            key={participant.sid}
+                            className="backdrop-blur-[16px] bg-white/10 border border-white/20 rounded-xl flex flex-col items-center min-w-[130px] max-w-[130px] h-[140px] shadow-lg justify-center text-center"
+                            style={{ flex: "0 0 auto" }}
+                          >
+                            <HexAvatar
+                              initials={participant.identity
+                                .slice(0, 2)
+                                .toUpperCase()}
+                              size={84}
+                              fontSize={24}
+                            />
+                            <span className="text-white text-xs font-medium mt-1 truncate max-w-[100px] text-center">
+                              {participant.identity}
+                            </span>
+                          </div>
+                        );
+                      })}
+                    </div>
 
+                  </div>
+                )}
                 {/* Mobile bottom bar */}
                 {/* {activeTab === "Session" && (
                  
