@@ -111,10 +111,10 @@ export const CustomVideoTiles = ({
     const t = preferred
       ? trackByParticipantAndSource.get(`${p.identity}:${preferred}`)
       : undefined;
-
+    // 85
     return (
-      <div className="w-full h-full min-h-0 flex items-center justify-center">
-        <div className="w-full h-full max-h-[98vh] aspect-video mx-auto">
+      <div className="w-full h-full min-h-0 flex">
+        <div className={`w-full h-[full] max-h-[${!showSideRail ? '98vh' : '85vh'}] aspect-video mx-auto`}>
           <VideoSurface
             participant={p}
             trackRef={t}
@@ -173,7 +173,7 @@ export const CustomVideoTiles = ({
         {/* Right rail: lg+ only */}
         {showSideRail && (
           <>
-            <div className="hidden lg:flex w-56 flex-col gap-2 shrink-0 mr-3 ">
+            <div className="hidden lg:flex w-56 flex-col gap-2 shrink-0 mr-3 mt-1 ">
               {displayed.map((p) => (
                 <SmallVideoTile
                   key={p.identity}
@@ -197,7 +197,9 @@ const VideoSurface = ({
   fallbackInitials,
   fallbackName,
   fillClass,
-  variant = ""
+  variant = "",
+  isShort = false,
+  smallPiece = false
 }: {
   participant: Participant;
   trackRef?: ReturnType<typeof useTracks>[number];
@@ -205,6 +207,8 @@ const VideoSurface = ({
   fallbackName?: string;
   fillClass?: string;
   variant?: string;
+  isShort?: boolean;
+  smallPiece?: boolean;
 }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [hasMedia, setHasMedia] = useState<boolean>(!!trackRef?.publication?.track);
@@ -224,9 +228,10 @@ const VideoSurface = ({
       setHasMedia(false);
     }
   }, [trackRef?.publication?.track]);
-
+  const heightForTile = smallPiece ? 'h-full min-h-[180px]' : !isShort ? 'h-full' : 'h-[84vh]'
+  console.log(isShort, "hehe")
   return (
-    <div className="relative w-full h-full min-h-[180px] bg-transparent rounded-xl overflow-hidden ">
+    <div className={`relative w-full  ${heightForTile} bg-transparent rounded-xl overflow-hidden `}>
       <video
         ref={videoRef}
         autoPlay
@@ -283,7 +288,8 @@ const MainVideoTile = ({
   const t = source ? trackMap.get(`${participant.identity}:${source}`) : undefined;
   const displayName = participant.identity;
   const initials = getInitials(displayName);
-
+  console.log(sideRailOpen, "vsideRailOpensideRailOpen")
+  const heightForTile = !sideRailOpen ? 'h-full' : 'h-[85vh]'
   return (
     <div className="relative w-full h-full rounded-xl text-white">
       <VideoSurface
@@ -291,7 +297,8 @@ const MainVideoTile = ({
         trackRef={t}
         fallbackInitials={initials}
         fallbackName={displayName}
-        fillClass="w-full h-full object-cover rounded-xl"
+        fillClass={`w-full ${heightForTile} object-cover rounded-xl`}
+        isShort={sideRailOpen}
       />
 
       <div className="absolute top-4 right-4 flex flex-col gap-2 z-30">
@@ -367,6 +374,7 @@ const SmallVideoTile = ({
         fallbackInitials={initials}
         fillClass="w-full h-full object-cover"
         variant="tiles"
+        smallPiece={true}
       />
 
       <div
