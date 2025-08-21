@@ -8,40 +8,8 @@ import FooterNavColumn from "@/components/layout/FooterNavColumn";
 import FooterLocation from "@/components/layout/FooterLocation";
 
 function FireSightFooter({ children }: { children: ReactNode | null }) {
-  // useEffect(() => {
-  //   if (typeof window === "undefined" || !window.performance) return;
-  //   try {
-  //     const perf = window.performance;
-  //     if (perf.mark) perf.mark("firesight.footer.mounted");
-  //     const mountTime = Math.round(perf.now());
-  //     // store a small perf entry on window for later consumption by analytics
-  //     (window as any).__firesightPerf = (window as any).__firesightPerf || [];
-  //     (window as any).__firesightPerf.push({ name: "footer", time: mountTime });
-  //     // also create a measure if supported
-  //     if (perf.measure) {
-  //       try {
-  //         perf.measure(
-  //           "firesight.footer.time",
-  //           "navigationStart",
-  //           "firesight.footer.mounted"
-  //         );
-  //       } catch (e) {
-  //         // navigationStart may not be available in all contexts; ignore
-  //       }
-  //     }
-  //     // lightweight console debug for local profiling
-  //     // eslint-disable-next-line no-console
-  //     console.debug(
-  //       "Firesight footer mounted (ms since navigation):",
-  //       mountTime
-  //     );
-  //   } catch (e) {
-  //     // swallow any perf errors
-  //   }
-  // }, []);
   return (
     <>
-      {/* Note: prefer CSS media queries for visibility where possible to avoid unnecessary DOM rendering. */}
       <div className="px-14 pb-14 w-full relative m-0 overflow-hidden hidden lg:block">
         {children}
         <div className="footer-box md:!pt-[93px] !pt-[40px] md:!pb-[24px] !pb-[49px] relative overflow-hidden">

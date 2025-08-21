@@ -1634,19 +1634,8 @@ function TabBar({
   setCurItem?: (index: number) => void;
 }) {
   const tabItems = [
-    [
-      // "AI Impact Index",
-      // "Community",
-      // "Training Resources",
-      // "Resume Builder",
-      // "Career Advisor",
-    ],
-    [
-      "Similar Occupations",
-      "Most Impacted",
-      "Least Impacted",
-      // "Occupational Categories",
-    ],
+    [],
+    ["Similar Occupations", "Most Impacted", "Least Impacted"],
   ];
 
   const containerRef = useRef<HTMLDivElement>(null);

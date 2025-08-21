@@ -390,7 +390,7 @@ export default function PricingTag() {
             Freelancers, Consultants & Independent Professionals
           </p>
           <br />
-          <p className="text-white">
+          <p className="text-white italic">
             Sessions isn&apos;t just for meetings - it&apos;s for motion. Built
             for solo knowledge workers navigating complexity alone, Sessions
             transforms every call into forward momentum. Whether you&apos;re a
@@ -573,9 +573,10 @@ export default function PricingTag() {
                     {tier.description && tier.description.content}
                   </p>
                   {index === 0 && (
-                    <Link href="/session/start-session">
-                      <div className="uppercase text-white text-[30px] font-bold px-[50px] py-[32px] w-full text-center green-gradient-border-btn">
+                    <Link href="/sessions/start-session">
+                      <div className="uppercase text-white text-[30px] font-bold px-[50px] py-[32px] w-full text-center green-gradient-border-rect-btn">
                         start session now
+                        <div className="green-polygon-piece absolute bottom-0 right-0 !w-[80px] !h-[80px] pointer-events-none" />
                       </div>
                     </Link>
                   )}
@@ -823,5 +824,3 @@ export default function PricingTag() {
     </>
   );
 }
-
-// background: linear-gradient(180deg, rgba(0, 144, 255, 0.28) 0%, rgba(134, 160, 216, 0.31) 100%);

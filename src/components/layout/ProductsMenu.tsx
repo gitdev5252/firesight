@@ -49,7 +49,7 @@ export default function ProductsMenu({ menuRef, onClose }: Props) {
             width={24}
             height={24}
           />
-          <Link href="/session" onClick={onClose}>
+          <Link href="/sessions" onClick={onClose}>
             FIRESIGHT | SESSIONS{" "}
             <small>
               <i>(Alpha)</i>

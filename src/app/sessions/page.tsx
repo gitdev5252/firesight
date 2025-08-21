@@ -78,7 +78,7 @@ export default function SessionPage() {
             <h2 className="text-[44px] font-bold uppercase md:mb-[33px] mb-[15px] text-white">
               AI-Native Conference platform
             </h2>
-            <p className="text-white">
+            <p className="text-white text-[16px]">
               Sessions is a next-generation, browser-based conferencing solution
               that combines intuitive collaboration tools with the power of
               embedded AI Agents. In addition to seamless integration with
@@ -94,6 +94,7 @@ export default function SessionPage() {
                 place, Sessions transforms the way teams brainstorm, plan & make
                 decisions.
               </span>{" "}
+              <br />
               <br />
               Hosts can easily switch user roles, invite new participants on the
               fly, and tag important moments for quick review. Sessions can be
@@ -112,9 +113,15 @@ export default function SessionPage() {
                 build momentum, not memory gaps.
               </span>
             </p>
+            <Button
+              variant="outline"
+              className="green-gradient-border-btn text-[22px] px-[35px] py-[25px] !text-white sm:mt-[50px] mt-[15px] font-bold"
+            >
+              Try for Free
+            </Button>
           </div>
-          <div className="flex flex-col justify-center items-center md:w-[35%] w-full gap-6">
-            <div className="text-center flex flex-col justify-center items-center border border-[rgba(255,255,255,0.1)] backdrop-blur-[32px] rounded-[20px] md:p-[40px] p-[20px]">
+          <div className="flex flex-col justify-between items-center md:w-[35%] w-full gap-6">
+            <div className="text-center flex flex-col justify-center items-center border border-[rgba(255,255,255,0.1)] backdrop-blur-[32px] rounded-[20px] md:p-[40px] p-[20px] h-full">
               <h3 className="text-[24px] bg-gradient-to-b from-[rgba(20,255,0,0.55)] to-[rgba(0,240,255,0.62)] bg-clip-text text-transparent font-bold md:mb-[36px] mb-[15px]">
                 PRICING
               </h3>
@@ -128,7 +135,7 @@ export default function SessionPage() {
                 grow your conferencing toolkit without breaking the bank.
               </p>
             </div>
-            <div className="text-center flex flex-col justify-center items-center border border-[rgba(255,255,255,0.1)] backdrop-blur-[32px] rounded-[20px] md:p-[40px] p-[20px]">
+            <div className="text-center flex flex-col justify-center items-center border border-[rgba(255,255,255,0.1)] backdrop-blur-[32px] rounded-[20px] md:p-[40px] p-[20px] h-full ">
               <h3 className="text-[24px] bg-gradient-to-b from-[rgba(20,255,0,0.55)] to-[rgba(0,240,255,0.62)] bg-clip-text text-transparent font-bold md:mb-[36px] mb-[15px]">
                 USE CASES
               </h3>
@@ -195,7 +202,7 @@ export default function SessionPage() {
       <div className="flex w-full relative 2xl:h-[1500px] md:h-[1098px]">
         <Button
           variant="outline"
-          className="green-gradient-border-btn text-[22px] px-[35px] py-[25px] !text-white md:ml-14 z-[1000]"
+          className="green-gradient-border-btn text-[22px] px-[35px] py-[25px] !text-white md:ml-14 font-bold"
         >
           Try for Free
         </Button>
@@ -325,10 +332,10 @@ export default function SessionPage() {
       </div>
 
       <div className="absolute inset-0 pointer-events-none z-[-100]">
-        <div className="session-bg h-[106.66vw] top-[calc(27vw+125px)] md:top-[3800px] md:h-[50vw]"></div>
+        <div className="session-bg h-[106.66vw] top-[calc(27vw+125px)] 2xl:top-[3900px] md:top-[3400px] md:h-[50vw]"></div>
       </div>
 
-      <div className=" w-full md:px-14 px-4 md:mb-[58px] mb-[20px]">
+      <div className=" w-full md:px-14 px-4 md:mb-[58px] mb-[20px] md:mt-[150px]">
         <PricingTag />
       </div>
 

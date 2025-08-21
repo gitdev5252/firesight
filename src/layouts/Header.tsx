@@ -84,7 +84,7 @@ export const Header = memo(function Header({
                   height={24}
                 />
               )}
-              {pathname.includes("/session") && (
+              {pathname.includes("/sessions") && (
                 <Image
                   src="/images/icons/polygon-green.svg"
                   alt="Session"
@@ -94,8 +94,8 @@ export const Header = memo(function Header({
               )}
               {pathname === "/pulse/overview"
                 ? "FIRESIGHT | PULSE"
-                : pathname.includes("/session")
-                ? "FIRESIGHT | SESSION"
+                : pathname.includes("/sessions")
+                ? "FIRESIGHT | SESSIONS"
                 : "PRODUCTS"}
               <Image
                 src={
@@ -116,8 +116,8 @@ export const Header = memo(function Header({
               />
             )}
           </div>
-          {pathname === "/session" ? (
-            <Link href="/session/start-session">
+          {pathname === "/sessions" ? (
+            <Link href="/sessions/start-session">
               <Button
                 variant="outline"
                 className="green-gradient-border-btn text-[18px] px-[35px] py-[25px] !text-white 2xl:ml-10 md:ml-[16px] cursor-pointer"
@@ -128,7 +128,7 @@ export const Header = memo(function Header({
           ) : (
             ""
           )}
-          {pathname === "/session/start-session" ? (
+          {pathname === "/sessions/start-session" ? (
             <>
               <Button
                 variant="outline"
@@ -148,7 +148,7 @@ export const Header = memo(function Header({
           ) : (
             ""
           )}
-          {pathname !== "/session/start-session" && (
+          {pathname !== "/sessions/start-session" && (
             <div className="flex ml-10">
               <Link
                 href="/about-us"

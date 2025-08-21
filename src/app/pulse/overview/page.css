@@ -8,14 +8,6 @@
   position: relative;
 }
 
-.main-small-box {
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  border-radius: 10px;
-  padding: 1px;
-  width: 100%;
-  position: relative;
-}
-
 .color-pattern-bg {
   background-image: url("/images/color pattern - small.svg");
   background-repeat: no-repeat;
@@ -29,7 +21,11 @@
 .blue-shine-pulse-overview {
   border-radius: 504px;
   opacity: 0.12;
-  background: linear-gradient(180deg, rgba(63, 104, 250, 0.55) 0%, rgba(188, 239, 255, 0.62) 100%);
+  background: linear-gradient(
+    180deg,
+    rgba(63, 104, 250, 0.55) 0%,
+    rgba(188, 239, 255, 0.62) 100%
+  );
   filter: blur(139px);
   width: 504px;
   min-width: 504px;
@@ -42,7 +38,11 @@
 .blue-shine-pulse-overview-mobile {
   border-radius: 50%;
   opacity: 0.12;
-  background: linear-gradient(180deg, rgba(63, 104, 250, 0.55) 0%, rgba(188, 239, 255, 0.62) 100%);
+  background: linear-gradient(
+    180deg,
+    rgba(63, 104, 250, 0.55) 0%,
+    rgba(188, 239, 255, 0.62) 100%
+  );
   filter: blur(139px);
   width: 336.6px;
   min-width: 336.6px;
