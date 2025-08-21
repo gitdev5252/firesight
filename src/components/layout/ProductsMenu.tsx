@@ -26,15 +26,14 @@ export default function ProductsMenu({ menuRef, onClose }: Props) {
           />
         </Button>
       </div>
-      <div className="flex flex-col px-1">
+      <div className="flex flex-col px-4">
         <Link href="/pulse/overview" onClick={onClose}>
-          <div className="flex items-center justify-start h-[52px]">
+          <div className="flex items-center justify-start gap-4 h-[52px]">
             <Image
-              src="/images/BlueBlurPolygon.svg"
+              src="/images/icons/polygon-blue.svg"
               alt=" "
-              width={116}
-              height={116}
-              className={"mx-[-33px] my-[-48ox]"}
+              width={24}
+              height={24}
             />
             FIRESIGHT | PULSE&nbsp;
             <small>
@@ -43,13 +42,12 @@ export default function ProductsMenu({ menuRef, onClose }: Props) {
           </div>
         </Link>
 
-        <div className="flex items-center justify-start h-[52px]">
+        <div className="flex items-center justify-start gap-4 h-[52px]">
           <Image
-            src="/images/GreenBlurPolygon.svg"
+            src="/images/icons/polygon-green.svg"
             alt=" "
-            width={116}
-            height={116}
-            className={"mx-[-33px] my-[-48ox]"}
+            width={24}
+            height={24}
           />
           <Link href="/session" onClick={onClose}>
             FIRESIGHT | SESSIONS{" "}
@@ -58,16 +56,15 @@ export default function ProductsMenu({ menuRef, onClose }: Props) {
             </small>
           </Link>
         </div>
-        <div className="flex items-center justify-start h-[52px]">
+        <div className="flex items-center justify-start gap-4 h-[52px]">
           <Image
-            src="/images/PinkBlurPolygon.svg"
+            src="/images/icons/polygon-puple.svg"
             alt=" "
-            width={116}
-            height={116}
-            className={"mx-[-33px] my-[-48ox]"}
+            width={24}
+            height={24}
           />
-          <Link href="/platform" onClick={onClose}>
-            FIRESIGHT | PLATFORM <small>(Comming Soon)</small>
+          <Link href="#" onClick={onClose}>
+            FIRESIGHT | PLATFORM <small>(Coming Soon)</small>
           </Link>
         </div>
       </div>

@@ -1,43 +1,44 @@
+"use client";
 import Link from "next/link";
 import Image from "next/image";
 import "./layout.css";
-import { ReactNode, useEffect, memo } from "react";
+import { ReactNode, memo } from "react";
 import FooterSocials from "@/components/layout/FooterSocials";
 import FooterNavColumn from "@/components/layout/FooterNavColumn";
 import FooterLocation from "@/components/layout/FooterLocation";
 
 function FireSightFooter({ children }: { children: ReactNode | null }) {
-  useEffect(() => {
-    if (typeof window === "undefined" || !window.performance) return;
-    try {
-      const perf = window.performance;
-      if (perf.mark) perf.mark("firesight.footer.mounted");
-      const mountTime = Math.round(perf.now());
-      // store a small perf entry on window for later consumption by analytics
-      (window as any).__firesightPerf = (window as any).__firesightPerf || [];
-      (window as any).__firesightPerf.push({ name: "footer", time: mountTime });
-      // also create a measure if supported
-      if (perf.measure) {
-        try {
-          perf.measure(
-            "firesight.footer.time",
-            "navigationStart",
-            "firesight.footer.mounted"
-          );
-        } catch (e) {
-          // navigationStart may not be available in all contexts; ignore
-        }
-      }
-      // lightweight console debug for local profiling
-      // eslint-disable-next-line no-console
-      console.debug(
-        "Firesight footer mounted (ms since navigation):",
-        mountTime
-      );
-    } catch (e) {
-      // swallow any perf errors
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (typeof window === "undefined" || !window.performance) return;
+  //   try {
+  //     const perf = window.performance;
+  //     if (perf.mark) perf.mark("firesight.footer.mounted");
+  //     const mountTime = Math.round(perf.now());
+  //     // store a small perf entry on window for later consumption by analytics
+  //     (window as any).__firesightPerf = (window as any).__firesightPerf || [];
+  //     (window as any).__firesightPerf.push({ name: "footer", time: mountTime });
+  //     // also create a measure if supported
+  //     if (perf.measure) {
+  //       try {
+  //         perf.measure(
+  //           "firesight.footer.time",
+  //           "navigationStart",
+  //           "firesight.footer.mounted"
+  //         );
+  //       } catch (e) {
+  //         // navigationStart may not be available in all contexts; ignore
+  //       }
+  //     }
+  //     // lightweight console debug for local profiling
+  //     // eslint-disable-next-line no-console
+  //     console.debug(
+  //       "Firesight footer mounted (ms since navigation):",
+  //       mountTime
+  //     );
+  //   } catch (e) {
+  //     // swallow any perf errors
+  //   }
+  // }, []);
   return (
     <>
       {/* Note: prefer CSS media queries for visibility where possible to avoid unnecessary DOM rendering. */}

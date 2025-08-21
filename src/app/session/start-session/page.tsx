@@ -114,7 +114,7 @@ export default function StartSessionPage() {
                 New Session
               </button>
               <button
-                className="flex items-center text-[18px] px-[36px] py-[14px] text-white font-bold"
+                className="flex items-center text-[18px] px-[36px] py-[14px] text-white"
                 style={{
                   border: "1px solid #262933",
                   borderRadius: "55px",

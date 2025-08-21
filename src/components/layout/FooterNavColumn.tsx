@@ -1,5 +1,4 @@
 "use client";
-import Link from "next/link";
 import { ReactNode } from "react";
 
 export default function FooterNavColumn({

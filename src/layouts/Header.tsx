@@ -78,20 +78,18 @@ export const Header = memo(function Header({
             >
               {pathname === "/pulse/overview" && (
                 <Image
-                  src="/images/BlueBlurPolygon.svg"
+                  src="/images/icons/polygon-blue.svg"
                   alt="Pulse"
-                  width={116}
-                  height={116}
-                  className="inline mx-[-40px]"
+                  width={24}
+                  height={24}
                 />
               )}
               {pathname.includes("/session") && (
                 <Image
-                  src="/images/GreenBlurPolygon.svg"
+                  src="/images/icons/polygon-green.svg"
                   alt="Session"
-                  width={116}
-                  height={116}
-                  className="inline mx-[-40px]"
+                  width={24}
+                  height={24}
                 />
               )}
               {pathname === "/pulse/overview"
@@ -119,14 +117,14 @@ export const Header = memo(function Header({
             )}
           </div>
           {pathname === "/session" ? (
-            <div className="start-session-btn-bg">
-              <Link
-                href="/session/start-session"
-                className="nav-item active absolute -top-[8px] w-full h-full flex items-center justify-center"
+            <Link href="/session/start-session">
+              <Button
+                variant="outline"
+                className="green-gradient-border-btn text-[18px] px-[35px] py-[25px] !text-white 2xl:ml-10 md:ml-[16px] cursor-pointer"
               >
                 Start Session Now
-              </Link>
-            </div>
+              </Button>
+            </Link>
           ) : (
             ""
           )}
@@ -151,10 +149,7 @@ export const Header = memo(function Header({
             ""
           )}
           {pathname !== "/session/start-session" && (
-            <div
-              className={`flex  ${pathname === "/session" ? "ml-0" : "ml-10"}`}
-            >
-              {" "}
+            <div className="flex ml-10">
               <Link
                 href="/about-us"
                 className={
@@ -164,7 +159,7 @@ export const Header = memo(function Header({
               >
                 <Image
                   className="mr-4 hidden"
-                  src="/images/PurplePolygon.svg"
+                  src="/images/icons/polygon-puple.svg"
                   alt=" "
                   width={24}
                   height={24}
@@ -179,7 +174,7 @@ export const Header = memo(function Header({
               >
                 <Image
                   className="mr-4 hidden"
-                  src="/images/PurplePolygon.svg"
+                  src="/images/icons/polygon-puple.svg"
                   alt=" "
                   width={24}
                   height={24}
@@ -195,7 +190,7 @@ export const Header = memo(function Header({
               >
                 <Image
                   className="mr-4 hidden"
-                  src="/images/PurplePolygon.svg"
+                  src="/images/icons/polygon-puple.svg"
                   alt=" "
                   width={24}
                   height={24}
