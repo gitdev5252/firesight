@@ -127,7 +127,10 @@ export function Header({ scrolled }: { scrolled: boolean }) {
                         height={116}
                         className={"mx-[-33px] my-[-48ox]"}
                       />
-                      FIRESIGHT | PULSE
+                      FIRESIGHT | PULSE&nbsp;
+                      <small>
+                        <i> (Closed Alpha)</i>
+                      </small>
                     </div>
                   </Link>
 
@@ -142,7 +145,7 @@ export function Header({ scrolled }: { scrolled: boolean }) {
                     <Link href="/session" onClick={() => setMenuOpen(false)}>
                       FIRESIGHT | SESSIONS{" "}
                       <small>
-                        <i>(Comming Soon)</i>
+                        <i>(Alpha)</i>
                       </small>
                     </Link>
                   </div>
