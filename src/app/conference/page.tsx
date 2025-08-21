@@ -64,14 +64,14 @@ const Sidebar = ({
 
   return (
     <div className="h-full flex flex-col min-h-0">
-      <div className="flex border-b border-white/10">
+      <div className="flex border-b border-white/10 p-3">
         {tabs.map((tab) => (
           <button
             key={tab}
             onClick={() => setActiveTab(tab)}
             className={`flex-1 px-2 py-3 text-xs font-medium transition-colors ${activeTab === tab
-              ? "text-white border-b-2 border-green-500 bg-white/5"
-              : "text-white/60 hover:text-white/80"
+              ? "text-white border-b-1 border-green-400 mt-1"
+              : "text-white/60 hover:text-white/80 mt-1"
               }`}
           >
             {tab}
@@ -88,7 +88,7 @@ const Sidebar = ({
           />
         )}
         {activeTab === "Chat" && (
-          <div className="flex flex-col h-full min-h-0 bg-[#141721] rounded-[10px] pt-4 mt-4 ml-3 mr-3 mb-3 border border-[#FFFFFF1A]">
+          <div className="h-[97vh] min-h-0 bg-[#141721] rounded-[10px] pt-4 border border-[#FFFFFF1A]">
             <ChatTab messages={chatMessages} onSendMessage={onSendMessage} />
           </div>
         )}
@@ -110,7 +110,7 @@ const PeopleTab = ({
   raisedHands: { [key: string]: boolean };
 }) => {
   return (
-    <div className="mt-8">
+    <div className="">
       <div className="bg-[rgba(255,255,255,0.02)] rounded-[20px] border border-[rgba(255,255,255,0.1)] backdrop-blur-[32px] p-2 mb-4 max-h-[56vh] overflow-auto">
         {participants && participants.length > 0 ? (
           participants.map((participant) => {
@@ -220,7 +220,7 @@ const ChatTab = ({
 
   return (
     <div className="flex flex-col h-full min-h-0 bg-[#141721] rounded-[10px] p-3">
-      <div className="flex-1 overflow-y-auto mb-4 space-y-3 min-h-0 ">
+      <div className="flex-1 overflow-y-none mb-4 space-y-3 min-h-0 ">
         {messages.length > 0 ? (
           messages.map((msg, index) => (
             <div className="flex items-center gap-3 ml-2 mr-2" key={index}>
@@ -237,7 +237,7 @@ const ChatTab = ({
             No messages yet. Start the conversation!
           </p>
         )}
-        <div ref={messagesEndRef} />
+        {/* <div ref={messagesEndRef} /> */}
       </div>
 
       <div className="pt-4 pb-4">
@@ -272,7 +272,7 @@ const ChatTab = ({
 };
 
 const TranscriptTab = () => (
-  <div className="flex flex-col items-center h-full min-h-[500px] w-full mt-10">
+  <div className="flex flex-col items-center h-full min-h-[500px] w-full ">
     <div className="bg-[#181C23] border border-white/10 rounded-2xl p-8 w-full max-w-md flex flex-col items-center shadow-lg h-[90%]">
       <span className="text-green-400 text-base font-mono mb-4">Coming Soon</span>
       <h2 className="text-white text-2xl font-bold mb-2 text-center tracking-wide">
@@ -376,7 +376,8 @@ const ConferenceControls = ({
   onToggleHandRaise,
   currentUser,
   raisedHands,
-  isSidebarOpen
+  isSidebarOpen,
+  isSideRail
 }: {
   onInvite: () => void;
   onToggleSidebar: () => void;
@@ -385,6 +386,7 @@ const ConferenceControls = ({
   currentUser: string;
   raisedHands: { [key: string]: boolean };
   isSidebarOpen: boolean;
+  isSideRail: boolean;
 }) => {
   const {
     isMicrophoneEnabled,
@@ -403,11 +405,11 @@ const ConferenceControls = ({
     if (disconnectButtonProps.onClick) await disconnectButtonProps.onClick(e);
     router.push("/session");
   };
-
+  const fullScreenStyle = !isSideRail && 'bg-[#080B1680] p-3 rounded-[15px] mt-1'
   return (
     <div className="px-6 pb-6">
       <div className="px-2 py-4">
-        <div className="flex items-center justify-between">
+        <div className={`flex items-center justify-between ${fullScreenStyle}`}>
           <div className="flex items-center gap-4">
             <button
               className="flex flex-col items-center gap-1 text-gray-400/60 hover:text-gray-400 transition-colors"
@@ -1300,7 +1302,10 @@ export default function SessionPage() {
 
                 {/* Desktop controls */}
 
-                <div className="absolute bottom-0 left-0 right-0 hidden md:block"> <ConferenceControls onInvite={() => setIsModalOpen(true)} onToggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)} onSendEmoji={sendEmoji} onToggleHandRaise={toggleHandRaise} currentUser={currentUser} raisedHands={raisedHands} isSidebarOpen={isSidebarOpen} /> </div>
+                <div className="absolute bottom-0 left-0 right-0 hidden md:block">
+                  <ConferenceControls onInvite={() => setIsModalOpen(true)} onToggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)} onSendEmoji={sendEmoji} onToggleHandRaise={toggleHandRaise} currentUser={currentUser} raisedHands={raisedHands} isSidebarOpen={isSidebarOpen} isSideRail={showSideRail} />
+
+                </div>
                 <div className="md:hidden h-[72px]" />
 
                 {/* Mobile participant chips */}
@@ -1344,7 +1349,7 @@ export default function SessionPage() {
                 )}
                 {/* Desktop View Full Screen */}
                 {!showSideRail && participants && participants.length > 0 && (
-                  <div className="absolute bottom-28 left-0 right-0 z-20 px-3 pb-2 hidden md:block">
+                  <div className={`absolute ${showSideRail ? "bottom-28" : "bottom-32" }  left-0 right-0 z-20 px-3 pb-2 hidden md:block`}>
                     <div className={`flex gap-3 overflow-x-auto scrollbar-hide ${participants.length <= 2 && 'items-center justify-center'}`}>
                       {participants.map((p) => {
                         const participant = p as Participant;
