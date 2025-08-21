@@ -1,15 +1,46 @@
 import Link from "next/link";
 import Image from "next/image";
 import "./layout.css";
-import { ReactNode } from "react";
+import { ReactNode, useEffect, memo } from "react";
+import FooterSocials from "@/components/layout/FooterSocials";
+import FooterNavColumn from "@/components/layout/FooterNavColumn";
+import FooterLocation from "@/components/layout/FooterLocation";
 
-export default function FireSightFooter({
-  children,
-}: {
-  children: ReactNode | null;
-}) {
+function FireSightFooter({ children }: { children: ReactNode | null }) {
+  useEffect(() => {
+    if (typeof window === "undefined" || !window.performance) return;
+    try {
+      const perf = window.performance;
+      if (perf.mark) perf.mark("firesight.footer.mounted");
+      const mountTime = Math.round(perf.now());
+      // store a small perf entry on window for later consumption by analytics
+      (window as any).__firesightPerf = (window as any).__firesightPerf || [];
+      (window as any).__firesightPerf.push({ name: "footer", time: mountTime });
+      // also create a measure if supported
+      if (perf.measure) {
+        try {
+          perf.measure(
+            "firesight.footer.time",
+            "navigationStart",
+            "firesight.footer.mounted"
+          );
+        } catch (e) {
+          // navigationStart may not be available in all contexts; ignore
+        }
+      }
+      // lightweight console debug for local profiling
+      // eslint-disable-next-line no-console
+      console.debug(
+        "Firesight footer mounted (ms since navigation):",
+        mountTime
+      );
+    } catch (e) {
+      // swallow any perf errors
+    }
+  }, []);
   return (
     <>
+      {/* Note: prefer CSS media queries for visibility where possible to avoid unnecessary DOM rendering. */}
       <div className="px-14 pb-14 w-full relative m-0 overflow-hidden hidden lg:block">
         {children}
         <div className="footer-box md:!pt-[93px] !pt-[40px] md:!pb-[24px] !pb-[49px] relative overflow-hidden">
@@ -24,250 +55,168 @@ export default function FireSightFooter({
                   alt="firesight.ai"
                   width={120}
                   height={120}
+                  loading="lazy"
                   className="pl-6 md:h-[118px] h-[88px]"
                 />
               </Link>
 
-              <div className="flex gap-[5px] mt-2 md:relative absolute bottom-0">
-                {/* Replace with your actual social icons */}
-                <Link
-                  href="https://www.linkedin.com/company/firesightai/about/?viewAsMember=true"
-                  aria-label="LinkedIn"
-                >
-                  <Image
-                    src="/images/icons/linkedin.svg"
-                    alt="LinkedIn"
-                    width={30}
-                    height={30}
-                  />
-                </Link>
-                <Link href="/" aria-label="cb">
-                  <Image
-                    src="/images/icons/cb.svg"
-                    alt="cb"
-                    width={30}
-                    height={30}
-                  />
-                </Link>
-                <Link
-                  href="https://twitter.com/FiresightAi/"
-                  aria-label="Twitter"
-                >
-                  <Image
-                    src="/images/icons/x.svg"
-                    alt="X"
-                    width={30}
-                    height={30}
-                  />
-                </Link>
-                <Link href="https://www.discord.com/" aria-label="Discord">
-                  <Image
-                    src="/images/icons/discord.svg"
-                    alt="Game"
-                    width={30}
-                    height={30}
-                  />
-                </Link>
-              </div>
+              <FooterSocials className="flex gap-[5px] mt-2 md:relative absolute bottom-0" />
             </div>
             <div className="vertical-divider !h-[111px] md:!block !hidden"></div>
-            {/* Firesight | PULSE */}
-            <div>
-              <div className="font-bold mb-[12px]">
-                Firesight |
-                <span
-                  className="ml-2"
-                  style={{
-                    background:
-                      "linear-gradient(180deg, rgba(0,255,224,0.55) 0%, rgba(188,239,255,0.62) 100%)",
-                    WebkitBackgroundClip: "text",
-                    WebkitTextFillColor: "transparent",
-                  }}
-                >
-                  PULSE
-                </span>
-              </div>
-              <ul className="space-y-[12px]">
-                <li>
-                  <Link href="/pulse/overview" className="hover:underline">
-                    Overview
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/pulse/platform" className="hover:underline">
-                    Platform
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/pulse/pricing" className="hover:underline">
-                    Pricing
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/pulse/network-brands"
-                    className="hover:underline"
+            <FooterNavColumn
+              title={
+                <>
+                  Firesight |
+                  <span
+                    className="ml-2"
+                    style={{
+                      background:
+                        "linear-gradient(180deg, rgba(0,255,224,0.55) 0%, rgba(188,239,255,0.62) 100%)",
+                      WebkitBackgroundClip: "text",
+                      WebkitTextFillColor: "transparent",
+                    }}
                   >
-                    Network Partners
-                  </Link>
-                </li>
-              </ul>
-            </div>
+                    PULSE
+                  </span>
+                </>
+              }
+            >
+              <li>
+                <Link href="/pulse/overview" className="hover:underline">
+                  Overview
+                </Link>
+              </li>
+              <li>
+                <Link href="/pulse/platform" className="hover:underline">
+                  Platform
+                </Link>
+              </li>
+              <li>
+                <Link href="/pulse/pricing" className="hover:underline">
+                  Pricing
+                </Link>
+              </li>
+              <li>
+                <Link href="/pulse/network-brands" className="hover:underline">
+                  Network Partners
+                </Link>
+              </li>
+            </FooterNavColumn>
             <div className="vertical-divider !h-[111px]  md:!block !hidden"></div>
-            {/* Main Nav */}
-            <div>
-              <ul className="space-y-[12px] ">
-                <li>
-                  <Link href="/" className="hover:underline">
-                    Home
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/about-us" className="hover:underline">
-                    About Us
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="https://blog.firesight.ai/"
-                    className="hover:underline"
-                  >
-                    Blog
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/ai-impact" className="hover:underline">
-                    AI Impact Index
-                  </Link>
-                </li>
-              </ul>
-            </div>
-            <div className="vertical-divider !h-[111px]  md:!block !hidden"></div>
-            {/* Firesight | SESSIONS */}
-            <div>
-              <div className="font-bold mb-2 ">
-                Firesight |
-                <span
-                  className="ml-2"
-                  style={{
-                    background:
-                      "linear-gradient(180deg, rgba(20, 255, 0, 0.55) 0%, rgba(0, 240, 255, 0.62) 100%)",
-                    WebkitBackgroundClip: "text",
-                    WebkitTextFillColor: "transparent",
-                  }}
+            <FooterNavColumn>
+              <li>
+                <Link href="/" className="hover:underline">
+                  Home
+                </Link>
+              </li>
+              <li>
+                <Link href="/about-us" className="hover:underline">
+                  About Us
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="https://blog.firesight.ai/"
+                  className="hover:underline"
                 >
-                  SESSIONS
-                </span>
-              </div>
-              <ul className="space-y-1">
-                <li>
-                  <Link href="/sessions/about" className="hover:underline">
-                    About
-                  </Link>
-                </li>
-              </ul>
+                  Blog
+                </Link>
+              </li>
+              <li>
+                <Link href="/ai-impact" className="hover:underline">
+                  AI Impact Index
+                </Link>
+              </li>
+            </FooterNavColumn>
+            <div className="vertical-divider !h-[111px]  md:!block !hidden"></div>
+            <FooterNavColumn
+              title={
+                <>
+                  Firesight |
+                  <span
+                    className="ml-2"
+                    style={{
+                      background:
+                        "linear-gradient(180deg, rgba(20, 255, 0, 0.55) 0%, rgba(0, 240, 255, 0.62) 100%)",
+                      WebkitBackgroundClip: "text",
+                      WebkitTextFillColor: "transparent",
+                    }}
+                  >
+                    SESSIONS
+                  </span>
+                </>
+              }
+            >
+              <li>
+                <Link href="/sessions/about" className="hover:underline">
+                  About
+                </Link>
+              </li>
               <div className="border-b border-[#23263A] mt-[25px]"></div>
               <div className="font-bold mt-6 mb-2">
                 Firesight |
-                <span
-                  className="ml-2"
-                  style={{
-                    color: "#E93249",
-                  }}
-                >
+                <span className="ml-2" style={{ color: "#E93249" }}>
                   PLATFORM
                 </span>
               </div>
-              <ul className="space-y-1">
-                <li>
-                  <Link href="/platform/about" className="hover:underline">
-                    About
-                  </Link>
-                </li>
-              </ul>
-            </div>
+              <li>
+                <Link href="/platform/about" className="hover:underline">
+                  About
+                </Link>
+              </li>
+            </FooterNavColumn>
           </div>
           {/* Locations & Partner */}
           <div className="flex flex-col md:flex-row justify-between items-center gap-8 py-8 border-b border-[#23263A] h-full md:!px-[41px] !px-[24px]">
             <div className="flex w-full flex-wrap md:justify-between justify-center items-center gap-6 md:gap-8 text-white h-full">
-              <div className="flex items-start">
-                <Image
-                  src="/images/icons/location.svg"
-                  alt="Game"
-                  width={13}
-                  height={13}
-                  className="mr-[13px] mt-1"
-                />
-                <div>
-                  <div className="flex items-center gap-2 text-white">
-                    <span className="font-bold">FAREHAM</span>
-                    <span className="italic text-[#A0AEC0] text-xs">
-                      (Corporate HQ)
-                    </span>
-                  </div>
-                  <div className="text-[#A0AEC0] text-xs text-center md:text-left">
+              <FooterLocation
+                city="FAREHAM"
+                subtitle="(Corporate HQ)"
+                address={
+                  <>
                     203 West St, Fareham,
                     <br />
                     Hampshire, PO16 0EN, UNITED KINGDOM
-                  </div>
-                </div>
-              </div>
+                  </>
+                }
+                className="flex items-start"
+              />
               <div className="vertical-divider md:!block !hidden !h-[60px]"></div>
-              {/* Canberra */}
-              <div className="flex items-start">
-                <Image
-                  src="/images/icons/location.svg"
-                  alt="Game"
-                  width={13}
-                  height={13}
-                  className="mr-[13px] mt-1"
-                />
-                <div>
-                  <div className="flex items-center gap-2 text-white">
-                    <span className="font-bold">CANBERRA</span>
-                    <span className="italic text-[#A0AEC0] text-xs">
-                      (Outpost)
-                    </span>
-                  </div>
-                  <div className="text-[#A0AEC0] text-xs text-center md:text-left">
+              <FooterLocation
+                city="CANBERRA"
+                subtitle="(Outpost)"
+                address={
+                  <>
                     1 Moore St, Canberra,
                     <br />
                     ACT, 2601, AUSTRALIA
-                  </div>
-                </div>
-              </div>
+                  </>
+                }
+                className="flex items-start"
+              />
               <div className="vertical-divider md:!block !hidden !h-[60px]"></div>
               {/* Ha Noi */}
-              <div className="flex items-start">
-                <Image
-                  src="/images/icons/location.svg"
-                  alt="Game"
-                  width={13}
-                  height={13}
-                  className="mr-[13px] mt-1"
-                />
-                <div>
-                  <div className="flex items-center gap-2 text-white">
-                    <span className="font-bold">HA NOI</span>
-                    <span className="italic text-[#A0AEC0] text-xs">
-                      (Outpost)
-                    </span>
-                  </div>
-                  <div className="text-[#A0AEC0] text-xs text-center md:text-left">
+              <FooterLocation
+                city="HA NOI"
+                subtitle="(Outpost)"
+                address={
+                  <>
                     1 Thai ha St, Trung Liet
                     <br />
                     Ward, Ha Noi, VIETNAM
-                  </div>
-                </div>
-              </div>
+                  </>
+                }
+                className="flex items-start"
+              />
               <div className="vertical-divider md:!block !hidden !h-[60px]"></div>
               <div className="flex flex-col items-center md:items-end gap-2">
-                <Link href="http://dvincigroup.com/">
+                <Link href="http://dvincigroup.com/" aria-label="D'Vinci Group">
                   <Image
                     src="/images/D vinci.svg"
                     alt="D'VINCI GROUP"
                     width={198}
                     height={67}
+                    loading="lazy"
                   />
                 </Link>
               </div>
@@ -277,12 +226,13 @@ export default function FireSightFooter({
           {/* Bottom Bar */}
           <div className="flex flex-col md:flex-row justify-between items-center pt-6 text-xs text-[#A0AEC0] md:!px-[41px] !px-[24px]">
             <div className="flex items-center mb-2 md:mb-0 min-w-[135px]">
-              <Link href="http://dvincigroup.com/">
+              <Link href="http://dvincigroup.com/" aria-label="D'Vinci Group">
                 <Image
                   src="/images/icons/dvinci.svg"
                   alt="D'VINCI"
                   width={17}
                   height={17}
+                  loading="lazy"
                 />
               </Link>
               <span className="text-[10px] font-bold border-l-2 border-l-white pl-3 ml-3">
@@ -290,8 +240,12 @@ export default function FireSightFooter({
               </span>
             </div>
             <div className="flex flex-wrap w-full justify-center gap-[34px] underline md:text-[12px] text-[8px] font-bold">
-              <Link href="/terms">Terms & Conditions</Link>
-              <Link href="/privacy">Privacy Policy</Link>
+              <Link href="/terms" aria-label="Terms and Conditions">
+                Terms & Conditions
+              </Link>
+              <Link href="/privacy" aria-label="Privacy Policy">
+                Privacy Policy
+              </Link>
               <span>Firesight Ltd 2025. All Rights Reserved.</span>
             </div>
             <div className="text-[13px] min-w-[238px]">
@@ -299,6 +253,7 @@ export default function FireSightFooter({
               <Link
                 href="mailto:hello@firesight.ai"
                 className="font-bold text-white"
+                aria-label="Email hello at firesight dot ai"
               >
                 hello@firesight.ai
               </Link>
@@ -320,51 +275,12 @@ export default function FireSightFooter({
                   alt="firesight.ai"
                   width={120}
                   height={120}
+                  loading="lazy"
                   className="pl-6 md:h-[118px] h-[88px]"
                 />
               </Link>
 
-              <div className="flex gap-[5px] mt-2 md:relative absolute bottom-0">
-                {/* Replace with your actual social icons */}
-                <Link
-                  href="https://www.linkedin.com/company/firesightai/about/?viewAsMember=true"
-                  aria-label="LinkedIn"
-                >
-                  <Image
-                    src="/images/icons/linkedin.svg"
-                    alt="LinkedIn"
-                    width={30}
-                    height={30}
-                  />
-                </Link>
-                <Link href="/" aria-label="cb">
-                  <Image
-                    src="/images/icons/cb.svg"
-                    alt="cb"
-                    width={30}
-                    height={30}
-                  />
-                </Link>
-                <Link
-                  href="https://twitter.com/FiresightAi/"
-                  aria-label="Twitter"
-                >
-                  <Image
-                    src="/images/icons/x.svg"
-                    alt="X"
-                    width={30}
-                    height={30}
-                  />
-                </Link>
-                <Link href="https://www.discord.com/" aria-label="Discord">
-                  <Image
-                    src="/images/icons/discord.svg"
-                    alt="Game"
-                    width={30}
-                    height={30}
-                  />
-                </Link>
-              </div>
+              <FooterSocials className="flex gap-[5px] mt-2 md:relative absolute bottom-0" />
             </div>
             <div className="w-full h-[1px] bg-[#ffffff19]"></div>
 
@@ -496,6 +412,7 @@ export default function FireSightFooter({
                   alt="Game"
                   width={13}
                   height={13}
+                  loading="lazy"
                   className="mr-[13px] mt-1"
                 />
                 <div>
@@ -513,70 +430,53 @@ export default function FireSightFooter({
                 </div>
               </div>
               <div className="vertical-divider md:!block !hidden !h-[60px]"></div>
-              {/* Canberra */}
-              <div className="flex items-start">
-                <Image
-                  src="/images/icons/location.svg"
-                  alt="Game"
-                  width={13}
-                  height={13}
-                  className="mr-[13px] mt-1"
-                />
-                <div>
-                  <div className="flex items-center gap-2 text-white">
-                    <span className="font-bold">CANBERRA</span>
-                    <span className="italic text-[#A0AEC0] text-xs">
-                      (Outpost)
-                    </span>
-                  </div>
-                  <div className="text-[#A0AEC0] text-xs text-center md:text-left">
+              <FooterLocation
+                city="CANBERRA"
+                subtitle="(Outpost)"
+                address={
+                  <>
                     1 Moore St, Canberra,
                     <br />
                     ACT, 2601, AUSTRALIA
-                  </div>
-                </div>
-              </div>
+                  </>
+                }
+                className="flex items-start"
+              />
               <div className="vertical-divider md:!block !hidden !h-[60px]"></div>
-              {/* Ha Noi */}
-              <div className="flex items-start">
-                <Image
-                  src="/images/icons/location.svg"
-                  alt="Game"
-                  width={13}
-                  height={13}
-                  className="mr-[13px] mt-1"
-                />
-                <div>
-                  <div className="flex items-center gap-2 text-white">
-                    <span className="font-bold">HA NOI</span>
-                    <span className="italic text-[#A0AEC0] text-xs">
-                      (Outpost)
-                    </span>
-                  </div>
-                  <div className="text-[#A0AEC0] text-xs text-center md:text-left">
+              <FooterLocation
+                city="HA NOI"
+                subtitle="(Outpost)"
+                address={
+                  <>
                     1 Thai ha St, Trung Liet
                     <br />
                     Ward, Ha Noi, VIETNAM
-                  </div>
-                </div>
-              </div>
+                  </>
+                }
+                className="flex items-start"
+              />
             </div>
 
             <div className="w-full h-[1px] bg-[#ffffff19]"></div>
 
             <div className="w-full h-[1px] bg-[#ffffff19]"></div>
 
-            <Link href="http://dvincigroup.com/" className="my-10">
+            <Link
+              href="http://dvincigroup.com/"
+              className="my-10"
+              aria-label="D'Vinci Group"
+            >
               <Image
                 src="/images/D vinci.svg"
                 alt="D'VINCI GROUP"
                 width={266}
                 height={91}
+                loading="lazy"
               />
             </Link>
 
             <div className="min-w-[135px] flex items-center gap-3 mb-10">
-              <Link href="http://dvincigroup.com/">
+              <Link href="http://dvincigroup.com/" aria-label="D'Vinci Group">
                 <Image
                   src="/images/icons/dvinci.svg"
                   alt="D'VINCI"
@@ -608,6 +508,7 @@ export default function FireSightFooter({
                 alt="firesight.ai"
                 width={120}
                 height={120}
+                loading="lazy"
                 className="my-[42px] h-[88px]"
               />
             </Link>
@@ -750,6 +651,7 @@ export default function FireSightFooter({
                   alt="Game"
                   width={13}
                   height={13}
+                  loading="lazy"
                   className="mr-[13px] mt-1"
                 />
                 <div>
@@ -768,97 +670,40 @@ export default function FireSightFooter({
               </div>
               {/* Fareham */}
               <div className="flex items-start">
-                <Image
-                  src="/images/icons/location.svg"
-                  alt="Game"
-                  width={13}
-                  height={13}
-                  className="mr-[13px] mt-1"
+                <FooterLocation
+                  city="FAREHAM"
+                  subtitle="(Corporate HQ)"
+                  address={
+                    <>
+                      203 West St, Fareham,
+                      <br />
+                      Hampshire, PO16 0EN, UNITED KINGDOM
+                    </>
+                  }
+                  className="flex items-start"
                 />
-                <div>
-                  <div className="flex items-center gap-2 text-white">
-                    <span className="font-bold">FAREHAM</span>
-                    <span className="italic text-[#A0AEC0] text-xs">
-                      (Corporate HQ)
-                    </span>
-                  </div>
-                  <div className="text-[#A0AEC0] text-xs text-center md:text-left">
-                    203 West St, Fareham,
-                    <br />
-                    Hampshire, PO16 0EN, UNITED KINGDOM
-                  </div>
-                </div>
               </div>
               {/* Ha Noi */}
-              <div className="flex items-start">
-                <Image
-                  src="/images/icons/location.svg"
-                  alt="Game"
-                  width={13}
-                  height={13}
-                  className="mr-[13px] mt-1"
-                />
-                <div>
-                  <div className="flex items-center gap-2 text-white">
-                    <span className="font-bold">HA NOI</span>
-                    <span className="italic text-[#A0AEC0] text-xs">
-                      (Outpost)
-                    </span>
-                  </div>
-                  <div className="text-[#A0AEC0] text-xs text-center md:text-left">
+              <FooterLocation
+                city="HA NOI"
+                subtitle="(Outpost)"
+                address={
+                  <>
                     1 Thai ha St, Trung Liet
                     <br />
                     Ward, Ha Noi, VIETNAM
-                  </div>
-                </div>
-              </div>
+                  </>
+                }
+                className="flex items-start"
+              />
+              <div className="vertical-divider md:!block !hidden !h-[60px]"></div>
               <div className="vertical-divider md:!block !hidden !h-[60px]"></div>
             </div>
 
             <div className="w-full h-[1px] bg-[#ffffff19]"></div>
 
             {/* Social Icons */}
-            <div className="flex gap-[5px] py-6">
-              {/* Replace with your actual social icons */}
-              <Link
-                href="https://www.linkedin.com/company/firesightai/about/?viewAsMember=true"
-                aria-label="LinkedIn"
-              >
-                <Image
-                  src="/images/icons/linkedin.svg"
-                  alt="LinkedIn"
-                  width={30}
-                  height={30}
-                />
-              </Link>
-              <Link href="/" aria-label="cb">
-                <Image
-                  src="/images/icons/cb.svg"
-                  alt="cb"
-                  width={30}
-                  height={30}
-                />
-              </Link>
-              <Link
-                href="https://twitter.com/FiresightAi/"
-                aria-label="Twitter"
-              >
-                <Image
-                  src="/images/icons/x.svg"
-                  alt="X"
-                  width={30}
-                  height={30}
-                />
-              </Link>
-              <Link href="https://www.discord.com/" aria-label="Discord">
-                <Image
-                  src="/images/icons/discord.svg"
-                  alt="Game"
-                  width={30}
-                  height={30}
-                />
-              </Link>
-            </div>
+            <FooterSocials className="flex gap-[5px] py-6" />
 
             <div className="w-full h-[1px] bg-[#ffffff19]"></div>
 
@@ -880,6 +725,7 @@ export default function FireSightFooter({
                   alt="D'VINCI"
                   width={17}
                   height={17}
+                  loading="lazy"
                 />
               </Link>
               <p className="text-[10px] font-bold border-l-2 border-l-white pl-3">
@@ -899,3 +745,5 @@ export default function FireSightFooter({
     </>
   );
 }
+
+export default memo(FireSightFooter);
