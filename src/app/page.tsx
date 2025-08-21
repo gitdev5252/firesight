@@ -1,6 +1,11 @@
 "use client";
-import { useState, useCallback } from "react";
-import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
+import React, { useState, useCallback } from "react";
+import {
+  motion,
+  AnimatePresence,
+  useReducedMotion,
+  type PanInfo,
+} from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
 import "./page.css";
@@ -48,8 +53,8 @@ export default function Home() {
 
   // Stable drag-end handlers to avoid creating new functions on every render.
   const handlePulseDragEnd = useCallback(
-    (e: any, { offset, velocity }: any) => {
-      const swipe = swipePower(offset.x, velocity.x);
+    (e: PointerEvent | MouseEvent | TouchEvent, info: PanInfo) => {
+      const swipe = swipePower(info.offset.x, info.velocity.x);
       if (swipe < -swipeConfidenceThreshold) paginate("pulse", 1);
       else if (swipe > swipeConfidenceThreshold) paginate("pulse", -1);
     },
@@ -57,8 +62,8 @@ export default function Home() {
   );
 
   const handleSessionDragEnd = useCallback(
-    (e: any, { offset, velocity }: any) => {
-      const swipe = swipePower(offset.x, velocity.x);
+    (e: PointerEvent | MouseEvent | TouchEvent, info: PanInfo) => {
+      const swipe = swipePower(info.offset.x, info.velocity.x);
       if (swipe < -swipeConfidenceThreshold) paginate("session", 1);
       else if (swipe > swipeConfidenceThreshold) paginate("session", -1);
     },
@@ -66,8 +71,8 @@ export default function Home() {
   );
 
   const handlePlatformDragEnd = useCallback(
-    (e: any, { offset, velocity }: any) => {
-      const swipe = swipePower(offset.x, velocity.x);
+    (e: PointerEvent | MouseEvent | TouchEvent, info: PanInfo) => {
+      const swipe = swipePower(info.offset.x, info.velocity.x);
       if (swipe < -swipeConfidenceThreshold) paginate("platform", 1);
       else if (swipe > swipeConfidenceThreshold) paginate("platform", -1);
     },
