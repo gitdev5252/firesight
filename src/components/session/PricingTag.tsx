@@ -1,5 +1,5 @@
 "use client";
-
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
@@ -213,6 +213,30 @@ export default function PricingTag() {
     },
   ];
 
+  const teamCardContent = [
+    <>
+      <span className="font-bold">No sign-up. No setup. Just start.</span>{" "}
+      Sessions Instant Meetings is your zero-barrier entry point to smarter
+      calls. Launch a secure video meeting instantly - no account required, no
+      downloads, no delays.
+    </>,
+    <>
+      Sessions equips teams with a real-time AI co-pilot that enhances
+      decision-making across every call. Sessions turns meetings into a{" "}
+      <span className="font-bold">scalable driver of productivity</span>
+    </>,
+    <>
+      Sessions equips teams with a real-time AI co-pilot that enhances
+      decision-making across every call. Sessions turns meetings into a{" "}
+      <span className="font-bold">scalable driver of productivity</span>
+    </>,
+    <>
+      Sessions equips teams with a real-time AI co-pilot that enhances
+      decision-making across every call. Sessions turns meetings into a{" "}
+      <span className="font-bold">scalable driver of productivity</span>
+    </>,
+  ];
+
   const [[page, direction], setPage] = useState([0, 0]);
 
   const paginate = (newDirection: number) => {
@@ -386,20 +410,38 @@ export default function PricingTag() {
           </span>
         </div>
         <div className="text-center md:mb-[118px] mb-[30px] text-[24px] md:px-[100px] px-[10px]">
-          <p className="font-bold text-white">
-            Freelancers, Consultants & Independent Professionals
-          </p>
-          <br />
-          <p className="text-white">
-            Sessions isn&apos;t just for meetings - it&apos;s for motion. Built
-            for solo knowledge workers navigating complexity alone, Sessions
-            transforms every call into forward momentum. Whether you&apos;re a
-            strategist, researcher, or creator{" "}
-            <span className="font-bold">
-              your AI Agent team works beside you in real time,
-            </span>{" "}
-            streamlining every call into focused, productive output.
-          </p>
+          {period === 0 ? (
+            <>
+              <p className="font-bold text-white">
+                Freelancers, Consultants & Independent Professionals
+              </p>
+              <br />
+              <p className="text-white italic">
+                Sessions isn&apos;t just for meetings - it&apos;s for motion.
+                Built for solo knowledge workers navigating complexity alone,
+                Sessions transforms every call into forward momentum. Whether
+                you&apos;re a strategist, researcher, or creator{" "}
+                <span className="font-bold">
+                  your AI Agent team works beside you in real time,
+                </span>{" "}
+                streamlining every call into focused, productive output.
+              </p>
+            </>
+          ) : (
+            <>
+              <p className="font-bold text-white">Startups, Agencies & Teams</p>
+              <br />
+              <p className="text-white italic">
+                Sessions transforms meetings into{" "}
+                <span className="font-bold">real-time execution engines.</span>
+                Action items are captured, tasks are auto-assigned, and key
+                insights are shared instantly - no follow-up scramble, no missed
+                details. Whether you&apos;re aligning cross-functionally or
+                leading standups, Sessions keeps every participant on the same
+                page and every call driving progress.
+              </p>
+            </>
+          )}
         </div>
         <motion.div
           ref={contentRef}
@@ -570,12 +612,17 @@ export default function PricingTag() {
 
                 <div className="border-y-[rgba(255,255,255,0.1)] border-y-[1px] text-white flex flex-col items-center justify-center py-[30px] px-[7px] gap-[30px]">
                   <p className="text-center text-[15px]">
-                    {tier.description && tier.description.content}
+                    {period === 0
+                      ? tier.description && tier.description.content
+                      : teamCardContent[index]}
                   </p>
                   {index === 0 && (
-                    <div className="uppercase text-white text-[30px] font-bold px-[50px] py-[32px] w-full text-center green-gradient-border-btn">
-                      start session now
-                    </div>
+                    <Link href="/sessions/start-session">
+                      <div className="uppercase text-white text-[30px] font-bold px-[50px] py-[32px] w-full text-center green-gradient-border-rect-btn">
+                        start session now
+                        <div className="green-polygon-piece absolute bottom-0 right-0 !w-[80px] !h-[80px] pointer-events-none" />
+                      </div>
+                    </Link>
                   )}
                 </div>
 
@@ -821,5 +868,3 @@ export default function PricingTag() {
     </>
   );
 }
-
-// background: linear-gradient(180deg, rgba(0, 144, 255, 0.28) 0%, rgba(134, 160, 216, 0.31) 100%);

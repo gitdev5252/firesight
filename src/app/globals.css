@@ -147,12 +147,12 @@
 
 .ticket-pill {
   clip-path: polygon(
-    10% 0%,  /* Top-left in a bit */
-    90% 0%,  /* Top-right in a bit */
-    100% 50%, /* Right point */
-    90% 100%, /* Bottom-right in a bit */
-    10% 100%, /* Bottom-left in a bit */
-    0% 50%    /* Left point */
+    10% 0%,
+    /* Top-left in a bit */ 90% 0%,
+    /* Top-right in a bit */ 100% 50%,
+    /* Right point */ 90% 100%,
+    /* Bottom-right in a bit */ 10% 100%,
+    /* Bottom-left in a bit */ 0% 50% /* Left point */
   );
   border-radius: 8px;
 }
@@ -173,21 +173,26 @@
   color: #fff;
   background: #181a20;
   border: 1.5px solid #444;
-  font-family: 'Fira Mono', monospace;
+  font-family: "Fira Mono", monospace;
   font-size: 1.25rem;
   clip-path: polygon(
-    12px 0%, calc(100% - 12px) 0%, 100% 12px, 100% calc(100% - 12px),
-    calc(100% - 12px) 100%, 12px 100%, 0% calc(100% - 12px), 0% 12px
+    12px 0%,
+    calc(100% - 12px) 0%,
+    100% 12px,
+    100% calc(100% - 12px),
+    calc(100% - 12px) 100%,
+    12px 100%,
+    0% calc(100% - 12px),
+    0% 12px
   );
 }
 
-
 .custom-scrollbar::-webkit-scrollbar {
-  width: 6px;                /* thin */
+  width: 6px; /* thin */
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.1);  /* light transparent white */
+  background: rgba(255, 255, 255, 0.1); /* light transparent white */
   border-radius: 10px;
 }
 
