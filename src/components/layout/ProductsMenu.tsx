@@ -20,7 +20,7 @@ export default function ProductsMenu({ menuRef, onClose }: Props) {
           <Image
             src="/images/mobile/menu-close.svg"
             alt="Close"
-            width={24}
+            width={25}
             height={24}
             className="lg:size-6 md:size-[18px] size-[20px]"
           />
@@ -32,12 +32,12 @@ export default function ProductsMenu({ menuRef, onClose }: Props) {
             <Image
               src="/images/icons/polygon-blue.svg"
               alt=" "
-              width={24}
+              width={25}
               height={24}
             />
-            FIRESIGHT | PULSE&nbsp;
+            FIRESIGHT | PULSE
             <small>
-              <i> (Closed Alpha)</i>
+              <i>(Closed Alpha)</i>
             </small>
           </div>
         </Link>
@@ -46,7 +46,7 @@ export default function ProductsMenu({ menuRef, onClose }: Props) {
           <Image
             src="/images/icons/polygon-green.svg"
             alt=" "
-            width={24}
+            width={25}
             height={24}
           />
           <Link href="/sessions" onClick={onClose}>
@@ -60,11 +60,14 @@ export default function ProductsMenu({ menuRef, onClose }: Props) {
           <Image
             src="/images/icons/polygon-puple.svg"
             alt=" "
-            width={24}
+            width={25}
             height={24}
           />
           <Link href="#" onClick={onClose}>
-            FIRESIGHT | PLATFORM <small>(Coming Soon)</small>
+            FIRESIGHT | PLATFORM{" "}
+            <small>
+              <i>(Coming Soon)</i>
+            </small>
           </Link>
         </div>
       </div>
