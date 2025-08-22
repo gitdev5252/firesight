@@ -201,6 +201,24 @@ export const Header = memo(function Header({
           )}
         </nav>
         {/* Hamburger Icon for Mobile */}
+        <div className="sm:hidden block">
+          <Link href="/auth/signup">
+            <Button
+              className="uppercase text-white polygon-green-sm-btn bg-transparent border-0"
+              variant="outline"
+            >
+              sign up
+            </Button>
+          </Link>
+          <Link href="/auth/signin">
+            <Button
+              variant="outline"
+              className="uppercase text-white bg-transparent border-0"
+            >
+              log in
+            </Button>
+          </Link>
+        </div>
         <button
           className="md:hidden block ml-auto w-6 h-6"
           onClick={() => setMenus((m) => ({ ...m, mobile: !m.mobile }))}

@@ -172,6 +172,13 @@
   border-radius: 9999px;
 }
 
+.polygon-green-sm-btn {
+  background-image: url("/images/background/polygon-green-sm.svg");
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+}
+
 .red-btn-bg {
   background-image: url("/images/red-btn-bg.svg");
   background-repeat: no-repeat;

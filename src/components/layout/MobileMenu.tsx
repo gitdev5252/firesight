@@ -20,6 +20,7 @@ export default function MobileMenu({ onClose }: Props) {
           />
         </Button>
       </div>
+
       <div className="relative flex flex-col text-white text-[12px] items-center">
         {/* Pulse */}
         <div className="flex w-full justify-between pt-[35px] pb-[41px] gap-0 font-bold">
