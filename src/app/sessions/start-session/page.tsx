@@ -182,7 +182,7 @@ export default function StartSessionPage() {
             </div>
             <div className="sm: border-0 border-b-[1px] border-[rgba(255,255,255,0.1)] block sm:hidden w-full"></div>
           </div>
-          <div className="sm:border border-0 border-[rgba(255,255,255,0.1)] md:w-4/9 w-full rounded-[20px] relative flex flex-col items-center min-h-[450px] h-[450px] justify-between">
+          <div className="sm:border border-0 border-[rgba(255,255,255,0.1)] md:w-4/9 w-full rounded-[20px] relative flex flex-col items-center min-h-[450px] h-[460px] justify-between">
             <div className="flex-1 w-full flex items-center justify-center">
               <AnimatePresence initial={false} custom={direction}>
                 <motion.div
@@ -224,7 +224,7 @@ export default function StartSessionPage() {
                           src={item.image}
                           alt={item.title}
                           key={item.title}
-                          width={537}
+                          width={513}
                           height={347}
                           className="mx-auto sm:block hidden"
                         />
@@ -243,7 +243,7 @@ export default function StartSessionPage() {
               </AnimatePresence>
             </div>
             {/* Custom Polygon Pagination */}
-            <div className="flex items-center justify-center gap-3 sm:mt-6 mt-1 mb-2 z-10">
+            <div className="flex items-center justify-center gap-3 mt-1 mb-5 z-10 absolute bottom-[10px]">
               {slideData.map((item, idx) => (
                 <button
                   key={item.title}
