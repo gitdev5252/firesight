@@ -114,7 +114,7 @@ export const CustomVideoTiles = ({
       ? trackByParticipantAndSource.get(`${p.identity}:${preferred}`)
       : undefined;
     // 85'
-    
+
     return (
       <div className="w-full h-full min-h-0 flex">
         <div className={`w-full h-[full] max-h-[${!showSideRail ? '98vh' : isMobileFull ? '85vh' : '98vh'}] aspect-video mx-auto`}>
@@ -143,7 +143,7 @@ export const CustomVideoTiles = ({
   const maxIndividualTiles = 3;
   const displayed = others.slice(0, maxIndividualTiles);
   const overflow = others.slice(maxIndividualTiles);
-
+  console.log(showSideRail, "showSideRailoverflow")
   return (
     <>
       {/* Render remote audio tracks so you can hear other participants */}
@@ -166,6 +166,7 @@ export const CustomVideoTiles = ({
                   trackMap={trackByParticipantAndSource}
                   onToggleSideRail={onToggleSideRail}
                   sideRailOpen={showSideRail}
+                  isMobileFull={isMobileFull}
                 />
               </div>
             </div>
@@ -202,7 +203,8 @@ const VideoSurface = ({
   fillClass,
   variant = "",
   isShort = false,
-  smallPiece = false
+  smallPiece = false,
+  isMobileFull = false
 }: {
   participant: Participant;
   trackRef?: ReturnType<typeof useTracks>[number];
@@ -211,6 +213,7 @@ const VideoSurface = ({
   fillClass?: string;
   variant?: string;
   isShort?: boolean;
+  isMobileFull?: boolean;
   smallPiece?: boolean;
 }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -231,10 +234,10 @@ const VideoSurface = ({
       setHasMedia(false);
     }
   }, [trackRef?.publication?.track]);
-  const heightForTile = smallPiece ? 'h-full min-h-[180px]' : !isShort ? 'h-[94.5vh]' : 'h-[84vh]'
+  const heightForTile = smallPiece ? 'h-full min-h-[180px]' : !isShort ? 'h-[94.5vh]' : isMobileFull ? 'h-[98vh]' : 'h-[84vh]'
   console.log(isShort, "hehe")
   return (
-    <div className={`relative w-full  ${heightForTile} bg-transparent rounded-xl overflow-hidden `}>
+    <div className={` relative w-full  ${heightForTile} bg-transparent rounded-xl overflow-hidden `}>
       <video
         ref={videoRef}
         autoPlay
@@ -265,6 +268,7 @@ const MainVideoTile = ({
   trackMap,
   onToggleSideRail,
   sideRailOpen,
+  isMobileFull
 }: {
   participant: Participant;
   activeEmojis?: {
@@ -273,6 +277,7 @@ const MainVideoTile = ({
   trackMap: Map<string, ReturnType<typeof useTracks>[number]>;
   onToggleSideRail?: () => void;
   sideRailOpen?: boolean;
+  isMobileFull?: boolean;
 }) => {
   const [source, setSource] = useState<Track.Source | null>(pickSource(participant));
   const sourceTimer = useRef<number | null>(null);
@@ -302,6 +307,7 @@ const MainVideoTile = ({
         fallbackName={displayName}
         fillClass={`w-full ${heightForTile} object-cover rounded-xl`}
         isShort={sideRailOpen}
+        isMobileFull={isMobileFull}
       />
 
       <div className="absolute top-4 right-4 flex flex-col gap-2 z-30">
@@ -315,7 +321,10 @@ const MainVideoTile = ({
         </div> */}
         <button
           type="button"
-          onClick={onToggleSideRail}
+          onClick={(e) => {
+            e.stopPropagation();
+            onToggleSideRail?.();
+          }}
           className="w-7 h-7 bg-[#080B16] rounded-full flex items-center justify-center shadow-lg hover:bg-white/10 transition"
           title={sideRailOpen ? 'Hide participants' : 'Show participants'}
         >

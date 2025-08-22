@@ -958,7 +958,7 @@ export default function SessionPage() {
     }
     return `${day}${ordinal(day)} ${month} ${year}`;
   }
-
+console.log(showSideRail,"theu no")
   return (
     <div className={`${!isMobileFull && 'p-4 md:p-8 bg-[#080B16] min-h-screen flex flex-col'}`}>
 
