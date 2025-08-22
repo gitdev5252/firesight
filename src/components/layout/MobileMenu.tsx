@@ -107,7 +107,7 @@ export default function MobileMenu({ onClose }: Props) {
           </div>
           <div className="vertical-divider !h-[48px]"></div>
           <div className="flex flex-col flex-1 items-center gap-y-3">
-            <div>
+            <Link href="/sessions">
               Firesight |
               <span
                 className="ml-2"
@@ -120,7 +120,7 @@ export default function MobileMenu({ onClose }: Props) {
               >
                 SESSIONS
               </span>
-            </div>
+            </Link>
             <Link href="/sessions/about" className="hover:underline">
               About
             </Link>

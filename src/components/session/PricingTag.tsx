@@ -277,15 +277,15 @@ export default function PricingTag() {
         <h3 className="text-[24px] bg-gradient-to-b from-[rgba(20,255,0,0.55)] to-[rgba(0,240,255,0.62)] bg-clip-text text-transparent font-bold md:mb-[50px] mb-[15px]">
           PRICING
         </h3>
-        <h1 className="uppercase text-white md:text-[80px] text-[20px] font-bold md:w-[55%] w-full mt-[20px]">
+        <h1 className="uppercase text-white md:text-[80px] text-[28px] font-bold md:w-[55%] w-full sm:mt-[20px]">
           the perfect plan for your needs
         </h1>
       </div>
       <div
         ref={containerRef}
-        className="overflow-x-hidden w-full relative sm:block flex justify-center items-center md:py-[60px] py-[20px] border border-[rgba(255,255,255,0.1)] backdrop-blur-[32px] rounded-[20px] bg-[rgba(255,255,255,0.02)]"
+        className="overflow-x-hidden w-full relative sm:block flex flex-col justify-center items-center md:py-[60px] py-[20px] border border-[rgba(255,255,255,0.1)] backdrop-blur-[32px] rounded-[20px] bg-[rgba(255,255,255,0.02)]"
       >
-        <div className="flex items-center justify-center md:gap-[30px] gap-5 md:mb-[81px] mb-[50px]">
+        <div className="flex items-center justify-center md:gap-[30px] gap-5 md:mb-[65px] mb-[20px]">
           <span
             className={`md:text-[22px] text-[16px] text-white ${
               period === 0 ? "font-bold" : ""
@@ -379,7 +379,7 @@ export default function PricingTag() {
                   y2="34.0002"
                   gradientUnits="userSpaceOnUse"
                 >
-                  <stop stop-color="#038B98" stop-opacity="0.63" />
+                  <stop stopColor="#038B98" stopOpacity="0.63" />
                   <stop
                     offset="0.703125"
                     stop-color="#0FFB49"
@@ -394,8 +394,8 @@ export default function PricingTag() {
                   y2="34.0002"
                   gradientUnits="userSpaceOnUse"
                 >
-                  <stop stop-color="#14FF00" stop-opacity="0.55" />
-                  <stop offset="1" stop-color="#00F0FF" stop-opacity="0.62" />
+                  <stop stopColor="#14FF00" stopOpacity="0.55" />
+                  <stop offset="1" stopColor="#00F0FF" stopOpacity="0.62" />
                 </linearGradient>
               </defs>
             </svg>
@@ -409,14 +409,14 @@ export default function PricingTag() {
             Team
           </span>
         </div>
-        <div className="text-center md:mb-[118px] mb-[30px] text-[24px] md:px-[100px] px-[10px]">
+        <div className="text-center md:mb-[90px] sm:mb-[30px] sm:text-[24px] text-[16px] md:px-[100px] px-[10px]">
           {period === 0 ? (
             <>
               <p className="font-bold text-white">
                 Freelancers, Consultants & Independent Professionals
               </p>
-              <br />
-              <p className="text-white italic">
+              <br className="sm:block hidden" />
+              <p className="text-white italic sm:text-[24px] text-[14px]">
                 Sessions isn&apos;t just for meetings - it&apos;s for motion.
                 Built for solo knowledge workers navigating complexity alone,
                 Sessions transforms every call into forward momentum. Whether
@@ -431,7 +431,7 @@ export default function PricingTag() {
             <>
               <p className="font-bold text-white">Startups, Agencies & Teams</p>
               <br />
-              <p className="text-white italic">
+              <p className="text-white italic sm:text-[24px] text-[14px]">
                 Sessions transforms meetings into{" "}
                 <span className="font-bold">real-time execution engines.</span>
                 Action items are captured, tasks are auto-assigned, and key
@@ -445,7 +445,7 @@ export default function PricingTag() {
         </div>
         <motion.div
           ref={contentRef}
-          className="cursor-grab pb-14 w-full flex lg:gap-[50px] sm:gap-9 gap-4"
+          className="cursor-grab pb-14 w-full sm:flex hidden lg:gap-[50px] sm:gap-9 gap-4"
           drag="x"
           dragConstraints={constraints}
           dragElastic={0.1}
@@ -724,160 +724,167 @@ export default function PricingTag() {
             </div>
           ))}
         </motion.div>
-      </div>
-      <div className="w-full sm:hidden">
-        <div className="relative w-full shadow rounded overflow-hidden text-white h-[calc(2164px-180vw)]">
-          <AnimatePresence initial={false} custom={direction}>
-            <motion.div
-              key={page}
-              custom={direction}
-              drag="x"
-              dragConstraints={{ left: 0, right: 0 }}
-              onDragEnd={(e, { offset, velocity }) => {
-                const swipe = swipePower(offset.x, velocity.x);
-                if (swipe < -swipeConfidenceThreshold) paginate(1);
-                else if (swipe > swipeConfidenceThreshold) paginate(-1);
-              }}
-              variants={{
-                enter: (dir: number) => ({
-                  x: dir > 0 ? 300 : -300,
-                  opacity: 0,
-                }),
-                center: {
-                  x: 0,
-                  opacity: 1,
-                },
-                exit: (dir: number) => ({
-                  x: dir < 0 ? 300 : -300,
-                  opacity: 0,
-                }),
-              }}
-              initial="enter"
-              animate="center"
-              exit="exit"
-              transition={{ duration: 0.1 }}
-              className={
-                "absolute w-full h-full flex items-center justify-stretch"
-              }
-            >
-              <div className="main-box lg:min-w-[40.9vw] sm:min-w-[60vw] min-w-[84vw] h-full w-auto">
-                <div className="my-9 mx-4 gap-6 flex flex-col items-center justify-start h-full">
-                  <p className="text-white text-[14px]">
-                    Firesight | <b>Session</b>
-                  </p>
-                  <p className="uppercase text-center text-[30px] font-bold text-[rgba(0,255,224,0.60)]">
-                    {pricingTiers[page].plan}
-                  </p>
-                  <p className="text-white font-bold text-center">
-                    {pricingTiers[page].priceDes == "Contact Us" ? (
-                      <span className="text-[40px] leading-loose">
-                        Contact Us
-                      </span>
-                    ) : (
-                      <>
-                        <span className="text-[36px] leading-none">
-                          $
-                          {period
-                            ? pricingTiers[page].price.annual
-                            : pricingTiers[page].price.monthly}
-                        </span>
-                        <br />
-                        <span className="text-[14px] font-normal leading-none">
-                          {pricingTiers[page].priceDes}
-                        </span>
-                      </>
-                    )}
-                  </p>
-                  <Button
-                    variant="outline"
-                    className="cursor-pointer gradient-border-btn text-[16px] g-transparent h-11 mt-3 rounded-full px-9 py-3 text-white hover:text-white"
+        <div className="w-full sm:hidden">
+          <div className="relative w-full shadow rounded overflow-hidden text-white h-[calc(2164px-180vw)]">
+            <AnimatePresence initial={false} custom={direction}>
+              <motion.div
+                key={page}
+                custom={direction}
+                drag="x"
+                dragConstraints={{ left: 0, right: 0 }}
+                onDragEnd={(e, { offset, velocity }) => {
+                  const swipe = swipePower(offset.x, velocity.x);
+                  if (swipe < -swipeConfidenceThreshold) paginate(1);
+                  else if (swipe > swipeConfidenceThreshold) paginate(-1);
+                }}
+                variants={{
+                  enter: (dir: number) => ({
+                    x: dir > 0 ? 300 : -300,
+                    opacity: 0,
+                  }),
+                  center: {
+                    x: 0,
+                    opacity: 1,
+                  },
+                  exit: (dir: number) => ({
+                    x: dir < 0 ? 300 : -300,
+                    opacity: 0,
+                  }),
+                }}
+                initial="enter"
+                animate="center"
+                exit="exit"
+                transition={{ duration: 0.1 }}
+                className={
+                  "absolute w-full h-full flex items-center justify-stretch"
+                }
+              >
+                <div className="main-box lg:min-w-[40.9vw] sm:min-w-[60vw] min-w-[84vw] h-full w-auto mx-4">
+                  <div
+                    className={`my-9 mx-4 gap-6 flex flex-col items-center justify-start border border-[rgba(255,255,255,0.1)] rounded-[20px] relative w-full backdrop-blur-[32px]
+                    ${
+                      page === 0
+                        ? "bg-[linear-gradient(86deg,rgba(3,139,152,0.16)_9.54%,rgba(15,251,73,0.15)_72.65%)]"
+                        : "bg-[rgba(255,255,255,0.01)]"
+                    }`}
                   >
-                    {pricingTiers[page].cta && pricingTiers[page].cta.normal}{" "}
-                    <span className="font-bold">
-                      {" "}
-                      {pricingTiers[page].cta && pricingTiers[page].cta.bold}
-                    </span>
-                  </Button>
-
-                  <div className="border-y-[rgba(255,255,255,0.1)] border-y-[1px] text-white flex flex-col items-center justify-center py-6 px-[7px] gap-6">
-                    <p className="text-center text-[12px]">
-                      {pricingTiers[page].description &&
-                        pricingTiers[page].description.content}
+                    <p className="text-white text-[14px]">
+                      Firesight | <b>Session</b>
                     </p>
-                  </div>
+                    <p className="uppercase text-center text-[30px] font-bold text-[rgba(0,255,224,0.60)]">
+                      {pricingTiers[page].plan}
+                    </p>
+                    <p className="text-white font-bold text-center">
+                      {pricingTiers[page].priceDes == "Contact Us" ? (
+                        <span className="text-[40px] leading-loose">
+                          Contact Us
+                        </span>
+                      ) : (
+                        <>
+                          <span className="text-[36px] leading-none">
+                            $
+                            {period
+                              ? pricingTiers[page].price.annual
+                              : pricingTiers[page].price.monthly}
+                          </span>
+                          <br />
+                          <span className="text-[14px] font-normal leading-none">
+                            {pricingTiers[page].priceDes}
+                          </span>
+                        </>
+                      )}
+                    </p>
+                    <Button
+                      variant="outline"
+                      className="cursor-pointer gradient-border-btn text-[16px] g-transparent h-11 mt-3 rounded-full px-9 py-3 text-white hover:text-white"
+                    >
+                      {pricingTiers[page].cta && pricingTiers[page].cta.normal}{" "}
+                      <span className="font-bold">
+                        {" "}
+                        {pricingTiers[page].cta && pricingTiers[page].cta.bold}
+                      </span>
+                    </Button>
 
-                  <div className="flex flex-col gap-5">
-                    {pricingTiers[page].features.map((feature, index) => (
-                      <div
-                        key={index}
-                        className="flex items-center justify-between gap-4"
-                      >
-                        <div>
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="14"
-                            height="17"
-                            viewBox="0 0 14 17"
-                            fill="none"
-                          >
-                            <path
-                              d="M7 0.5L14 4.5V12.5L7 16.5L0 12.5V4.5L7 0.5Z"
-                              fill="white"
-                            />
-                          </svg>
+                    <div className="border-y-[rgba(255,255,255,0.1)] border-y-[1px] text-white flex flex-col items-center justify-center py-6 px-[7px] gap-6">
+                      <p className="text-center text-[12px]">
+                        {pricingTiers[page].description &&
+                          pricingTiers[page].description.content}
+                      </p>
+                    </div>
+
+                    <div className="flex flex-col gap-5">
+                      {pricingTiers[page].features.map((feature, index) => (
+                        <div
+                          key={index}
+                          className="flex items-center justify-between gap-4"
+                        >
+                          <div>
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="14"
+                              height="17"
+                              viewBox="0 0 14 17"
+                              fill="none"
+                            >
+                              <path
+                                d="M7 0.5L14 4.5V12.5L7 16.5L0 12.5V4.5L7 0.5Z"
+                                fill="white"
+                              />
+                            </svg>
+                          </div>
+                          <p className="text-white text-[12px]">
+                            <b>{feature.name}</b> {feature.des}
+                          </p>
                         </div>
-                        <p className="text-white text-[12px]">
-                          <b>{feature.name}</b> {feature.des}
-                        </p>
-                      </div>
-                    ))}
+                      ))}
+                    </div>
                   </div>
                 </div>
-              </div>
-            </motion.div>
-          </AnimatePresence>
-        </div>
-        <div className="flex justify-center gap-2 my-8 sm:hidden">
-          {pricingTiers.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => paginate(index - page)}
-              className={`${
-                page === index
-                  ? "h-[8.66px] w-[26px]"
-                  : "w-[10px] h-[10px] opacity-50"
-              }`}
-            >
-              {page === index ? (
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="26"
-                  height="10"
-                  viewBox="0 0 26 10"
-                  fill="none"
-                >
-                  <path
-                    d="M25.5275 4.21311C25.8175 4.69611 25.8124 5.30088 25.5143 5.77894L23.7404 8.62384C23.4665 9.06317 22.9853 9.33018 22.4676 9.33018L3.44896 9.33018C2.92224 9.33018 2.43412 9.05391 2.16298 8.60234L0.463642 5.77221C0.178291 5.29698 0.178291 4.70312 0.463642 4.22788L2.16298 1.39776C2.43412 0.946186 2.92225 0.669921 3.44897 0.669921L22.551 0.669922C23.0778 0.669922 23.5659 0.946188 23.837 1.39776L25.5275 4.21311Z"
-                    fill="white"
-                  />
-                </svg>
-              ) : (
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="10"
-                  height="10"
-                  viewBox="0 0 10 10"
-                  fill="none"
-                >
-                  <path
-                    opacity="0.5"
-                    d="M9.56699 4.25C9.83494 4.7141 9.83494 5.2859 9.56699 5.75L7.93301 8.58013C7.66506 9.04423 7.16987 9.33013 6.63397 9.33013L3.36603 9.33013C2.83013 9.33013 2.33494 9.04423 2.06699 8.58013L0.433013 5.75C0.165064 5.2859 0.165064 4.7141 0.433013 4.25L2.06699 1.41987C2.33494 0.955771 2.83013 0.669872 3.36603 0.669872L6.63397 0.669873C7.16987 0.669873 7.66506 0.955771 7.93301 1.41987L9.56699 4.25Z"
-                    fill="white"
-                  />
-                </svg>
-              )}
-            </button>
-          ))}
+              </motion.div>
+            </AnimatePresence>
+          </div>
+          <div className="flex justify-center gap-2 my-8 sm:hidden">
+            {pricingTiers.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => paginate(index - page)}
+                className={`${
+                  page === index
+                    ? "h-[8.66px] w-[26px]"
+                    : "w-[10px] h-[10px] opacity-50"
+                }`}
+              >
+                {page === index ? (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="26"
+                    height="10"
+                    viewBox="0 0 26 10"
+                    fill="none"
+                  >
+                    <path
+                      d="M25.5275 4.21311C25.8175 4.69611 25.8124 5.30088 25.5143 5.77894L23.7404 8.62384C23.4665 9.06317 22.9853 9.33018 22.4676 9.33018L3.44896 9.33018C2.92224 9.33018 2.43412 9.05391 2.16298 8.60234L0.463642 5.77221C0.178291 5.29698 0.178291 4.70312 0.463642 4.22788L2.16298 1.39776C2.43412 0.946186 2.92225 0.669921 3.44897 0.669921L22.551 0.669922C23.0778 0.669922 23.5659 0.946188 23.837 1.39776L25.5275 4.21311Z"
+                      fill="white"
+                    />
+                  </svg>
+                ) : (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="10"
+                    height="10"
+                    viewBox="0 0 10 10"
+                    fill="none"
+                  >
+                    <path
+                      opacity="0.5"
+                      d="M9.56699 4.25C9.83494 4.7141 9.83494 5.2859 9.56699 5.75L7.93301 8.58013C7.66506 9.04423 7.16987 9.33013 6.63397 9.33013L3.36603 9.33013C2.83013 9.33013 2.33494 9.04423 2.06699 8.58013L0.433013 5.75C0.165064 5.2859 0.165064 4.7141 0.433013 4.25L2.06699 1.41987C2.33494 0.955771 2.83013 0.669872 3.36603 0.669872L6.63397 0.669873C7.16987 0.669873 7.66506 0.955771 7.93301 1.41987L9.56699 4.25Z"
+                      fill="white"
+                    />
+                  </svg>
+                )}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
     </>
