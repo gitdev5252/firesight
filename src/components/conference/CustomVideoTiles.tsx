@@ -35,6 +35,7 @@ export const CustomVideoTiles = ({
   activeEmojis,
   showSideRail = true,
   onToggleSideRail,
+  isMobileFull = false
 
 }: {
   activeEmojis?: {
@@ -42,6 +43,7 @@ export const CustomVideoTiles = ({
   };
   showSideRail?: boolean;
   onToggleSideRail?: () => void;
+  isMobileFull?: boolean;
 
 }) => {
   const participantsRaw = useParticipants();
@@ -111,10 +113,11 @@ export const CustomVideoTiles = ({
     const t = preferred
       ? trackByParticipantAndSource.get(`${p.identity}:${preferred}`)
       : undefined;
-    // 85
+    // 85'
+    
     return (
       <div className="w-full h-full min-h-0 flex">
-        <div className={`w-full h-[full] max-h-[${!showSideRail ? '98vh' : '85vh'}] aspect-video mx-auto`}>
+        <div className={`w-full h-[full] max-h-[${!showSideRail ? '98vh' : isMobileFull ? '85vh' : '98vh'}] aspect-video mx-auto`}>
           <VideoSurface
             participant={p}
             trackRef={t}
@@ -228,7 +231,7 @@ const VideoSurface = ({
       setHasMedia(false);
     }
   }, [trackRef?.publication?.track]);
-  const heightForTile = smallPiece ? 'h-full min-h-[180px]' : !isShort ? 'h-full' : 'h-[84vh]'
+  const heightForTile = smallPiece ? 'h-full min-h-[180px]' : !isShort ? 'h-[94.5vh]' : 'h-[84vh]'
   console.log(isShort, "hehe")
   return (
     <div className={`relative w-full  ${heightForTile} bg-transparent rounded-xl overflow-hidden `}>

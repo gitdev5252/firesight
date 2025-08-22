@@ -645,22 +645,22 @@ const MobileConferenceControls = ({
           </div>
         </div>
       </div>
-{!isMobileFull && (
-      <div className="flex border-b border-white/10">
-        {mobileTabs.map((tab) => (
-          <button
-            key={tab}
-            className={`flex-1 px-2 py-3 text-xs font-medium transition-colors ${activeTab === tab
-              ? "text-white border-b-2 border-green-500 bg-white/5"
-              : "text-white/60 hover:text-white/80"
-              }`}
-            onClick={() => setActiveTab(tab)}
-          >
-            {tab}
-          </button>
-        ))}
-      </div>
-)}
+      {!isMobileFull && (
+        <div className="flex border-b border-white/10">
+          {mobileTabs.map((tab) => (
+            <button
+              key={tab}
+              className={`flex-1 px-2 py-3 text-xs font-medium transition-colors ${activeTab === tab
+                ? "text-white border-b-2 border-green-500 bg-white/5"
+                : "text-white/60 hover:text-white/80"
+                }`}
+              onClick={() => setActiveTab(tab)}
+            >
+              {tab}
+            </button>
+          ))}
+        </div>
+      )}
     </div>
   );
 };
@@ -961,7 +961,7 @@ export default function SessionPage() {
 
   return (
     <div className={`${!isMobileFull && 'p-4 md:p-8 bg-[#080B16] min-h-screen flex flex-col'}`}>
-      
+
       {/* Name Input Modal */}
       {nameModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-[rgba(0,0,0,0.35)] backdrop-blur-[8px]">
@@ -1012,7 +1012,7 @@ export default function SessionPage() {
 
         {/* Header (desktop) */}
         <div className="hidden md:flex items-center justify-between px-6 py-4 text-white mb-2 mt-3">
-          
+
           <div className="flex items-center gap-2 ml-4">
             <div className="w-4 h-4 rounded-full flex items-center justify-center">
               <Clock color="white" />
@@ -1038,7 +1038,12 @@ export default function SessionPage() {
 
         {/* Main Video Area */}
         <div className="flex-1  relative mx-0 md:mx-6 mb-4 md:mb-6 min-h-0">
-          <div className={`w-full h-[${isMobileFull ? '100vh' : '97vh'}] md:h-[calc(100vh-20px)] max-h-[${isMobileFull ? '100vh' : '85vh'}] ${isMobileFull && "rounded-2xl"} border border-white/20 relative overflow-hidden min-h-[300px] `}>
+          <div className={"w-full md:h-[calc(100vh-20px)] border border-white/20 relative overflow-hidden min-h-[300px] h-[140vh] max-h-[100vh] rounded-2xl " +
+            // (isMobileFull
+            //   ? "h-[140vh] max-h-[100vh] rounded-2xl"
+            //   : "h-[97vh] max-h-[85vh]")
+          ""}
+          >
             {/* User Avatar (desktop) */}
             <div className="hidden md:block absolute top-6 left-6 bg-[#080B16] pb-2 pt-2 pl-4 pr-4 rounded-[11px] border border-[rgba(211,211,211,0.1)] z-10">
               <div className="flex items-center gap-3">
@@ -1171,11 +1176,11 @@ export default function SessionPage() {
                 audio
                 className="w-full h-full"
               >
-           
+
                 {/* DESKTOP / TABLET TILES */}
                 <div className="hidden md:block w-full h-full">
                   <CustomVideoTiles activeEmojis={activeEmojis} showSideRail={showSideRail}
-                    onToggleSideRail={() => setShowSideRail(v => !v)}
+                    onToggleSideRail={() => setShowSideRail(!showSideRail)}
                   />
                 </div>
 
@@ -1183,7 +1188,8 @@ export default function SessionPage() {
                 <div className="block md:hidden w-full h-full">
                   {activeTab === "Session" && (
                     <>
-                     <CustomVideoTiles activeEmojis={activeEmojis} />
+                      <CustomVideoTiles activeEmojis={activeEmojis} isMobileFull={isMobileFull}
+                      />
                     </>
 
                   )}
@@ -1365,7 +1371,7 @@ export default function SessionPage() {
 
                 <div className="absolute bottom-0 left-0 right-0 hidden md:block">
                   <ConferenceControls onInvite={() => setIsModalOpen(true)} onToggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)} onSendEmoji={sendEmoji} onToggleHandRaise={toggleHandRaise} currentUser={currentUser} raisedHands={raisedHands} isSidebarOpen={isSidebarOpen} isSideRail={showSideRail} />
-                 
+
                 </div>
                 <div className="md:hidden h-[72px]" />
 
