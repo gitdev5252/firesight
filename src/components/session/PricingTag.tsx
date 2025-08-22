@@ -253,7 +253,7 @@ export default function PricingTag() {
       const content = contentRef.current;
 
       if (container && content) {
-        const containerWidth = container.offsetWidth;
+        const containerWidth = container.offsetWidth - 50;
         const contentWidth = content.scrollWidth;
 
         const maxDrag = contentWidth - containerWidth;
@@ -283,7 +283,7 @@ export default function PricingTag() {
       </div>
       <div
         ref={containerRef}
-        className="overflow-x-hidden w-full relative sm:block flex justify-center items-center md:px-[50px] px-[20px] md:py-[60px] py-[20px] border border-[rgba(255,255,255,0.1)] backdrop-blur-[32px] rounded-[20px] bg-[rgba(255,255,255,0.02)]"
+        className="overflow-x-hidden w-full relative sm:block flex justify-center items-center md:py-[60px] py-[20px] border border-[rgba(255,255,255,0.1)] backdrop-blur-[32px] rounded-[20px] bg-[rgba(255,255,255,0.02)]"
       >
         <div className="flex items-center justify-center md:gap-[30px] gap-5 md:mb-[81px] mb-[50px]">
           <span
@@ -445,7 +445,7 @@ export default function PricingTag() {
         </div>
         <motion.div
           ref={contentRef}
-          className="cursor-grab pb-14 w-full flex lg:gap-14 sm:gap-9 gap-4"
+          className="cursor-grab pb-14 w-full flex lg:gap-[50px] sm:gap-9 gap-4"
           drag="x"
           dragConstraints={constraints}
           dragElastic={0.1}
@@ -598,17 +598,32 @@ export default function PricingTag() {
                     </span>
                   </div>
                 )}
-
-                <Button
-                  variant="outline"
-                  className="cursor-pointer green-gradient-border-btn text-[16px] g-transparent rounded-full px-8 py-5 text-white hover:text-white"
-                >
-                  {tier.cta && tier.cta.normal}{" "}
-                  <span className="font-bold">
+                {index === 1 ? (
+                  <Link href="/sessions/start-session">
                     {" "}
-                    {tier.cta && tier.cta.bold}
-                  </span>
-                </Button>
+                    <Button
+                      variant="outline"
+                      className="cursor-pointer green-gradient-border-btn text-[16px] g-transparent rounded-full px-8 py-5 text-white hover:text-white"
+                    >
+                      {tier.cta && tier.cta.normal}{" "}
+                      <span className="font-bold">
+                        {" "}
+                        {tier.cta && tier.cta.bold}
+                      </span>
+                    </Button>
+                  </Link>
+                ) : (
+                  <Button
+                    variant="outline"
+                    className="cursor-pointer green-gradient-border-btn text-[16px] g-transparent rounded-full px-8 py-5 text-white hover:text-white"
+                  >
+                    {tier.cta && tier.cta.normal}{" "}
+                    <span className="font-bold">
+                      {" "}
+                      {tier.cta && tier.cta.bold}
+                    </span>
+                  </Button>
+                )}
 
                 <div className="border-y-[rgba(255,255,255,0.1)] border-y-[1px] text-white flex flex-col items-center justify-center py-[30px] px-[7px] gap-[30px]">
                   <p className="text-center text-[15px]">
@@ -745,7 +760,7 @@ export default function PricingTag() {
                 "absolute w-full h-full flex items-center justify-stretch"
               }
             >
-              <div className="main-box lg:min-w-[40.9vw] sm:min-w-[60vw] min-w-[84vw] h-full mx-4 w-auto">
+              <div className="main-box lg:min-w-[40.9vw] sm:min-w-[60vw] min-w-[84vw] h-full w-auto">
                 <div className="my-9 mx-4 gap-6 flex flex-col items-center justify-start h-full">
                   <p className="text-white text-[14px]">
                     Firesight | <b>Session</b>

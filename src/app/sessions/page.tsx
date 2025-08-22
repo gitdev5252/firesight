@@ -113,12 +113,14 @@ export default function SessionPage() {
                 build momentum, not memory gaps.
               </span>
             </p>
-            <Button
-              variant="outline"
-              className="green-gradient-border-btn text-[22px] px-[35px] py-[25px] !text-white sm:mt-[50px] mt-[15px] font-bold"
-            >
-              Try for Free
-            </Button>
+            <Link href="/sessions/start-session">
+              <Button
+                variant="outline"
+                className="green-gradient-border-btn text-[22px] px-[35px] py-[25px] !text-white sm:mt-[50px] mx-[15px] font-bold"
+              >
+                Try for Free
+              </Button>
+            </Link>
           </div>
           <div className="flex flex-col justify-between items-center md:w-[35%] w-full gap-6">
             <div className="text-center flex flex-col justify-center items-center border border-[rgba(255,255,255,0.1)] backdrop-blur-[32px] rounded-[20px] md:p-[40px] p-[20px] h-full">
@@ -150,7 +152,7 @@ export default function SessionPage() {
         </div>
       </div>
 
-      <div className="flex justify-start flex-col md:px-14 px-4 md:mb-[120px] mb-[30px]">
+      <div className="flex justify-start flex-col md:px-14 px-4 md:mb-[120px] mb-[30px] sm:mt-[120px]">
         <h3 className="text-[24px] bg-gradient-to-b from-[rgba(20,255,0,0.55)] to-[rgba(0,240,255,0.62)] bg-clip-text text-transparent font-bold md:mb-[50px] mb-[15px]">
           FEATURES
         </h3>
@@ -199,14 +201,16 @@ export default function SessionPage() {
         </div>
       </div>
 
-      <div className="flex w-full relative 2xl:h-[1500px] md:h-[1098px]">
-        <Button
-          variant="outline"
-          className="green-gradient-border-btn text-[22px] px-[35px] py-[25px] !text-white md:ml-14 font-bold"
-        >
-          Try for Free
-        </Button>
-        <div className="flex justify-center items-center w-full absolute z-[1000]">
+      <div className="flex w-full relative 2xl:h-[1400px] md:h-[1100px]">
+        <Link href="/sessions/start-session" className="z-[99999]">
+          <Button
+            variant="outline"
+            className="green-gradient-border-btn text-[22px] px-[35px] py-[25px] !text-white md:ml-14 font-bold"
+          >
+            Try for Free
+          </Button>
+        </Link>
+        <div className="flex justify-center items-center w-full absolute z-[9999]">
           <div
             className="w-[51px] h-[31px]"
             onClick={() => setToggle((toggle + 1) % 2)}
@@ -320,6 +324,7 @@ export default function SessionPage() {
             fill
             priority
             alt="worldshare"
+            className="mt-[30px]"
           />
         ) : (
           <Image
@@ -327,6 +332,7 @@ export default function SessionPage() {
             fill
             priority
             alt="worldshare"
+            className="mt-[30px]"
           />
         )}
       </div>

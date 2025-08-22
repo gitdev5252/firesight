@@ -397,7 +397,7 @@ const ConferenceControls = ({
 
   const handleEndCall = async (e: React.MouseEvent<HTMLButtonElement>) => {
     if (disconnectButtonProps.onClick) await disconnectButtonProps.onClick(e);
-    router.push("/session");
+    router.push("/sessions");
   };
   const fullScreenStyle =
     !isSideRail && "bg-[#080B1680] p-3 rounded-[15px] mt-1";
@@ -699,7 +699,7 @@ const MobileTabBarControls = ({
 
   const handleEndCall = async (e: React.MouseEvent<HTMLButtonElement>) => {
     if (disconnectButtonProps.onClick) await disconnectButtonProps.onClick(e);
-    router.push("/session");
+    router.push("/sessions");
   };
 
   return (
@@ -1253,7 +1253,7 @@ export default function SessionPage() {
                         <div className="fixed bottom-0 left-0 right-0 z-50 md:hidden px-4 pb-6">
                           <button
                             onClick={() => {
-                              window.location.href = "/session";
+                              window.location.href = "/sessions";
                             }}
                             className="w-full flex items-center justify-between gap-3 p-4 bg-[#0f1419] rounded-lg border border-white/10 shadow focus:outline-none focus:ring-2 focus:ring-red-400 transition"
                           >
