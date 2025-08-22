@@ -274,16 +274,140 @@ export default function PricingTag() {
   return (
     <>
       <div className="flex flex-wrap flex-col justify-center items-center w-full text-center">
-        <h3 className="text-[24px] bg-gradient-to-b from-[rgba(20,255,0,0.55)] to-[rgba(0,240,255,0.62)] bg-clip-text text-transparent font-bold md:mb-[50px] mb-[15px]">
+        <h3 className="sm:text-[24px] text-[16px] bg-gradient-to-b from-[rgba(20,255,0,0.55)] to-[rgba(0,240,255,0.62)] bg-clip-text text-transparent font-bold md:mb-[50px] mb-[15px]">
           PRICING
         </h3>
         <h1 className="uppercase text-white md:text-[80px] text-[28px] font-bold md:w-[55%] w-full sm:mt-[20px]">
           the perfect plan for your needs
         </h1>
+        <div className="sm:hidden flex items-center justify-center md:gap-[30px] gap-5 my-[20px]">
+          <span
+            className={`md:text-[22px] text-[16px] text-white ${
+              period === 0 ? "font-bold" : ""
+            }`}
+            onClick={() => setPeriod(0)}
+          >
+            Individual
+          </span>
+          <div
+            className="w-[51px] h-[31px]"
+            onClick={() => setPeriod((period + 1) % 2)}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="59"
+              height="43"
+              viewBox="0 0 59 43"
+              fill="none"
+            >
+              <path
+                fillRule="evenodd"
+                clipRule="evenodd"
+                d="M17.2554 3.09215C18.9954 2.99215 20.7334 3.00015 22.4734 3.00015C22.4854 3.00015 31.2904 3.00015 31.2904 3.00015C33.0644 3.00015 34.8024 2.99215 36.5414 3.09215C38.1224 3.18215 39.6624 3.37415 41.1954 3.80315C44.4224 4.70515 47.2404 6.58915 49.2774 9.26015C51.3024 11.9142 52.3984 15.1632 52.3984 18.4992C52.3984 21.8392 51.3024 25.0862 49.2774 27.7402C47.2404 30.4102 44.4224 32.2952 41.1954 33.1972C39.6624 33.6262 38.1224 33.8172 36.5414 33.9082C34.8024 34.0082 33.0644 33.9992 31.3244 33.9992C31.3124 33.9992 22.5054 34.0002 22.5054 34.0002C20.7334 33.9992 18.9954 34.0082 17.2554 33.9082C15.6754 33.8172 14.1354 33.6262 12.6024 33.1972C9.37544 32.2952 6.55744 30.4102 4.52044 27.7402C2.49544 25.0862 1.39844 21.8392 1.39844 18.5002C1.39844 15.1632 2.49544 11.9142 4.52044 9.26015C6.55744 6.58915 9.37544 4.70515 12.6024 3.80315C14.1354 3.37415 15.6754 3.18215 17.2554 3.09215Z"
+                fill="url(#paint0_linear_2002_30469)"
+                fillOpacity="0.5"
+                stroke="url(#paint1_linear_2002_30469)"
+              />
+              <g
+                filter="url(#filter0_dd_2002_30469)"
+                transform={period == 0 ? "translate(-20, 0)" : ""}
+              >
+                <path
+                  fillRule="evenodd"
+                  clipRule="evenodd"
+                  d="M36.8984 32C44.3543 32 50.3984 25.9558 50.3984 18.5C50.3984 11.0442 44.3543 5 36.8984 5C29.4426 5 23.3984 11.0442 23.3984 18.5C23.3984 25.9558 29.4426 32 36.8984 32Z"
+                  fill="white"
+                />
+              </g>
+              <defs>
+                <filter
+                  id="filter0_dd_2002_30469"
+                  x="15.3984"
+                  y="0"
+                  width="43"
+                  height="43"
+                  filterUnits="userSpaceOnUse"
+                  colorInterpolationFilters="sRGB"
+                >
+                  <feFlood floodOpacity="0" result="BackgroundImageFix" />
+                  <feColorMatrix
+                    in="SourceAlpha"
+                    type="matrix"
+                    values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+                    result="hardAlpha"
+                  />
+                  <feOffset dy="3" />
+                  <feGaussianBlur stdDeviation="0.5" />
+                  <feColorMatrix
+                    type="matrix"
+                    values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.06 0"
+                  />
+                  <feBlend
+                    in="SourceAlpha"
+                    type="matrix"
+                    values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+                    result="hardAlpha"
+                  />
+                  <feOffset dy="3" />
+                  <feGaussianBlur stdDeviation="4" />
+                  <feColorMatrix
+                    type="matrix"
+                    values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.15 0"
+                  />
+                  <feBlend
+                    mode="normal"
+                    in2="effect1_dropShadow_2002_30469"
+                    result="effect2_dropShadow_2002_30469"
+                  />
+                  <feBlend
+                    mode="normal"
+                    in="SourceGraphic"
+                    in2="effect2_dropShadow_2002_30469"
+                    result="shape"
+                  />
+                </filter>
+                <linearGradient
+                  id="paint0_linear_2002_30469"
+                  x1="27.3811"
+                  y1="3"
+                  x2="27.3811"
+                  y2="34.0002"
+                  gradientUnits="userSpaceOnUse"
+                >
+                  <stop stopColor="#038B98" stopOpacity="0.63" />
+                  <stop
+                    offset="0.703125"
+                    stop-color="#0FFB49"
+                    stop-opacity="0.59"
+                  />
+                </linearGradient>
+                <linearGradient
+                  id="paint1_linear_2002_30469"
+                  x1="26.8984"
+                  y1="3"
+                  x2="26.8984"
+                  y2="34.0002"
+                  gradientUnits="userSpaceOnUse"
+                >
+                  <stop stopColor="#14FF00" stopOpacity="0.55" />
+                  <stop offset="1" stopColor="#00F0FF" stopOpacity="0.62" />
+                </linearGradient>
+              </defs>
+            </svg>
+          </div>
+          <span
+            className={`md:text-[22px] text-[16px] text-white ${
+              period === 1 ? "font-bold" : ""
+            }`}
+            onClick={() => setPeriod(1)}
+          >
+            Team
+          </span>
+        </div>
       </div>
       <div
         ref={containerRef}
-        className="overflow-x-hidden w-full relative sm:block flex flex-col justify-center items-center md:py-[60px] py-[20px] border border-[rgba(255,255,255,0.1)] backdrop-blur-[32px] rounded-[20px] bg-[rgba(255,255,255,0.02)]"
+        className="overflow-x-hidden sm:flex hidden w-full flex-col justify-center items-center md:py-[60px] py-[20px] border border-[rgba(255,255,255,0.1)] backdrop-blur-[32px] rounded-[20px] bg-[rgba(255,255,255,0.02)]"
       >
         <div className="flex items-center justify-center md:gap-[30px] gap-5 md:mb-[65px] mb-[20px]">
           <span
@@ -409,7 +533,7 @@ export default function PricingTag() {
             Team
           </span>
         </div>
-        <div className="text-center md:mb-[90px] sm:mb-[30px] sm:text-[24px] text-[16px] md:px-[100px] px-[10px]">
+        <div className="block text-center md:mb-[90px] sm:mb-[30px] sm:text-[24px] text-[16px] md:px-[100px] px-[10px]">
           {period === 0 ? (
             <>
               <p className="font-bold text-white">
@@ -724,79 +848,209 @@ export default function PricingTag() {
             </div>
           ))}
         </motion.div>
-        <div className="w-full sm:hidden">
-          <div className="relative w-full shadow rounded overflow-hidden text-white h-[calc(2164px-180vw)]">
-            <AnimatePresence initial={false} custom={direction}>
-              <motion.div
-                key={page}
-                custom={direction}
-                drag="x"
-                dragConstraints={{ left: 0, right: 0 }}
-                onDragEnd={(e, { offset, velocity }) => {
-                  const swipe = swipePower(offset.x, velocity.x);
-                  if (swipe < -swipeConfidenceThreshold) paginate(1);
-                  else if (swipe > swipeConfidenceThreshold) paginate(-1);
-                }}
-                variants={{
-                  enter: (dir: number) => ({
-                    x: dir > 0 ? 300 : -300,
-                    opacity: 0,
-                  }),
-                  center: {
-                    x: 0,
-                    opacity: 1,
-                  },
-                  exit: (dir: number) => ({
-                    x: dir < 0 ? 300 : -300,
-                    opacity: 0,
-                  }),
-                }}
-                initial="enter"
-                animate="center"
-                exit="exit"
-                transition={{ duration: 0.1 }}
-                className={
-                  "absolute w-full h-full flex items-center justify-stretch"
-                }
-              >
-                <div className="main-box lg:min-w-[40.9vw] sm:min-w-[60vw] min-w-[84vw] h-full w-auto mx-4">
-                  <div
-                    className={`my-9 mx-4 gap-6 flex flex-col items-center justify-start border border-[rgba(255,255,255,0.1)] rounded-[20px] relative w-full backdrop-blur-[32px]
+      </div>
+      <div className="w-full sm:hidden">
+        <div className="relative w-full shadow rounded overflow-hidden text-white h-[calc(1900px-180vw)] mt-[10px]">
+          <AnimatePresence initial={false} custom={direction}>
+            <motion.div
+              key={page}
+              custom={direction}
+              drag="x"
+              dragConstraints={{ left: 0, right: 0 }}
+              onDragEnd={(e, { offset, velocity }) => {
+                const swipe = swipePower(offset.x, velocity.x);
+                if (swipe < -swipeConfidenceThreshold) paginate(1);
+                else if (swipe > swipeConfidenceThreshold) paginate(-1);
+              }}
+              variants={{
+                enter: (dir: number) => ({
+                  x: dir > 0 ? 300 : -300,
+                  opacity: 0,
+                }),
+                center: {
+                  x: 0,
+                  opacity: 1,
+                },
+                exit: (dir: number) => ({
+                  x: dir < 0 ? 300 : -300,
+                  opacity: 0,
+                }),
+              }}
+              initial="enter"
+              animate="center"
+              exit="exit"
+              transition={{ duration: 0.1 }}
+              className={"absolute w-full flex items-center justify-stretch"}
+            >
+              <div className="lg:min-w-[40.9vw] sm:min-w-[60vw] min-w-[84vw]  w-auto mx-4">
+                <div
+                  className={`p-[15px] h-[1200px] gap-6 flex flex-col items-center justify-start border border-[rgba(255,255,255,0.1)] rounded-[20px] relative w-full backdrop-blur-[32px]
                     ${
                       page === 0
                         ? "bg-[linear-gradient(86deg,rgba(3,139,152,0.16)_9.54%,rgba(15,251,73,0.15)_72.65%)]"
                         : "bg-[rgba(255,255,255,0.01)]"
                     }`}
-                  >
-                    <p className="text-white text-[14px]">
-                      Firesight | <b>Session</b>
-                    </p>
-                    <p className="uppercase text-center text-[30px] font-bold text-[rgba(0,255,224,0.60)]">
-                      {pricingTiers[page].plan}
-                    </p>
-                    <p className="text-white font-bold text-center">
-                      {pricingTiers[page].priceDes == "Contact Us" ? (
-                        <span className="text-[40px] leading-loose">
-                          Contact Us
+                >
+                  <p className="text-white text-[14px] mt-[20px]">
+                    Firesight | <b>Session</b>
+                  </p>
+                  <p className="uppercase text-[36px] font-bold text-white">
+                    {pricingTiers[page].plan}
+                  </p>
+                  <p className="text-white font-bold text-center">
+                    <span className="text-[55px] leading-none">
+                      $
+                      {period
+                        ? pricingTiers[page].price.annual
+                        : pricingTiers[page].price.monthly}
+                    </span>
+                    <br />
+                  </p>
+
+                  {page > 1 && (
+                    <div className="flex items-center justify-center md:gap-[30px] gap-5 ">
+                      <span className="md:text-[22px] text-[16px] text-white">
+                        Monthly
+                      </span>
+                      <div
+                        className="w-[51px] h-[31px]"
+                        onClick={() => setPeriod((period + 1) % 2)}
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="59"
+                          height="43"
+                          viewBox="0 0 59 43"
+                          fill="none"
+                        >
+                          <path
+                            fillRule="evenodd"
+                            clipRule="evenodd"
+                            d="M17.2554 3.09215C18.9954 2.99215 20.7334 3.00015 22.4734 3.00015C22.4854 3.00015 31.2904 3.00015 31.2904 3.00015C33.0644 3.00015 34.8024 2.99215 36.5414 3.09215C38.1224 3.18215 39.6624 3.37415 41.1954 3.80315C44.4224 4.70515 47.2404 6.58915 49.2774 9.26015C51.3024 11.9142 52.3984 15.1632 52.3984 18.4992C52.3984 21.8392 51.3024 25.0862 49.2774 27.7402C47.2404 30.4102 44.4224 32.2952 41.1954 33.1972C39.6624 33.6262 38.1224 33.8172 36.5414 33.9082C34.8024 34.0082 33.0644 33.9992 31.3244 33.9992C31.3124 33.9992 22.5054 34.0002 22.5054 34.0002C20.7334 33.9992 18.9954 34.0082 17.2554 33.9082C15.6754 33.8172 14.1354 33.6262 12.6024 33.1972C9.37544 32.2952 6.55744 30.4102 4.52044 27.7402C2.49544 25.0862 1.39844 21.8392 1.39844 18.5002C1.39844 15.1632 2.49544 11.9142 4.52044 9.26015C6.55744 6.58915 9.37544 4.70515 12.6024 3.80315C14.1354 3.37415 15.6754 3.18215 17.2554 3.09215Z"
+                            fill="url(#paint0_linear_2002_30469)"
+                            fillOpacity="0.5"
+                            stroke="url(#paint1_linear_2002_30469)"
+                          />
+                          <g
+                            filter="url(#filter0_dd_2002_30469)"
+                            transform={period == 0 ? "translate(-20, 0)" : ""}
+                          >
+                            <path
+                              fillRule="evenodd"
+                              clipRule="evenodd"
+                              d="M36.8984 32C44.3543 32 50.3984 25.9558 50.3984 18.5C50.3984 11.0442 44.3543 5 36.8984 5C29.4426 5 23.3984 11.0442 23.3984 18.5C23.3984 25.9558 29.4426 32 36.8984 32Z"
+                              fill="white"
+                            />
+                          </g>
+                          <defs>
+                            <filter
+                              id="filter0_dd_2002_30469"
+                              x="15.3984"
+                              y="0"
+                              width="43"
+                              height="43"
+                              filterUnits="userSpaceOnUse"
+                              colorInterpolationFilters="sRGB"
+                            >
+                              <feFlood
+                                floodOpacity="0"
+                                result="BackgroundImageFix"
+                              />
+                              <feColorMatrix
+                                in="SourceAlpha"
+                                type="matrix"
+                                values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+                                result="hardAlpha"
+                              />
+                              <feOffset dy="3" />
+                              <feGaussianBlur stdDeviation="0.5" />
+                              <feColorMatrix
+                                type="matrix"
+                                values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.06 0"
+                              />
+                              <feBlend
+                                in="SourceAlpha"
+                                type="matrix"
+                                values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+                                result="hardAlpha"
+                              />
+                              <feOffset dy="3" />
+                              <feGaussianBlur stdDeviation="4" />
+                              <feColorMatrix
+                                type="matrix"
+                                values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.15 0"
+                              />
+                              <feBlend
+                                mode="normal"
+                                in2="effect1_dropShadow_2002_30469"
+                                result="effect2_dropShadow_2002_30469"
+                              />
+                              <feBlend
+                                mode="normal"
+                                in="SourceGraphic"
+                                in2="effect2_dropShadow_2002_30469"
+                                result="shape"
+                              />
+                            </filter>
+                            <linearGradient
+                              id="paint0_linear_2002_30469"
+                              x1="27.3811"
+                              y1="3"
+                              x2="27.3811"
+                              y2="34.0002"
+                              gradientUnits="userSpaceOnUse"
+                            >
+                              <stop stopColor="#0091FF" stopOpacity="0.55" />
+                              <stop
+                                offset="1"
+                                stopColor="#86A0D8"
+                                stopOpacity="0.62"
+                              />
+                            </linearGradient>
+                            <linearGradient
+                              id="paint1_linear_2002_30469"
+                              x1="26.8984"
+                              y1="3"
+                              x2="26.8984"
+                              y2="34.0002"
+                              gradientUnits="userSpaceOnUse"
+                            >
+                              <stop stopColor="#00FFE0" stopOpacity="0.55" />
+                              <stop
+                                offset="1"
+                                stopColor="#BCEFFF"
+                                stopOpacity="0.62"
+                              />
+                            </linearGradient>
+                          </defs>
+                        </svg>
+                      </div>
+                      <span className="md:text-[22px] text-[16px] text-white font-bold">
+                        Annual
+                      </span>
+                    </div>
+                  )}
+
+                  {page === 1 ? (
+                    <Link href="/sessions/start-session">
+                      {" "}
+                      <Button
+                        variant="outline"
+                        className="cursor-pointer green-gradient-border-btn text-[16px] g-transparent rounded-full px-8 py-5 text-white hover:text-white"
+                      >
+                        {pricingTiers[page].cta &&
+                          pricingTiers[page].cta.normal}{" "}
+                        <span className="font-bold">
+                          {" "}
+                          {pricingTiers[page].cta &&
+                            pricingTiers[page].cta.bold}
                         </span>
-                      ) : (
-                        <>
-                          <span className="text-[36px] leading-none">
-                            $
-                            {period
-                              ? pricingTiers[page].price.annual
-                              : pricingTiers[page].price.monthly}
-                          </span>
-                          <br />
-                          <span className="text-[14px] font-normal leading-none">
-                            {pricingTiers[page].priceDes}
-                          </span>
-                        </>
-                      )}
-                    </p>
+                      </Button>
+                    </Link>
+                  ) : (
                     <Button
                       variant="outline"
-                      className="cursor-pointer gradient-border-btn text-[16px] g-transparent h-11 mt-3 rounded-full px-9 py-3 text-white hover:text-white"
+                      className="cursor-pointer green-gradient-border-btn text-[16px] g-transparent rounded-full px-8 py-5 text-white hover:text-white"
                     >
                       {pricingTiers[page].cta && pricingTiers[page].cta.normal}{" "}
                       <span className="font-bold">
@@ -804,87 +1058,142 @@ export default function PricingTag() {
                         {pricingTiers[page].cta && pricingTiers[page].cta.bold}
                       </span>
                     </Button>
+                  )}
 
-                    <div className="border-y-[rgba(255,255,255,0.1)] border-y-[1px] text-white flex flex-col items-center justify-center py-6 px-[7px] gap-6">
-                      <p className="text-center text-[12px]">
-                        {pricingTiers[page].description &&
-                          pricingTiers[page].description.content}
-                      </p>
-                    </div>
+                  <div className="border-y-[rgba(255,255,255,0.1)] border-y-[1px] text-white flex flex-col items-center justify-center py-[20px] px-[7px] gap-[20px]">
+                    <p className="text-center !text-[12px]">
+                      {period === 0
+                        ? pricingTiers[page].description &&
+                          pricingTiers[page].description.content
+                        : teamCardContent[page]}
+                    </p>
+                  </div>
 
-                    <div className="flex flex-col gap-5">
-                      {pricingTiers[page].features.map((feature, index) => (
-                        <div
-                          key={index}
-                          className="flex items-center justify-between gap-4"
+                  <div className="flex flex-col gap-5 mt-8 mb-10">
+                    {page !== 0 && (
+                      <div className="flex gap-4">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="16"
+                          height="19"
+                          viewBox="0 0 16 19"
+                          fill="none"
                         >
-                          <div>
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="14"
-                              height="17"
-                              viewBox="0 0 14 17"
-                              fill="none"
+                          <path
+                            d="M15.5065 5.48291V13.8979L8.00647 18.1167L0.50647 13.8979V5.48291L8.00647 1.26416L15.5065 5.48291Z"
+                            fill="url(#paint0_linear_133_51225)"
+                            fill-opacity="0.4"
+                            stroke="url(#paint1_linear_133_51225)"
+                          />
+                          <defs>
+                            <linearGradient
+                              id="paint0_linear_133_51225"
+                              x1="0.842291"
+                              y1="16.1195"
+                              x2="16.2387"
+                              y2="15.7592"
+                              gradientUnits="userSpaceOnUse"
                             >
-                              <path
-                                d="M7 0.5L14 4.5V12.5L7 16.5L0 12.5V4.5L7 0.5Z"
-                                fill="white"
+                              <stop stop-color="#038B98" stop-opacity="0.63" />
+                              <stop
+                                offset="0.703125"
+                                stop-color="#0FFB49"
+                                stop-opacity="0.59"
                               />
-                            </svg>
-                          </div>
-                          <p className="text-white text-[12px]">
-                            <b>{feature.name}</b> {feature.des}
-                          </p>
+                            </linearGradient>
+                            <linearGradient
+                              id="paint1_linear_133_51225"
+                              x1="8.00647"
+                              y1="0.690918"
+                              x2="8.00647"
+                              y2="18.6909"
+                              gradientUnits="userSpaceOnUse"
+                            >
+                              <stop stop-color="#14FF00" stop-opacity="0.55" />
+                              <stop
+                                offset="1"
+                                stop-color="#00F0FF"
+                                stop-opacity="0.62"
+                              />
+                            </linearGradient>
+                          </defs>
+                        </svg>
+                        <span className="font-bold text-[12px] text-white">
+                          All Sessions Instant Features +
+                        </span>{" "}
+                      </div>
+                    )}
+                    {pricingTiers[page].features.map((feature, index) => (
+                      <div
+                        key={index}
+                        className="flex items-center justify-start gap-4"
+                      >
+                        <div>
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="17"
+                            height="18"
+                            viewBox="0 0 17 18"
+                            fill="none"
+                          >
+                            <path
+                              d="M8.72656 0L16.7266 4.5V13.5L8.72656 18L0.726562 13.5V4.5L8.72656 0Z"
+                              fill="white"
+                            />
+                          </svg>
                         </div>
-                      ))}
-                    </div>
+                        <p className="text-white text-[12px]">
+                          <b>{feature.name}</b> {feature.des}
+                        </p>
+                      </div>
+                    ))}
                   </div>
                 </div>
-              </motion.div>
-            </AnimatePresence>
-          </div>
-          <div className="flex justify-center gap-2 my-8 sm:hidden">
-            {pricingTiers.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => paginate(index - page)}
-                className={`${
-                  page === index
-                    ? "h-[8.66px] w-[26px]"
-                    : "w-[10px] h-[10px] opacity-50"
-                }`}
-              >
-                {page === index ? (
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="26"
-                    height="10"
-                    viewBox="0 0 26 10"
-                    fill="none"
-                  >
-                    <path
-                      d="M25.5275 4.21311C25.8175 4.69611 25.8124 5.30088 25.5143 5.77894L23.7404 8.62384C23.4665 9.06317 22.9853 9.33018 22.4676 9.33018L3.44896 9.33018C2.92224 9.33018 2.43412 9.05391 2.16298 8.60234L0.463642 5.77221C0.178291 5.29698 0.178291 4.70312 0.463642 4.22788L2.16298 1.39776C2.43412 0.946186 2.92225 0.669921 3.44897 0.669921L22.551 0.669922C23.0778 0.669922 23.5659 0.946188 23.837 1.39776L25.5275 4.21311Z"
-                      fill="white"
-                    />
-                  </svg>
-                ) : (
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="10"
-                    height="10"
-                    viewBox="0 0 10 10"
-                    fill="none"
-                  >
-                    <path
-                      opacity="0.5"
-                      d="M9.56699 4.25C9.83494 4.7141 9.83494 5.2859 9.56699 5.75L7.93301 8.58013C7.66506 9.04423 7.16987 9.33013 6.63397 9.33013L3.36603 9.33013C2.83013 9.33013 2.33494 9.04423 2.06699 8.58013L0.433013 5.75C0.165064 5.2859 0.165064 4.7141 0.433013 4.25L2.06699 1.41987C2.33494 0.955771 2.83013 0.669872 3.36603 0.669872L6.63397 0.669873C7.16987 0.669873 7.66506 0.955771 7.93301 1.41987L9.56699 4.25Z"
-                      fill="white"
-                    />
-                  </svg>
-                )}
-              </button>
-            ))}
-          </div>
+              </div>
+            </motion.div>
+          </AnimatePresence>
+        </div>
+        <div className="flex justify-center gap-2 mb-8 sm:hidden">
+          {pricingTiers.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => paginate(index - page)}
+              className={`${
+                page === index
+                  ? "h-[8.66px] w-[26px]"
+                  : "w-[10px] h-[10px] opacity-50"
+              }`}
+            >
+              {page === index ? (
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="26"
+                  height="10"
+                  viewBox="0 0 26 10"
+                  fill="none"
+                >
+                  <path
+                    d="M25.5275 4.21311C25.8175 4.69611 25.8124 5.30088 25.5143 5.77894L23.7404 8.62384C23.4665 9.06317 22.9853 9.33018 22.4676 9.33018L3.44896 9.33018C2.92224 9.33018 2.43412 9.05391 2.16298 8.60234L0.463642 5.77221C0.178291 5.29698 0.178291 4.70312 0.463642 4.22788L2.16298 1.39776C2.43412 0.946186 2.92225 0.669921 3.44897 0.669921L22.551 0.669922C23.0778 0.669922 23.5659 0.946188 23.837 1.39776L25.5275 4.21311Z"
+                    fill="white"
+                  />
+                </svg>
+              ) : (
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="10"
+                  height="10"
+                  viewBox="0 0 10 10"
+                  fill="none"
+                >
+                  <path
+                    opacity="0.5"
+                    d="M9.56699 4.25C9.83494 4.7141 9.83494 5.2859 9.56699 5.75L7.93301 8.58013C7.66506 9.04423 7.16987 9.33013 6.63397 9.33013L3.36603 9.33013C2.83013 9.33013 2.33494 9.04423 2.06699 8.58013L0.433013 5.75C0.165064 5.2859 0.165064 4.7141 0.433013 4.25L2.06699 1.41987C2.33494 0.955771 2.83013 0.669872 3.36603 0.669872L6.63397 0.669873C7.16987 0.669873 7.66506 0.955771 7.93301 1.41987L9.56699 4.25Z"
+                    fill="white"
+                  />
+                </svg>
+              )}
+            </button>
+          ))}
         </div>
       </div>
     </>
