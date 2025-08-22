@@ -4,7 +4,12 @@ import dynamic from "next/dynamic";
 import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-import { subData, slideData } from "@/utils/constant/firesight";
+import {
+  subData,
+  slideData,
+  subDataMobile,
+  slideDataMobile,
+} from "@/utils/constant/firesight";
 import FireSightFooter from "@/layouts/FireSightFooter";
 
 const SessionModal = dynamic(
@@ -47,8 +52,8 @@ export default function StartSessionPage() {
   }, [paginate]);
 
   return (
-    <div className="w-full flex relative flex-col items-center justify-center min-h-screen overflow-hidden mt-30">
-      <div className="px-4 md:px-14">
+    <div className="w-full flex relative flex-col items-center justify-center min-h-screen overflow-hidden sm:mt-[120px] mt-[90px]">
+      <div className="sm:px-14 px-4 sm:mb-auto mb-[28px]">
         {modalOpen && (
           <SessionModal
             onClose={() => setModalOpen(false)}
@@ -79,22 +84,25 @@ export default function StartSessionPage() {
           <div className="green-shine-session-2nd-small md:block hidden"></div>
           <div className="green-shine-session-3rd-small md:block hidden"></div>
         </div>
-        <div className="flex flex-wrap p-[50px] text-white items-center justify-between border bg-[rgba(255,255,255,0.01)] border-[rgba(255,255,255,0.1)] backdrop-blur-[32px] rounded-[20px] w-full relative md:mb-[30px]">
-          <div className="md:w-5/9 w-full pt-[30px] pr-[100px]">
-            <h2 className="uppercase text-[35px] font-bold">
+        <div className="flex flex-wrap sm:p-[50px] p-[16px] text-white items-center justify-between border bg-[rgba(255,255,255,0.01)] border-[rgba(255,255,255,0.1)] backdrop-blur-[32px] rounded-[20px] w-full relative md:mb-[30px]">
+          <div className="md:w-5/9 w-full sm:block flex flex-col justify-center items-center pt-[30px] sm:pr-[100px] pr-0">
+            <h2 className="uppercase sm:text-[35px] text-[28px] font-bold sm:text-start text-center">
               smarter calls,{" "}
-              <span className="bg-gradient-to-b from-[rgba(20,255,0,0.55)] to-[rgba(0,240,255,0.62)] bg-clip-text text-transparent">
+              <span className="sm:hidden block h-[1px]">
+                <br />
+              </span>
+              <span className="bg-gradient-to-b from-[rgba(20,255,0,0.55)] to-[rgba(0,240,255,0.62)]  bg-clip-text sm:text-transparent text-white">
                 faster decisions
               </span>
             </h2>
-            <p className="text-[16px] pt-[40px]">
+            <p className="sm:text-[16px] text-[12px] sm:pt-[40px] pt-[12px] sm:text-start text-center">
               Sessions is an AI-Native browser-based video conferencing platform
               and your real-time decision co-pilot. Move from discussion to
               decision faster with Firesight | Sessions.
             </p>
-            <div className="flex flex-wrap mt-[50px] gap-4">
+            <div className="flex flex-wrap sm:w-auto w-full sm:mt-[50px] mt-[24px] gap-4">
               <button
-                className="flex items-center text-[18px] px-[36px] py-[14px] text-white font-bold cursor-pointer"
+                className="flex items-center sm:text-[18px] text-[16px] px-[36px] py-[14px] text-white font-bold cursor-pointer text-center sm:w-auto w-full"
                 style={{
                   border: "1px solid rgba(15, 251, 73, 0.59)",
                   borderRadius: "55px",
@@ -104,17 +112,19 @@ export default function StartSessionPage() {
                 }}
                 onClick={() => setModalOpen(true)}
               >
-                <Image
-                  src="/images/icons/camera.svg"
-                  alt="New Session"
-                  width={24}
-                  height={24}
-                  className="pr-2"
-                />
-                New Session
+                <div className="flex justify-center w-full">
+                  <Image
+                    src="/images/icons/camera.svg"
+                    alt="New Session"
+                    width={24}
+                    height={24}
+                    className="pr-2"
+                  />
+                  New Session
+                </div>
               </button>
               <button
-                className="flex items-center text-[18px] px-[36px] py-[14px] text-white font-bold"
+                className="flex items-center sm:text-[18px] text-[16px] sm:px-[36px] py-[14px] text-white text-center sm:w-auto w-full"
                 style={{
                   border: "1px solid #262933",
                   borderRadius: "55px",
@@ -122,20 +132,25 @@ export default function StartSessionPage() {
                   boxShadow: "0 3.131px 46.972px 0 rgba(13, 63, 46, 0.5)",
                 }}
               >
-                <Image
-                  src="/images/icons/link.svg"
-                  alt="session link"
-                  width={24}
-                  height={24}
-                  className="pr-2"
-                />
-                Enter Session Link
+                <div className="flex justify-center w-full">
+                  <Image
+                    src="/images/icons/link.svg"
+                    alt="session link"
+                    width={24}
+                    height={24}
+                    className="pr-2"
+                  />
+                  Enter Session Link
+                </div>
               </button>
             </div>
-            <div className="border border-b-[1px] border-[rgba(255,255,255,0.1)] mt-[45px] w-full"></div>
-            <div className="flex flex-wrap mt-[50px] gap-4">
+            <div className="border-b-[1px] border-[rgba(255,255,255,0.1)] sm:mt-[45px] mt-[36px] w-full"></div>
+            <div className="sm:flex hidden flex-wrap sm:mt-[30px] gap-4">
               {subData.map((item, index) => (
-                <div key={index} className="flex items-center gap-2 p-2 ">
+                <div
+                  key={index}
+                  className="flex sm:flex-col items-center gap-2 p-2 "
+                >
                   <Image
                     src={item.image}
                     alt={item.title}
@@ -147,8 +162,27 @@ export default function StartSessionPage() {
                 </div>
               ))}
             </div>
+            <div className="sm:hidden flex my-[16px] sm:mt-[30px] gap-4">
+              {subDataMobile.map((item, index) => (
+                <div
+                  key={index}
+                  className={`flex flex-col justify-center items-center border-[rgba(255,255,255,0.1)] ${
+                    index <= 1 ? "border-r-[1px] pr-[14px]" : "border-0"
+                  }`}
+                >
+                  <Image
+                    src={item.image}
+                    alt={item.title}
+                    width={24}
+                    height={24}
+                  />
+                  <span className="text-[10px] mt-[8px]">{item.title}</span>
+                </div>
+              ))}
+            </div>
+            <div className="sm: border-0 border-b-[1px] border-[rgba(255,255,255,0.1)] block sm:hidden w-full"></div>
           </div>
-          <div className="border border-[rgba(255,255,255,0.1)] md:w-4/9 w-full rounded-[20px] relative flex flex-col items-center min-h-[450px] h-[450px] justify-between">
+          <div className="sm:border border-0 border-[rgba(255,255,255,0.1)] md:w-4/9 w-full rounded-[20px] relative flex flex-col items-center min-h-[450px] h-[460px] justify-between">
             <div className="flex-1 w-full flex items-center justify-center">
               <AnimatePresence initial={false} custom={direction}>
                 <motion.div
@@ -185,21 +219,31 @@ export default function StartSessionPage() {
                     const currentIndex = page % slideData.length;
                     const item = slideData[currentIndex];
                     return (
-                      <Image
-                        src={item.image}
-                        alt={item.title}
-                        key={item.title}
-                        width={537}
-                        height={347}
-                        className="mx-auto"
-                      />
+                      <div>
+                        <Image
+                          src={item.image}
+                          alt={item.title}
+                          key={item.title}
+                          width={513}
+                          height={347}
+                          className="mx-auto sm:block hidden"
+                        />
+                        <Image
+                          src={slideDataMobile[currentIndex].image}
+                          alt={item.title}
+                          key={item.title}
+                          width={313}
+                          height={330}
+                          className="sm:hidden block"
+                        />
+                      </div>
                     );
                   })()}
                 </motion.div>
               </AnimatePresence>
             </div>
             {/* Custom Polygon Pagination */}
-            <div className="flex items-center justify-center gap-3 mt-6 mb-2 z-10">
+            <div className="flex items-center justify-center gap-3 mt-1 mb-5 z-10 absolute bottom-[10px]">
               {slideData.map((item, idx) => (
                 <button
                   key={item.title}
@@ -232,13 +276,6 @@ export default function StartSessionPage() {
             </div>
           </div>
         </div>
-        <div
-          style={{
-            background: 'url("/images/mobile/sessions-show-mobile.svg")',
-            backgroundSize: "contain",
-          }}
-          className="w-[100vw] h-[206.07vw] bg-no-repeat block md:hidden"
-        ></div>
       </div>
       <div className="w-full">
         <FireSightFooter>

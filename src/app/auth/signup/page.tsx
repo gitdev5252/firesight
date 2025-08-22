@@ -1,5 +1,6 @@
 "use client";
 import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -243,12 +244,11 @@ export default function Page() {
           <div className="mt-[24px] w-full text-center">
             <p>
               Already have an account?{" "}
-              <span
-                className="font-bold underline cursor-pointer hover:text-[rgb(8,11,22)]"
-                onClick={() => router.push("/auth/signin")}
-              >
-                Sign In
-              </span>
+              <Link href="/auth/signin">
+                <span className="font-bold underline cursor-pointer hover:text-[rgb(8,11,22)]">
+                  Sign In
+                </span>
+              </Link>
             </p>
           </div>
         </div>

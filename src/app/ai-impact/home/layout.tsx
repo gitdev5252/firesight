@@ -21,17 +21,6 @@ export default function Page({
 }>) {
   const [modalOpen, setModalOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
-  // const pathname = usePathname();
-  // const [curPath, setCurPath] = useState("");
-  // useEffect(() => {
-  //   setModalOpen(false);
-  //   console.log("pathname changed!", pathname);
-  //   setCurPath(pathname);
-
-  //   const container = document.getElementById("main-container");
-  //   if (container && pathname != "/ai-impact/home")
-  //     container.style.setProperty("background", "#0E111C", "important");
-  // }, [pathname]);
   return (
     <SearchContext.Provider value={{ searchTerm, setSearchTerm }}>
       <div className="w-full lg:px-15 md:px-4">
@@ -78,10 +67,6 @@ export default function Page({
         <div
           id="main-container"
           className="main-box-1 lg:mt-[55px] md:mt-8 mt-4 lg:mb-[42px] md:mb-4 mb-6 w-full lg:p-10 lg:pr-11 px-4 py-[30px]"
-          // style={{
-          //   background:
-          //     curPath != "/ai-impact/home" ? "#0E111C !important" : "",
-          // }}
           style={{
             background: "transparent",
           }}
@@ -281,8 +266,6 @@ export default function Page({
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
-
-          {/* <p className="lg:text-[20px] mt-[50px] font-bold text-[#E93249] leading-[120%]">Engineering & Agriculture</p> */}
 
           {/* Main Panel */}
           {children}

@@ -110,7 +110,8 @@ export const sessionFeaturedCardInfo: SessionSectionCardInfo[] = [
   },
   {
     title: "Sessions Library",
-    content: "Knowledge Base for call recordings, transcripts & Sessions data. Effortlessly searchable; organised.",
+    content:
+      "Knowledge Base for call recordings, transcripts & Sessions data. Effortlessly searchable; organised.",
   },
   {
     title: "Sessions Recordings",
@@ -118,8 +119,6 @@ export const sessionFeaturedCardInfo: SessionSectionCardInfo[] = [
       "High-fidelity video and audio captures preserved for future reference, with intuitive UI navigation.",
   },
 ];
-
-
 
 export const platformSectionCardInfo: PlatformSectionCardInfo[] = [
   {
@@ -171,6 +170,21 @@ export const subData: ImageInfo[] = [
   },
 ];
 
+export const subDataMobile: ImageInfo[] = [
+  {
+    image: "/images/icons/star-green.svg",
+    title: "Add to Favourites",
+  },
+  {
+    image: "/images/icons/green-pin.svg",
+    title: "Pin to Launch Screen",
+  },
+  {
+    image: "/images/icons/green-download.svg",
+    title: "Save as App",
+  },
+];
+
 export const slideData: ImageInfo[] = [
   { title: "ai-co-pilot", image: "/images/session/ai-co-pilot.svg" },
   {
@@ -189,5 +203,26 @@ export const slideData: ImageInfo[] = [
   {
     title: "best-in-class-performance",
     image: "/images/session/best-in-class-performance.svg",
+  },
+];
+
+export const slideDataMobile: ImageInfo[] = [
+  { title: "ai-co-pilot", image: "/images/session/ai-copilot-sm.svg" },
+  {
+    title: "meeting-summaries",
+    image: "/images/session/ai-copilot-sm.svg",
+  },
+  {
+    title: "session-libraries",
+    image: "/images/session/ai-copilot-sm.svg",
+  },
+  {
+    title: "intelligence-knowledge-base",
+    image: "/images/session/ai-copilot-sm.svg",
+  },
+  { title: "meeting-flow", image: "/images/session/ai-copilot-sm.svg" },
+  {
+    title: "best-in-class-performance",
+    image: "/images/session/ai-copilot-sm.svg",
   },
 ];

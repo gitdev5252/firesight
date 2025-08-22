@@ -1,6 +1,11 @@
 "use client";
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import React, { useState, useCallback } from "react";
+import {
+  motion,
+  AnimatePresence,
+  useReducedMotion,
+  type PanInfo,
+} from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
 import "./page.css";
@@ -22,28 +27,57 @@ const swipePower = (offset: number, velocity: number) => {
   return Math.abs(offset) * velocity;
 };
 export default function Home() {
-  const [[page, direction], setPage] = useState([0, 0]);
-  const [[page1, direction1], setPage1] = useState([0, 0]);
-  const [[page2, direction2], setPage2] = useState([0, 0]);
+  const [pagesState, setPagesState] = useState({
+    platform: [0, 0],
+    pulse: [0, 0],
+    session: [0, 0],
+  });
 
-  const paginate = (newDirection: number) => {
-    setPage(([prevPage]) => {
-      const newPage = (prevPage + newDirection + pages.length) % pages.length;
-      return [newPage, newDirection];
-    });
-  };
-  const paginate1 = (newDirection: number) => {
-    setPage1(([prevPage]) => {
-      const newPage = (prevPage + newDirection + pages.length) % pages.length;
-      return [newPage, newDirection];
-    });
-  };
-  const paginate2 = (newDirection: number) => {
-    setPage2(([prevPage]) => {
-      const newPage = (prevPage + newDirection + pages.length) % pages.length;
-      return [newPage, newDirection];
-    });
-  };
+  const [page, direction] = pagesState.platform;
+  const [page1, direction1] = pagesState.pulse;
+  const [page2, direction2] = pagesState.session;
+
+  const paginate = useCallback(
+    (key: "platform" | "pulse" | "session", newDirection: number) => {
+      setPagesState((prev) => {
+        const [prevPage] = prev[key];
+        const newPage = (prevPage + newDirection + pages.length) % pages.length;
+        return { ...prev, [key]: [newPage, newDirection] };
+      });
+    },
+    []
+  );
+
+  // Respect user's reduced motion preference for accessibility and performance
+  const reducedMotion = useReducedMotion();
+
+  // Stable drag-end handlers to avoid creating new functions on every render.
+  const handlePulseDragEnd = useCallback(
+    (e: PointerEvent | MouseEvent | TouchEvent, info: PanInfo) => {
+      const swipe = swipePower(info.offset.x, info.velocity.x);
+      if (swipe < -swipeConfidenceThreshold) paginate("pulse", 1);
+      else if (swipe > swipeConfidenceThreshold) paginate("pulse", -1);
+    },
+    [paginate]
+  );
+
+  const handleSessionDragEnd = useCallback(
+    (e: PointerEvent | MouseEvent | TouchEvent, info: PanInfo) => {
+      const swipe = swipePower(info.offset.x, info.velocity.x);
+      if (swipe < -swipeConfidenceThreshold) paginate("session", 1);
+      else if (swipe > swipeConfidenceThreshold) paginate("session", -1);
+    },
+    [paginate]
+  );
+
+  const handlePlatformDragEnd = useCallback(
+    (e: PointerEvent | MouseEvent | TouchEvent, info: PanInfo) => {
+      const swipe = swipePower(info.offset.x, info.velocity.x);
+      if (swipe < -swipeConfidenceThreshold) paginate("platform", 1);
+      else if (swipe > swipeConfidenceThreshold) paginate("platform", -1);
+    },
+    [paginate]
+  );
 
   return (
     <>
@@ -57,6 +91,7 @@ export default function Home() {
           width={214}
           height={53}
           priority
+          sizes="(max-width: 768px) 141px, 214px"
           className="md:w-[214px] md:h-[53px] w-[141px] h-[35px]"
           style={{ width: "auto", height: "auto" }}
         />
@@ -114,7 +149,7 @@ export default function Home() {
               alt="Logo"
               width={264}
               height={64}
-              priority
+              sizes="(max-width: 768px) 124px, 264px"
               className="md:w-[264px] md:h-[64px] w-[124px] h-[30px]"
               style={{ width: "auto", height: "auto" }}
             />
@@ -203,11 +238,7 @@ export default function Home() {
                 custom={direction1}
                 drag="x"
                 dragConstraints={{ left: 0, right: 0 }}
-                onDragEnd={(e, { offset, velocity }) => {
-                  const swipe = swipePower(offset.x, velocity.x);
-                  if (swipe < -swipeConfidenceThreshold) paginate1(1);
-                  else if (swipe > swipeConfidenceThreshold) paginate1(-1);
-                }}
+                onDragEnd={handlePulseDragEnd}
                 variants={{
                   enter: (dir: number) => ({
                     x: dir > 0 ? 300 : -300,
@@ -225,8 +256,9 @@ export default function Home() {
                 initial="enter"
                 animate="center"
                 exit="exit"
-                transition={{ duration: 0.1 }}
+                transition={{ duration: reducedMotion ? 0 : 0.1 }}
                 className="absolute w-full h-full flex items-center justify-stretch"
+                style={{ willChange: "transform, opacity" }}
               >
                 <div className="flex flex-col w-full h-full justify-stretch gap-3 items-stretch">
                   {pulseSectionCardInfo
@@ -257,7 +289,7 @@ export default function Home() {
             {pages.map((_, index) => (
               <button
                 key={index}
-                onClick={() => paginate1(index - page1)}
+                onClick={() => paginate("pulse", index - page1)}
                 className={`${
                   page1 === index
                     ? "h-[8.66px] w-[26px]"
@@ -313,7 +345,7 @@ export default function Home() {
               alt="Logo"
               width={214}
               height={53}
-              priority
+              sizes="(max-width: 768px) 124px, 214px"
               className="md:w-[264px] md:h-[64px] w-[124px] h-[38px]"
               style={{ width: "auto", height: "auto" }}
             />
@@ -410,11 +442,7 @@ export default function Home() {
                 custom={direction2}
                 drag="x"
                 dragConstraints={{ left: 0, right: 0 }}
-                onDragEnd={(e, { offset, velocity }) => {
-                  const swipe = swipePower(offset.x, velocity.x);
-                  if (swipe < -swipeConfidenceThreshold) paginate2(1);
-                  else if (swipe > swipeConfidenceThreshold) paginate2(-1);
-                }}
+                onDragEnd={handleSessionDragEnd}
                 variants={{
                   enter: (dir: number) => ({
                     x: dir > 0 ? 300 : -300,
@@ -432,8 +460,9 @@ export default function Home() {
                 initial="enter"
                 animate="center"
                 exit="exit"
-                transition={{ duration: 0.1 }}
+                transition={{ duration: reducedMotion ? 0 : 0.1 }}
                 className="absolute w-full h-full flex items-center justify-stretch"
+                style={{ willChange: "transform, opacity" }}
               >
                 <div className="flex flex-col w-full h-full justify-stretch gap-3 items-stretch">
                   {sessionSectionCardInfo
@@ -460,7 +489,7 @@ export default function Home() {
             {pages.map((_, index) => (
               <button
                 key={index}
-                onClick={() => paginate2(index - page2)}
+                onClick={() => paginate("session", index - page2)}
                 className={`${
                   page2 === index
                     ? "h-[8.66px] w-[26px]"
@@ -511,7 +540,7 @@ export default function Home() {
               alt="Logo"
               width={214}
               height={53}
-              priority
+              sizes="(max-width: 768px) 124px, 214px"
               className="md:w-[264px] md:h-[64px] w-[124px] h-[30px]"
               style={{ width: "auto", height: "auto" }}
             />
@@ -616,11 +645,7 @@ export default function Home() {
                 custom={direction}
                 drag="x"
                 dragConstraints={{ left: 0, right: 0 }}
-                onDragEnd={(e, { offset, velocity }) => {
-                  const swipe = swipePower(offset.x, velocity.x);
-                  if (swipe < -swipeConfidenceThreshold) paginate(1);
-                  else if (swipe > swipeConfidenceThreshold) paginate(-1);
-                }}
+                onDragEnd={handlePlatformDragEnd}
                 variants={{
                   enter: (dir: number) => ({
                     x: dir > 0 ? 300 : -300,
@@ -638,8 +663,9 @@ export default function Home() {
                 initial="enter"
                 animate="center"
                 exit="exit"
-                transition={{ duration: 0.1 }}
+                transition={{ duration: reducedMotion ? 0 : 0.1 }}
                 className="absolute w-full h-full flex items-center justify-stretch"
+                style={{ willChange: "transform, opacity" }}
               >
                 <div className="flex flex-col w-full h-full justify-stretch gap-3 items-stretch">
                   {platformSectionCardInfo
@@ -678,7 +704,7 @@ export default function Home() {
             {pages.map((_, index) => (
               <button
                 key={index}
-                onClick={() => paginate(index - page)}
+                onClick={() => paginate("platform", index - page)}
                 className={`${
                   page === index
                     ? "h-[8.66px] w-[26px]"

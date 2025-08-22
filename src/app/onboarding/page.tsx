@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import "./onboarding.css";
+import Link from "next/link";
 export default function Page() {
   const onboardingCon = [
     <>
@@ -41,14 +42,17 @@ export default function Page() {
         alt="background"
         className="bg-image"
       />
-      <Image
-        src="/images/logo.svg"
-        width={147}
-        height={36}
-        alt="logo"
-        className="sm:block hidden"
-      />
+      <Link href="/">
+        <Image
+          src="/images/logo.svg"
+          width={147}
+          height={36}
+          alt="logo"
+          className="sm:block hidden"
+        />
+      </Link>
       <div className="w-full flex justify-center sm:mb-[105px] mb-[55px]">
+        <Link href="/"></Link>
         <Image
           src="/images/logo-white.png"
           width={30}
