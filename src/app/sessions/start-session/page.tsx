@@ -22,9 +22,15 @@ const ScheduledSessionModal = dynamic(
   { ssr: false }
 );
 
+const EnterLinkModal = dynamic(
+  () => import("@/components/session/EnterLinkModal"),
+  { ssr: false }
+);
+
 export default function StartSessionPage() {
   const [[page, direction], setPage] = useState([0, 0]);
   const [modalOpen, setModalOpen] = useState(false);
+  const [modalLink, setModalLink] = useState(false);
   const [modalOpenFuture, setModalOpenFuture] = useState(false);
 
   const swipeConfidenceThreshold = 100;
@@ -66,6 +72,7 @@ export default function StartSessionPage() {
             origin={origin}
           />
         )}
+        {modalLink && <EnterLinkModal onClose={() => setModalLink(false)} />}
         <AnimatePresence>
           {(modalOpen || modalOpenFuture) && (
             <motion.div
@@ -131,6 +138,7 @@ export default function StartSessionPage() {
                   background: "rgba(8, 11, 22, 0.50)",
                   boxShadow: "0 3.131px 46.972px 0 rgba(13, 63, 46, 0.5)",
                 }}
+                onClick={() => setModalLink(true)}
               >
                 <div className="flex justify-center w-full">
                   <Image
