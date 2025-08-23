@@ -154,6 +154,7 @@ export const CustomVideoTiles = ({
   const maxIndividualTiles = 3;
   const displayed = others.slice(0, maxIndividualTiles);
   const overflow = others.slice(maxIndividualTiles);
+  const heightForTile = !showSideRail ? 'md:h-auto' : 'md:h-auto'
   // console.log(showSideRail, "showSideRailshowSideRail")
   return (
     <>
@@ -167,10 +168,11 @@ export const CustomVideoTiles = ({
         {/* Main area */}
         <div className="flex-1 min-w-0 min-h-0 p-2 ">
           <div className="w-full h-full max-h-[99vh] md:h-[95vh]">
-            <div className="w-full h-full aspect-video rounded-[15px] 
+            <div className={`w-full aspect-video rounded-[15px] ${heightForTile}
                 p-0 sm:p-[2px] 
-                bg-none sm:bg-[linear-gradient(90deg,#14FF00_55%,#00F0FF_62%)]">
-              <div className="w-full h-full rounded-[12px] bg-[#141622]">
+                bg-none sm:bg-[linear-gradient(90deg,#14FF00_55%,#00F0FF_62%)]
+                `}>
+              <div className={`w-full rounded-[12px] bg-[#141622]  ${heightForTile}`}>
                 <MainVideoTile
                   participant={mainParticipant}
                   activeEmojis={activeEmojis}
@@ -268,7 +270,8 @@ const VideoSurface = ({
         autoPlay
         playsInline
         muted={participant.isLocal}
-        className={fillClass ?? "w-full h-full object-cover"}
+        className={fillClass ?? `w-full h-full object-cover p-0 sm:p-[2px] 
+                bg-none sm:bg-[linear-gradient(90deg,#14FF00_55%,#00F0FF_62%)]`}
       />
 
       <div

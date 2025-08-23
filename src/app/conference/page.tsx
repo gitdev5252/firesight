@@ -70,11 +70,10 @@ const Sidebar = ({
           <button
             key={tab}
             onClick={() => setActiveTab(tab)}
-            className={`flex-1 px-2 py-3 text-xs font-medium transition-colors ${
-              activeTab === tab
-                ? "text-white border-b-1 border-green-400 mt-1"
-                : "text-white/60 hover:text-white/80 mt-1"
-            }`}
+            className={`flex-1 px-2 py-3 text-xs font-medium transition-colors ${activeTab === tab
+              ? "text-white border-b-1 border-green-400 mt-1"
+              : "text-white/60 hover:text-white/80 mt-1"
+              }`}
           >
             {tab}
           </button>
@@ -420,11 +419,10 @@ const ConferenceControls = ({
 
           <div className="flex items-center gap-6">
             <button
-              className={`flex flex-col items-center gap-1 transition-colors ${
-                isMicrophoneEnabled
-                  ? "text-gray-400 hover:text-gray-400"
-                  : "text-red-400 hover:text-red-300"
-              }`}
+              className={`flex flex-col items-center gap-1 transition-colors ${isMicrophoneEnabled
+                ? "text-gray-400 hover:text-gray-400"
+                : "text-red-400 hover:text-red-300"
+                }`}
               onClick={toggleMicrophone}
             >
               <div className="items-center justify-center">
@@ -440,11 +438,10 @@ const ConferenceControls = ({
             <div className="w-px h-8 bg-white/20"></div>
 
             <button
-              className={`flex flex-col items-center gap-1 transition-colors ${
-                isCameraEnabled
-                  ? "text-gray-400 hover:text-gray-400"
-                  : "text-red-400 hover:text-red-300"
-              }`}
+              className={`flex flex-col items-center gap-1 transition-colors ${isCameraEnabled
+                ? "text-gray-400 hover:text-gray-400"
+                : "text-red-400 hover:text-red-300"
+                }`}
               onClick={toggleCamera}
             >
               <div className="items-center justify-center">
@@ -460,11 +457,10 @@ const ConferenceControls = ({
             <div className="w-px h-8 bg-white/20"></div>
 
             <button
-              className={`flex flex-col items-center gap-1 transition-colors ${
-                raisedHands[currentUser]
-                  ? "text-yellow-400 hover:text-yellow-500"
-                  : "text-gray-400 hover:text-gray-400"
-              }`}
+              className={`flex flex-col items-center gap-1 transition-colors ${raisedHands[currentUser]
+                ? "text-yellow-400 hover:text-yellow-500"
+                : "text-gray-400 hover:text-gray-400"
+                }`}
               onClick={() => onToggleHandRaise(currentUser)}
             >
               <div className="items-center justify-center">
@@ -486,11 +482,10 @@ const ConferenceControls = ({
 
             <button
               onClick={isScreenSharing ? stopScreenShare : startScreenShare}
-              className={`flex flex-col items-center gap-1 transition-colors ${
-                isScreenSharing
-                  ? "text-green-400 hover:text-green-300"
-                  : "text-gray-400 hover:text-gray-400"
-              }`}
+              className={`flex flex-col items-center gap-1 transition-colors ${isScreenSharing
+                ? "text-green-400 hover:text-green-300"
+                : "text-gray-400 hover:text-gray-400"
+                }`}
             >
               <div className="items-center justify-center">
                 <Monitor color={isScreenSharing ? "#10b981" : "white"} />
@@ -619,11 +614,10 @@ const MobileConferenceControls = ({
             </button>
 
             <button
-              className={`flex flex-col items-center gap-1 transition-colors ${
-                raisedHands[currentUser]
-                  ? "text-yellow-400 hover:text-yellow-500"
-                  : "text-gray-400 hover:text-gray-400"
-              }`}
+              className={`flex flex-col items-center gap-1 transition-colors ${raisedHands[currentUser]
+                ? "text-yellow-400 hover:text-yellow-500"
+                : "text-gray-400 hover:text-gray-400"
+                }`}
               onClick={() => onToggleHandRaise(currentUser)}
             >
               <div className="items-center justify-center">
@@ -1093,9 +1087,8 @@ export default function SessionPage() {
       )}
 
       <div
-        className={`w-full flex flex-col md:bg-[#0D101B] md:border md:border-[rgba(255,255,255,0.1)] rounded-[20px] backdrop-blur-[32px] relative transition-all duration-300 ${
-          isSidebarOpen ? "pr-120" : ""
-        } flex-1 min-h-0`}
+        className={`w-full flex flex-col md:bg-[#0D101B] md:border md:border-[rgba(255,255,255,0.1)] rounded-[20px] backdrop-blur-[32px] relative transition-all duration-300 ${isSidebarOpen ? "pr-120" : ""
+          } flex-1 min-h-0`}
       >
         {/* Sidebar */}
         {isSidebarOpen && (
@@ -1232,161 +1225,196 @@ export default function SessionPage() {
                 </div> */}
                 <ShowSideRailProvider>
 
-                {isDesktop ? (
-                  <CustomVideoTiles
-                    activeEmojis={activeEmojis}
-                    showSideRail={showSideRail}
-                    onToggleSideRail={handleToggleSideRail}
-                  />
-                ) : (
-                  <>
-                    {activeTab === "Session" && (
-                      <>
-                        <CustomVideoTiles activeEmojis={activeEmojis} isMobileFull={isMobileFull}
-                        />
-                      </>
-                    )}
-                    <div className="p-1 ml-2 mr-2 ">
-                      {activeTab === "People" && (
+                  {isDesktop ? (
+                    <CustomVideoTiles
+                      activeEmojis={activeEmojis}
+                      showSideRail={showSideRail}
+                      onToggleSideRail={handleToggleSideRail}
+                    />
+                  ) : (
+                    <>
+                      {activeTab === "Session" && (
                         <>
-                          <div className="bg-[rgba(255,255,255,0.02)] rounded-[20px] border border-[rgba(255,255,255,0.1)] backdrop-blur-[32px] p-2 mb-4 max-h-[56vh] overflow-auto mt-38">
-                            {participants && participants.length > 0 ? (
-                              participants.map((participant) => {
-                                const p = participant as Participant;
-                                const initials = p.identity.slice(0, 2).toUpperCase();
-                                const isLocal = p.isLocal;
-                                const isMicEnabled = !p.isMicrophoneEnabled === false;
-                                const isCameraEnabled = !p.isCameraEnabled === false;
+                          <CustomVideoTiles activeEmojis={activeEmojis} isMobileFull={isMobileFull}
+                          />
+                        </>
+                      )}
+                      <div className="p-1 ml-2 mr-2 ">
+                        {activeTab === "People" && (
+                          <>
+                            <div className="bg-[rgba(255,255,255,0.02)] rounded-[20px] border border-[rgba(255,255,255,0.1)] backdrop-blur-[32px] p-2 mb-4 max-h-[56vh] overflow-auto mt-38">
+                              {participants && participants.length > 0 ? (
+                                participants.map((participant) => {
+                                  const p = participant as Participant;
+                                  const initials = p.identity.slice(0, 2).toUpperCase();
+                                  const isLocal = p.isLocal;
+                                  const isMicEnabled = !p.isMicrophoneEnabled === false;
+                                  const isCameraEnabled = !p.isCameraEnabled === false;
 
-                                return (
-                                  <div
-                                    key={p.sid}
-                                    className="flex items-center gap-3 p-3 rounded-lg"
-                                  >
-                                    <HexAvatar initials={initials} size={32} fontSize={12} />
+                                  return (
+                                    <div
+                                      key={p.sid}
+                                      className="flex items-center gap-3 p-3 rounded-lg"
+                                    >
+                                      <HexAvatar initials={initials} size={32} fontSize={12} />
 
-                                    <div className="flex-1">
-                                      <div className="flex items-center gap-2">
-                                        <p className="text-white text-sm font-medium">
-                                          {p.identity} {isLocal && "(Host)"}
-                                        </p>
-                                        {raisedHands[p.identity] && (
-                                          <Hand
-                                            size={16}
-                                            color="#fbbf24"
-                                            className="animate-pulse"
-                                          />
-                                        )}
+                                      <div className="flex-1">
+                                        <div className="flex items-center gap-2">
+                                          <p className="text-white text-sm font-medium">
+                                            {p.identity} {isLocal && "(Host)"}
+                                          </p>
+                                          {raisedHands[p.identity] && (
+                                            <Hand
+                                              size={16}
+                                              color="#fbbf24"
+                                              className="animate-pulse"
+                                            />
+                                          )}
+                                        </div>
+                                      </div>
+                                      <div className="flex gap-5 mr-4">
+                                        <div className="w-5 h-5 rounded-full flex items-center justify-center">
+                                          {isMicEnabled ? (
+                                            <Mic size={24} color="white" />
+                                          ) : (
+                                            <MicOff size={24} color="white" />
+                                          )}
+                                        </div>
+                                        <div className="w-5 h-5 rounded-full flex items-center justify-center">
+                                          {isCameraEnabled ? (
+                                            <Video size={24} color="white" />
+                                          ) : (
+                                            <VideoOff size={24} color="white" />
+                                          )}
+                                        </div>
                                       </div>
                                     </div>
-                                    <div className="flex gap-5 mr-4">
-                                      <div className="w-5 h-5 rounded-full flex items-center justify-center">
-                                        {isMicEnabled ? (
-                                          <Mic size={24} color="white" />
-                                        ) : (
-                                          <MicOff size={24} color="white" />
-                                        )}
-                                      </div>
-                                      <div className="w-5 h-5 rounded-full flex items-center justify-center">
-                                        {isCameraEnabled ? (
-                                          <Video size={24} color="white" />
-                                        ) : (
-                                          <VideoOff size={24} color="white" />
-                                        )}
-                                      </div>
+                                  );
+                                })
+                              ) : (
+                                <p className="text-white/60 text-sm">No participants yet</p>
+                              )}
+                            </div>
+                            <div className="fixed bottom-0 left-0 right-0 z-50 md:hidden px-4 pb-8">
+                              <button
+                                onClick={() => { window.location.href = "/session"; }}
+                                className="w-full grid grid-cols-[1fr_auto_1fr] items-center
+               bg-[#0f1419] rounded-lg border border-white/10 shadow
+               focus:outline-none focus:ring-2 focus:ring-red-400 transition
+               "
+                              >
+                                {/* left spacer to balance the right icon */}
+                                <span />
+
+                                {/* centered label */}
+                                <span className="justify-self-center text-white font-mono text-base text-center p-4 mr-8 flex items-center gap-3">
+                                  <Link />
+                                  Share Session Link
+                                </span>
+
+                                {/* right icon block */}
+                                <span className="flex items-center justify-self-end">
+                                  <span className="w-px h-14 bg-white/20 mx-2" />
+                                  <div className="p-4 mr-2">
+                                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                      <rect x="9" y="9" width="13" height="13" rx="2" />
+                                      <path d="M5 15V5a2 2 0 0 1 2-2h10" />
+                                    </svg>
+                                  </div>
+                                </span>
+                              </button>
+                            </div>
+
+                          </>
+
+                        )}
+
+                      </div>
+                      {activeTab === "Chat" && (
+                        <div className="md:hidden relative px-3 mb-4 mt-33">
+                          {/* Grid: scroll area + sticky input row */}
+                          <div className="grid grid-rows-[1fr_auto] h-[calc(100svh-140px)] overflow-y-auto space-y-3 min-h-0 ">
+                            {/* 👆 140px = approx top controls + tab bar; tweak to your UI */}
+
+                            {/* Scrollable messages */}
+                            <div className="overflow-y-auto min-h-0 space-y-3 py-3 pr-1">
+                              {chatMessages.length > 0 ? (
+                                chatMessages.map((msg, index) => (
+                                  <div className="flex gap-3 ml-2 mr-2 items-center" key={index}>
+                                    <HexAvatar
+                                      initials={msg.username
+                                        .split(" ")
+                                        .map((w) => w[0])
+                                        .join("")
+                                        .toUpperCase()
+                                        .slice(0, 2)}
+                                    />
+                                    <div
+                                      className="
+                  bg-white/5 rounded-lg p-3 border border-white/10 w-fit
+                  max-w-[85%] sm:max-w-[75%]
+                  whitespace-pre-wrap break-words
+                  [overflow-wrap:anywhere] [word-break:break-word]
+                "
+                                    >
+                                      <p className="text-white/80 text-sm">
+                                        {msg.message}
+                                      </p>
                                     </div>
                                   </div>
-                                );
-                              })
-                            ) : (
-                              <p className="text-white/60 text-sm">No participants yet</p>
-                            )}
-                          </div>
-                          <div className="fixed bottom-0 left-0 right-0 z-50 md:hidden px-4 pb-6">
-                            <button
-                              onClick={() => {
-                                window.location.href = "/session";
-                              }}
-                              className="w-full flex items-center justify-between gap-3 p-4 bg-[#0f1419] rounded-lg border border-white/10 shadow focus:outline-none focus:ring-2 focus:ring-red-400 transition"
-                            >
-                              <span className="flex items-center gap-2">
-                                <span className="text-white font-mono text-base">Share Session Link</span>
-                              </span>
-                              <span className="flex items-center">
-                                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" /><path d="M5 15V5a2 2 0 0 1 2-2h10" /></svg>
-                              </span>
-                            </button>
-                          </div>
-                        </>
+                                ))
+                              ) : (
+                                <p className="text-white/60 text-sm text-center py-8">
+                                  No messages yet. Start the conversation!
+                                </p>
+                              )}
+                              {/* <div ref={messagesEndRef} /> */}
+                            </div>
 
+                            {/* Sticky input (not fixed) so layout reserves space */}
+                            <div className="
+        sticky bottom-0 z-10
+        bg-[#080B16]/70 backdrop-blur
+        
+        px-4 pt-2 pb-4
+      ">
+                              <div className="flex gap-2">
+                                <input
+                                  type="text"
+                                  value={inputMessage}
+                                  onChange={(e) => setInputMessage(e.target.value)}
+                                  onKeyPress={handleKeyPress}
+                                  placeholder="Type here..."
+                                  className="flex-1 w-full bg-[#080B1680] border border-white/20 rounded-lg px-3 py-4 text-white text-sm placeholder-white/50 focus:outline-none focus:border-blue-500"
+                                />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
                       )}
 
-                    </div>
-                    {activeTab === "Chat" && (
-                      <>
-                        <div className="flex-1 mb-4 space-y-3 min-h-0 mt-38">
-                          {chatMessages.length > 0 ? (
-                            chatMessages.map((msg, index) => (
-                              <div className="flex items-center gap-3 ml-2 mr-2" key={index}>
-                                <HexAvatar initials={msg.username.split(" ").map((w) => w[0]).join("").toUpperCase().slice(0, 2)} />
-                                <div className="bg-white/5 rounded-lg p-3 border border-white/10">
-                                  <div className="flex items-center mb-1">
-                                    <p className="text-white/80 text-sm">{msg.message}</p>
-                                  </div>
-                                </div>
-                              </div>
-                            ))
-                          ) : (
-                            <p className="text-white/60 text-sm text-center py-8">
-                              No messages yet. Start the conversation!
-                            </p>
-                          )}
-                          {/* <div ref={messagesEndRef} /> */}
+                      {activeTab === "Transcript" && (
+                        <div className="mt-[200px] p-3">
+                          <TranscriptTab />
                         </div>
-                        <div className="fixed bottom-0 left-0 right-0 z-50 md:hidden px-4 pb-10">
-                          <input
-                            type="text"
-                            value={inputMessage}
-                            onChange={(e) => setInputMessage(e.target.value)}
-                            onKeyPress={handleKeyPress}
-                            placeholder="Type here..."
-                            className="flex-1 w-full bg-white/10 border border-white/20 rounded-lg px-3 py-2 text-white text-sm placeholder-white/50 focus:outline-none focus:border-blue-500"
-                          />
-                          {/* <button
-                          onClick={handleSendMessage}
-                          disabled={!inputMessage.trim()}
-                          className="px-4 py-2 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-800 disabled:opacity-50 text-white rounded-lg text-sm font-medium transition-colors"
-                        >
-                          Send
-                        </button> */}
+                      )}
+                      {activeTab === "Summary" && (
+                        <div className="mt-[200px] p-3">
+                          <SummaryTab />
                         </div>
-                      </>
-                      // <div className="mt-[200px] p-3">
-                      //   <ChatTab messages={chatMessages} onSendMessage={sendChatMessage} />
-                      // </div>
-                    )}
-                    {activeTab === "Transcript" && (
-                      <div className="mt-[200px] p-3">
-                        <TranscriptTab />
-                      </div>
-                    )}
-                    {activeTab === "Summary" && (
-                      <div className="mt-[200px] p-3">
-                        <SummaryTab />
-                      </div>
-                    )}
+                      )}
 
 
-                    {/* <CustomVideoTiles activeEmojis={activeEmojis} /> */}
-                    {/* <PeopleTab
+                      {/* <CustomVideoTiles activeEmojis={activeEmojis} /> */}
+                      {/* <PeopleTab
             participants={participants}
             roomName={roomName}
             raisedHands={raisedHands}
           /> */}
-                  </>
+                    </>
 
 
-                )}
+                  )}
                 </ShowSideRailProvider>
 
                 {/* Mobile controls (top cluster) */}
@@ -1448,10 +1476,9 @@ export default function SessionPage() {
                   participants.length > 0 && (
                     <div className="absolute bottom-1 left-0 right-0 z-20 block md:hidden px-3 pb-2">
                       <div
-                        className={`flex gap-3 overflow-x-auto scrollbar-hide ${
-                          participants.length <= 2 &&
+                        className={`flex gap-3 overflow-x-auto scrollbar-hide ${participants.length <= 2 &&
                           "items-center justify-center"
-                        }`}
+                          }`}
                       >
                         {participants.map((p) => {
                           const participant = p as Participant;
@@ -1490,15 +1517,13 @@ export default function SessionPage() {
                 {/* Desktop View Full Screen */}
                 {!showSideRail && participants && participants.length > 0 && (
                   <div
-                    className={`absolute ${
-                      showSideRail ? "bottom-28" : "bottom-32"
-                    }  left-0 right-0 z-20 px-3 pb-2 hidden md:block`}
+                    className={`absolute ${showSideRail ? "bottom-28" : "bottom-32"
+                      }  left-0 right-0 z-20 px-3 pb-2 hidden md:block`}
                   >
                     <div
-                      className={`flex gap-3 overflow-x-auto scrollbar-hide ${
-                        participants.length <= 2 &&
+                      className={`flex gap-3 overflow-x-auto scrollbar-hide ${participants.length <= 2 &&
                         "items-center justify-center"
-                      }`}
+                        }`}
                     >
                       {participants.map((p) => {
                         const participant = p as Participant;
