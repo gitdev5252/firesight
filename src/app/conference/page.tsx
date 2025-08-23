@@ -112,7 +112,7 @@ const PeopleTab = ({
 }) => {
   return (
     <div className="">
-      <div className="bg-[rgba(255,255,255,0.02)] rounded-[20px] border border-[rgba(255,255,255,0.1)] backdrop-blur-[32px] p-2 mb-4 max-h-[56vh] overflow-auto">
+      <div className="bg-[rgba(255,255,255,0.02)] rounded-[20px] border border-[rgba(255,255,255,0.1)] backdrop-blur-[32px] p-2 mb-4 max-h-[90vh] overflow-auto h-[98vh]">
         {participants && participants.length > 0 ? (
           participants.map((participant) => {
             const p = participant as Participant;
@@ -133,28 +133,33 @@ const PeopleTab = ({
                     <p className="text-white text-sm font-medium">
                       {p.identity} {isLocal && "(Host)"}
                     </p>
+                  </div>
+                </div>
+                <div className="flex gap-5 mr-4 items-center">
+                  <div className="w-8 h-8 rounded-full flex items-center justify-center">
                     {raisedHands[p.identity] && (
-                      <Hand
-                        size={16}
-                        color="#fbbf24"
-                        className="animate-pulse"
+                      <img
+                        src="/images/icons/hand-active.svg"
+                        alt=""
+                        width={32}
+                        height={32}
                       />
                     )}
                   </div>
-                </div>
-                <div className="flex gap-5 mr-4">
                   <div className="w-5 h-5 rounded-full flex items-center justify-center">
+
                     {isMicEnabled ? (
                       <Mic size={24} color="white" />
                     ) : (
-                      <MicOff size={24} color="white" />
+                      <MicOff size={24} color="#E93249" />
                     )}
                   </div>
+
                   <div className="w-5 h-5 rounded-full flex items-center justify-center">
                     {isCameraEnabled ? (
                       <Video size={24} color="white" />
                     ) : (
-                      <VideoOff size={24} color="white" />
+                      <VideoOff size={24} color="#E93249" />
                     )}
                   </div>
                 </div>
@@ -458,13 +463,21 @@ const ConferenceControls = ({
 
             <button
               className={`flex flex-col items-center gap-1 transition-colors ${raisedHands[currentUser]
-                ? "text-yellow-400 hover:text-yellow-500"
+                ? "text-gray-400 hover:text-gray-400"
                 : "text-gray-400 hover:text-gray-400"
                 }`}
               onClick={() => onToggleHandRaise(currentUser)}
             >
               <div className="items-center justify-center">
-                <Hand color={raisedHands[currentUser] ? "#fbbf24" : "white"} />
+                {raisedHands[currentUser] ? (
+                  <img
+                    src="/images/icons/hand-active.svg"
+                    alt=""
+                    width={32}
+                    height={32}
+                  />) : (
+                  <Hand color="white" />
+                )}
               </div>
               <span className="text-xs mt-2">Hand</span>
             </button>
@@ -488,10 +501,21 @@ const ConferenceControls = ({
                 }`}
             >
               <div className="items-center justify-center">
-                <Monitor color={isScreenSharing ? "#10b981" : "white"} />
+                {/* <Monitor color={isScreenSharing ? "#10b981" : "white"} /> */}
+                {isScreenSharing ? (
+                  <img
+                    src="/images/icons/screen-active.svg"
+                    alt=""
+                    width={32}
+                    height={32}
+                  />
+                ) : (
+                  <Monitor color={isScreenSharing ? "#10b981" : "white"} />
+
+                )}
               </div>
               <span className="text-xs mt-2">
-                {isScreenSharing ? "Stop" : "Present"}
+                {isScreenSharing ? "Present" : "Present"}
               </span>
             </button>
 
@@ -779,6 +803,8 @@ const MobileTabBarControls = ({
 
 /* ----------------- Page ----------------- */
 export default function SessionPage() {
+  // Emoji bar state
+  const [showEmojiBar, setShowEmojiBar] = React.useState(false);
   // Track when the user joined the session
   const [meetingStart, setMeetingStart] = React.useState<number | null>(null);
   const [meetingDuration, setMeetingDuration] =
@@ -827,14 +853,14 @@ export default function SessionPage() {
     "💪",
   ];
 
-  const sendEmoji = (username: string) => {
+  const sendEmoji = (username: string, emoji?: string) => {
     const randomEmoji = emojis[Math.floor(Math.random() * emojis.length)];
     const timestamp = Date.now();
     setActiveEmojis((prev) => ({
       ...prev,
-      [username]: { emoji: randomEmoji, timestamp, username },
+      [username]: { emoji: emoji ? emoji : randomEmoji, timestamp, username },
     }));
-    window.sendEmojiToAll?.(randomEmoji, username);
+    window.sendEmojiToAll?.(emoji ? emoji : randomEmoji, username);
     setTimeout(() => {
       setActiveEmojis((prev) => {
         const next = { ...prev };
@@ -1456,11 +1482,23 @@ export default function SessionPage() {
 
                 {/* Desktop controls */}
 
+                {/* Emoji Bar (desktop) */}
+                {showEmojiBar && (
+                  <div className="absolute left-1/2 bottom-35 -translate-x-1/2 z-50 flex justify-center w-auto pointer-events-none">
+                    <div className="bg-[#080B1680] px-6 py-3 flex items-center gap-4 rounded-[10px] shadow-lg animate-fade-in-up pointer-events-auto border border-[#FFFFFF1A]">
+                      {['👋', '👍', '❤️', '😂', '😎', '💩'].map((emoji, i) => (
+                        <button key={i} className="text-3xl hover:scale-110 transition" onClick={() => { setShowEmojiBar(false); sendEmoji(currentUser, emoji); }}>
+                          {emoji}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
                 <div className="absolute bottom-0 left-0 right-0 hidden md:block">
                   <ConferenceControls
                     onInvite={() => setIsModalOpen(true)}
                     onToggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)}
-                    onSendEmoji={sendEmoji}
+                    onSendEmoji={() => setShowEmojiBar((v) => !v)}
                     onToggleHandRaise={toggleHandRaise}
                     currentUser={currentUser}
                     raisedHands={raisedHands}

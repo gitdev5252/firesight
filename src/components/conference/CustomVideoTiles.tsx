@@ -1,6 +1,6 @@
 import { useTracks, useParticipants } from "@livekit/components-react";
 import { Participant, Track } from "livekit-client";
-import { Expand, Mic, MicOff, Monitor } from "lucide-react";
+import { Expand, Mic, MicOff, Monitor, Shrink } from "lucide-react";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { HexAvatar } from "../HexAvatar/HexAvatar";
 import { useShowSideRail } from "@/hooks/sideRail";
@@ -355,11 +355,11 @@ const MainVideoTile = ({
             onToggleSideRail?.();
             toggle();
           }}
-          className="w-7 h-7 bg-[#080B16] rounded-full flex items-center justify-center shadow-lg hover:bg-white/10 transition"
+          className="w-7 h-7 rounded-full flex items-center justify-center shadow-lg hover:bg-white/10 transition"
           title={sideRailOpen ? 'Hide participants' : 'Show participants'}
         >
           {/* You can swap icons if you prefer when open/closed */}
-          <Expand color="white" />
+          {!sideRailOpen ? <Expand color="white" /> : <Shrink color="white" />}
         </button>
 
       </div>
