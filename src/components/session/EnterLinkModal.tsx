@@ -14,20 +14,6 @@ export default function EnterLinkModal({ onClose }: Props) {
   const [link, setLink] = useState("");
   const router = useRouter();
 
-  // Extract session id from link (assume last part after last slash)
-  const getSessionId = (url: string) => {
-    try {
-      const parts = url.trim().split("/");
-      return parts[parts.length - 1] || "";
-    } catch {
-      return "";
-    }
-  };
-
-  const handleJoin = () => {
-    router.push(link);
-  };
-
   return (
     <motion.div
       initial={{ opacity: 0 }}
