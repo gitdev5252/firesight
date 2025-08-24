@@ -1,8 +1,9 @@
 import { useTracks, useParticipants } from "@livekit/components-react";
 import { Participant, Track } from "livekit-client";
 import { Expand, Mic, MicOff, Monitor } from "lucide-react";
-import { useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { HexAvatar } from "../HexAvatar/HexAvatar";
+import { useShowSideRail } from "@/hooks/sideRail";
 
 /* Helper to attach/detach audio track to <audio> element */
 function AudioTrackRenderer({ track }: { track: Track | undefined }) {
@@ -33,8 +34,9 @@ const pickSource = (p: Participant): Track.Source | null => {
 
 export const CustomVideoTiles = ({
   activeEmojis,
-  showSideRail = true,
+  showSideRail,
   onToggleSideRail,
+  isMobileFull = false
 
 }: {
   activeEmojis?: {
@@ -42,6 +44,7 @@ export const CustomVideoTiles = ({
   };
   showSideRail?: boolean;
   onToggleSideRail?: () => void;
+  isMobileFull?: boolean;
 
 }) => {
   const participantsRaw = useParticipants();
@@ -67,6 +70,16 @@ export const CustomVideoTiles = ({
     }
     return map;
   }, [tracks]);
+  const __id = React.useRef(Math.random().toString(36).slice(2, 7));
+
+  React.useEffect(() => {
+    console.log('[Tiles mount]', __id.current);
+    return () => console.log('[Tiles unmount]', __id.current);
+  }, []);
+
+  React.useEffect(() => {
+    console.log('[showSideRail]', __id.current, showSideRail);
+  }, [showSideRail]);
 
   /* choose/keep a main tile; prefer screenshare, else first remote */
   const [mainId, setMainId] = useState<string | null>(null);
@@ -111,10 +124,11 @@ export const CustomVideoTiles = ({
     const t = preferred
       ? trackByParticipantAndSource.get(`${p.identity}:${preferred}`)
       : undefined;
-    // 85
+    // 85'
+
     return (
       <div className="w-full h-full min-h-0 flex">
-        <div className={`w-full h-[full] max-h-[${!showSideRail ? '98vh' : '85vh'}] aspect-video mx-auto`}>
+        <div className={`w-full h-[full] max-h-[${!showSideRail ? '98vh' : isMobileFull ? '85vh' : '98vh'}] aspect-video mx-auto`}>
           <VideoSurface
             participant={p}
             trackRef={t}
@@ -140,7 +154,7 @@ export const CustomVideoTiles = ({
   const maxIndividualTiles = 3;
   const displayed = others.slice(0, maxIndividualTiles);
   const overflow = others.slice(maxIndividualTiles);
-
+  // console.log(showSideRail, "showSideRailshowSideRail")
   return (
     <>
       {/* Render remote audio tracks so you can hear other participants */}
@@ -152,7 +166,7 @@ export const CustomVideoTiles = ({
       <div className="w-full h-full flex gap-3 min-h-0">
         {/* Main area */}
         <div className="flex-1 min-w-0 min-h-0 p-2 ">
-          <div className="w-full h-full max-h-[95vh]">
+          <div className="w-full h-full max-h-[99vh] md:h-[95vh]">
             <div className="w-full h-full aspect-video rounded-[15px] 
                 p-0 sm:p-[2px] 
                 bg-none sm:bg-[linear-gradient(90deg,#14FF00_55%,#00F0FF_62%)]">
@@ -162,7 +176,8 @@ export const CustomVideoTiles = ({
                   activeEmojis={activeEmojis}
                   trackMap={trackByParticipantAndSource}
                   onToggleSideRail={onToggleSideRail}
-                  sideRailOpen={showSideRail}
+                  // sideRailOpen={showSideRail}
+                  isMobileFull={isMobileFull}
                 />
               </div>
             </div>
@@ -198,8 +213,9 @@ const VideoSurface = ({
   fallbackName,
   fillClass,
   variant = "",
-  isShort = false,
-  smallPiece = false
+  isShort,
+  smallPiece = false,
+  isMobileFull = false
 }: {
   participant: Participant;
   trackRef?: ReturnType<typeof useTracks>[number];
@@ -208,10 +224,13 @@ const VideoSurface = ({
   fillClass?: string;
   variant?: string;
   isShort?: boolean;
+  isMobileFull?: boolean;
   smallPiece?: boolean;
 }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [hasMedia, setHasMedia] = useState<boolean>(!!trackRef?.publication?.track);
+  const { value: sideRailOpen } = useShowSideRail();
+  console.log(!sideRailOpen ? 'h-[86vh]' : 'h-[96vh]', "value")
 
   useEffect(() => {
     const el = videoRef.current;
@@ -228,10 +247,22 @@ const VideoSurface = ({
       setHasMedia(false);
     }
   }, [trackRef?.publication?.track]);
-  const heightForTile = smallPiece ? 'h-full min-h-[180px]' : !isShort ? 'h-full' : 'h-[84vh]'
-  console.log(isShort, "hehe")
+  const heightForTile =
+    smallPiece
+      ? "h-full min-h-[180px]"
+      : isMobileFull
+        ? "h-[98vh]"
+        : sideRailOpen
+          ? "h-full min-h-[280px]"
+          : "h-[99vh] md:h-[84vh]"; // mobile 94vh, md+ 84vh
+  // const heightForTile =
+  //   ();
+  console.log(heightForTile, "heightForTileheightForTile")
+  React.useEffect(() => {
+    console.log('[isShort]', isShort ? 'h-[80vh]' : 'h-[84vh]');
+  }, [isShort]);
   return (
-    <div className={`relative w-full  ${heightForTile} bg-transparent rounded-xl overflow-hidden `}>
+    <div className={` relative w-full ${heightForTile} bg-transparent rounded-xl overflow-hidden `}>
       <video
         ref={videoRef}
         autoPlay
@@ -261,7 +292,7 @@ const MainVideoTile = ({
   activeEmojis,
   trackMap,
   onToggleSideRail,
-  sideRailOpen,
+  isMobileFull
 }: {
   participant: Participant;
   activeEmojis?: {
@@ -269,10 +300,11 @@ const MainVideoTile = ({
   };
   trackMap: Map<string, ReturnType<typeof useTracks>[number]>;
   onToggleSideRail?: () => void;
-  sideRailOpen?: boolean;
+  isMobileFull?: boolean;
 }) => {
   const [source, setSource] = useState<Track.Source | null>(pickSource(participant));
   const sourceTimer = useRef<number | null>(null);
+  const { value: sideRailOpen } = useShowSideRail();
 
   useEffect(() => {
     if (sourceTimer.current) window.clearTimeout(sourceTimer.current);
@@ -288,8 +320,10 @@ const MainVideoTile = ({
   const t = source ? trackMap.get(`${participant.identity}:${source}`) : undefined;
   const displayName = participant.identity;
   const initials = getInitials(displayName);
-  console.log(sideRailOpen, "vsideRailOpensideRailOpen")
-  const heightForTile = !sideRailOpen ? 'h-full' : 'h-[85vh]'
+  console.log('[sideRailOpen]', sideRailOpen ? 'h-[80vh]' : 'h-[84vh]');
+  const { value: showSideRail, toggle } = useShowSideRail();
+  const heightForTile = !showSideRail ? 'h-[84vh]' : 'h-[95vh]'
+
   return (
     <div className="relative w-full h-full rounded-xl text-white">
       <VideoSurface
@@ -299,6 +333,7 @@ const MainVideoTile = ({
         fallbackName={displayName}
         fillClass={`w-full ${heightForTile} object-cover rounded-xl`}
         isShort={sideRailOpen}
+        isMobileFull={isMobileFull}
       />
 
       <div className="absolute top-4 right-4 flex flex-col gap-2 z-30">
@@ -312,7 +347,11 @@ const MainVideoTile = ({
         </div> */}
         <button
           type="button"
-          onClick={onToggleSideRail}
+          onClick={(e) => {
+            e.stopPropagation();
+            onToggleSideRail?.();
+            toggle();
+          }}
           className="w-7 h-7 bg-[#080B16] rounded-full flex items-center justify-center shadow-lg hover:bg-white/10 transition"
           title={sideRailOpen ? 'Hide participants' : 'Show participants'}
         >
