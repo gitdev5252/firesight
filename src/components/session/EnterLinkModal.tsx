@@ -25,11 +25,7 @@ export default function EnterLinkModal({ onClose }: Props) {
   };
 
   const handleJoin = () => {
-    const sessionId = getSessionId(link);
-    if (sessionId) {
-      router.push(`/${sessionId}`);
-      onClose();
-    }
+    router.push(link);
   };
 
   return (
@@ -78,7 +74,7 @@ export default function EnterLinkModal({ onClose }: Props) {
               value={link}
               onChange={(e) => setLink(e.target.value)}
               onKeyDown={(e) => {
-                if (e.key === "Enter") handleJoin();
+                if (e.key === "Enter") router.push(link);
               }}
               placeholder="Paste session link here"
               className={cn(
@@ -94,7 +90,7 @@ export default function EnterLinkModal({ onClose }: Props) {
                   "linear-gradient(88deg, rgba(3, 139, 152, 0.06) 5.46%, rgba(15, 251, 73, 0.06) 71.42%)",
                 boxShadow: "0 3.131px 46.972px 0 rgba(13, 63, 46, 0.5)",
               }}
-              onClick={handleJoin}
+              onClick={() => router.push(link)}
             >
               <Image
                 src="/images/icons/send-green.svg"
