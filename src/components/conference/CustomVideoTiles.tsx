@@ -54,7 +54,7 @@ export const CustomVideoTiles = ({
   const tracks = useTracks([Track.Source.Camera, Track.Source.ScreenShare]);
   // Get all microphone tracks (audio)
   const audioTracks = useTracks([Track.Source.Microphone]);
-
+  const [focusedIdentity, setFocusedIdentity] = useState<string | null>(null);
   /* stable sort: local last (so a remote is main if available) */
   const participants = useMemo(() => {
     return [...participantsRaw].sort((a, b) => {
@@ -157,12 +157,19 @@ export const CustomVideoTiles = ({
   /* multi participant */
   // Always show the local participant as the main tile for themselves
   const localParticipant = participants.find((p) => p.isLocal);
-  const mainParticipant =
-    localParticipant ||
+  const mainParticipant = focusedIdentity ? participants.find(p => p.identity === focusedIdentity) ?? participants[0] : localParticipant ||
+
     participants.find((p) => p.identity === mainId) ||
     participants.find((p) => !p.isLocal) ||
     participants[0];
+  // const mainParticipant = useMemo(() => {
+  //   if (focusedIdentity) {
+  //     return participants.find(p => p.identity === focusedIdentity) ?? participants[0];
+  //   }
 
+  //   // fallback: local user hi dikhega agar koi focus na ho
+  //   return participants.find(p => p.isLocal) ?? participants[0];
+  // }, [participants, focusedIdentity]);
   // For the local user, remove themselves from the side tiles
   const others = participants.filter(
     (p) => p.identity !== mainParticipant.identity
@@ -193,11 +200,9 @@ export const CustomVideoTiles = ({
               className={`w-full aspect-video rounded-[15px] ${heightForTile}
                 p-0 sm:p-[2px] 
                 bg-none sm:bg-[linear-gradient(90deg,#14FF00_55%,#00F0FF_62%)]
-                `}
-            >
-              <div
-                className={`w-full rounded-[12px] bg-[#141622]  ${heightForTile}`}
-              >
+
+                `}>
+              <div className={`w-full rounded-[12px] md:bg-[#141622] bg-transparent  ${heightForTile}`}>
                 <MainVideoTile
                   participant={mainParticipant}
                   activeEmojis={activeEmojis}
@@ -220,6 +225,8 @@ export const CustomVideoTiles = ({
                   key={p.identity}
                   participant={p}
                   trackMap={trackByParticipantAndSource}
+                  setFocusedIdentity={setFocusedIdentity}
+                  focusedIdentity={focusedIdentity}
                 />
               ))}
               {overflow.length > 0 && <OverflowTile participants={overflow} />}
@@ -275,33 +282,31 @@ const VideoSurface = ({
       setHasMedia(false);
     }
   }, [trackRef?.publication?.track]);
-  const heightForTile = smallPiece
-    ? "h-full min-h-[180px]"
-    : isMobileFull
-    ? "h-[98vh]"
-    : sideRailOpen
-    ? "h-full min-h-[280px]"
-    : "h-[99vh] md:h-[84vh]"; // mobile 94vh, md+ 84vh
-  // const heightForTile =
-  //   ();
+  const heightForTile =
+    smallPiece
+      ? "h-full min-h-[180px]"
+      : isMobileFull
+        ? "h-[98vh]"
+        : sideRailOpen
+          ? "h-full min-h-[280px]"
+          : "h-full md:h-[84vh]"; // mobile 94vh, md+ 84vh
+
   console.log(heightForTile, "heightForTileheightForTile");
   React.useEffect(() => {
     console.log("[isShort]", isShort ? "h-[80vh]" : "h-[84vh]");
   }, [isShort]);
   return (
-    <div
-      className={` relative w-full ${heightForTile} bg-transparent rounded-xl overflow-hidden `}
-    >
+
+    <div className={` relative w-full ${heightForTile} bg-transparent md:rounded-xl overflow-hidden `}>
       <video
         ref={videoRef}
         autoPlay
         playsInline
         muted={participant.isLocal}
-        className={`custom-video ${
-          fillClass ??
-          `w-full h-full object-cover p-0 sm:p-[2px] 
-                bg-none sm:bg-[linear-gradient(90deg,#14FF00_55%,#00F0FF_62%)]`
-        }`}
+        className={(trackRef?.source === Track.Source.ScreenShare
+          ? ''
+          : 'custom-video ') + `${fillClass ?? `w-full h-full object-cover p-0 sm:p-[2px] 
+                bg-none sm:bg-[linear-gradient(90deg,#14FF00_55%,#00F0FF_62%)]`}`}
       />
 
       <div
@@ -367,7 +372,7 @@ const MainVideoTile = ({
   const initials = getInitials(displayName);
   console.log("[sideRailOpen]", sideRailOpen ? "h-[80vh]" : "h-[84vh]");
   const { value: showSideRail, toggle } = useShowSideRail();
-  const heightForTile = !showSideRail ? "md:h-[84vh]" : "md:h-[95vh]";
+  const heightForTile = !showSideRail ? 'md:h-[84vh]' : 'md:h-[95vh]';
 
   return (
     <div className="relative w-full h-full rounded-xl text-white">
@@ -430,9 +435,13 @@ const MainVideoTile = ({
 const SmallVideoTile = ({
   participant,
   trackMap,
+  setFocusedIdentity,
+  focusedIdentity
 }: {
   participant: Participant;
   trackMap: Map<string, ReturnType<typeof useTracks>[number]>;
+  setFocusedIdentity: (id: string | null) => void;
+  focusedIdentity: string | null;
 }) => {
   const [source, setSource] = useState<Track.Source | null>(
     pickSource(participant)
@@ -457,8 +466,11 @@ const SmallVideoTile = ({
 
   return (
     <div
-      className="w-full h-[148px] min-h-[128px] bg-[#141622] rounded-lg relative overflow-hidden cursor-pointer hover:ring-2 hover:ring-blue-500/50 transition-all border-[#FFFFFF1A] border mt-1"
-      style={{ boxShadow: "0px 25px 85px 0px rgba(8, 11, 22, 0.35)" }}
+      className={`w-full h-[148px] min-h-[128px] bg-[#141622] rounded-lg relative overflow-hidden cursor-pointer hover:ring-2 hover:ring-blue-500/50 transition-all border-[#FFFFFF1A] border mt-1 ${focusedIdentity === participant.identity ? 'ring-2 ring-blue-500' : ''
+        }`}
+      style={{ boxShadow: '0px 25px 85px 0px rgba(8, 11, 22, 0.35)' }}
+      onClick={() => setFocusedIdentity(participant.identity)}
+
     >
       <VideoSurface
         participant={participant}
