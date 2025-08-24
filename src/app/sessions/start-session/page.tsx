@@ -131,7 +131,7 @@ export default function StartSessionPage() {
                 </div>
               </button>
               <button
-                className="flex items-center sm:text-[18px] text-[16px] sm:px-[36px] py-[14px] text-white text-center sm:w-auto w-full"
+                className="flex items-center sm:text-[18px] text-[16px] sm:px-[36px] py-[14px] text-white text-center sm:w-auto w-full cursor-pointer"
                 style={{
                   border: "1px solid #262933",
                   borderRadius: "55px",
@@ -153,11 +153,11 @@ export default function StartSessionPage() {
               </button>
             </div>
             <div className="border-b-[1px] border-[rgba(255,255,255,0.1)] sm:mt-[45px] mt-[36px] w-full"></div>
-            <div className="sm:flex hidden flex-wrap sm:mt-[30px] gap-4">
+            <div className="sm:flex w-full justify-around hidden flex-wrap sm:mt-[30px] gap-4">
               {subData.map((item, index) => (
                 <div
                   key={index}
-                  className="flex sm:flex-col items-center gap-2 p-2 "
+                  className="flex sm:flex-col items-center gap-2 p-2 cursor-pointer"
                 >
                   <Image
                     src={item.image}

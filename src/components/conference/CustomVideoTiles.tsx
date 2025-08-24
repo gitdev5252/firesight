@@ -24,7 +24,12 @@ function AudioTrackRenderer({ track }: { track: Track | undefined }) {
 
 /* utils */
 const getInitials = (name: string) =>
-  name.split(" ").map((w) => w[0]).join("").toUpperCase().slice(0, 2);
+  name
+    .split(" ")
+    .map((w) => w[0])
+    .join("")
+    .toUpperCase()
+    .slice(0, 2);
 
 const pickSource = (p: Participant): Track.Source | null => {
   if (p.isScreenShareEnabled) return Track.Source.ScreenShare;
@@ -36,8 +41,7 @@ export const CustomVideoTiles = ({
   activeEmojis,
   showSideRail,
   onToggleSideRail,
-  isMobileFull = false
-
+  isMobileFull = false,
 }: {
   activeEmojis?: {
     [key: string]: { emoji: string; timestamp: number; username: string };
@@ -45,7 +49,6 @@ export const CustomVideoTiles = ({
   showSideRail?: boolean;
   onToggleSideRail?: () => void;
   isMobileFull?: boolean;
-
 }) => {
   const participantsRaw = useParticipants();
   const tracks = useTracks([Track.Source.Camera, Track.Source.ScreenShare]);
@@ -73,12 +76,12 @@ export const CustomVideoTiles = ({
   const __id = React.useRef(Math.random().toString(36).slice(2, 7));
 
   React.useEffect(() => {
-    console.log('[Tiles mount]', __id.current);
-    return () => console.log('[Tiles unmount]', __id.current);
+    console.log("[Tiles mount]", __id.current);
+    return () => console.log("[Tiles unmount]", __id.current);
   }, []);
 
   React.useEffect(() => {
-    console.log('[showSideRail]', __id.current, showSideRail);
+    console.log("[showSideRail]", __id.current, showSideRail);
   }, [showSideRail]);
 
   /* choose/keep a main tile; prefer screenshare, else first remote */
@@ -87,7 +90,8 @@ export const CustomVideoTiles = ({
 
   useEffect(() => {
     if (!mainId && participants.length > 0) {
-      const firstRemote = participants.find((p) => !p.isLocal) ?? participants[0];
+      const firstRemote =
+        participants.find((p) => !p.isLocal) ?? participants[0];
       setMainId(firstRemote.identity);
     }
   }, [participants, mainId]);
@@ -98,8 +102,13 @@ export const CustomVideoTiles = ({
       const sharer = participants.find((p) => p.isScreenShareEnabled);
       if (sharer && sharer.identity !== mainId) {
         setMainId(sharer.identity);
-      } else if (!sharer && mainId && !participants.find((p) => p.identity === mainId)) {
-        const next = participants.find((p) => !p.isLocal) ?? participants[0] ?? null;
+      } else if (
+        !sharer &&
+        mainId &&
+        !participants.find((p) => p.identity === mainId)
+      ) {
+        const next =
+          participants.find((p) => !p.isLocal) ?? participants[0] ?? null;
         setMainId(next ? next.identity : null);
       }
     }, 250);
@@ -128,7 +137,11 @@ export const CustomVideoTiles = ({
 
     return (
       <div className="w-full h-full min-h-0 flex">
-        <div className={`w-full h-[full] max-h-[${!showSideRail ? '98vh' : isMobileFull ? '85vh' : '98vh'}] aspect-video mx-auto`}>
+        <div
+          className={`w-full max-h-[${
+            !showSideRail ? "98vh" : isMobileFull ? "85vh" : "98vh"
+          }] aspect-video mx-auto`}
+        >
           <VideoSurface
             participant={p}
             trackRef={t}
@@ -145,6 +158,7 @@ export const CustomVideoTiles = ({
   // Always show the local participant as the main tile for themselves
   const localParticipant = participants.find((p) => p.isLocal);
   const mainParticipant = focusedIdentity ? participants.find(p => p.identity === focusedIdentity) ?? participants[0] : localParticipant ||
+
     participants.find((p) => p.identity === mainId) ||
     participants.find((p) => !p.isLocal) ||
     participants[0];
@@ -157,11 +171,13 @@ export const CustomVideoTiles = ({
   //   return participants.find(p => p.isLocal) ?? participants[0];
   // }, [participants, focusedIdentity]);
   // For the local user, remove themselves from the side tiles
-  const others = participants.filter((p) => p.identity !== mainParticipant.identity);
+  const others = participants.filter(
+    (p) => p.identity !== mainParticipant.identity
+  );
   const maxIndividualTiles = 3;
   const displayed = others.slice(0, maxIndividualTiles);
   const overflow = others.slice(maxIndividualTiles);
-  const heightForTile = !showSideRail ? 'md:h-auto' : 'md:h-auto'
+  const heightForTile = !showSideRail ? "md:h-auto" : "md:h-auto";
   // console.log(showSideRail, "showSideRailshowSideRail")
   return (
     <>
@@ -169,15 +185,22 @@ export const CustomVideoTiles = ({
       {audioTracks.map((t) => {
         // Only render for remote participants
         if (t.participant.isLocal) return null;
-        return <AudioTrackRenderer key={t.publication.trackSid} track={t.publication.track} />;
+        return (
+          <AudioTrackRenderer
+            key={t.publication.trackSid}
+            track={t.publication.track}
+          />
+        );
       })}
       <div className="w-full h-full flex gap-3 min-h-0">
         {/* Main area */}
         <div className="flex-1 min-w-0 min-h-0 p-2 ">
           <div className="w-full h-full max-h-[99vh] md:h-[95vh]">
-            <div className={`w-full aspect-video rounded-[15px] ${heightForTile}
+            <div
+              className={`w-full aspect-video rounded-[15px] ${heightForTile}
                 p-0 sm:p-[2px] 
                 bg-none sm:bg-[linear-gradient(90deg,#14FF00_55%,#00F0FF_62%)]
+
                 `}>
               <div className={`w-full rounded-[12px] md:bg-[#141622] bg-transparent  ${heightForTile}`}>
                 <MainVideoTile
@@ -190,7 +213,6 @@ export const CustomVideoTiles = ({
                 />
               </div>
             </div>
-
           </div>
         </div>
 
@@ -226,7 +248,7 @@ const VideoSurface = ({
   variant = "",
   isShort,
   smallPiece = false,
-  isMobileFull = false
+  isMobileFull = false,
 }: {
   participant: Participant;
   trackRef?: ReturnType<typeof useTracks>[number];
@@ -239,9 +261,11 @@ const VideoSurface = ({
   smallPiece?: boolean;
 }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [hasMedia, setHasMedia] = useState<boolean>(!!trackRef?.publication?.track);
+  const [hasMedia, setHasMedia] = useState<boolean>(
+    !!trackRef?.publication?.track
+  );
   const { value: sideRailOpen } = useShowSideRail();
-  console.log(!sideRailOpen ? 'h-[86vh]' : 'h-[96vh]', "value")
+  console.log(!sideRailOpen ? "h-[86vh]" : "h-[96vh]", "value");
 
   useEffect(() => {
     const el = videoRef.current;
@@ -266,13 +290,13 @@ const VideoSurface = ({
         : sideRailOpen
           ? "h-full min-h-[280px]"
           : "h-full md:h-[84vh]"; // mobile 94vh, md+ 84vh
-  // const heightForTile =
-  //   ();
-  console.log(heightForTile, "heightForTileheightForTile")
+
+  console.log(heightForTile, "heightForTileheightForTile");
   React.useEffect(() => {
-    console.log('[isShort]', isShort ? 'h-[80vh]' : 'h-[84vh]');
+    console.log("[isShort]", isShort ? "h-[80vh]" : "h-[84vh]");
   }, [isShort]);
   return (
+
     <div className={` relative w-full ${heightForTile} bg-transparent md:rounded-xl overflow-hidden `}>
       <video
         ref={videoRef}
@@ -286,14 +310,22 @@ const VideoSurface = ({
       />
 
       <div
-        className={`absolute inset-0 flex flex-col items-center justify-center transition-opacity duration-200 ${hasMedia ? "opacity-0 pointer-events-none" : "opacity-100"
-          }`}
+        className={`absolute inset-0 flex flex-col items-center justify-center transition-opacity duration-200 ${
+          hasMedia ? "opacity-0 pointer-events-none" : "opacity-100"
+        }`}
       >
         <div className={`${variant == "tiles" && "mb-15"}`}>
-          <HexAvatar initials={fallbackInitials} size={variant == "tiles" ? 50 : 150} fontSize={variant == "tiles" ? 16 : 28} borderColor="" />
+          <HexAvatar
+            initials={fallbackInitials}
+            size={variant == "tiles" ? 50 : 150}
+            fontSize={variant == "tiles" ? 16 : 28}
+            borderColor=""
+          />
         </div>
         {fallbackName && (
-          <p className="mt-3 text-lg text-white/80 font-semibold">{fallbackName}</p>
+          <p className="mt-3 text-lg text-white/80 font-semibold">
+            {fallbackName}
+          </p>
         )}
       </div>
     </div>
@@ -306,7 +338,7 @@ const MainVideoTile = ({
   activeEmojis,
   trackMap,
   onToggleSideRail,
-  isMobileFull
+  isMobileFull,
 }: {
   participant: Participant;
   activeEmojis?: {
@@ -316,7 +348,9 @@ const MainVideoTile = ({
   onToggleSideRail?: () => void;
   isMobileFull?: boolean;
 }) => {
-  const [source, setSource] = useState<Track.Source | null>(pickSource(participant));
+  const [source, setSource] = useState<Track.Source | null>(
+    pickSource(participant)
+  );
   const sourceTimer = useRef<number | null>(null);
   const { value: sideRailOpen } = useShowSideRail();
 
@@ -331,10 +365,12 @@ const MainVideoTile = ({
     };
   }, [participant.isScreenShareEnabled, participant.isCameraEnabled]);
 
-  const t = source ? trackMap.get(`${participant.identity}:${source}`) : undefined;
+  const t = source
+    ? trackMap.get(`${participant.identity}:${source}`)
+    : undefined;
   const displayName = participant.identity;
   const initials = getInitials(displayName);
-  console.log('[sideRailOpen]', sideRailOpen ? 'h-[80vh]' : 'h-[84vh]');
+  console.log("[sideRailOpen]", sideRailOpen ? "h-[80vh]" : "h-[84vh]");
   const { value: showSideRail, toggle } = useShowSideRail();
   const heightForTile = !showSideRail ? 'md:h-[84vh]' : 'md:h-[95vh]';
 
@@ -367,12 +403,11 @@ const MainVideoTile = ({
             toggle();
           }}
           className="w-7 h-7 rounded-full flex items-center justify-center shadow-lg hover:bg-white/10 transition"
-          title={sideRailOpen ? 'Hide participants' : 'Show participants'}
+          title={sideRailOpen ? "Hide participants" : "Show participants"}
         >
           {/* You can swap icons if you prefer when open/closed */}
           {!sideRailOpen ? <Expand color="white" /> : <Shrink color="white" />}
         </button>
-
       </div>
 
       {activeEmojis &&
@@ -385,7 +420,9 @@ const MainVideoTile = ({
             <div className="animate-float-up">
               <div className="bg-[#080B16] backdrop-blur-lg rounded-full px-5 py-3 gap-3 shadow-2xl items-center flex flex-col">
                 <span className="text-5xl">{emojiData.emoji}</span>
-                <p className="text-white font-bold text-lg">{emojiData.username}</p>
+                <p className="text-white font-bold text-lg">
+                  {emojiData.username}
+                </p>
               </div>
             </div>
           </div>
@@ -406,17 +443,24 @@ const SmallVideoTile = ({
   setFocusedIdentity: (id: string | null) => void;
   focusedIdentity: string | null;
 }) => {
-  const [source, setSource] = useState<Track.Source | null>(pickSource(participant));
+  const [source, setSource] = useState<Track.Source | null>(
+    pickSource(participant)
+  );
   const debounceRef = useRef<number | null>(null);
   useEffect(() => {
     if (debounceRef.current) window.clearTimeout(debounceRef.current);
-    debounceRef.current = window.setTimeout(() => setSource(pickSource(participant)), 200);
+    debounceRef.current = window.setTimeout(
+      () => setSource(pickSource(participant)),
+      200
+    );
     return () => {
       if (debounceRef.current) window.clearTimeout(debounceRef.current);
     };
   }, [participant.isScreenShareEnabled, participant.isCameraEnabled]);
 
-  const t = source ? trackMap.get(`${participant.identity}:${source}`) : undefined;
+  const t = source
+    ? trackMap.get(`${participant.identity}:${source}`)
+    : undefined;
   const displayName = participant.identity;
   const initials = getInitials(displayName);
 
@@ -446,7 +490,6 @@ const SmallVideoTile = ({
         {participant.isLocal && " (You)"}
       </div>
 
-
       <div className="absolute top-2 right-2 flex flex-col gap-1 z-20">
         {source === Track.Source.ScreenShare && (
           <div className="w-6 h-6 bg-green-600 rounded-full flex items-center justify-center shadow-lg">
@@ -458,7 +501,12 @@ const SmallVideoTile = ({
             <Mic size={16} color="white" />
           </div>
         ) : (
-          <img src="/images/icons/mic-off-hex.svg" alt="" width={32} height={32} />
+          <img
+            src="/images/icons/mic-off-hex.svg"
+            alt=""
+            width={32}
+            height={32}
+          />
         )}
       </div>
     </div>
@@ -471,7 +519,10 @@ const OverflowTile = ({ participants }: { participants: Participant[] }) => {
   // show at most 2 people + a "+N" tile if more remain
   const maxSlots = 3;
   const needsMoreTile = participants.length > 2;
-  const visible = participants.slice(0, needsMoreTile ? maxSlots : Math.min(3, participants.length));
+  const visible = participants.slice(
+    0,
+    needsMoreTile ? maxSlots : Math.min(3, participants.length)
+  );
   const remaining = Math.max(0, participants.length - visible.length);
 
   return (
