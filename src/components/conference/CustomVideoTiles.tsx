@@ -270,8 +270,8 @@ const VideoSurface = ({
         autoPlay
         playsInline
         muted={participant.isLocal}
-        className={fillClass ?? `w-full h-full object-cover p-0 sm:p-[2px] 
-                bg-none sm:bg-[linear-gradient(90deg,#14FF00_55%,#00F0FF_62%)]`}
+        className={`custom-video ${fillClass ?? `w-full h-full object-cover p-0 sm:p-[2px] 
+                bg-none sm:bg-[linear-gradient(90deg,#14FF00_55%,#00F0FF_62%)]`}`}
       />
 
       <div
@@ -325,7 +325,7 @@ const MainVideoTile = ({
   const initials = getInitials(displayName);
   console.log('[sideRailOpen]', sideRailOpen ? 'h-[80vh]' : 'h-[84vh]');
   const { value: showSideRail, toggle } = useShowSideRail();
-  const heightForTile = !showSideRail ? 'h-[84vh]' : 'h-[95vh]'
+  const heightForTile = !showSideRail ?  'md:h-[84vh]' : 'md:h-[95vh]';
 
   return (
     <div className="relative w-full h-full rounded-xl text-white">
@@ -334,7 +334,7 @@ const MainVideoTile = ({
         trackRef={t}
         fallbackInitials={initials}
         fallbackName={displayName}
-        fillClass={`w-full ${heightForTile} object-cover rounded-xl`}
+        fillClass={`w-full h-full ${heightForTile} object-cover rounded-xl`}
         isShort={sideRailOpen}
         isMobileFull={isMobileFull}
       />
