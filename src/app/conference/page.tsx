@@ -1131,28 +1131,34 @@ export default function SessionPage() {
 
         {/* Header (desktop) */}
         <div className="hidden md:flex items-center justify-between px-6 py-4 text-white mb-2 mt-3">
+          {/* Left: Duration */}
           <div className="flex items-center gap-2 ml-4">
-            <div className="w-4 h-4 rounded-full flex items-center justify-center">
+            <div className="w-4 h-4 flex items-center justify-center">
               <Clock color="white" />
             </div>
             <span className="text-sm font-medium">{meetingDuration}</span>
-            <span className="mx-2 text-gray-400 ml-20">|</span>
-            {/* <span className="text-sm font-mono text-green-400">{meetingDuration}</span>
-            <span className="mx-2 text-gray-400 ml-20">|</span> */}
           </div>
 
-          <div className="flex items-center gap-[2px] h-8">
-            <img src="/images/icons/soundwave.svg" alt="" />
+          {/* Divider */}
+          <span className="mx-6 text-gray-400">|</span>
+
+          {/* Middle: Waveform */}
+          <div className="flex items-center h-8">
+            <img src="/images/icons/soundwave.svg" alt="soundwave" />
           </div>
 
+          {/* Divider */}
+          <span className="mx-6 text-gray-400">|</span>
+
+          {/* Right: Date */}
           <div className="flex items-center gap-2 mr-4">
-            <div className="w-4 h-4 rounded flex items-center justify-center">
-              <span className="mx-2 text-gray-400 mr-28">|</span>
+            <div className="w-4 h-4 flex items-center justify-center">
               <Calendar color="white" />
             </div>
             <span className="text-sm font-medium">{getFormattedDate()}</span>
           </div>
         </div>
+
 
         {/* Main Video Area */}
         <div className="flex-1  relative mx-0 md:mx-6 mb-4 md:mb-6 min-h-0">
