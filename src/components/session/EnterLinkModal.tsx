@@ -3,12 +3,35 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { Input } from "../ui/input";
-
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { cn } from "@/lib/utils";
 interface Props {
   onClose: () => void;
 }
 
 export default function EnterLinkModal({ onClose }: Props) {
+  const [link, setLink] = useState("");
+  const router = useRouter();
+
+  // Extract session id from link (assume last part after last slash)
+  const getSessionId = (url: string) => {
+    try {
+      const parts = url.trim().split("/");
+      return parts[parts.length - 1] || "";
+    } catch {
+      return "";
+    }
+  };
+
+  const handleJoin = () => {
+    const sessionId = getSessionId(link);
+    if (sessionId) {
+      router.push(`/${sessionId}`);
+      onClose();
+    }
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -52,11 +75,18 @@ export default function EnterLinkModal({ onClose }: Props) {
         <div className="pl-8 pr-6 pt-2 pb-4 gap-3 flex flex-col">
           <div className="flex flex-col items-center gap-4 cursor-pointer">
             <Input
-              value={""}
-              className="border-[rgba(255,255,255,0.12)] bg-transparent text-white"
+              value={link}
+              onChange={(e) => setLink(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") handleJoin();
+              }}
+              placeholder="Paste session link here"
+              className={cn(
+                "border-[rgba(255,255,255,0.12)] bg-transparent text-white focus-visible:ring-offset-0"
+              )}
             />
             <div
-              className="flex items-center px-[36px] py-[10px]"
+              className="flex items-center px-[36px] py-[10px] cursor-pointer"
               style={{
                 border: "1px solid rgba(15, 251, 73, 0.59)",
                 borderRadius: "55px",
@@ -64,6 +94,7 @@ export default function EnterLinkModal({ onClose }: Props) {
                   "linear-gradient(88deg, rgba(3, 139, 152, 0.06) 5.46%, rgba(15, 251, 73, 0.06) 71.42%)",
                 boxShadow: "0 3.131px 46.972px 0 rgba(13, 63, 46, 0.5)",
               }}
+              onClick={handleJoin}
             >
               <Image
                 src="/images/icons/send-green.svg"
