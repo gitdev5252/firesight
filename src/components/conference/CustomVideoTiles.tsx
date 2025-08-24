@@ -1,6 +1,6 @@
 import { useTracks, useParticipants } from "@livekit/components-react";
 import { Participant, Track } from "livekit-client";
-import { Expand, Mic, MicOff, Monitor } from "lucide-react";
+import { Expand, Mic, MicOff, Monitor, Shrink } from "lucide-react";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { HexAvatar } from "../HexAvatar/HexAvatar";
 import { useShowSideRail } from "@/hooks/sideRail";
@@ -154,6 +154,7 @@ export const CustomVideoTiles = ({
   const maxIndividualTiles = 3;
   const displayed = others.slice(0, maxIndividualTiles);
   const overflow = others.slice(maxIndividualTiles);
+  const heightForTile = !showSideRail ? 'md:h-auto' : 'md:h-auto'
   // console.log(showSideRail, "showSideRailshowSideRail")
   return (
     <>
@@ -167,10 +168,11 @@ export const CustomVideoTiles = ({
         {/* Main area */}
         <div className="flex-1 min-w-0 min-h-0 p-2 ">
           <div className="w-full h-full max-h-[99vh] md:h-[95vh]">
-            <div className="w-full h-full aspect-video rounded-[15px] 
+            <div className={`w-full aspect-video rounded-[15px] ${heightForTile}
                 p-0 sm:p-[2px] 
-                bg-none sm:bg-[linear-gradient(90deg,#14FF00_55%,#00F0FF_62%)]">
-              <div className="w-full h-full rounded-[12px] bg-[#141622]">
+                bg-none sm:bg-[linear-gradient(90deg,#14FF00_55%,#00F0FF_62%)]
+                `}>
+              <div className={`w-full rounded-[12px] bg-[#141622]  ${heightForTile}`}>
                 <MainVideoTile
                   participant={mainParticipant}
                   activeEmojis={activeEmojis}
@@ -268,7 +270,8 @@ const VideoSurface = ({
         autoPlay
         playsInline
         muted={participant.isLocal}
-        className={fillClass ?? "w-full h-full object-cover"}
+        className={fillClass ?? `w-full h-full object-cover p-0 sm:p-[2px] 
+                bg-none sm:bg-[linear-gradient(90deg,#14FF00_55%,#00F0FF_62%)]`}
       />
 
       <div
@@ -352,11 +355,11 @@ const MainVideoTile = ({
             onToggleSideRail?.();
             toggle();
           }}
-          className="w-7 h-7 bg-[#080B16] rounded-full flex items-center justify-center shadow-lg hover:bg-white/10 transition"
+          className="w-7 h-7 rounded-full flex items-center justify-center shadow-lg hover:bg-white/10 transition"
           title={sideRailOpen ? 'Hide participants' : 'Show participants'}
         >
           {/* You can swap icons if you prefer when open/closed */}
-          <Expand color="white" />
+          {!sideRailOpen ? <Expand color="white" /> : <Shrink color="white" />}
         </button>
 
       </div>
