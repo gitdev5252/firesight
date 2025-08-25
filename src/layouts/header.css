@@ -26,7 +26,15 @@
 .main-menu-box {
   background: rgba(255, 255, 255, 0.02) !important;
   border: 1px solid rgba(255, 255, 255, 0.1);
+  /* Enable backdrop blur in Safari and other browsers */
+  -webkit-backdrop-filter: blur(32px) !important;
   backdrop-filter: blur(32px) !important;
+  /* Ensure background and border respect the element box when blurring */
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+  /* Promote compositing layer in Safari for proper rendering */
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
   border-radius: 20px;
   position: relative;
 }

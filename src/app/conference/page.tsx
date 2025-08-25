@@ -219,11 +219,6 @@ const ChatTab = ({
     }
   };
 
-  // const formatTime = (timestamp: number) => {
-  //   const date = new Date(timestamp);
-  //   return date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
-  // };
-
   return (
     <div className="flex flex-col h-full min-h-0 bg-[#141721] rounded-[10px] p-3">
       <div className="flex-1 overflow-y-auto mb-4 space-y-3 min-h-0">
@@ -791,11 +786,6 @@ const MobileTabBarControls = ({
           </button>
         </div>
       </div>
-
-      {/* Fallback horizontal scroll if someone adds more buttons later */}
-      {/* <div className="mt-2 overflow-x-auto sm:hidden no-scrollbar">
-        ...optional secondary row...
-      </div> */}
     </div>
   );
 };
@@ -1263,6 +1253,7 @@ export default function SessionPage() {
                 audio
                 className=""
               >
+
                 <div className="hidden md:flex items-center justify-between px-6 py-4 text-white mb-2 mt-3">
                   {/* Left: Duration */}
                   <div className="flex items-center gap-2 ml-4">
@@ -1518,6 +1509,7 @@ export default function SessionPage() {
                               </div>
                             </div>
                           )}
+
 
                           {activeTab === "Transcript" && (
                             <div className="mt-[200px] p-3">
