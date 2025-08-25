@@ -235,3 +235,48 @@
 dialog.bottom-sheet::backdrop {
   @apply bg-black/10 backdrop-blur-[40px];
 }
+/* somewhere in your global CSS */
+.self-video {
+  transform: none !important;
+}
+/* Kill any mirroring in the local tile subtree, including transform longhands */
+[data-no-mirror="1"],
+[data-no-mirror="1"] * {
+  transform: none !important;   /* old transform */
+  scale: 1 !important;          /* CSS Transform Level 2 longhand */
+  rotate: none !important;      /* longhand rotate */
+  transform-style: flat !important;
+  backface-visibility: visible !important;
+}
+
+/* Belt & suspenders for the <video> itself */
+[data-no-mirror="1"] video {
+  transform: none !important;
+  scale: 1 !important;
+  rotate: none !important;
+}
+.custom-video{
+    transform: scaleX(-1);
+}
+/* Gradient border utility using a masked pseudo-element */
+.gradient-border {
+  position: relative;
+  border-radius: 12px; /* match your tile rounding */
+  overflow: hidden;
+}
+
+.gradient-border::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  padding: 2px; /* border thickness */
+  border-radius: inherit;
+  background: linear-gradient(90deg, #14FF00 55%, #00F0FF 62%);
+  /* Mask the center so only the ring shows */
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  pointer-events: none;
+}

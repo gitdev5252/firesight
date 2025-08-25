@@ -12,7 +12,7 @@ export const useMediaControls = () => {
 
   const [isMicrophoneEnabled, setIsMicrophoneEnabled] = useState(true);
   const [isCameraEnabled, setIsCameraEnabled] = useState(isCameraOn);
-  console.log( isCameraOn, "localParticipantlocalParticipant")
+  // console.log( isCameraOn, "localParticipantlocalParticipant")
   useEffect(() => {
     if (localParticipant) {
       setIsMicrophoneEnabled(localParticipant.isMicrophoneEnabled);

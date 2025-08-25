@@ -36,6 +36,7 @@ import { useMediaControls } from "@/hooks/useMediaControls";
 import { HexAvatar } from "@/components/HexAvatar/HexAvatar";
 import BottomSheet from "@/components/BottomSheet/BottomSheet";
 import { ShowSideRailProvider } from "@/hooks/sideRail";
+import { LiveWaveform } from "@/components/Audio/LiveWave";
 
 const mobileTabs = ["Session", "People", "Chat", "Transcript", "Summary"];
 
@@ -70,11 +71,10 @@ const Sidebar = ({
           <button
             key={tab}
             onClick={() => setActiveTab(tab)}
-            className={`flex-1 px-2 py-3 text-xs font-medium transition-colors ${
-              activeTab === tab
-                ? "text-white border-b-1 border-green-400 mt-1"
-                : "text-white/60 hover:text-white/80 mt-1"
-            }`}
+            className={`flex-1 px-2 py-3 text-xs font-medium transition-colors ${activeTab === tab
+              ? "text-white border-b-1 border-green-400 mt-1"
+              : "text-white/60 hover:text-white/80 mt-1"
+              }`}
           >
             {tab}
           </button>
@@ -424,11 +424,10 @@ const ConferenceControls = ({
 
           <div className="flex items-center gap-6">
             <button
-              className={`flex flex-col items-center gap-1 transition-colors ${
-                isMicrophoneEnabled
-                  ? "text-gray-400 hover:text-gray-400"
-                  : "text-red-400 hover:text-red-300"
-              }`}
+              className={`flex flex-col items-center gap-1 transition-colors ${isMicrophoneEnabled
+                ? "text-gray-400 hover:text-gray-400"
+                : "text-red-400 hover:text-red-300"
+                }`}
               onClick={toggleMicrophone}
             >
               <div className="items-center justify-center">
@@ -444,11 +443,10 @@ const ConferenceControls = ({
             <div className="w-px h-8 bg-white/20"></div>
 
             <button
-              className={`flex flex-col items-center gap-1 transition-colors ${
-                isCameraEnabled
-                  ? "text-gray-400 hover:text-gray-400"
-                  : "text-red-400 hover:text-red-300"
-              }`}
+              className={`flex flex-col items-center gap-1 transition-colors ${isCameraEnabled
+                ? "text-gray-400 hover:text-gray-400"
+                : "text-red-400 hover:text-red-300"
+                }`}
               onClick={toggleCamera}
             >
               <div className="items-center justify-center">
@@ -464,11 +462,10 @@ const ConferenceControls = ({
             <div className="w-px h-8 bg-white/20"></div>
 
             <button
-              className={`flex flex-col items-center gap-1 transition-colors ${
-                raisedHands[currentUser]
-                  ? "text-gray-400 hover:text-gray-400"
-                  : "text-gray-400 hover:text-gray-400"
-              }`}
+              className={`flex flex-col items-center gap-1 transition-colors ${raisedHands[currentUser]
+                ? "text-gray-400 hover:text-gray-400"
+                : "text-gray-400 hover:text-gray-400"
+                }`}
               onClick={() => onToggleHandRaise(currentUser)}
             >
               <div className="items-center justify-center">
@@ -499,11 +496,10 @@ const ConferenceControls = ({
 
             <button
               onClick={isScreenSharing ? stopScreenShare : startScreenShare}
-              className={`flex flex-col items-center gap-1 transition-colors ${
-                isScreenSharing
-                  ? "text-green-400 hover:text-green-300"
-                  : "text-gray-400 hover:text-gray-400"
-              }`}
+              className={`flex flex-col items-center gap-1 transition-colors ${isScreenSharing
+                ? "text-green-400 hover:text-green-300"
+                : "text-gray-400 hover:text-gray-400"
+                }`}
             >
               <div className="items-center justify-center">
                 {/* <Monitor color={isScreenSharing ? "#10b981" : "white"} /> */}
@@ -642,11 +638,10 @@ const MobileConferenceControls = ({
             </button>
 
             <button
-              className={`flex flex-col items-center gap-1 transition-colors ${
-                raisedHands[currentUser]
-                  ? "text-yellow-400 hover:text-yellow-500"
-                  : "text-gray-400 hover:text-gray-400"
-              }`}
+              className={`flex flex-col items-center gap-1 transition-colors ${raisedHands[currentUser]
+                ? "text-yellow-400 hover:text-yellow-500"
+                : "text-gray-400 hover:text-gray-400"
+                }`}
               onClick={() => onToggleHandRaise(currentUser)}
             >
               <div className="items-center justify-center">
@@ -688,11 +683,10 @@ const MobileConferenceControls = ({
           {mobileTabs.map((tab) => (
             <button
               key={tab}
-              className={`flex-1 px-2 py-3 text-xs font-medium transition-colors ${
-                activeTab === tab
-                  ? "text-white border-b-2 border-green-500 bg-white/5"
-                  : "text-white/60 hover:text-white/80"
-              }`}
+              className={`flex-1 px-2 py-3 text-xs font-medium transition-colors ${activeTab === tab
+                ? "text-white border-b-2 border-green-500 bg-white/5"
+                : "text-white/60 hover:text-white/80"
+                }`}
               onClick={() => setActiveTab(tab)}
             >
               {tab}
@@ -1067,9 +1061,8 @@ export default function SessionPage() {
 
   return (
     <div
-      className={`${
-        !isMobileFull && "p-4 md:p-8 bg-[#080B16] min-h-screen flex flex-col"
-      } md:p-8 md:bg-[#080B16] md:min-h-screen md:flex md:flex-col relative`}
+      className={`${!isMobileFull && "p-4 md:p-8 bg-[#080B16] min-h-screen flex flex-col"
+        } md:p-8 md:bg-[#080B16] md:min-h-screen md:flex md:flex-col relative`}
     >
       {isDesktop ? (
         <img
@@ -1084,7 +1077,7 @@ export default function SessionPage() {
             height: "-webkit-fill-available",
           }}
         />
-      ) :    <img
+      ) : <img
         src="/images/onboarding/background-green.png"
         alt="background"
         className="bg-image"
@@ -1096,8 +1089,8 @@ export default function SessionPage() {
           height: "-webkit-fill-available",
         }}
       />}
-      
-   
+
+
       {/* Name Input Modal */}
       {nameModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-[rgba(0,0,0,0.35)] backdrop-blur-[8px]">
@@ -1132,9 +1125,8 @@ export default function SessionPage() {
       )}
 
       <div
-        className={`w-full flex flex-col md:bg-[#0D101B] md:border md:border-[rgba(255,255,255,0.1)] rounded-[20px] md:backdrop-blur-[32px] relative transition-all duration-300 ${
-          isSidebarOpen ? "pr-120" : ""
-        } flex-1 min-h-0`}
+        className={`w-full flex flex-col md:bg-[#0D101B] md:border md:border-[rgba(255,255,255,0.1)] rounded-[20px] md:backdrop-blur-[32px] relative transition-all duration-300 ${isSidebarOpen ? "pr-120" : ""
+          } flex-1 min-h-0`}
       >
         {/* Sidebar */}
         {isSidebarOpen && (
@@ -1150,8 +1142,7 @@ export default function SessionPage() {
         )}
 
         {/* Header (desktop) */}
-        <div className="hidden md:flex items-center justify-between px-6 py-4 text-white mb-2 mt-3">
-          {/* Left: Duration */}
+        {/* <div className="hidden md:flex items-center justify-between px-6 py-4 text-white mb-2 mt-3">
           <div className="flex items-center gap-2 ml-4">
             <div className="w-4 h-4 flex items-center justify-center">
               <Clock color="white" />
@@ -1159,35 +1150,31 @@ export default function SessionPage() {
             <span className="text-sm font-medium">{meetingDuration}</span>
           </div>
 
-          {/* Divider */}
           <span className="mx-6 text-gray-400">|</span>
 
-          {/* Middle: Waveform */}
           <div className="flex items-center h-8">
-<img
-  src="/images/icons/soundwave.svg"
-  alt="soundwave"
-  style={{
-    width: "30vw",   // always 30% of screen width
-    height: "auto"
-  }}
-/>
+            <img
+              src="/images/icons/soundwave.svg"
+              alt="soundwave"
+              style={{
+                width: "30vw",   
+                height: "auto"
+              }}
+            />
           </div>
 
-          {/* Divider */}
           <span className="mx-6 text-gray-400">|</span>
 
-          {/* Right: Date */}
           <div className="flex items-center gap-2 mr-4">
             <div className="w-4 h-4 flex items-center justify-center">
               <Calendar color="white" />
             </div>
             <span className="text-sm font-medium">{getFormattedDate()}</span>
           </div>
-        </div>
+        </div> */}
 
         {/* Main Video Area */}
-        <div className="flex-1  relative mx-0 md:mx-6 mb-4 md:mb-6 min-h-0">
+        {/* <div className="flex-1  relative mx-0 md:mx-6 mb-4 md:mb-6 min-h-0">
           <div
             className={
               "w-full md:h-[calc(100vh-20px)] border border-white/20 relative overflow-hidden min-h-[300px] h-[140vh] max-h-[100vh] rounded-2xl " +
@@ -1196,9 +1183,9 @@ export default function SessionPage() {
               //   : "h-[97vh] max-h-[85vh]")
               ""
             }
-          >
+          > */}
             {/* User Avatar (desktop) */}
-            <div className="hidden md:block absolute top-6 left-6 bg-[#080B16] pb-2 pt-2 pl-4 pr-4 rounded-[11px] border border-[rgba(211,211,211,0.1)] z-10">
+            {/* <div className="hidden md:block absolute top-6 left-6 bg-[#080B16] pb-2 pt-2 pl-4 pr-4 rounded-[11px] border border-[rgba(211,211,211,0.1)] z-10">
               <div className="flex items-center gap-3">
                 <HexAvatar
                   initials={currentUser.slice(0, 2).toUpperCase()}
@@ -1209,7 +1196,7 @@ export default function SessionPage() {
                   {currentUser}
                 </span>
               </div>
-            </div>
+            </div> */}
             {isModalOpen && (
               <div className="absolute inset-0 flex items-center justify-center z-100 bg-black/50">
                 <div className="bg-[#1e2328] border border-white/20 rounded-xl max-w-md w-full mx-6 relative">
@@ -1274,240 +1261,287 @@ export default function SessionPage() {
                 connect
                 video
                 audio
-                className="w-full h-full"
+                className=""
               >
-                {/* DESKTOP / TABLET TILES */}
-                {/* <div className="hidden md:block w-full h-full">
+                <div className="hidden md:flex items-center justify-between px-6 py-4 text-white mb-2 mt-3">
+                  {/* Left: Duration */}
+                  <div className="flex items-center gap-2 ml-4">
+                    <div className="w-4 h-4 flex items-center justify-center">
+                      <Clock color="white" />
+                    </div>
+                    <span className="text-sm font-medium">{meetingDuration}</span>
+                  </div>
+
+                  {/* Divider */}
+                  <span className="mx-6 text-gray-400">|</span>
+
+                  {/* Middle: Waveform */}
+                  <div className="flex items-center h-8">
+                    {/* <img
+                      src="/images/icons/soundwave.svg"
+                      alt="soundwave"
+                      style={{
+                        width: "30vw",   // always 30% of screen width
+                        height: "auto"
+                      }}
+                    /> */}
+                          <LiveWaveform />        {/* live waveform */}
+
+                  </div>
+
+                  {/* Divider */}
+                  <span className="mx-6 text-gray-400">|</span>
+
+                  {/* Right: Date */}
+                  <div className="flex items-center gap-2 mr-4">
+                    <div className="w-4 h-4 flex items-center justify-center">
+                      <Calendar color="white" />
+                    </div>
+                    <span className="text-sm font-medium">{getFormattedDate()}</span>
+                  </div>
+                </div>
+                <div className="flex-1  relative mx-0 md:mx-6 mb-4 md:mb-6 min-h-0">
+                  <div
+                    className={
+                      "w-full md:h-[calc(100vh-20px)] border border-white/20 relative overflow-hidden min-h-[300px] h-[140vh] max-h-[100vh] rounded-2xl " +
+                      // (isMobileFull
+                      //   ? "h-[140vh] max-h-[100vh] rounded-2xl"
+                      //   : "h-[97vh] max-h-[85vh]")
+                      ""
+                    }
+                  >
+                    {/* DESKTOP / TABLET TILES */}
+                    {/* <div className="hidden md:block w-full h-full">
                   <CustomVideoTiles activeEmojis={activeEmojis} showSideRail={showSideRail}
                     onToggleSideRail={() => setShowSideRail(!showSideRail)}
 
                   />
                 </div> */}
-                <ShowSideRailProvider>
-                  {isDesktop ? (
-                    <CustomVideoTiles
-                      activeEmojis={activeEmojis}
-                      showSideRail={showSideRail}
-                      onToggleSideRail={handleToggleSideRail}
-                    />
-                  ) : (
-                    <>
-                      {activeTab === "Session" && (
+                    <ShowSideRailProvider>
+                      {isDesktop ? (
+                        <CustomVideoTiles
+                          activeEmojis={activeEmojis}
+                          showSideRail={showSideRail}
+                          onToggleSideRail={handleToggleSideRail}
+                        />
+                      ) : (
                         <>
-                          <CustomVideoTiles
-                            activeEmojis={activeEmojis}
-                            isMobileFull={isMobileFull}
-                          />
-                        </>
-                      )}
-                      <div className="p-1 ml-2 mr-2 ">
-                        {activeTab === "People" && (
-                          <>
-                            <div className="bg-[rgba(255,255,255,0.02)] rounded-[20px] border border-[rgba(255,255,255,0.1)] backdrop-blur-[32px] p-2 mb-4 max-h-[56vh] overflow-auto mt-38">
-                              {participants && participants.length > 0 ? (
-                                participants.map((participant) => {
-                                  const p = participant as Participant;
-                                  const initials = p.identity
-                                    .slice(0, 2)
-                                    .toUpperCase();
-                                  const isLocal = p.isLocal;
-                                  const isMicEnabled =
-                                    !p.isMicrophoneEnabled === false;
-                                  const isCameraEnabled =
-                                    !p.isCameraEnabled === false;
+                          {activeTab === "Session" && (
+                            <>
+                              <CustomVideoTiles
+                                activeEmojis={activeEmojis}
+                                isMobileFull={isMobileFull}
+                              />
+                            </>
+                          )}
+                          <div className="p-1 ml-2 mr-2 ">
+                            {activeTab === "People" && (
+                              <>
+                                <div className="bg-[rgba(255,255,255,0.02)] rounded-[20px] border border-[rgba(255,255,255,0.1)] backdrop-blur-[32px] p-2 mb-4 max-h-[56vh] overflow-auto mt-38">
+                                  {participants && participants.length > 0 ? (
+                                    participants.map((participant) => {
+                                      const p = participant as Participant;
+                                      const initials = p.identity
+                                        .slice(0, 2)
+                                        .toUpperCase();
+                                      const isLocal = p.isLocal;
+                                      const isMicEnabled =
+                                        !p.isMicrophoneEnabled === false;
+                                      const isCameraEnabled =
+                                        !p.isCameraEnabled === false;
 
-                                  return (
-                                    <div
-                                      key={p.sid}
-                                      className="flex items-center gap-3 p-3 rounded-lg"
-                                    >
-                                      <HexAvatar
-                                        initials={initials}
-                                        size={32}
-                                        fontSize={12}
-                                      />
+                                      return (
+                                        <div
+                                          key={p.sid}
+                                          className="flex items-center gap-3 p-3 rounded-lg"
+                                        >
+                                          <HexAvatar
+                                            initials={initials}
+                                            size={32}
+                                            fontSize={12}
+                                          />
 
-                                      <div className="flex-1">
-                                        <div className="flex items-center gap-2">
-                                          <p className="text-white text-sm font-medium">
-                                            {p.identity} {isLocal && "(Host)"}
-                                          </p>
-                                          {raisedHands[p.identity] && (
-                                            <Hand
-                                              size={16}
-                                              color="#fbbf24"
-                                              className="animate-pulse"
-                                            />
-                                          )}
+                                          <div className="flex-1">
+                                            <div className="flex items-center gap-2">
+                                              <p className="text-white text-sm font-medium">
+                                                {p.identity} {isLocal && "(Host)"}
+                                              </p>
+                                              {raisedHands[p.identity] && (
+                                                <Hand
+                                                  size={16}
+                                                  color="#fbbf24"
+                                                  className="animate-pulse"
+                                                />
+                                              )}
+                                            </div>
+                                          </div>
+                                          <div className="flex gap-5 mr-4">
+                                            <div className="w-5 h-5 rounded-full flex items-center justify-center">
+                                              {isMicEnabled ? (
+                                                <Mic size={24} color="white" />
+                                              ) : (
+                                                <MicOff size={24} color="white" />
+                                              )}
+                                            </div>
+                                            <div className="w-5 h-5 rounded-full flex items-center justify-center">
+                                              {isCameraEnabled ? (
+                                                <Video size={24} color="white" />
+                                              ) : (
+                                                <VideoOff size={24} color="white" />
+                                              )}
+                                            </div>
+                                          </div>
                                         </div>
-                                      </div>
-                                      <div className="flex gap-5 mr-4">
-                                        <div className="w-5 h-5 rounded-full flex items-center justify-center">
-                                          {isMicEnabled ? (
-                                            <Mic size={24} color="white" />
-                                          ) : (
-                                            <MicOff size={24} color="white" />
-                                          )}
-                                        </div>
-                                        <div className="w-5 h-5 rounded-full flex items-center justify-center">
-                                          {isCameraEnabled ? (
-                                            <Video size={24} color="white" />
-                                          ) : (
-                                            <VideoOff size={24} color="white" />
-                                          )}
-                                        </div>
-                                      </div>
-                                    </div>
-                                  );
-                                })
-                              ) : (
-                                <p className="text-white/60 text-sm">
-                                  No participants yet
-                                </p>
-                              )}
-                            </div>
-                            <div className="fixed bottom-0 left-0 right-0 z-50 md:hidden px-4 pb-8">
-                              <button
-                                onClick={() => {
-                                  window.location.href = "/session";
-                                }}
-                                className="w-full grid grid-cols-[1fr_auto_1fr] items-center
+                                      );
+                                    })
+                                  ) : (
+                                    <p className="text-white/60 text-sm">
+                                      No participants yet
+                                    </p>
+                                  )}
+                                </div>
+                                <div className="fixed bottom-0 left-0 right-0 z-50 md:hidden px-4 pb-8">
+                                  <button
+                                    onClick={() => {
+                                      window.location.href = "/session";
+                                    }}
+                                    className="w-full grid grid-cols-[1fr_auto_1fr] items-center
                bg-[#0f1419] rounded-lg border border-white/10 shadow
                focus:outline-none focus:ring-2 focus:ring-red-400 transition
                "
-                              >
-                                {/* left spacer to balance the right icon */}
-                                <span />
-
-                                {/* centered label */}
-                                <span className="justify-self-center text-white font-mono text-base text-center p-4 mr-8 flex items-center gap-3">
-                                  <Link />
-                                  Share Session Link
-                                </span>
-
-                                {/* right icon block */}
-                                <span className="flex items-center justify-self-end">
-                                  <span className="w-px h-14 bg-white/20 mx-2" />
-                                  <div className="p-4 mr-2">
-                                    <svg
-                                      width="22"
-                                      height="22"
-                                      viewBox="0 0 24 24"
-                                      fill="none"
-                                      stroke="white"
-                                      strokeWidth="2"
-                                      strokeLinecap="round"
-                                      strokeLinejoin="round"
-                                    >
-                                      <rect
-                                        x="9"
-                                        y="9"
-                                        width="13"
-                                        height="13"
-                                        rx="2"
-                                      />
-                                      <path d="M5 15V5a2 2 0 0 1 2-2h10" />
-                                    </svg>
-                                  </div>
-                                </span>
-                              </button>
-                            </div>
-                          </>
-                        )}
-                      </div>
-                      {activeTab === "Chat" && (
-                        <div className="md:hidden relative px-3 mb-4 mt-33">
-                          {/* Grid: scroll area + sticky input row */}
-                          <div className="grid grid-rows-[1fr_auto] h-[calc(100svh-140px)] overflow-y-auto space-y-3 min-h-0 ">
-                            {/* 👆 140px = approx top controls + tab bar; tweak to your UI */}
-
-                            {/* Scrollable messages */}
-                            <div className="overflow-y-auto min-h-0 space-y-3 py-3 pr-1">
-                              {chatMessages.length > 0 ? (
-                                chatMessages.map((msg, index) => (
-                                  <div
-                                    className="flex gap-3 ml-2 mr-2 items-center"
-                                    key={index}
                                   >
-                                    <HexAvatar
-                                      initials={msg.username
-                                        .split(" ")
-                                        .map((w) => w[0])
-                                        .join("")
-                                        .toUpperCase()
-                                        .slice(0, 2)}
-                                    />
-                                    <div
-                                      className="
+                                    {/* left spacer to balance the right icon */}
+                                    <span />
+
+                                    {/* centered label */}
+                                    <span className="justify-self-center text-white font-mono text-base text-center p-4 mr-8 flex items-center gap-3">
+                                      <Link />
+                                      Share Session Link
+                                    </span>
+
+                                    {/* right icon block */}
+                                    <span className="flex items-center justify-self-end">
+                                      <span className="w-px h-14 bg-white/20 mx-2" />
+                                      <div className="p-4 mr-2">
+                                        <svg
+                                          width="22"
+                                          height="22"
+                                          viewBox="0 0 24 24"
+                                          fill="none"
+                                          stroke="white"
+                                          strokeWidth="2"
+                                          strokeLinecap="round"
+                                          strokeLinejoin="round"
+                                        >
+                                          <rect
+                                            x="9"
+                                            y="9"
+                                            width="13"
+                                            height="13"
+                                            rx="2"
+                                          />
+                                          <path d="M5 15V5a2 2 0 0 1 2-2h10" />
+                                        </svg>
+                                      </div>
+                                    </span>
+                                  </button>
+                                </div>
+                              </>
+                            )}
+                          </div>
+                          {activeTab === "Chat" && (
+                            <div className="md:hidden relative px-3 mb-4 mt-33">
+                              {/* Grid: scroll area + sticky input row */}
+                              <div className="grid grid-rows-[1fr_auto] h-[calc(100svh-140px)] overflow-y-auto space-y-3 min-h-0 ">
+                                {/* 👆 140px = approx top controls + tab bar; tweak to your UI */}
+
+                                {/* Scrollable messages */}
+                                <div className="overflow-y-auto min-h-0 space-y-3 py-3 pr-1">
+                                  {chatMessages.length > 0 ? (
+                                    chatMessages.map((msg, index) => (
+                                      <div
+                                        className="flex gap-3 ml-2 mr-2 items-center"
+                                        key={index}
+                                      >
+                                        <HexAvatar
+                                          initials={msg.username
+                                            .split(" ")
+                                            .map((w) => w[0])
+                                            .join("")
+                                            .toUpperCase()
+                                            .slice(0, 2)}
+                                        />
+                                        <div
+                                          className="
                   bg-white/5 rounded-lg p-3 border border-white/10 w-fit
                   max-w-[85%] sm:max-w-[75%]
                   whitespace-pre-wrap break-words
                   [overflow-wrap:anywhere] [word-break:break-word]
                 "
-                                    >
-                                      <p className="text-white/80 text-sm">
-                                        {msg.message}
-                                      </p>
-                                    </div>
-                                  </div>
-                                ))
-                              ) : (
-                                <p className="text-white/60 text-sm text-center py-8">
-                                  No messages yet. Start the conversation!
-                                </p>
-                              )}
-                              {/* <div ref={messagesEndRef} /> */}
-                            </div>
+                                        >
+                                          <p className="text-white/80 text-sm">
+                                            {msg.message}
+                                          </p>
+                                        </div>
+                                      </div>
+                                    ))
+                                  ) : (
+                                    <p className="text-white/60 text-sm text-center py-8">
+                                      No messages yet. Start the conversation!
+                                    </p>
+                                  )}
+                                  {/* <div ref={messagesEndRef} /> */}
+                                </div>
 
-                            {/* Sticky input (not fixed) so layout reserves space */}
-                            <div
-                              className="
+                                {/* Sticky input (not fixed) so layout reserves space */}
+                                <div
+                                  className="
         sticky bottom-0 z-10
         bg-[#080B16]/70 backdrop-blur
         
         px-4 pt-2 pb-4
       "
-                            >
-                              <div className="flex gap-2">
-                                <input
-                                  type="text"
-                                  value={inputMessage}
-                                  onChange={(e) =>
-                                    setInputMessage(e.target.value)
-                                  }
-                                  onKeyPress={handleKeyPress}
-                                  placeholder="Type here..."
-                                  className="flex-1 w-full bg-[#080B1680] border border-white/20 rounded-lg px-3 py-4 text-white text-sm placeholder-white/50 focus:outline-none focus:border-blue-500"
-                                />
+                                >
+                                  <div className="flex gap-2">
+                                    <input
+                                      type="text"
+                                      value={inputMessage}
+                                      onChange={(e) =>
+                                        setInputMessage(e.target.value)
+                                      }
+                                      onKeyPress={handleKeyPress}
+                                      placeholder="Type here..."
+                                      className="flex-1 w-full bg-[#080B1680] border border-white/20 rounded-lg px-3 py-4 text-white text-sm placeholder-white/50 focus:outline-none focus:border-blue-500"
+                                    />
+                                  </div>
+                                </div>
                               </div>
                             </div>
-                          </div>
-                        </div>
-                      )}
+                          )}
 
-                      {activeTab === "Transcript" && (
-                        <div className="mt-[200px] p-3">
-                          <TranscriptTab />
-                        </div>
-                      )}
-                      {activeTab === "Summary" && (
-                        <div className="mt-[200px] p-3">
-                          <SummaryTab />
-                        </div>
-                      )}
+                          {activeTab === "Transcript" && (
+                            <div className="mt-[200px] p-3">
+                              <TranscriptTab />
+                            </div>
+                          )}
+                          {activeTab === "Summary" && (
+                            <div className="mt-[200px] p-3">
+                              <SummaryTab />
+                            </div>
+                          )}
 
-                      {/* <CustomVideoTiles activeEmojis={activeEmojis} /> */}
-                      {/* <PeopleTab
+                          {/* <CustomVideoTiles activeEmojis={activeEmojis} /> */}
+                          {/* <PeopleTab
             participants={participants}
             roomName={roomName}
             raisedHands={raisedHands}
           /> */}
-                    </>
-                  )}
-                </ShowSideRailProvider>
+                        </>
+                      )}
+                    </ShowSideRailProvider>
 
-                {/* Mobile controls (top cluster) */}
-                {/* <div className="sticky top-0 left-0 right-0 z-20 block md:hidden">
+                    {/* Mobile controls (top cluster) */}
+                    {/* <div className="sticky top-0 left-0 right-0 z-20 block md:hidden">
                   <MobileConferenceControls
                     onInvite={() => setIsModalOpen(true)}
                     onToggleHandRaise={toggleHandRaise}
@@ -1517,154 +1551,153 @@ export default function SessionPage() {
                     activeTab={activeTab}
                   />
                 </div> */}
-                {/* <div className="sticky top-0 z-20 bg-[#0D101B] border-b border-white/10"> */}
-                <div
-                  className="md:hidden fixed top-0 left-0 right-0 z-40 
+                    {/* <div className="sticky top-0 z-20 bg-[#0D101B] border-b border-white/10"> */}
+                    <div
+                      className="md:hidden fixed top-0 left-0 right-0 z-40 
                 backdrop-blur border-b border-white/10
                 pt-[env(safe-area-inset-top)] bg-[#080b1649]"
-                >
-                  <MobileConferenceControls
-                    onInvite={() => setIsModalOpen(true)}
-                    onToggleHandRaise={toggleHandRaise}
-                    currentUser={currentUser}
-                    raisedHands={raisedHands}
-                    setActiveTab={setActiveTab}
-                    activeTab={activeTab}
-                    setIsBottomSheetOpen={setIsBottomSheetOpen}
-                    isBottomSheetOpen={isBottomSheetOpen}
-                    setIsMobileFull={setIsMobileFull}
-                    isMobileFull={isMobileFull}
-                  />
-                </div>
-                <ParticipantProvider onParticipantsChange={setParticipants} />
-                <RealtimeMessaging
-                  onEmojiReceived={handleEmojiReceived}
-                  onHandRaiseReceived={handleHandRaiseReceived}
-                  onChatReceived={handleChatReceived}
-                />
-
-                {/* Desktop controls */}
-
-                {/* Emoji Bar (desktop) */}
-                {showEmojiBar && (
-                  <div className="absolute left-1/2 bottom-35 -translate-x-1/2 z-50 flex justify-center w-auto pointer-events-none">
-                    <div className="bg-[#080B1680] px-6 py-3 flex items-center gap-4 rounded-[10px] shadow-lg animate-fade-in-up pointer-events-auto border border-[#FFFFFF1A]">
-                      {["👋", "👍", "❤️", "😂", "😎", "💩"].map((emoji, i) => (
-                        <button
-                          key={i}
-                          className="text-3xl hover:scale-110 transition"
-                          onClick={() => {
-                            setShowEmojiBar(false);
-                            sendEmoji(currentUser, emoji);
-                          }}
-                        >
-                          {emoji}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                )}
-                <div className="absolute bottom-0 left-0 right-0 hidden md:block">
-                  <ConferenceControls
-                    onInvite={() => setIsModalOpen(true)}
-                    onToggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)}
-                    onSendEmoji={() => setShowEmojiBar((v) => !v)}
-                    onToggleHandRaise={toggleHandRaise}
-                    currentUser={currentUser}
-                    raisedHands={raisedHands}
-                    isSidebarOpen={isSidebarOpen}
-                    isSideRail={showSideRail}
-                  />
-                </div>
-                <div className="md:hidden h-[72px]" />
-
-                {/* Mobile participant chips */}
-                {activeTab === "Session" &&
-                  participants &&
-                  participants.length > 0 && (
-                    <div className="absolute bottom-1 left-0 right-0 z-20 block md:hidden px-3 pb-2">
-                      <div
-                        className={`flex gap-3 overflow-x-auto scrollbar-hide ${
-                          participants.length <= 2 &&
-                          "items-center justify-center"
-                        }`}
-                      >
-                        {participants.map((p) => {
-                          const participant = p as Participant;
-                          return (
-                            <div
-                              key={participant.sid}
-                              className="backdrop-blur-[16px] bg-white/10 border border-white/20 rounded-xl flex flex-col items-center min-w-[130px] max-w-[130px] h-[140px] shadow-lg justify-center text-center"
-                              style={{ flex: "0 0 auto" }}
-                            >
-                              <HexAvatar
-                                initials={participant.identity
-                                  .slice(0, 2)
-                                  .toUpperCase()}
-                                size={84}
-                                fontSize={24}
-                              />
-                              <span className="text-white text-xs font-medium mt-1 truncate max-w-[100px] text-center">
-                                {participant.identity}
-                              </span>
-                            </div>
-                          );
-                        })}
-                      </div>
-                      <div className="mt-4 mb-3 items-center justify-center flex">
-                        <img src="/images/icons/soundwave-small.svg" alt="" />
-                      </div>
-                      <div className="items-center justify-center">
-                        <MobileTabBarControls
-                          onSendEmoji={sendEmoji}
-                          currentUser={currentUser}
-                          onInvite={() => setIsModalOpen(true)}
-                        />
-                      </div>
-                    </div>
-                  )}
-                {/* Desktop View Full Screen */}
-                {!showSideRail && participants && participants.length > 0 && (
-                  <div
-                    className={`absolute ${
-                      showSideRail ? "bottom-28" : "bottom-32"
-                    }  left-0 right-0 z-20 px-3 pb-2 hidden md:block`}
-                  >
-                    <div
-                      className={`flex gap-3 overflow-x-auto scrollbar-hide ${
-                        participants.length <= 2 &&
-                        "items-center justify-center"
-                      }`}
                     >
-                      {participants.map((p) => {
-                        const participant = p as Participant;
-                        if (participant.isLocal) return null;
-                        return (
-                          <div
-                            key={participant.sid}
-                            className="backdrop-blur-[16px] bg-white/10 border border-white/20 rounded-xl flex flex-col items-center min-w-[130px] max-w-[130px] h-[140px] shadow-lg justify-center text-center"
-                            style={{ flex: "0 0 auto" }}
-                          >
-                            <HexAvatar
-                              initials={participant.identity
-                                .slice(0, 2)
-                                .toUpperCase()}
-                              size={84}
-                              fontSize={24}
-                            />
-                            <span className="text-white text-xs font-medium mt-1 truncate max-w-[100px] text-center">
-                              {participant.identity}
-                            </span>
-                          </div>
-                        );
-                      })}
+                      <MobileConferenceControls
+                        onInvite={() => setIsModalOpen(true)}
+                        onToggleHandRaise={toggleHandRaise}
+                        currentUser={currentUser}
+                        raisedHands={raisedHands}
+                        setActiveTab={setActiveTab}
+                        activeTab={activeTab}
+                        setIsBottomSheetOpen={setIsBottomSheetOpen}
+                        isBottomSheetOpen={isBottomSheetOpen}
+                        setIsMobileFull={setIsMobileFull}
+                        isMobileFull={isMobileFull}
+                      />
                     </div>
-                  </div>
-                )}
-                {/* Mobile bottom bar */}
-                {/* {activeTab === "Session" && (
+                    <ParticipantProvider onParticipantsChange={setParticipants} />
+                    <RealtimeMessaging
+                      onEmojiReceived={handleEmojiReceived}
+                      onHandRaiseReceived={handleHandRaiseReceived}
+                      onChatReceived={handleChatReceived}
+                    />
+
+                    {/* Desktop controls */}
+
+                    {/* Emoji Bar (desktop) */}
+                    {showEmojiBar && (
+                      <div className="absolute left-1/2 bottom-35 -translate-x-1/2 z-50 flex justify-center w-auto pointer-events-none">
+                        <div className="bg-[#080B1680] px-6 py-3 flex items-center gap-4 rounded-[10px] shadow-lg animate-fade-in-up pointer-events-auto border border-[#FFFFFF1A]">
+                          {["👋", "👍", "❤️", "😂", "😎", "💩"].map((emoji, i) => (
+                            <button
+                              key={i}
+                              className="text-3xl hover:scale-110 transition"
+                              onClick={() => {
+                                setShowEmojiBar(false);
+                                sendEmoji(currentUser, emoji);
+                              }}
+                            >
+                              {emoji}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                    <div className="absolute bottom-0 left-0 right-0 hidden md:block">
+                      <ConferenceControls
+                        onInvite={() => setIsModalOpen(true)}
+                        onToggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)}
+                        onSendEmoji={() => setShowEmojiBar((v) => !v)}
+                        onToggleHandRaise={toggleHandRaise}
+                        currentUser={currentUser}
+                        raisedHands={raisedHands}
+                        isSidebarOpen={isSidebarOpen}
+                        isSideRail={showSideRail}
+                      />
+                    </div>
+                    <div className="md:hidden h-[72px]" />
+
+                    {/* Mobile participant chips */}
+                    {activeTab === "Session" &&
+                      participants &&
+                      participants.length > 0 && (
+                        <div className="absolute bottom-1 left-0 right-0 z-20 block md:hidden px-3 pb-2">
+                          <div
+                            className={`flex gap-3 overflow-x-auto scrollbar-hide ${participants.length <= 2 &&
+                              "items-center justify-center"
+                              }`}
+                          >
+                            {participants.map((p) => {
+                              const participant = p as Participant;
+                              return (
+                                <div
+                                  key={participant.sid}
+                                  className="backdrop-blur-[16px] bg-white/10 border border-white/20 rounded-xl flex flex-col items-center min-w-[130px] max-w-[130px] h-[140px] shadow-lg justify-center text-center"
+                                  style={{ flex: "0 0 auto" }}
+                                >
+                                  <HexAvatar
+                                    initials={participant.identity
+                                      .slice(0, 2)
+                                      .toUpperCase()}
+                                    size={84}
+                                    fontSize={24}
+                                  />
+                                  <span className="text-white text-xs font-medium mt-1 truncate max-w-[100px] text-center">
+                                    {participant.identity}
+                                  </span>
+                                </div>
+                              );
+                            })}
+                          </div>
+                          <div className="mt-4 mb-3 items-center justify-center flex">
+                            <img src="/images/icons/soundwave-small.svg" alt="" />
+                          </div>
+                          <div className="items-center justify-center">
+                            <MobileTabBarControls
+                              onSendEmoji={sendEmoji}
+                              currentUser={currentUser}
+                              onInvite={() => setIsModalOpen(true)}
+                            />
+                          </div>
+                        </div>
+                      )}
+                    {/* Desktop View Full Screen */}
+                    {!showSideRail && participants && participants.length > 0 && (
+                      <div
+                        className={`absolute ${showSideRail ? "bottom-28" : "bottom-32"
+                          }  left-0 right-0 z-20 px-3 pb-2 hidden md:block`}
+                      >
+                        <div
+                          className={`flex gap-3 overflow-x-auto scrollbar-hide ${participants.length <= 2 &&
+                            "items-center justify-center"
+                            }`}
+                        >
+                          {participants.map((p) => {
+                            const participant = p as Participant;
+                            if (participant.isLocal) return null;
+                            return (
+                              <div
+                                key={participant.sid}
+                                className="backdrop-blur-[16px] bg-white/10 border border-white/20 rounded-xl flex flex-col items-center min-w-[130px] max-w-[130px] h-[140px] shadow-lg justify-center text-center"
+                                style={{ flex: "0 0 auto" }}
+                              >
+                                <HexAvatar
+                                  initials={participant.identity
+                                    .slice(0, 2)
+                                    .toUpperCase()}
+                                  size={84}
+                                  fontSize={24}
+                                />
+                                <span className="text-white text-xs font-medium mt-1 truncate max-w-[100px] text-center">
+                                  {participant.identity}
+                                </span>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    )}
+                    {/* Mobile bottom bar */}
+                    {/* {activeTab === "Session" && (
                  
                 )} */}
+                  </div>
+                </div>
               </LiveKitRoom>
             ) : (
               <div className="w-full h-full flex items-center justify-center">
@@ -1673,68 +1706,68 @@ export default function SessionPage() {
                 </div>
               </div>
             )}
-          </div>
-        </div>
+            {/* </div>
+        </div> */}
 
-        {/* Bottom Control Bar - Only show when not connected */}
-        {!token && (
-          <div className="px-6 pb-6">
-            <div className="px-2 py-4">
-              <div className="flex items-center justify-center">
-                <div className="text-white/50 text-sm">
-                  Connecting to session...
+            {/* Bottom Control Bar - Only show when not connected */}
+            {!token && (
+              <div className="px-6 pb-6">
+                <div className="px-2 py-4">
+                  <div className="flex items-center justify-center">
+                    <div className="text-white/50 text-sm">
+                      Connecting to session...
+                    </div>
+                  </div>
                 </div>
               </div>
+            )}
+          </div>
+          {/* End button for mobile */}
+          <BottomSheet
+            open={isBottomSheetOpen}
+            onClose={() => {
+              setIsBottomSheetOpen(false);
+            }}
+          >
+            <div className=" justify-center items-center flex flex-col gap-3 p-4">
+              <div
+                className="backdrop-blur-[16px] text-[#FFFFFF] bg-[#080B1680] rounded-[15px] gap-4 flex flex-row items-center h-[44px] w-auto p-6 shadow-lg justify-center text-center"
+                style={{ flex: "0 0 auto" }}
+              >
+                <Monitor size={18} />
+                <span>Present</span>
+              </div>
+              <div
+                className="backdrop-blur-[16px] text-[#FFFFFF] bg-[#080B1680] rounded-[15px] gap-4 flex flex-row items-center h-[44px] w-auto p-6 shadow-lg justify-center text-center"
+                style={{ flex: "0 0 auto" }}
+              >
+                <Users size={18} />
+                <span>Roles</span>
+              </div>
+              <div
+                className="backdrop-blur-[16px] text-[#FFFFFF] bg-[#080B1680] rounded-[15px] gap-4 flex flex-row items-center h-[44px] w-auto p-6 shadow-lg justify-center text-center"
+                style={{ flex: "0 0 auto" }}
+              >
+                <Bot size={18} />
+                <span>AI Worker</span>
+              </div>
+              <div
+                className="backdrop-blur-[16px] text-[#FFFFFF] bg-[#080B1680] rounded-[15px] gap-4 flex flex-row items-center h-[44px] w-auto p-6 shadow-lg justify-center text-center"
+                style={{ flex: "0 0 auto" }}
+              >
+                <Link size={18} />
+                <span>Share Session Link</span>
+              </div>
             </div>
-          </div>
-        )}
-      </div>
-      {/* End button for mobile */}
-      <BottomSheet
-        open={isBottomSheetOpen}
-        onClose={() => {
-          setIsBottomSheetOpen(false);
-        }}
-      >
-        <div className=" justify-center items-center flex flex-col gap-3 p-4">
-          <div
-            className="backdrop-blur-[16px] text-[#FFFFFF] bg-[#080B1680] rounded-[15px] gap-4 flex flex-row items-center h-[44px] w-auto p-6 shadow-lg justify-center text-center"
-            style={{ flex: "0 0 auto" }}
-          >
-            <Monitor size={18} />
-            <span>Present</span>
-          </div>
-          <div
-            className="backdrop-blur-[16px] text-[#FFFFFF] bg-[#080B1680] rounded-[15px] gap-4 flex flex-row items-center h-[44px] w-auto p-6 shadow-lg justify-center text-center"
-            style={{ flex: "0 0 auto" }}
-          >
-            <Users size={18} />
-            <span>Roles</span>
-          </div>
-          <div
-            className="backdrop-blur-[16px] text-[#FFFFFF] bg-[#080B1680] rounded-[15px] gap-4 flex flex-row items-center h-[44px] w-auto p-6 shadow-lg justify-center text-center"
-            style={{ flex: "0 0 auto" }}
-          >
-            <Bot size={18} />
-            <span>AI Worker</span>
-          </div>
-          <div
-            className="backdrop-blur-[16px] text-[#FFFFFF] bg-[#080B1680] rounded-[15px] gap-4 flex flex-row items-center h-[44px] w-auto p-6 shadow-lg justify-center text-center"
-            style={{ flex: "0 0 auto" }}
-          >
-            <Link size={18} />
-            <span>Share Session Link</span>
-          </div>
+            {/* Divider */}
+            <div className="border-t border-white/20 my-4" />
+            <div className=" justify-center items-center flex  flex-row gap-3 ">
+              <span className="text-[#86878D] text-sm">Session State: </span>
+              <span className="text-[#FFFFFF] font-bold text-sm">Active</span>
+              <span className="text-white/50 text-sm">|</span>
+              <span className="text-[#FFFFFF] font-bold text-sm">65:23</span>
+            </div>
+          </BottomSheet>
         </div>
-        {/* Divider */}
-        <div className="border-t border-white/20 my-4" />
-        <div className=" justify-center items-center flex  flex-row gap-3 ">
-          <span className="text-[#86878D] text-sm">Session State: </span>
-          <span className="text-[#FFFFFF] font-bold text-sm">Active</span>
-          <span className="text-white/50 text-sm">|</span>
-          <span className="text-[#FFFFFF] font-bold text-sm">65:23</span>
-        </div>
-      </BottomSheet>
-    </div>
-  );
+        );
 }
