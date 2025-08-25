@@ -219,11 +219,6 @@ const ChatTab = ({
     }
   };
 
-  // const formatTime = (timestamp: number) => {
-  //   const date = new Date(timestamp);
-  //   return date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
-  // };
-
   return (
     <div className="flex flex-col h-full min-h-0 bg-[#141721] rounded-[10px] p-3">
       <div className="flex-1 overflow-y-auto mb-4 space-y-3 min-h-0">
@@ -797,11 +792,6 @@ const MobileTabBarControls = ({
           </button>
         </div>
       </div>
-
-      {/* Fallback horizontal scroll if someone adds more buttons later */}
-      {/* <div className="mt-2 overflow-x-auto sm:hidden no-scrollbar">
-        ...optional secondary row...
-      </div> */}
     </div>
   );
 };
@@ -1254,13 +1244,6 @@ export default function SessionPage() {
                 audio
                 className="w-full h-full"
               >
-                {/* DESKTOP / TABLET TILES */}
-                {/* <div className="hidden md:block w-full h-full">
-                  <CustomVideoTiles activeEmojis={activeEmojis} showSideRail={showSideRail}
-                    onToggleSideRail={() => setShowSideRail(!showSideRail)}
-
-                  />
-                </div> */}
                 <ShowSideRailProvider>
                   {isDesktop ? (
                     <CustomVideoTiles
@@ -1473,29 +1456,10 @@ export default function SessionPage() {
                           <SummaryTab />
                         </div>
                       )}
-
-                      {/* <CustomVideoTiles activeEmojis={activeEmojis} /> */}
-                      {/* <PeopleTab
-            participants={participants}
-            roomName={roomName}
-            raisedHands={raisedHands}
-          /> */}
                     </>
                   )}
                 </ShowSideRailProvider>
 
-                {/* Mobile controls (top cluster) */}
-                {/* <div className="sticky top-0 left-0 right-0 z-20 block md:hidden">
-                  <MobileConferenceControls
-                    onInvite={() => setIsModalOpen(true)}
-                    onToggleHandRaise={toggleHandRaise}
-                    currentUser={currentUser}
-                    raisedHands={raisedHands}
-                    setActiveTab={setActiveTab}
-                    activeTab={activeTab}
-                  />
-                </div> */}
-                {/* <div className="sticky top-0 z-20 bg-[#0D101B] border-b border-white/10"> */}
                 <div
                   className="md:hidden fixed top-0 left-0 right-0 z-40 
                 backdrop-blur border-b border-white/10
