@@ -199,9 +199,9 @@ export const CustomVideoTiles = ({
             <div
               className={`w-full aspect-video rounded-[15px] ${heightForTile}
                 p-0 sm:p-[2px] 
-                bg-none sm:bg-[linear-gradient(90deg,#14FF00_55%,#00F0FF_62%)]
-
+                bg-none 
                 `}>
+                  {/* sm:bg-[linear-gradient(90deg,#14FF00_55%,#00F0FF_62%)] */}
               <div className={`w-full rounded-[12px] md:bg-[#141622] bg-transparent  ${heightForTile}`}>
                 <MainVideoTile
                   participant={mainParticipant}
