@@ -113,7 +113,7 @@ const PeopleTab = ({
 }) => {
   return (
     <div className="">
-      <div className="bg-[rgba(255,255,255,0.02)] rounded-[20px] border border-[rgba(255,255,255,0.1)] backdrop-blur-[32px] p-2 mb-4 max-h-[90vh] overflow-auto h-[98vh]">
+      <div className="bg-[rgba(255,255,255,0.02)] rounded-[20px] border border-[rgba(255,255,255,0.1)] md:backdrop-blur-[32px] p-2 mb-4 max-h-[90vh] overflow-auto h-[98vh]">
         {participants && participants.length > 0 ? (
           participants.map((participant) => {
             const p = participant as Participant;
@@ -1061,8 +1061,21 @@ export default function SessionPage() {
         !isMobileFull && "p-4 md:p-8 bg-[#080B16] min-h-screen flex flex-col"
       } md:p-8 md:bg-[#080B16] md:min-h-screen md:flex md:flex-col relative`}
     >
-      <img
-        src="/images/onboarding/bg.png"
+      {isDesktop ? (
+        <img
+          src="/images/onboarding/bg.png"
+          alt="background"
+          className="bg-image"
+          style={{
+            position: "absolute",
+            left: 0,
+            bottom: 0,
+            width: "-webkit-fill-available",
+            height: "-webkit-fill-available",
+          }}
+        />
+      ) :    <img
+        src="/images/onboarding/background-green.png"
         alt="background"
         className="bg-image"
         style={{
@@ -1072,7 +1085,9 @@ export default function SessionPage() {
           width: "-webkit-fill-available",
           height: "-webkit-fill-available",
         }}
-      />
+      />}
+      
+   
       {/* Name Input Modal */}
       {nameModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-[rgba(0,0,0,0.35)] backdrop-blur-[8px]">
@@ -1107,7 +1122,7 @@ export default function SessionPage() {
       )}
 
       <div
-        className={`w-full flex flex-col md:bg-[#0D101B] md:border md:border-[rgba(255,255,255,0.1)] rounded-[20px] backdrop-blur-[32px] relative transition-all duration-300 ${
+        className={`w-full flex flex-col md:bg-[#0D101B] md:border md:border-[rgba(255,255,255,0.1)] rounded-[20px] md:backdrop-blur-[32px] relative transition-all duration-300 ${
           isSidebarOpen ? "pr-120" : ""
         } flex-1 min-h-0`}
       >
@@ -1139,7 +1154,14 @@ export default function SessionPage() {
 
           {/* Middle: Waveform */}
           <div className="flex items-center h-8">
-            <img src="/images/icons/soundwave.svg" alt="soundwave" />
+<img
+  src="/images/icons/soundwave.svg"
+  alt="soundwave"
+  style={{
+    width: "30vw",   // always 30% of screen width
+    height: "auto"
+  }}
+/>
           </div>
 
           {/* Divider */}
