@@ -37,6 +37,7 @@ import { HexAvatar } from "@/components/HexAvatar/HexAvatar";
 import BottomSheet from "@/components/BottomSheet/BottomSheet";
 import { ShowSideRailProvider } from "@/hooks/sideRail";
 import { LiveWaveform } from "@/components/Audio/LiveWave";
+import { toast } from "sonner";
 
 const mobileTabs = ["Session", "People", "Chat", "Transcript", "Summary"];
 
@@ -174,7 +175,7 @@ const PeopleTab = ({
 
       <div className="flex items-center gap-3 p-2 bg-[#0f1419] rounded-lg border border-white/10">
         <Link color="white" />
-        <span className="text-white/80 text-sm flex-1 font-mono">
+        <span className="text-white text-sm flex-1 font-mono">
           {`${window.location.origin}/conference?room=${roomName}`}
         </span>
         <button
@@ -183,6 +184,11 @@ const PeopleTab = ({
             navigator.clipboard.writeText(
               `${window.location.origin}/conference?room=${roomName}`
             );
+            toast.success("Copied to clipboard", {
+              style: {
+                width: "200px",
+              },
+            });
           }}
         >
           <Copy color="white" />
@@ -1139,63 +1145,6 @@ export default function SessionPage() {
             />
           </div>
         )}
-
-        {/* Header (desktop) */}
-        {/* <div className="hidden md:flex items-center justify-between px-6 py-4 text-white mb-2 mt-3">
-          <div className="flex items-center gap-2 ml-4">
-            <div className="w-4 h-4 flex items-center justify-center">
-              <Clock color="white" />
-            </div>
-            <span className="text-sm font-medium">{meetingDuration}</span>
-          </div>
-
-          <span className="mx-6 text-gray-400">|</span>
-
-          <div className="flex items-center h-8">
-            <img
-              src="/images/icons/soundwave.svg"
-              alt="soundwave"
-              style={{
-                width: "30vw",   
-                height: "auto"
-              }}
-            />
-          </div>
-
-          <span className="mx-6 text-gray-400">|</span>
-
-          <div className="flex items-center gap-2 mr-4">
-            <div className="w-4 h-4 flex items-center justify-center">
-              <Calendar color="white" />
-            </div>
-            <span className="text-sm font-medium">{getFormattedDate()}</span>
-          </div>
-        </div> */}
-
-        {/* Main Video Area */}
-        {/* <div className="flex-1  relative mx-0 md:mx-6 mb-4 md:mb-6 min-h-0">
-          <div
-            className={
-              "w-full md:h-[calc(100vh-20px)] border border-white/20 relative overflow-hidden min-h-[300px] h-[140vh] max-h-[100vh] rounded-2xl " +
-              // (isMobileFull
-              //   ? "h-[140vh] max-h-[100vh] rounded-2xl"
-              //   : "h-[97vh] max-h-[85vh]")
-              ""
-            }
-          > */}
-        {/* User Avatar (desktop) */}
-        {/* <div className="hidden md:block absolute top-6 left-6 bg-[#080B16] pb-2 pt-2 pl-4 pr-4 rounded-[11px] border border-[rgba(211,211,211,0.1)] z-10">
-              <div className="flex items-center gap-3">
-                <HexAvatar
-                  initials={currentUser.slice(0, 2).toUpperCase()}
-                  size={24}
-                  fontSize={10}
-                />
-                <span className="text-white text-sm font-medium">
-                  {currentUser}
-                </span>
-              </div>
-            </div> */}
         {isModalOpen && (
           <div className="absolute inset-0 flex items-center justify-center z-100 bg-black/50">
             <div className="bg-[#1e2328] border border-white/20 rounded-xl max-w-md w-full mx-6 relative">
@@ -1234,7 +1183,7 @@ export default function SessionPage() {
                 </p>
                 <div className="flex items-center gap-3 p-2 bg-[#0f1419] rounded-lg border border-white/10">
                   <Link color="white" />
-                  <span className="text-white/80 text-sm flex-1 font-mono">
+                  <span className="text-white text-sm flex-1 font-mono">
                     {`${window.location.origin}/conference?room=${roomName}`}
                   </span>
                   <button
@@ -1243,6 +1192,11 @@ export default function SessionPage() {
                       navigator.clipboard.writeText(
                         `${window.location.origin}/conference?room=${roomName}`
                       );
+                      toast.success("Copied to clipboard", {
+                        style: {
+                          width: "200px",
+                        },
+                      });
                     }}
                   >
                     <Copy color="white" />
@@ -1528,29 +1482,9 @@ export default function SessionPage() {
                           <SummaryTab />
                         </div>
                       )}
-
-                      {/* <CustomVideoTiles activeEmojis={activeEmojis} /> */}
-                      {/* <PeopleTab
-            participants={participants}
-            roomName={roomName}
-            raisedHands={raisedHands}
-          /> */}
                     </>
                   )}
                 </ShowSideRailProvider>
-
-                {/* Mobile controls (top cluster) */}
-                {/* <div className="sticky top-0 left-0 right-0 z-20 block md:hidden">
-                  <MobileConferenceControls
-                    onInvite={() => setIsModalOpen(true)}
-                    onToggleHandRaise={toggleHandRaise}
-                    currentUser={currentUser}
-                    raisedHands={raisedHands}
-                    setActiveTab={setActiveTab}
-                    activeTab={activeTab}
-                  />
-                </div> */}
-                {/* <div className="sticky top-0 z-20 bg-[#0D101B] border-b border-white/10"> */}
                 <div
                   className="md:hidden fixed top-0 left-0 right-0 z-40 
                 backdrop-blur border-b border-white/10
