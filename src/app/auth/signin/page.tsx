@@ -38,7 +38,7 @@ export default function Page() {
     try {
       // Simulate API call delay
       await new Promise((resolve) => setTimeout(resolve, 1000));
-      console.log("data--->", data)
+      console.log("data--->", data);
       // Redirect to dashboard or home page after successful signin
       router.push("/");
     } catch (error) {
@@ -144,7 +144,6 @@ export default function Page() {
                       <Checkbox
                         checked={field.value}
                         onCheckedChange={field.onChange}
-                        className=""
                       />
                     </FormControl>
                     <div className="space-y-1 leading-none">

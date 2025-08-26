@@ -113,7 +113,7 @@ const PeopleTab = ({
   raisedHands: { [key: string]: boolean };
 }) => {
   return (
-    <div className="">
+    <div>
       <div className="bg-[rgba(255,255,255,0.02)] rounded-[20px] border border-[rgba(255,255,255,0.1)] md:backdrop-blur-[32px] p-2 mb-4 max-h-[90vh] overflow-auto h-[98vh]">
         {participants && participants.length > 0 ? (
           participants.map((participant) => {
@@ -404,7 +404,7 @@ const ConferenceControls = ({
     !isSideRail && "bg-[#080B1680] p-3 rounded-[15px] mt-1";
   return (
     <div className="px-6">
-      <div className="px-2 py-4">
+      <div className="px-2 pb-[27px]">
         <div className={`flex items-center justify-between ${fullScreenStyle}`}>
           <div className="flex items-center gap-4">
             <button
@@ -1260,7 +1260,6 @@ export default function SessionPage() {
             connect
             video
             audio
-            className=""
           >
             <div className="hidden md:flex items-center justify-between px-6 py-4 text-white mb-2 mt-3">
               {/* Left: Duration */}

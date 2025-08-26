@@ -203,7 +203,6 @@ export default function Page() {
                       <Checkbox
                         checked={field.value}
                         onCheckedChange={field.onChange}
-                        className=""
                       />
                     </FormControl>
                     <div className="space-y-1 leading-none">

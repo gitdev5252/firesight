@@ -290,17 +290,21 @@ export default function PricingTag() {
           >
             Individual
           </span>
-          <div
-            className="w-[51px] h-[31px]"
-            onClick={() => setPeriod((period + 1) % 2)}
-          >
+          {period === 0 ? (
             <Image
               src="/images/icons/toggle-left.svg"
               alt="Switch-Left"
-              width={51}
-              height={31}
+              width={58}
+              height={43}
             />
-          </div>
+          ) : (
+            <Image
+              src="/images/icons/toggle-right.svg"
+              alt="Switch-Right"
+              width={58}
+              height={43}
+            />
+          )}
           <span
             className={`md:text-[22px] text-[16px] text-white ${
               period === 1 ? "font-bold" : ""
