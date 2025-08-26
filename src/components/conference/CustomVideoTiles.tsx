@@ -73,8 +73,6 @@ export const CustomVideoTiles = ({
     }
     return map;
   }, [tracks]);
-  const __id = React.useRef(Math.random().toString(36).slice(2, 7));
-
   /* choose/keep a main tile; prefer screenshare, else first remote */
   const [mainId, setMainId] = useState<string | null>(null);
   const promoteTimer = useRef<number | null>(null);
@@ -232,7 +230,6 @@ const VideoSurface = ({
   fallbackName,
   fillClass,
   variant = "",
-  isShort,
   smallPiece = false,
   isMobileFull = false,
 }: {
