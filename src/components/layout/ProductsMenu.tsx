@@ -13,7 +13,7 @@ export default function ProductsMenu({ menuRef, onClose }: Props) {
   return (
     <div
       ref={menuRef}
-      className="main-menu-box text-white !absolute w-[388px] h-[250px] left-0 top-13 mr-0"
+      className="main-menu-box text-white !absolute w-[388px] h-[250px] -left-40 top-13 mr-0"
     >
       <div className="flex justify-end items-center mt-4 pr-5">
         <Button onClick={onClose} variant="ghost" className="p-0">
