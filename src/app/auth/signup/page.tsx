@@ -58,7 +58,22 @@ export default function Page() {
       <div className="blue-shine-pulse-overview w-[min(602px,41.8vw)] h-[min(602px,41.8vw)] bottom-[23vw] right-[19.3vw] md:block hidden"></div>
       <div className="blue-shine-pulse-overview bottom-[-12.555vw] right-[-12.277vw] w-[min(602px,55.8vw)] h-[min(602px,55.8vw)] md:block hidden"></div>
       <div className="auth-bg w-full">
-        <div className="flex flex-col justify-center items-start w-1/2 bg-white p-[93px] h-screen">
+        <div className="flex flex-col justify-center items-start md:w-1/2 w-full bg-white md:p-[93px] sm:p-[40px] p-[20px] h-screen">
+          <div className="flex items-center gap-2 h-6 sm:mb-[30px] mb-[10px]  z-20 text-black">
+            <Link
+              href="/sessions/start-session"
+              className="flex items-center gap-2"
+            >
+              <Image
+                src="/images/icons/back-btn.svg"
+                alt="back-btn"
+                width={24}
+                height={24}
+                className="bg-black"
+              />
+              <p className="text-[16px]">Back to Home</p>
+            </Link>
+          </div>
           <div className="flex justify-between items-center w-full">
             <div className="border border-[rgba(134,135,141,0.2)] h-[1px] w-2/5" />
             <Image
@@ -70,7 +85,7 @@ export default function Page() {
             <div className="border bg-[rgba(134,135,141,0.2)] h-[1px] w-2/5" />
           </div>
 
-          <h2 className="uppercase text-center text-[52px] font-bold mt-[30px] w-full">
+          <h2 className="uppercase text-center sm:text-[52px] text-[40px] font-bold sm:mt-[30px] mt-[10px] w-full">
             create your account
           </h2>
 
@@ -81,7 +96,7 @@ export default function Page() {
           <Form {...form}>
             <form
               onSubmit={form.handleSubmit(onSubmit)}
-              className="w-full mt-[50px] space-y-6"
+              className="w-full sm:mt-[50px] mt-[10px] space-y-6"
             >
               <FormField
                 control={form.control}
@@ -230,7 +245,7 @@ export default function Page() {
               <Button
                 type="submit"
                 disabled={isLoading}
-                className="bg-[rgb(8,11,22)] text-white !text-[16px] w-full py-[30px] mt-[30px] hover:bg-[rgb(8,11,22)]/90 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="bg-[rgb(8,11,22)] text-white !text-[16px] w-full py-[30px] sm:mt-[30px] mt-[10px] hover:bg-[rgb(8,11,22)]/90 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {isLoading ? "Creating Account..." : "Sign Up >"}
               </Button>
