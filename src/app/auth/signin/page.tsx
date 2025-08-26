@@ -36,9 +36,6 @@ export default function Page() {
   const onSubmit = async (data: SigninFormData) => {
     setIsLoading(true);
     try {
-      // Here you would typically make an API call to authenticate the user
-      console.log("Signin data:", data);
-
       // Simulate API call delay
       await new Promise((resolve) => setTimeout(resolve, 1000));
 

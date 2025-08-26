@@ -7,7 +7,6 @@ const SessionLobby = () => {
   const router = useRouter();
 
   const startSession = (type: "agent" | "conference") => {
-    console.log("Starting session:", type);
     const id = generateSessionId();
     router.push(`/sessions/${id}?type=${type}`);
   };

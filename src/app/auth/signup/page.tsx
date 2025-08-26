@@ -39,9 +39,6 @@ export default function Page() {
   const onSubmit = async (data: SignupFormData) => {
     setIsLoading(true);
     try {
-      // Here you would typically make an API call to create the user
-      console.log("Form data:", data);
-
       // Simulate API call delay
       await new Promise((resolve) => setTimeout(resolve, 1000));
 
