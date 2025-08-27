@@ -1184,9 +1184,9 @@ export default function SessionPage() {
                 <div className="flex items-center sm:gap-3 gap-1 p-2 bg-[#0f1419] rounded-lg border border-white/10">
                   <Link
                     color="white"
-                    className="sm:w-auto sm:h-auto w-[15px] h-[15px]"
+                    className="sm:w-auto sm:h-auto w-[15px] h-[15px] mr-[3px]"
                   />
-                  <span className="text-white text-sm flex-1 font-mono max-w-[230px]">
+                  <span className="text-white text-sm flex-1 font-mono not-sm:max-w-[230px]">
                     {`${window.location.origin}/conference?room=${roomName}`}
                   </span>
                   <button
