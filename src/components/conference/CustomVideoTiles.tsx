@@ -289,7 +289,7 @@ const VideoSurface = ({
       />
 
       <div
-        className={`absolute inset-0 flex flex-col items-center justify-center transition-opacity duration-200 ${
+        className={`absolute inset-0 flex flex-col items-center justify-center transition-opacity duration-200 not-sm:-top-[160px] ${
           hasMedia ? "opacity-0 pointer-events-none" : "opacity-100"
         }`}
       >
