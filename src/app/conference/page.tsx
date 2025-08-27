@@ -115,7 +115,7 @@ const PeopleTab = ({
 }) => {
   return (
     <div>
-      <div className="bg-[rgba(255,255,255,0.02)] rounded-[20px] border border-[rgba(255,255,255,0.1)] md:backdrop-blur-[32px] p-2 mb-4 max-h-[90vh] overflow-auto h-[98vh]">
+      <div className="bg-[rgba(255,255,255,0.02)] rounded-[20px] border border-[rgba(255,255,255,0.1)] md:backdrop-blur-[32px] p-2 mb-4 overflow-auto md:h-[72vh]">
         {participants && participants.length > 0 ? (
           participants.map((participant) => {
             const p = participant as Participant;
@@ -1135,7 +1135,7 @@ export default function SessionPage() {
       >
         {/* Sidebar */}
         {isSidebarOpen && (
-          <div className="absolute right-0 top-0 bottom-0 w-120 z-30 rounded-r-[20px] overflow-hidden border-l border-white/10 bg-[#0D101B]">
+          <div className="absolute right-0 top-0 bottom-0 w-120 z-30 rounded-r-[20px] overflow-hidden border-l border-white/10 bg-[#0D101B] md:h-[92vh]">
             <Sidebar
               participants={participants}
               roomName={roomName}
@@ -1176,17 +1176,17 @@ export default function SessionPage() {
               {/* divider */}
               <div className="border-b border-white/10 mb-4"></div>
               <div className="p-4">
-                <p className="text-white/70 text-sm mb-6 leading-relaxed">
+                <p className="text-white/70 text-sm sm:mb-6 mb-3 leading-relaxed">
                   Send this link to people you want to invite to the Session.{" "}
                   <br /> Don&apos;t forget to save the link, so you can use it
                   later.
                 </p>
-                <div className="flex items-center gap-3 p-2 bg-[#0f1419] rounded-lg border border-white/10">
+                <div className="flex items-center sm:gap-3 gap-1 p-2 bg-[#0f1419] rounded-lg border border-white/10">
                   <Link
                     color="white"
                     className="sm:w-auto sm:h-auto w-[15px] h-[15px]"
                   />
-                  <span className="text-white text-sm flex-1 font-mono">
+                  <span className="text-white text-sm flex-1 font-mono max-w-[230px]">
                     {`${window.location.origin}/conference?room=${roomName}`}
                   </span>
                   <button
