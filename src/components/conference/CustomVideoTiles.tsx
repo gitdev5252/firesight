@@ -203,7 +203,7 @@ export const CustomVideoTiles = ({
         {/* Right rail: lg+ only */}
         {showSideRail && (
           <>
-            <div className="hidden lg:flex w-56 flex-col gap-2 shrink-0 mr-3 mt-1 ">
+            <div className="hidden lg:flex w-56 flex-col gap-2 shrink-0">
               {displayed.map((p) => (
                 <SmallVideoTile
                   key={p.identity}
