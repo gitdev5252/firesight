@@ -175,7 +175,7 @@ export const CustomVideoTiles = ({
       })}
       <div className="w-full h-full flex gap-3 min-h-0">
         {/* Main area */}
-        <div className="flex-1 min-w-0 min-h-0 p-2 ">
+        <div className="flex-1 min-w-0 min-h-0">
           <div className="w-full h-full max-h-[99vh] md:h-[95vh]">
             <div
               className={`w-full aspect-video rounded-[15px] ${heightForTile}
@@ -279,10 +279,10 @@ const VideoSurface = ({
         className={
           (trackRef?.source === Track.Source.ScreenShare
             ? ""
-            : "custom-video ") +
+            : "custom-video h-screen") +
           `${
             fillClass ??
-            `w-full h-screen object-cover p-0 sm:p-[2px] 
+            `w-full object-cover p-0 sm:p-[2px] 
                 bg-none sm:bg-[linear-gradient(90deg,#14FF00_55%,#00F0FF_62%)]`
           }`
         }

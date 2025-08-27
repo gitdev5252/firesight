@@ -1265,7 +1265,7 @@ export default function SessionPage() {
                           />
                         </>
                       )}
-                      <div className="p-1 ml-2 mr-2 ">
+                      <div className="">
                         {activeTab === "People" && (
                           <>
                             <div className="bg-[rgba(255,255,255,0.02)] rounded-[20px] border border-[rgba(255,255,255,0.1)] backdrop-blur-[32px] p-2 mb-4 max-h-[56vh] overflow-auto mt-38">
