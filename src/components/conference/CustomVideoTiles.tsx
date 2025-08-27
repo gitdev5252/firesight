@@ -270,7 +270,7 @@ const VideoSurface = ({
   //   : "h-full md:h-[84vh]"; // mobile 94vh, md+ 84vh
 
   return (
-    <div className="relative w-full bg-transparent md:rounded-xl overflow-hidden sm:h-[69vh] h-full">
+    <div className="relative w-full bg-transparent md:rounded-xl overflow-hidden md:h-[69vh] sm:h-[67vh] h-full">
       <video
         ref={videoRef}
         autoPlay

@@ -1246,8 +1246,8 @@ export default function SessionPage() {
                 </span>
               </div>
             </div>
-            <div className="flex-1  relative mx-0 md:mx-6 mb-4 md:mb-6">
-              <div className="w-full border border-white/20 relative overflow-hidden rounded-2xl sm:h-[80vh] h-[95vh]">
+            <div className="flex-1  relative mx-0 md:mx-6 md:mb-6 mb-0">
+              <div className="w-full border border-white/20 relative overflow-hidden rounded-2xl sm:h-[80vh] h-screen">
                 <ShowSideRailProvider>
                   {isDesktop ? (
                     <CustomVideoTiles
