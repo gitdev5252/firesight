@@ -1147,7 +1147,7 @@ export default function SessionPage() {
         )}
         {isModalOpen && (
           <div className="absolute inset-0 flex items-center justify-center z-100 bg-black/50">
-            <div className="bg-[#1e2328] border border-white/20 rounded-xl max-w-md w-full mx-6 relative">
+            <div className="bg-[#1e2328] border border-white/20 rounded-xl max-w-md w-full mx-2 relative">
               <div className="flex items-center p-4">
                 {/* Close Button */}
                 <button
