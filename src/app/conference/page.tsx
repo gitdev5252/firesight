@@ -1097,7 +1097,7 @@ export default function SessionPage() {
 
       {/* Name Input Modal */}
       {nameModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-[rgba(0,0,0,0.35)] backdrop-blur-[8px]">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-[rgba(255,255,255,0.1)] backdrop-blur-[30px]">
           <div className="bg-[#1e2328] border border-white/20 rounded-xl max-w-md w-full mx-6 relative p-8 flex flex-col items-center">
             <h2 className="text-white text-lg font-medium mb-2">
               Enter Your Name

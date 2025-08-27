@@ -400,12 +400,9 @@ export default function Home() {
                 task delegation and automated follow-ups, make every meeting
                 smarter, more productive with Sessions.
               </p>
-              <Button
-                variant="ghost"
-                className="cursor-pointer green-btn-bg text-[16px] mt-[20px] bg-transparent border-0 px-8 py-5 text-white hover:text-black font-bold"
-              >
+              <button className="cursor-pointer green-btn-bg text-[16px] mt-[10px] bg-transparent border-0 px-8 py-5 text-white font-bold">
                 Explore Session
-              </Button>
+              </button>
             </div>
             <div className="md:text-[18px] text-[12px] lg:flex-3 w-full hidden md:block">
               Sessions is a next-generation browser-based conferencing solution.
@@ -593,12 +590,9 @@ export default function Home() {
                 platform’s Unified Dashboard serves as the command center,
                 bringing everything you need into one intuitive space
               </p>
-              <Button
-                variant="outline"
-                className="cursor-pointer red-btn-bg text-[16px] mt-[20px] bg-transparent border-0 px-8 py-5 text-white hover:text-black font-bold"
-              >
+              <button className="cursor-pointer red-btn-bg text-[16px] mt-[10px] bg-transparent border-0 px-8 py-5 text-white font-bold">
                 Explore Platform
-              </Button>
+              </button>
             </div>
             <div className="md:text-[18px] text-[12px] lg:flex-3 w-full hidden md:block">
               SaaS solution designed to centralize and optimize workflows for
