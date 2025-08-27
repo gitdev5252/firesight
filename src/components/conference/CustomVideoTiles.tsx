@@ -279,10 +279,10 @@ const VideoSurface = ({
         className={
           (trackRef?.source === Track.Source.ScreenShare
             ? ""
-            : "custom-video h-screen") +
+            : "custom-video h-screen ") +
           `${
             fillClass ??
-            `w-full object-cover p-0 sm:p-[2px] 
+            `w-full h-full object-cover p-0 sm:p-[2px] 
                 bg-none sm:bg-[linear-gradient(90deg,#14FF00_55%,#00F0FF_62%)]`
           }`
         }
