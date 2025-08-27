@@ -1182,7 +1182,10 @@ export default function SessionPage() {
                   later.
                 </p>
                 <div className="flex items-center gap-3 p-2 bg-[#0f1419] rounded-lg border border-white/10">
-                  <Link color="white" />
+                  <Link
+                    color="white"
+                    className="sm:w-auto sm:h-auto w-[15px] h-[15px]"
+                  />
                   <span className="text-white text-sm flex-1 font-mono">
                     {`${window.location.origin}/conference?room=${roomName}`}
                   </span>
@@ -1199,7 +1202,10 @@ export default function SessionPage() {
                       });
                     }}
                   >
-                    <Copy color="white" />
+                    <Copy
+                      color="white"
+                      className="sm:w-auto sm:h-auto w-[15px] h-[15px]"
+                    />
                   </button>
                 </div>
               </div>
