@@ -1065,7 +1065,7 @@ export default function SessionPage() {
     <div
       className={`${
         !isMobileFull && "p-4 md:p-8 bg-[#080B16] min-h-screen flex flex-col"
-      } md:p-8 md:bg-[#080B16] md:min-h-screen md:flex md:flex-col relative`}
+      } md:p-8 md:bg-[#080B16] md:max-h-screen md:flex md:flex-col relative`}
     >
       {isDesktop ? (
         <img
@@ -1214,6 +1214,7 @@ export default function SessionPage() {
             connect
             video
             audio
+            style={{ height: "fit-content!important" }}
           >
             <div className="hidden md:flex items-center justify-between px-6 py-4 text-white mb-2 mt-3">
               {/* Left: Duration */}
@@ -1229,15 +1230,7 @@ export default function SessionPage() {
 
               {/* Middle: Waveform */}
               <div className="flex items-center h-8">
-                {/* <img
-                      src="/images/icons/soundwave.svg"
-                      alt="soundwave"
-                      style={{
-                        width: "30vw",   // always 30% of screen width
-                        height: "auto"
-                      }}
-                    /> */}
-                <LiveWaveform /> {/* live waveform */}
+                <LiveWaveform />
               </div>
 
               {/* Divider */}
@@ -1253,23 +1246,8 @@ export default function SessionPage() {
                 </span>
               </div>
             </div>
-            <div className="flex-1  relative mx-0 md:mx-6 mb-4 md:mb-6 min-h-0">
-              <div
-                className={
-                  "w-full md:h-[calc(100vh-20px)] border border-white/20 relative overflow-hidden min-h-[300px] h-[140vh] max-h-[100vh] rounded-2xl " +
-                  // (isMobileFull
-                  //   ? "h-[140vh] max-h-[100vh] rounded-2xl"
-                  //   : "h-[97vh] max-h-[85vh]")
-                  ""
-                }
-              >
-                {/* DESKTOP / TABLET TILES */}
-                {/* <div className="hidden md:block w-full h-full">
-                  <CustomVideoTiles activeEmojis={activeEmojis} showSideRail={showSideRail}
-                    onToggleSideRail={() => setShowSideRail(!showSideRail)}
-
-                  />
-                </div> */}
+            <div className="flex-1  relative mx-0 md:mx-6 mb-4 md:mb-6">
+              <div className="w-full border border-white/20 relative overflow-hidden rounded-2xl sm:h-[80vh] h-[95vh]">
                 <ShowSideRailProvider>
                   {isDesktop ? (
                     <CustomVideoTiles

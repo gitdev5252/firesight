@@ -230,8 +230,6 @@ const VideoSurface = ({
   fallbackName,
   fillClass,
   variant = "",
-  smallPiece = false,
-  isMobileFull = false,
 }: {
   participant: Participant;
   trackRef?: ReturnType<typeof useTracks>[number];
@@ -247,7 +245,6 @@ const VideoSurface = ({
   const [hasMedia, setHasMedia] = useState<boolean>(
     !!trackRef?.publication?.track
   );
-  const { value: sideRailOpen } = useShowSideRail();
 
   useEffect(() => {
     const el = videoRef.current;
@@ -264,18 +261,16 @@ const VideoSurface = ({
       setHasMedia(false);
     }
   }, [trackRef?.publication?.track]);
-  const heightForTile = smallPiece
-    ? "h-full min-h-[180px]"
-    : isMobileFull
-    ? "h-[98vh]"
-    : sideRailOpen
-    ? "h-full min-h-[280px]"
-    : "h-full md:h-[84vh]"; // mobile 94vh, md+ 84vh
+  // const heightForTile = smallPiece
+  //   ? "h-full min-h-[180px]"
+  //   : isMobileFull
+  //   ? "h-[98vh]"
+  //   : sideRailOpen
+  //   ? "h-full min-h-[280px]"
+  //   : "h-full md:h-[84vh]"; // mobile 94vh, md+ 84vh
 
   return (
-    <div
-      className={` relative w-full ${heightForTile} bg-transparent md:rounded-xl overflow-hidden `}
-    >
+    <div className="relative w-full bg-transparent md:rounded-xl overflow-hidden sm:h-[69vh] h-full">
       <video
         ref={videoRef}
         autoPlay
