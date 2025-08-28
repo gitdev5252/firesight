@@ -115,7 +115,7 @@ const PeopleTab = ({
 }) => {
   return (
     <div>
-      <div className="bg-[rgba(255,255,255,0.02)] rounded-[20px] border border-[rgba(255,255,255,0.1)] md:backdrop-blur-[32px] p-2 mb-4 overflow-auto md:h-[72vh]">
+      <div className="bg-[rgba(255,255,255,0.02)] rounded-[20px] border border-[rgba(255,255,255,0.1)] md:backdrop-blur-[32px] p-2 mb-4 overflow-auto 2xl:h-[72vh] md:h-[71vh]">
         {participants && participants.length > 0 ? (
           participants.map((participant) => {
             const p = participant as Participant;
@@ -410,7 +410,7 @@ const ConferenceControls = ({
     !isSideRail && "bg-[#080B1680] p-3 rounded-[15px] mt-1";
   return (
     <div className="px-6">
-      <div className="px-2 pb-[27px]">
+      <div className="px-2">
         <div className={`flex items-center justify-between ${fullScreenStyle}`}>
           <div className="flex items-center gap-4">
             <button
