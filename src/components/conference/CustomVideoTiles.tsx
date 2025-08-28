@@ -350,7 +350,7 @@ const MainVideoTile = ({
   const displayName = participant.identity;
   const initials = getInitials(displayName);
   const { value: showSideRail, toggle } = useShowSideRail();
-  const heightForTile = !showSideRail ? "md:h-[84vh]" : "md:h-[95vh]";
+  const heightForTile = !showSideRail ? "" : "md:h-[95vh]";
 
   return (
     <div className="relative w-full h-full rounded-xl text-white">

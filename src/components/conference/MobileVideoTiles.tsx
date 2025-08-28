@@ -195,7 +195,7 @@ const VideoSurface = ({
         autoPlay
         playsInline
         muted={participant.isLocal}
-        className="w-full h-full object-cover"
+        className="w-full object-cover"
       />
       <div
         className={`absolute inset-0 flex items-center justify-center transition-opacity duration-200 ${
