@@ -189,7 +189,7 @@ const VideoSurface = ({
   }, [trackRef?.publication?.track]);
 
   return (
-    <div className="relative w-full h-full min-h-[60svh] bg-transparent">
+    <div className="relative w-full h-full min-h-[60vh] bg-transparent">
       <video
         ref={videoRef}
         autoPlay

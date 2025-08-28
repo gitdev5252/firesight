@@ -359,7 +359,7 @@ const MainVideoTile = ({
         trackRef={t}
         fallbackInitials={initials}
         fallbackName={displayName}
-        fillClass={`w-full h-full ${heightForTile} object-cover rounded-xl`}
+        fillClass={`w-full h-full ${heightForTile} object-cover rounded-xl not-sm:h-[100vh]`}
         isShort={sideRailOpen}
         isMobileFull={isMobileFull}
       />
@@ -454,7 +454,7 @@ const SmallVideoTile = ({
         participant={participant}
         trackRef={t}
         fallbackInitials={initials}
-        fillClass="w-full h-full object-cover"
+        fillClass="w-full object-cover"
         variant="tiles"
         smallPiece={true}
       />
