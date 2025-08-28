@@ -92,7 +92,7 @@ const Sidebar = ({
           />
         )}
         {activeTab === "Chat" && (
-          <div className="h-[97vh] min-h-0 bg-[#141721] rounded-[10px] pt-4 border border-[#FFFFFF1A]">
+          <div className="h-[80vh] min-h-0 bg-[#141721] rounded-[10px] pt-4 border border-[#FFFFFF1A]">
             <ChatTab messages={chatMessages} onSendMessage={onSendMessage} />
           </div>
         )}
