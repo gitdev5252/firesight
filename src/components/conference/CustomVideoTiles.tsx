@@ -279,7 +279,7 @@ const VideoSurface = ({
         className={
           (trackRef?.source === Track.Source.ScreenShare
             ? ""
-            : "custom-video") +
+            : "custom-video ") +
           `${
             fillClass ??
             `w-full object-cover p-0 sm:p-[2px] 
