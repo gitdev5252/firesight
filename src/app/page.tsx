@@ -401,7 +401,7 @@ export default function Home() {
                 smarter, more productive with Sessions.
               </p>
               <button className="cursor-pointer green-btn-bg text-[16px] mt-[10px] bg-transparent border-0 px-8 py-5 text-white font-bold">
-                Explore Session
+                Explore Sessions
               </button>
             </div>
             <div className="md:text-[18px] text-[12px] lg:flex-3 w-full hidden md:block">

@@ -220,7 +220,7 @@ export default function StartSessionPage() {
                   initial="enter"
                   animate="center"
                   exit="exit"
-                  transition={{ duration: 0.5, ease: "easeInOut" }}
+                  transition={{ duration: 0.7, ease: "easeInOut" }}
                   className="w-full flex items-center justify-center"
                 >
                   {(() => {
