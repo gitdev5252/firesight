@@ -946,10 +946,18 @@ export default function SessionPage() {
   React.useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const nameFromUrl = urlParams.get("name");
+    const key = `livekit_session_${roomName}`;
+    console.log('awal on top')
+    if (localStorage.getItem(key)) {
+      alert("You are already in this session on this device.");
+      return;
+    }
+
     if (!nameFromUrl) {
       setNameModalOpen(true);
       return;
     }
+
     setCurrentUser(nameFromUrl);
     const roomFromUrl = urlParams.get("room");
     const currentRoom =
@@ -972,6 +980,8 @@ export default function SessionPage() {
     const currentRoom =
       roomFromUrl || `room-${Math.random().toString(36).slice(2, 8)}`;
     setRoomName(currentRoom);
+    const key = `livekit_session_${roomName}`;
+    localStorage.setItem(key, "true");
     fetch(
       `/api/livekit-token?room=${currentRoom}&identity=${userNameInput.trim()}`
     )
@@ -1214,6 +1224,65 @@ export default function SessionPage() {
               </div>
             </div>
           </div>
+        </div> 
+
+        {isModalOpen && (
+          <div className="absolute inset-0 flex items-center justify-center z-100 bg-black/50">
+            <div className="bg-[#1e2328] border border-white/20 rounded-xl max-w-md w-full mx-6 relative">
+              <div className="flex items-center p-4">
+                {/* Close Button */}
+                <button
+                  onClick={() => setIsModalOpen(false)}
+                  className="absolute right-4 w-6 h-6 flex items-center justify-center text-white/60 hover:text-white"
+                >
+                  <svg
+                    width="14"
+                    height="14"
+                    viewBox="0 0 14 14"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M1 1l12 12M1 13L13 1"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                    />
+                  </svg>
+                </button>
+                <h2 className="text-white text-lg font-medium">
+                  Your Session is ready
+                </h2>
+              </div>
+              {/* divider */}
+              <div className="border-b border-white/10 mb-4"></div>
+              <div className="p-4">
+                <p className="text-white/70 text-sm mb-6 leading-relaxed">
+                  Send this link to people you want to invite to the
+                  Session. <br /> Don&apos;t forget to save the link, so you
+                  can use it later.
+                </p>
+                <div className="flex items-center gap-3 p-2 bg-[#0f1419] rounded-lg border border-white/10">
+                  <Link color="white" />
+                  <span className="text-white/80 text-sm flex-1 font-mono">
+                    {`${window.location.origin}/conference?room=${roomName}`}
+                  </span>
+                  <button
+                    className="p-1 hover:bg-white/10 rounded"
+                    onClick={() => {
+                      navigator.clipboard.writeText(
+                        `${window.location.origin}/conference?room=${roomName}`
+                      );
+                    }}
+                  >
+                    <Copy color="white" />
+                  </button>
+
+                </div>
+                <span className="text-sm font-medium">{meetingDuration}</span>
+              </div>
+            </div>
+          </div>
         )}
         {/* LiveKit Video Area */}
         {token ? (
@@ -1223,8 +1292,9 @@ export default function SessionPage() {
             connect
             video
             audio
-            style={{ height: "fit-content!important" }}
+            className=""
           >
+
             <div className="hidden md:flex items-center justify-between px-6 py-4 text-white mb-2 mt-3">
               {/* Left: Duration */}
               <div className="flex items-center gap-2 ml-4">
@@ -1239,7 +1309,7 @@ export default function SessionPage() {
 
               {/* Middle: Waveform */}
               <div className="flex items-center h-8">
-                <LiveWaveform />
+                <LiveWaveform />        {/* live waveform */}
               </div>
 
               {/* Divider */}
@@ -1250,6 +1320,7 @@ export default function SessionPage() {
                 <div className="w-4 h-4 flex items-center justify-center">
                   <Calendar color="white" />
                 </div>
+
                 <span className="text-sm font-medium">
                   {getFormattedDate()}
                 </span>
@@ -1274,6 +1345,7 @@ export default function SessionPage() {
                           />
                         </>
                       )}
+
                       <div className="">
                         {activeTab === "People" && (
                           <>
@@ -1343,7 +1415,9 @@ export default function SessionPage() {
                             <div className="fixed bottom-0 left-0 right-0 z-50 md:hidden px-4 pb-8">
                               <button
                                 onClick={() => {
+
                                   window.location.href = "/sessions";
+
                                 }}
                                 className="w-full grid grid-cols-[1fr_auto_1fr] items-center
                bg-[#0f1419] rounded-lg border border-white/10 shadow
@@ -1431,6 +1505,7 @@ export default function SessionPage() {
                                 </p>
                               )}
                               {/* <div ref={messagesEndRef} /> */}
+
                             </div>
 
                             {/* Sticky input (not fixed) so layout reserves space */}
@@ -1487,6 +1562,26 @@ export default function SessionPage() {
                     setIsMobileFull={setIsMobileFull}
                     isMobileFull={isMobileFull}
                   />
+                </div> */}
+                {/* <div className="sticky top-0 z-20 bg-[#0D101B] border-b border-white/10"> */}
+                <div
+                  className="md:hidden fixed top-0 left-0 right-0 z-40 
+                backdrop-blur border-b border-white/10
+                pt-[env(safe-area-inset-top)] bg-[#080b1649]"
+                >
+                  <MobileConferenceControls
+                    onInvite={() => setIsModalOpen(true)}
+                    onToggleHandRaise={toggleHandRaise}
+                    currentUser={currentUser}
+                    raisedHands={raisedHands}
+                    setActiveTab={setActiveTab}
+                    activeTab={activeTab}
+                    setIsBottomSheetOpen={setIsBottomSheetOpen}
+                    isBottomSheetOpen={isBottomSheetOpen}
+                    setIsMobileFull={setIsMobileFull}
+                    isMobileFull={isMobileFull}
+                  />
+
                 </div>
                 <ParticipantProvider onParticipantsChange={setParticipants} />
                 <RealtimeMessaging
@@ -1516,6 +1611,7 @@ export default function SessionPage() {
                     </div>
                   </div>
                 )}
+
                 <div className="absolute 2xl:bottom-[20px] sm:bottom-[15px] bottom-0 left-0 right-0 hidden md:block">
                   <ConferenceControls
                     onInvite={() => setIsModalOpen(true)}
@@ -1560,13 +1656,7 @@ export default function SessionPage() {
                                 {participant.identity}
                               </span>
                             </div>
-                            // <SmallVideoTile
-                            //   key={p.identity}
-                            //   participant={p}
-                            //   trackMap={trackByParticipantAndSource}
-                            //   setFocusedIdentity={setFocusedIdentity}
-                            //   focusedIdentity={focusedIdentity}
-                            // />
+
                           );
                         })}
                       </div>
@@ -1585,6 +1675,7 @@ export default function SessionPage() {
                 {/* Desktop View Full Screen */}
                 {!showSideRail && participants && participants.length > 0 && (
                   <div
+
                     className={`absolute ${
                       showSideRail ? "bottom-28" : "bottom-32"
                     }  left-0 right-0 z-20 px-3 pb-2 hidden md:block`}
@@ -1594,6 +1685,7 @@ export default function SessionPage() {
                         participants.length <= 2 &&
                         "items-center justify-center"
                       }`}
+
                     >
                       {participants.map((p) => {
                         const participant = p as Participant;
@@ -1662,6 +1754,7 @@ export default function SessionPage() {
             className="backdrop-blur-[16px] text-[#FFFFFF] bg-[#080B1680] rounded-[15px] gap-4 flex flex-row items-center h-[44px] w-auto p-6 shadow-lg justify-center text-center"
             style={{ flex: "0 0 auto" }}
           >
+
             <Monitor size={18} />
             <span>Present</span>
           </div>
@@ -1669,6 +1762,7 @@ export default function SessionPage() {
             className="backdrop-blur-[16px] text-[#FFFFFF] bg-[#080B1680] rounded-[15px] gap-4 flex flex-row items-center h-[44px] w-auto p-6 shadow-lg justify-center text-center"
             style={{ flex: "0 0 auto" }}
           >
+
             <Users size={18} />
             <span>Roles</span>
           </div>
@@ -1686,6 +1780,7 @@ export default function SessionPage() {
             <Link size={18} />
             <span>Share Session Link</span>
           </div>
+
         </div>
         {/* Divider */}
         <div className="border-t border-white/20 my-4" />
@@ -1695,6 +1790,7 @@ export default function SessionPage() {
           <span className="text-white/50 text-sm">|</span>
           <span className="text-[#FFFFFF] font-bold text-sm">65:23</span>
         </div>
+
       </BottomSheet>
     </div>
   );
