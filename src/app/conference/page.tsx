@@ -41,6 +41,9 @@ import { toast } from "sonner";
 
 const mobileTabs = ["Session", "People", "Chat", "Transcript", "Summary"];
 
+// Small helper to extract ternary class logic for readability
+const classIf = (cond: boolean, a: string, b: string) => (cond ? a : b);
+
 type Participant = {
   identity: string;
   isLocal: boolean;
@@ -49,255 +52,274 @@ type Participant = {
   sid: string;
 };
 
-const Sidebar = ({
-  participants,
-  roomName,
-  raisedHands,
-  chatMessages,
-  onSendMessage,
-}: {
-  participants?: unknown[];
-  roomName: string;
-  raisedHands: { [key: string]: boolean };
-  chatMessages: { message: string; timestamp: number; username: string }[];
-  onSendMessage: (message: string) => void;
-}) => {
-  const [activeTab, setActiveTab] = React.useState("People");
-  const tabs = ["People", "Chat", "Transcript", "Summary", "Prompts"];
+const Sidebar = React.memo(
+  ({
+    participants,
+    roomName,
+    raisedHands,
+    chatMessages,
+    onSendMessage,
+  }: {
+    participants?: Participant[];
+    roomName: string;
+    raisedHands: { [key: string]: boolean };
+    chatMessages: { message: string; timestamp: number; username: string }[];
+    onSendMessage: (message: string) => void;
+  }) => {
+    const [activeTab, setActiveTab] = React.useState("People");
+    const tabs = ["People", "Chat", "Transcript", "Summary", "Prompts"];
 
-  return (
-    <div className="flex flex-col min-h-0">
-      <div className="flex border-b border-white/10 p-3">
-        {tabs.map((tab) => (
-          <button
-            key={tab}
-            onClick={() => setActiveTab(tab)}
-            className={`flex-1 px-2 py-3 text-xs font-medium transition-colors ${
-              activeTab === tab
-                ? "text-white border-b-1 border-green-400 mt-1"
-                : "text-white/60 hover:text-white/80 mt-1"
-            }`}
-          >
-            {tab}
-          </button>
-        ))}
+    return (
+      <div className="flex flex-col min-h-0">
+        <div className="flex border-b border-white/10 p-3">
+          {tabs.map((tab) => (
+            <button
+              key={tab}
+              onClick={() => setActiveTab(tab)}
+              className={`flex-1 px-2 py-3 text-xs font-medium transition-colors ${classIf(
+                activeTab === tab,
+                "text-white border-b-1 border-green-400 mt-1",
+                "text-white/60 hover:text-white/80 mt-1"
+              )}`}
+            >
+              {tab}
+            </button>
+          ))}
+        </div>
+
+        <div className="flex-1 p-4 overflow-y-auto min-h-0">
+          {activeTab === "People" && (
+            <PeopleTab
+              participants={participants}
+              roomName={roomName}
+              raisedHands={raisedHands}
+            />
+          )}
+          {activeTab === "Chat" && (
+            <div className="h-[80vh] min-h-0 bg-[#141721] rounded-[10px] pt-4 border border-[#FFFFFF1A]">
+              <ChatTab messages={chatMessages} onSendMessage={onSendMessage} />
+            </div>
+          )}
+          {activeTab === "Transcript" && <InfoTab type="Transcript" />}
+          {activeTab === "Summary" && <InfoTab type="Summary" />}
+          {activeTab === "Prompts" && <InfoTab type="Prompts" />}
+        </div>
       </div>
+    );
+  }
+);
 
-      <div className="flex-1 p-4 overflow-y-auto min-h-0">
-        {activeTab === "People" && (
-          <PeopleTab
-            participants={participants}
-            roomName={roomName}
-            raisedHands={raisedHands}
-          />
-        )}
-        {activeTab === "Chat" && (
-          <div className="h-[80vh] min-h-0 bg-[#141721] rounded-[10px] pt-4 border border-[#FFFFFF1A]">
-            <ChatTab messages={chatMessages} onSendMessage={onSendMessage} />
-          </div>
-        )}
-        {activeTab === "Transcript" && <TranscriptTab />}
-        {activeTab === "Summary" && <SummaryTab />}
-        {activeTab === "Prompts" && <PromptsTab />}
-      </div>
-    </div>
-  );
-};
+const PeopleTab = React.memo(
+  ({
+    participants,
+    roomName,
+    raisedHands,
+  }: {
+    participants?: Participant[];
+    roomName: string;
+    raisedHands: { [key: string]: boolean };
+  }) => {
+    return (
+      <div>
+        <div className="bg-[rgba(255,255,255,0.02)] rounded-[20px] border border-[rgba(255,255,255,0.1)] md:backdrop-blur-[32px] p-2 mb-4 overflow-auto 2xl:h-[72.5vh] md:h-[71.5vh]">
+          {participants && participants.length > 0 ? (
+            participants.map((participant) => {
+              const p = participant as Participant;
+              const initials = p.identity.slice(0, 2).toUpperCase();
+              const isLocal = p.isLocal;
+              const isMicEnabled = !p.isMicrophoneEnabled === false;
+              const isCameraEnabled = !p.isCameraEnabled === false;
 
-const PeopleTab = ({
-  participants,
-  roomName,
-  raisedHands,
-}: {
-  participants?: unknown[];
-  roomName: string;
-  raisedHands: { [key: string]: boolean };
-}) => {
-  return (
-    <div>
-      <div className="bg-[rgba(255,255,255,0.02)] rounded-[20px] border border-[rgba(255,255,255,0.1)] md:backdrop-blur-[32px] p-2 mb-4 overflow-auto 2xl:h-[72.5vh] md:h-[71.5vh]">
-        {participants && participants.length > 0 ? (
-          participants.map((participant) => {
-            const p = participant as Participant;
-            const initials = p.identity.slice(0, 2).toUpperCase();
-            const isLocal = p.isLocal;
-            const isMicEnabled = !p.isMicrophoneEnabled === false;
-            const isCameraEnabled = !p.isCameraEnabled === false;
+              return (
+                <div
+                  key={p.sid}
+                  className="flex items-center gap-3 p-3 rounded-lg mb-2"
+                >
+                  <HexAvatar initials={initials} size={32} fontSize={12} />
 
-            return (
-              <div
-                key={p.sid}
-                className="flex items-center gap-3 p-3 rounded-lg mb-2"
-              >
-                <HexAvatar initials={initials} size={32} fontSize={12} />
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2">
+                      <p className="text-white text-sm font-medium">
+                        {p.identity} {isLocal && "(Host)"}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex gap-5 mr-4 items-center">
+                    <div className="w-8 h-8 rounded-full flex items-center justify-center">
+                      {raisedHands[p.identity] && (
+                        <img
+                          src="/images/icons/hand-active.svg"
+                          alt=""
+                          width={32}
+                          height={32}
+                        />
+                      )}
+                    </div>
+                    <div className="w-5 h-5 rounded-full flex items-center justify-center">
+                      {isMicEnabled ? (
+                        <Mic size={24} color="white" />
+                      ) : (
+                        <MicOff size={24} color="#E93249" />
+                      )}
+                    </div>
 
-                <div className="flex-1">
-                  <div className="flex items-center gap-2">
-                    <p className="text-white text-sm font-medium">
-                      {p.identity} {isLocal && "(Host)"}
-                    </p>
+                    <div className="w-5 h-5 rounded-full flex items-center justify-center">
+                      {isCameraEnabled ? (
+                        <Video size={24} color="white" />
+                      ) : (
+                        <VideoOff size={24} color="#E93249" />
+                      )}
+                    </div>
                   </div>
                 </div>
-                <div className="flex gap-5 mr-4 items-center">
-                  <div className="w-8 h-8 rounded-full flex items-center justify-center">
-                    {raisedHands[p.identity] && (
-                      <img
-                        src="/images/icons/hand-active.svg"
-                        alt=""
-                        width={32}
-                        height={32}
-                      />
-                    )}
-                  </div>
-                  <div className="w-5 h-5 rounded-full flex items-center justify-center">
-                    {isMicEnabled ? (
-                      <Mic size={24} color="white" />
-                    ) : (
-                      <MicOff size={24} color="#E93249" />
-                    )}
-                  </div>
+              );
+            })
+          ) : (
+            <p className="text-white/60 text-sm">No participants yet</p>
+          )}
+        </div>
 
-                  <div className="w-5 h-5 rounded-full flex items-center justify-center">
-                    {isCameraEnabled ? (
-                      <Video size={24} color="white" />
-                    ) : (
-                      <VideoOff size={24} color="#E93249" />
-                    )}
-                  </div>
+        <div className="flex items-center gap-3 p-2 bg-[#0f1419] rounded-lg border border-white/10">
+          <Link color="white" />
+          <span className="text-white text-sm flex-1 font-mono">
+            {`${window.location.origin}/conference?room=${roomName}`}
+          </span>
+          <button
+            className="p-1 hover:bg-white/10 rounded"
+            onClick={async () => {
+              try {
+                await navigator.clipboard.writeText(
+                  `${window.location.origin}/conference?room=${roomName}`
+                );
+                toast.success("Copied to clipboard", {
+                  style: {
+                    width: "200px",
+                  },
+                });
+              } catch (err) {
+                console.error("Clipboard write failed:", err);
+                toast.error("Unable to copy link. Please copy it manually.");
+              }
+            }}
+          >
+            <Copy color="white" />
+          </button>
+        </div>
+      </div>
+    );
+  }
+);
+
+const ChatTab = React.memo(
+  ({
+    messages,
+    onSendMessage,
+  }: {
+    messages: { message: string; timestamp: number; username: string }[];
+    onSendMessage: (message: string) => void;
+  }) => {
+    const [inputMessage, setInputMessage] = React.useState("");
+    const messagesEndRef = React.useRef<HTMLDivElement>(null);
+
+    React.useEffect(() => {
+      messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    }, [messages.length]);
+
+    const handleSendMessage = () => {
+      if (inputMessage.trim()) {
+        onSendMessage(inputMessage.trim());
+        setInputMessage("");
+      }
+    };
+
+    const handleKeyPress = (e: React.KeyboardEvent) => {
+      if (e.key === "Enter" && !e.shiftKey) {
+        e.preventDefault();
+        handleSendMessage();
+      }
+    };
+
+    return (
+      <div className="flex flex-col h-full min-h-0 bg-[#141721] rounded-[10px] p-3">
+        <div className="flex-1 overflow-y-auto mb-4 space-y-3 min-h-0">
+          {messages.length > 0 ? (
+            messages.map((msg, index) => (
+              <div className="flex gap-3 ml-2 mr-2 items-center" key={index}>
+                <HexAvatar
+                  initials={msg.username
+                    .split(" ")
+                    .map((w) => w[0])
+                    .join("")
+                    .toUpperCase()
+                    .slice(0, 2)}
+                />
+                <div className="bg-white/5 rounded-lg p-3 border border-white/10 w-fit max-w-[75%] min-w-0">
+                  <p className="text-white/80 text-sm break-words">
+                    {msg.message}
+                  </p>
                 </div>
               </div>
-            );
-          })
-        ) : (
-          <p className="text-white/60 text-sm">No participants yet</p>
-        )}
-      </div>
+            ))
+          ) : (
+            <p className="text-white/60 text-sm text-center py-8">
+              No messages yet. Start the conversation!
+            </p>
+          )}
+          {/* <div ref={messagesEndRef} /> */}
+        </div>
 
-      <div className="flex items-center gap-3 p-2 bg-[#0f1419] rounded-lg border border-white/10">
-        <Link color="white" />
-        <span className="text-white text-sm flex-1 font-mono">
-          {`${window.location.origin}/conference?room=${roomName}`}
+        <div>
+          <input
+            type="text"
+            value={inputMessage}
+            onChange={(e) => setInputMessage(e.target.value)}
+            onKeyPress={handleKeyPress}
+            placeholder="Type here..."
+            className="flex-1 w-full bg-[#080B1680] border border-white/20 rounded-lg px-3 py-4 text-white text-sm placeholder-white/50 focus:outline-none "
+          />
+        </div>
+      </div>
+    );
+  }
+);
+
+interface InfoTabProps {
+  type: "Transcript" | "Summary" | "Prompts";
+}
+
+const InfoTab: React.FC<InfoTabProps> = React.memo(({ type }) => {
+  const tabTitles: Record<string, string> = {
+    Transcript: "Transcript",
+    Summary: "Summary",
+    Prompts: "Prompts",
+  };
+  return (
+    <div className="flex flex-col items-center h-full min-h-[500px] w-full ">
+      <div className="bg-[#181C23] border border-white/10 rounded-2xl p-8 w-full max-w-md flex flex-col items-center shadow-lg h-[90%]">
+        <span className="text-green-400 text-base font-mono mb-4">
+          Coming Soon
         </span>
-        <button
-          className="p-1 hover:bg-white/10 rounded"
-          onClick={() => {
-            navigator.clipboard.writeText(
-              `${window.location.origin}/conference?room=${roomName}`
-            );
-            toast.success("Copied to clipboard", {
-              style: {
-                width: "200px",
-              },
-            });
-          }}
-        >
-          <Copy color="white" />
+        <h2 className="text-white text-2xl font-bold mb-2 text-center tracking-wide">
+          Create an Account
+        </h2>
+        <p className="text-white/70 text-base mb-8 text-center">
+          To be among the first to use{" "}
+          <span className="font-semibold">{tabTitles[type]}</span>
+        </p>
+        <button className="w-full py-4 mb-12 rounded-full border border-green-400 text-green-200 text-lg font-mono font-semibold bg-gradient-to-r from-green-400/10 to-cyan-400/10 hover:from-green-400/20 hover:to-cyan-400/20 transition">
+          14 Day Trial | <span className="font-bold text-white">Start Now</span>
+        </button>
+        <div className="w-full border-t border-white/10 my-8"></div>
+        <p className="text-white/60 text-center mb-4">
+          If you already have an account
+        </p>
+        <button className="w-full py-3 rounded-full border border-white/20 text-white/80 text-lg font-mono bg-[#10131A] hover:bg-white/10 transition">
+          Log In
         </button>
       </div>
     </div>
   );
-};
-
-const ChatTab = ({
-  messages,
-  onSendMessage,
-}: {
-  messages: { message: string; timestamp: number; username: string }[];
-  onSendMessage: (message: string) => void;
-}) => {
-  const [inputMessage, setInputMessage] = React.useState("");
-  const messagesEndRef = React.useRef<HTMLDivElement>(null);
-
-  React.useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages]);
-
-  const handleSendMessage = () => {
-    if (inputMessage.trim()) {
-      onSendMessage(inputMessage.trim());
-      setInputMessage("");
-    }
-  };
-
-  const handleKeyPress = (e: React.KeyboardEvent) => {
-    if (e.key === "Enter" && !e.shiftKey) {
-      e.preventDefault();
-      handleSendMessage();
-    }
-  };
-
-  return (
-    <div className="flex flex-col h-full min-h-0 bg-[#141721] rounded-[10px] p-3">
-      <div className="flex-1 overflow-y-auto mb-4 space-y-3 min-h-0">
-        {messages.length > 0 ? (
-          messages.map((msg, index) => (
-            <div className="flex gap-3 ml-2 mr-2 items-center" key={index}>
-              <HexAvatar
-                initials={msg.username
-                  .split(" ")
-                  .map((w) => w[0])
-                  .join("")
-                  .toUpperCase()
-                  .slice(0, 2)}
-              />
-              <div className="bg-white/5 rounded-lg p-3 border border-white/10 w-fit max-w-[75%] min-w-0">
-                <p className="text-white/80 text-sm break-words">
-                  {msg.message}
-                </p>
-              </div>
-            </div>
-          ))
-        ) : (
-          <p className="text-white/60 text-sm text-center py-8">
-            No messages yet. Start the conversation!
-          </p>
-        )}
-        {/* <div ref={messagesEndRef} /> */}
-      </div>
-
-      <div>
-        <input
-          type="text"
-          value={inputMessage}
-          onChange={(e) => setInputMessage(e.target.value)}
-          onKeyPress={handleKeyPress}
-          placeholder="Type here..."
-          className="flex-1 w-full bg-[#080B1680] border border-white/20 rounded-lg px-3 py-4 text-white text-sm placeholder-white/50 focus:outline-none focus:border-blue-500"
-        />
-      </div>
-    </div>
-  );
-};
-
-const TranscriptTab = () => (
-  <div className="flex flex-col items-center h-full min-h-[500px] w-full ">
-    <div className="bg-[#181C23] border border-white/10 rounded-2xl p-8 w-full max-w-md flex flex-col items-center shadow-lg h-[90%]">
-      <span className="text-green-400 text-base font-mono mb-4">
-        Coming Soon
-      </span>
-      <h2 className="text-white text-2xl font-bold mb-2 text-center tracking-wide">
-        Create an Account
-      </h2>
-      <p className="text-white/70 text-base mb-8 text-center">
-        To be among the first to use{" "}
-        <span className="font-semibold">Transcript</span>
-      </p>
-      <button className="w-full py-4 mb-12 rounded-full border border-green-400 text-green-200 text-lg font-mono font-semibold bg-gradient-to-r from-green-400/10 to-cyan-400/10 hover:from-green-400/20 hover:to-cyan-400/20 transition">
-        14 Day Trial | <span className="font-bold text-white">Start Now</span>
-      </button>
-      <div className="w-full border-t border-white/10 my-8"></div>
-      <p className="text-white/60 text-center mb-4">
-        If you already have an account
-      </p>
-      <button className="w-full py-3 rounded-full border border-white/20 text-white/80 text-lg font-mono bg-[#10131A] hover:bg-white/10 transition">
-        Log In
-      </button>
-    </div>
-  </div>
-);
-
-const SummaryTab = () => <TranscriptTab />;
-const PromptsTab = () => <TranscriptTab />;
+});
 
 /* ----------------- Realtime Messaging ----------------- */
 const RealtimeMessaging = ({
@@ -360,7 +382,7 @@ const RealtimeMessaging = ({
 const ParticipantProvider = ({
   onParticipantsChange,
 }: {
-  onParticipantsChange: (participants: unknown[]) => void;
+  onParticipantsChange: (participants: Participant[]) => void;
 }) => {
   const participants = useParticipants();
   React.useEffect(() => {
@@ -370,438 +392,454 @@ const ParticipantProvider = ({
 };
 
 /* ----------------- Desktop Controls ----------------- */
-const ConferenceControls = ({
-  onInvite,
-  onToggleSidebar,
-  onSendEmoji,
-  onToggleHandRaise,
-  currentUser,
-  raisedHands,
-  isSidebarOpen,
-  isSideRail,
-}: {
-  onInvite: () => void;
-  onToggleSidebar: () => void;
-  onSendEmoji: (username: string) => void;
-  onToggleHandRaise: (username: string) => void;
-  currentUser: string;
-  raisedHands: { [key: string]: boolean };
-  isSidebarOpen: boolean;
-  isSideRail: boolean;
-}) => {
-  const {
-    isMicrophoneEnabled,
-    isCameraEnabled,
-    toggleMicrophone,
-    toggleCamera,
-    startScreenShare,
-    stopScreenShare,
-    isScreenSharing,
-  } = useMediaControls();
+const ConferenceControls = React.memo(
+  ({
+    onInvite,
+    onToggleSidebar,
+    onSendEmoji,
+    onToggleHandRaise,
+    currentUser,
+    raisedHands,
+    isSidebarOpen,
+    isSideRail,
+  }: {
+    onInvite: () => void;
+    onToggleSidebar: () => void;
+    onSendEmoji: (username: string) => void;
+    onToggleHandRaise: (username: string) => void;
+    currentUser: string;
+    raisedHands: { [key: string]: boolean };
+    isSidebarOpen: boolean;
+    isSideRail: boolean;
+  }) => {
+    const {
+      isMicrophoneEnabled,
+      isCameraEnabled,
+      toggleMicrophone,
+      toggleCamera,
+      startScreenShare,
+      stopScreenShare,
+      isScreenSharing,
+    } = useMediaControls();
 
-  const { buttonProps: disconnectButtonProps } = useDisconnectButton({});
-  const router = useRouter();
+    // Local booleans for readability
+    const micOk = !!isMicrophoneEnabled;
+    const camOk = !!isCameraEnabled;
 
-  const handleEndCall = async (e: React.MouseEvent<HTMLButtonElement>) => {
-    if (disconnectButtonProps.onClick) await disconnectButtonProps.onClick(e);
-    router.push("/sessions");
-  };
-  const fullScreenStyle =
-    !isSideRail && "bg-[#080B1680] p-3 rounded-[15px] mt-1";
-  return (
-    <div className="px-6">
-      <div className="px-2">
-        <div className={`flex items-center justify-between ${fullScreenStyle}`}>
-          <div className="flex items-center gap-4">
-            <button
-              className="flex flex-col items-center gap-1 text-gray-400/60 hover:text-gray-400 transition-colors"
-              onClick={onInvite}
-            >
-              <div className="flex items-center justify-center">
-                <Link color="white" />
-              </div>
-              <span className="text-xs mt-2">Invite</span>
-            </button>
+    const { buttonProps: disconnectButtonProps } = useDisconnectButton({});
+    const router = useRouter();
+
+    // const handleScreenToggle = () => {
+    //   if (isScreenSharing) stopScreenShare();
+    //   else startScreenShare();
+    // };
+
+    const handleEndCall = async (e: React.MouseEvent<HTMLButtonElement>) => {
+      if (disconnectButtonProps.onClick) await disconnectButtonProps.onClick(e);
+      router.push("/sessions");
+    };
+    const fullScreenStyle = !isSideRail
+      ? "bg-[#080B1680] p-3 rounded-[15px] mt-1"
+      : "";
+    return (
+      <div className="px-6">
+        <div className="px-2">
+          <div
+            className={`flex items-center justify-between ${fullScreenStyle}`}
+          >
+            <div className="flex items-center gap-4">
+              <button
+                className="flex flex-col items-center gap-1 text-gray-400/60 hover:text-gray-400 transition-colors"
+                onClick={onInvite}
+              >
+                <div className="flex items-center justify-center">
+                  <Link color="white" />
+                </div>
+                <span className="text-xs mt-2">Invite</span>
+              </button>
+            </div>
+
+            <div className="flex items-center gap-6">
+              <button
+                className={`flex flex-col items-center gap-1 transition-colors ${classIf(
+                  micOk,
+                  "text-gray-400 hover:text-gray-400",
+                  "text-red-400 hover:text-red-300"
+                )}`}
+                onClick={toggleMicrophone}
+              >
+                <div className="items-center justify-center">
+                  {isMicrophoneEnabled ? (
+                    <Mic color="white" />
+                  ) : (
+                    <MicOff color="red" />
+                  )}
+                </div>
+                <span className="text-xs mt-2">Mic</span>
+              </button>
+
+              <div className="w-px h-8 bg-white/20"></div>
+
+              <button
+                className={`flex flex-col items-center gap-1 transition-colors ${classIf(
+                  camOk,
+                  "text-gray-400 hover:text-gray-400",
+                  "text-red-400 hover:text-red-300"
+                )}`}
+                onClick={toggleCamera}
+              >
+                <div className="items-center justify-center">
+                  {isCameraEnabled ? (
+                    <Video color="white" />
+                  ) : (
+                    <VideoOff color="red" />
+                  )}
+                </div>
+                <span className="text-xs mt-2">Camera</span>
+              </button>
+
+              <div className="w-px h-8 bg-white/20"></div>
+
+              <button
+                className={`flex flex-col items-center gap-1 transition-colors text-gray-400 hover:text-gray-400`}
+                onClick={() => onToggleHandRaise(currentUser)}
+              >
+                <div className="items-center justify-center">
+                  {raisedHands[currentUser] ? (
+                    <img
+                      src="/images/icons/hand-active.svg"
+                      alt=""
+                      width={32}
+                      height={32}
+                    />
+                  ) : (
+                    <Hand color="white" />
+                  )}
+                </div>
+                <span className="text-xs mt-2">Hand</span>
+              </button>
+
+              <div className="w-px h-8 bg-white/20"></div>
+
+              <button className="flex flex-col items-center gap-1 text-gray-400 hover:text-gray-400 transition-colors">
+                <div className="items-center justify-center">
+                  <BotMessageSquare color="white" />
+                </div>
+                <span className="text-xs mt-2">AI Worker</span>
+              </button>
+
+              <div className="w-px h-8 bg-white/20"></div>
+
+              <button
+                onClick={isScreenSharing ? stopScreenShare : startScreenShare}
+                className={`flex flex-col items-center gap-1 transition-colors ${
+                  isScreenSharing
+                    ? "text-green-400 hover:text-green-300"
+                    : "text-gray-400 hover:text-gray-400"
+                }`}
+              >
+                <div className="items-center justify-center">
+                  {/* <Monitor color={isScreenSharing ? "#10b981" : "white"} /> */}
+                  {isScreenSharing ? (
+                    <img
+                      src="/images/icons/screen-active.svg"
+                      alt=""
+                      width={32}
+                      height={32}
+                    />
+                  ) : (
+                    <Monitor color={isScreenSharing ? "#10b981" : "white"} />
+                  )}
+                </div>
+                <span className="text-xs mt-2">
+                  {isScreenSharing ? "Present" : "Present"}
+                </span>
+              </button>
+
+              <div className="w-px h-8 bg-white/20"></div>
+
+              <button
+                className="flex flex-col items-center gap-1 text-gray-400 hover:text-gray-400 transition-colors"
+                onClick={() => onSendEmoji(currentUser)}
+              >
+                <div className="items-center justify-center">
+                  <Smile color="white" />
+                </div>
+                <span className="text-xs mt-2">Emoji</span>
+              </button>
+
+              <div className="w-px h-8 bg-white/20"></div>
+
+              <button className="flex flex-col items-center gap-1 text-gray-400 hover:text-gray-400 transition-colors">
+                <div className="items-center justify-center">
+                  <Users color="white" />
+                </div>
+                <span className="text-xs mt-2">Roles</span>
+              </button>
+
+              <div className="w-px h-8 bg-white/20"></div>
+
+              <button
+                {...disconnectButtonProps}
+                onClick={handleEndCall}
+                className="flex flex-col items-center gap-1 transition-colors text-gray-400 hover:text-gray-400"
+              >
+                <div className="items-center justify-center">
+                  <PhoneOff color="white" />
+                </div>
+                <span className="text-xs mt-2">End Call</span>
+              </button>
+            </div>
+
+            <div className="flex items-center gap-4">
+              <button
+                className="flex flex-col items-center gap-1 text-gray-400/60 hover:text-gray-400 transition-colors"
+                onClick={onToggleSidebar}
+              >
+                <div className="flex items-center justify-center">
+                  {/* <PanelLeftClose color="white" /> */}
+                  {isSidebarOpen ? (
+                    <img
+                      src="/images/icons/sidebar-opened.svg"
+                      alt=""
+                      width={32}
+                      height={32}
+                    />
+                  ) : (
+                    <img
+                      src="/images/icons/sidebar-closed.svg"
+                      alt=""
+                      width={18}
+                      height={18}
+                    />
+                  )}
+                </div>
+                <span className="text-xs mt-2">Sidebar</span>
+              </button>
+            </div>
           </div>
+        </div>
+      </div>
+    );
+  }
+);
 
-          <div className="flex items-center gap-6">
+/* ----------------- Mobile Controls (unchanged look) ----------------- */
+const MobileConferenceControls = React.memo(
+  ({
+    onToggleHandRaise,
+    currentUser,
+    raisedHands,
+    setActiveTab,
+    activeTab,
+    isBottomSheetOpen,
+    setIsBottomSheetOpen,
+    isMobileFull,
+    setIsMobileFull,
+  }: {
+    onInvite: () => void;
+    onToggleHandRaise: (username: string) => void;
+    currentUser: string;
+    raisedHands: { [key: string]: boolean };
+    setActiveTab: (tab: string) => void;
+    activeTab: string;
+    setIsBottomSheetOpen: (isOpen: boolean) => void;
+    isBottomSheetOpen?: boolean;
+    isMobileFull: boolean;
+    setIsMobileFull: (isFull: boolean) => void;
+  }) => {
+    const { toggleCamera } = useMediaControls();
+
+    return (
+      <div className="px-6 pb-6">
+        <div className="px-2 py-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-4">
+              <button
+                className="flex flex-col items-center gap-1 text-gray-400/60 hover:text-gray-400 transition-colors"
+                onClick={() => setIsMobileFull(!isMobileFull)}
+              >
+                <div className="flex items-center justify-center">
+                  <Expand color="white" />
+                </div>
+              </button>
+            </div>
+
+            <div className="flex items-center gap-6">
+              <div className="w-px h-8 bg-white/20"></div>
+              <button
+                className="flex flex-col items-center gap-1 transition-colors text-white hover:text-gray-400"
+                onClick={toggleCamera}
+              >
+                <div className="items-center justify-center">
+                  <RefreshCcwDot color="white" />
+                </div>
+              </button>
+
+              <button
+                className={`flex flex-col items-center gap-1 transition-colors ${
+                  raisedHands[currentUser]
+                    ? "text-yellow-400 hover:text-yellow-500"
+                    : "text-gray-400 hover:text-gray-400"
+                }`}
+                onClick={() => onToggleHandRaise(currentUser)}
+              >
+                <div className="items-center justify-center">
+                  <Hand
+                    color={raisedHands[currentUser] ? "#fbbf24" : "white"}
+                  />
+                </div>
+              </button>
+
+              <button className="flex flex-col items-center gap-1 text-gray-400 hover:text-gray-400 transition-colors">
+                <div className="items-center justify-center">
+                  <Volume2 color="white" />
+                </div>
+              </button>
+              <div className="w-px h-8 bg-white/20"></div>
+            </div>
+
+            <div className="flex items-center gap-4">
+              <button
+                className="flex flex-col items-center gap-1 transition-colors text-gray-400 hover:text-gray-400"
+                onClick={() => setIsBottomSheetOpen(true)}
+              >
+                <div className="items-center justify-center">
+                  {!isBottomSheetOpen ? (
+                    <EllipsisVertical color="white" />
+                  ) : (
+                    <img
+                      src="/images/icons/hex-options.svg"
+                      alt=""
+                      width={28}
+                      height={28}
+                    />
+                  )}
+                </div>
+              </button>
+            </div>
+          </div>
+        </div>
+        {!isMobileFull && (
+          <div className="flex border-b border-white/10">
+            {mobileTabs.map((tab) => (
+              <button
+                key={tab}
+                className={`flex-1 px-2 py-3 text-xs font-medium transition-colors ${classIf(
+                  activeTab === tab,
+                  "text-white border-b-2 border-green-500 bg-white/5",
+                  "text-white/60 hover:text-white/80"
+                )}`}
+                onClick={() => setActiveTab(tab)}
+              >
+                {tab}
+              </button>
+            ))}
+          </div>
+        )}
+      </div>
+    );
+  }
+);
+const MobileTabBarControls = React.memo(
+  ({
+    onSendEmoji,
+    currentUser,
+    onInvite,
+  }: {
+    onSendEmoji: (username: string) => void;
+    currentUser: string;
+    onInvite: () => void;
+  }) => {
+    const {
+      isMicrophoneEnabled,
+      isCameraEnabled,
+      toggleMicrophone,
+      toggleCamera,
+    } = useMediaControls();
+    const { buttonProps: disconnectButtonProps } = useDisconnectButton({});
+    const router = useRouter();
+
+    const handleEndCall = async (e: React.MouseEvent<HTMLButtonElement>) => {
+      if (disconnectButtonProps.onClick) await disconnectButtonProps.onClick(e);
+      router.push("/sessions");
+    };
+
+    return (
+      <div className="px-4 pb-[max(env(safe-area-inset-bottom),1rem)]">
+        <div className="w-full rounded-2xl border border-white/10 bg-[#080B1680] backdrop-blur-md">
+          {/* GRID that auto-fits items and wraps on tiny screens */}
+          <div
+            className="
+            flex gap-3 p-3 overflow-x-auto snap-x no-scrollbar items-center
+          "
+          >
+            {/* mic */}
             <button
-              className={`flex flex-col items-center gap-1 transition-colors ${
-                isMicrophoneEnabled
-                  ? "text-gray-400 hover:text-gray-400"
-                  : "text-red-400 hover:text-red-300"
-              }`}
               onClick={toggleMicrophone}
+              className={`group flex h-12 w-full items-center justify-center rounded-xl  transition
+           
+            `}
+              aria-label="Toggle microphone"
             >
-              <div className="items-center justify-center">
-                {isMicrophoneEnabled ? (
-                  <Mic color="white" />
-                ) : (
-                  <MicOff color="red" />
-                )}
-              </div>
-              <span className="text-xs mt-2">Mic</span>
+              {isMicrophoneEnabled ? (
+                <Mic color="white" size={22} />
+              ) : (
+                <MicOff color="red" size={22} />
+              )}
             </button>
-
-            <div className="w-px h-8 bg-white/20"></div>
-
+            <div className="w-px h-8 bg-white/20 "></div>
+            {/* camera */}
             <button
-              className={`flex flex-col items-center gap-1 transition-colors ${
-                isCameraEnabled
-                  ? "text-gray-400 hover:text-gray-400"
-                  : "text-red-400 hover:text-red-300"
-              }`}
               onClick={toggleCamera}
+              className={`group flex h-12 w-full items-center justify-center rounded-xl  transition
+             
+            `}
+              aria-label="Toggle camera"
             >
-              <div className="items-center justify-center">
-                {isCameraEnabled ? (
-                  <Video color="white" />
-                ) : (
-                  <VideoOff color="red" />
-                )}
-              </div>
-              <span className="text-xs mt-2">Camera</span>
+              {isCameraEnabled ? (
+                <Video color="white" size={22} />
+              ) : (
+                <VideoOff color="red" size={22} />
+              )}
             </button>
+            <div className="w-px h-8 bg-white/20 "></div>
 
-            <div className="w-px h-8 bg-white/20"></div>
-
+            {/* emoji */}
             <button
-              className={`flex flex-col items-center gap-1 transition-colors ${
-                raisedHands[currentUser]
-                  ? "text-gray-400 hover:text-gray-400"
-                  : "text-gray-400 hover:text-gray-400"
-              }`}
-              onClick={() => onToggleHandRaise(currentUser)}
-            >
-              <div className="items-center justify-center">
-                {raisedHands[currentUser] ? (
-                  <img
-                    src="/images/icons/hand-active.svg"
-                    alt=""
-                    width={32}
-                    height={32}
-                  />
-                ) : (
-                  <Hand color="white" />
-                )}
-              </div>
-              <span className="text-xs mt-2">Hand</span>
-            </button>
-
-            <div className="w-px h-8 bg-white/20"></div>
-
-            <button className="flex flex-col items-center gap-1 text-gray-400 hover:text-gray-400 transition-colors">
-              <div className="items-center justify-center">
-                <BotMessageSquare color="white" />
-              </div>
-              <span className="text-xs mt-2">AI Worker</span>
-            </button>
-
-            <div className="w-px h-8 bg-white/20"></div>
-
-            <button
-              onClick={isScreenSharing ? stopScreenShare : startScreenShare}
-              className={`flex flex-col items-center gap-1 transition-colors ${
-                isScreenSharing
-                  ? "text-green-400 hover:text-green-300"
-                  : "text-gray-400 hover:text-gray-400"
-              }`}
-            >
-              <div className="items-center justify-center">
-                {/* <Monitor color={isScreenSharing ? "#10b981" : "white"} /> */}
-                {isScreenSharing ? (
-                  <img
-                    src="/images/icons/screen-active.svg"
-                    alt=""
-                    width={32}
-                    height={32}
-                  />
-                ) : (
-                  <Monitor color={isScreenSharing ? "#10b981" : "white"} />
-                )}
-              </div>
-              <span className="text-xs mt-2">
-                {isScreenSharing ? "Present" : "Present"}
-              </span>
-            </button>
-
-            <div className="w-px h-8 bg-white/20"></div>
-
-            <button
-              className="flex flex-col items-center gap-1 text-gray-400 hover:text-gray-400 transition-colors"
               onClick={() => onSendEmoji(currentUser)}
+              className="flex h-12 w-full items-center justify-center rounded-xl transition"
+              aria-label="Send emoji"
             >
-              <div className="items-center justify-center">
-                <Smile color="white" />
-              </div>
-              <span className="text-xs mt-2">Emoji</span>
+              <Smile color="white" size={22} />
             </button>
+            <div className="w-px h-8 bg-white/20 "></div>
 
-            <div className="w-px h-8 bg-white/20"></div>
-
-            <button className="flex flex-col items-center gap-1 text-gray-400 hover:text-gray-400 transition-colors">
-              <div className="items-center justify-center">
-                <Users color="white" />
-              </div>
-              <span className="text-xs mt-2">Roles</span>
+            {/* invite */}
+            <button
+              onClick={onInvite}
+              className="flex h-12 w-full items-center justify-center rounded-xl transition"
+              aria-label="Invite link"
+            >
+              <Link color="white" size={22} />
             </button>
+            <div className="w-px h-8 bg-white/20 "></div>
 
-            <div className="w-px h-8 bg-white/20"></div>
-
+            {/* end call */}
             <button
               {...disconnectButtonProps}
               onClick={handleEndCall}
-              className="flex flex-col items-center gap-1 transition-colors text-gray-400 hover:text-gray-400"
+              className="flex h-12 w-full items-center justify-center rounded-xl transition"
+              aria-label="End call"
             >
-              <div className="items-center justify-center">
-                <PhoneOff color="white" />
-              </div>
-              <span className="text-xs mt-2">End Call</span>
-            </button>
-          </div>
-
-          <div className="flex items-center gap-4">
-            <button
-              className="flex flex-col items-center gap-1 text-gray-400/60 hover:text-gray-400 transition-colors"
-              onClick={onToggleSidebar}
-            >
-              <div className="flex items-center justify-center">
-                {/* <PanelLeftClose color="white" /> */}
-                {isSidebarOpen ? (
-                  <img
-                    src="/images/icons/sidebar-opened.svg"
-                    alt=""
-                    width={32}
-                    height={32}
-                  />
-                ) : (
-                  <img
-                    src="/images/icons/sidebar-closed.svg"
-                    alt=""
-                    width={18}
-                    height={18}
-                  />
-                )}
-              </div>
-              <span className="text-xs mt-2">Sidebar</span>
+              <PhoneOff color="white" size={22} />
             </button>
           </div>
         </div>
       </div>
-    </div>
-  );
-};
-
-/* ----------------- Mobile Controls (unchanged look) ----------------- */
-const MobileConferenceControls = ({
-  onToggleHandRaise,
-  currentUser,
-  raisedHands,
-  setActiveTab,
-  activeTab,
-  isBottomSheetOpen,
-  setIsBottomSheetOpen,
-  isMobileFull,
-  setIsMobileFull,
-}: {
-  onInvite: () => void;
-  onToggleHandRaise: (username: string) => void;
-  currentUser: string;
-  raisedHands: { [key: string]: boolean };
-  setActiveTab: (tab: string) => void;
-  activeTab: string;
-  setIsBottomSheetOpen: (isOpen: boolean) => void;
-  isBottomSheetOpen?: boolean;
-  isMobileFull: boolean;
-  setIsMobileFull: (isFull: boolean) => void;
-}) => {
-  const { toggleCamera } = useMediaControls();
-
-  return (
-    <div className="px-6 pb-6">
-      <div className="px-2 py-4">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <button
-              className="flex flex-col items-center gap-1 text-gray-400/60 hover:text-gray-400 transition-colors"
-              onClick={() => setIsMobileFull(!isMobileFull)}
-            >
-              <div className="flex items-center justify-center">
-                <Expand color="white" />
-              </div>
-            </button>
-          </div>
-
-          <div className="flex items-center gap-6">
-            <div className="w-px h-8 bg-white/20"></div>
-            <button
-              className="flex flex-col items-center gap-1 transition-colors text-white hover:text-gray-400"
-              onClick={toggleCamera}
-            >
-              <div className="items-center justify-center">
-                <RefreshCcwDot color="white" />
-              </div>
-            </button>
-
-            <button
-              className={`flex flex-col items-center gap-1 transition-colors ${
-                raisedHands[currentUser]
-                  ? "text-yellow-400 hover:text-yellow-500"
-                  : "text-gray-400 hover:text-gray-400"
-              }`}
-              onClick={() => onToggleHandRaise(currentUser)}
-            >
-              <div className="items-center justify-center">
-                <Hand color={raisedHands[currentUser] ? "#fbbf24" : "white"} />
-              </div>
-            </button>
-
-            <button className="flex flex-col items-center gap-1 text-gray-400 hover:text-gray-400 transition-colors">
-              <div className="items-center justify-center">
-                <Volume2 color="white" />
-              </div>
-            </button>
-            <div className="w-px h-8 bg-white/20"></div>
-          </div>
-
-          <div className="flex items-center gap-4">
-            <button
-              className="flex flex-col items-center gap-1 transition-colors text-gray-400 hover:text-gray-400"
-              onClick={() => setIsBottomSheetOpen(true)}
-            >
-              <div className="items-center justify-center">
-                {!isBottomSheetOpen ? (
-                  <EllipsisVertical color="white" />
-                ) : (
-                  <img
-                    src="/images/icons/hex-options.svg"
-                    alt=""
-                    width={28}
-                    height={28}
-                  />
-                )}
-              </div>
-            </button>
-          </div>
-        </div>
-      </div>
-      {!isMobileFull && (
-        <div className="flex border-b border-white/10">
-          {mobileTabs.map((tab) => (
-            <button
-              key={tab}
-              className={`flex-1 px-2 py-3 text-xs font-medium transition-colors ${
-                activeTab === tab
-                  ? "text-white border-b-2 border-green-500 bg-white/5"
-                  : "text-white/60 hover:text-white/80"
-              }`}
-              onClick={() => setActiveTab(tab)}
-            >
-              {tab}
-            </button>
-          ))}
-        </div>
-      )}
-    </div>
-  );
-};
-const MobileTabBarControls = ({
-  onSendEmoji,
-  currentUser,
-  onInvite,
-}: {
-  onSendEmoji: (username: string) => void;
-  currentUser: string;
-  onInvite: () => void;
-}) => {
-  const {
-    isMicrophoneEnabled,
-    isCameraEnabled,
-    toggleMicrophone,
-    toggleCamera,
-  } = useMediaControls();
-  const { buttonProps: disconnectButtonProps } = useDisconnectButton({});
-  const router = useRouter();
-
-  const handleEndCall = async (e: React.MouseEvent<HTMLButtonElement>) => {
-    if (disconnectButtonProps.onClick) await disconnectButtonProps.onClick(e);
-    router.push("/sessions");
-  };
-
-  return (
-    <div className="px-4 pb-[max(env(safe-area-inset-bottom),1rem)]">
-      <div className="w-full rounded-2xl border border-white/10 bg-[#080B1680] backdrop-blur-md">
-        {/* GRID that auto-fits items and wraps on tiny screens */}
-        <div
-          className="
-            flex gap-3 p-3 overflow-x-auto snap-x no-scrollbar items-center
-          "
-        >
-          {/* mic */}
-          <button
-            onClick={toggleMicrophone}
-            className={`group flex h-12 w-full items-center justify-center rounded-xl  transition
-           
-            `}
-            aria-label="Toggle microphone"
-          >
-            {isMicrophoneEnabled ? (
-              <Mic color="white" size={22} />
-            ) : (
-              <MicOff color="red" size={22} />
-            )}
-          </button>
-          <div className="w-px h-8 bg-white/20 "></div>
-          {/* camera */}
-          <button
-            onClick={toggleCamera}
-            className={`group flex h-12 w-full items-center justify-center rounded-xl  transition
-             
-            `}
-            aria-label="Toggle camera"
-          >
-            {isCameraEnabled ? (
-              <Video color="white" size={22} />
-            ) : (
-              <VideoOff color="red" size={22} />
-            )}
-          </button>
-          <div className="w-px h-8 bg-white/20 "></div>
-
-          {/* emoji */}
-          <button
-            onClick={() => onSendEmoji(currentUser)}
-            className="flex h-12 w-full items-center justify-center rounded-xl transition"
-            aria-label="Send emoji"
-          >
-            <Smile color="white" size={22} />
-          </button>
-          <div className="w-px h-8 bg-white/20 "></div>
-
-          {/* invite */}
-          <button
-            onClick={onInvite}
-            className="flex h-12 w-full items-center justify-center rounded-xl transition"
-            aria-label="Invite link"
-          >
-            <Link color="white" size={22} />
-          </button>
-          <div className="w-px h-8 bg-white/20 "></div>
-
-          {/* end call */}
-          <button
-            {...disconnectButtonProps}
-            onClick={handleEndCall}
-            className="flex h-12 w-full items-center justify-center rounded-xl transition"
-            aria-label="End call"
-          >
-            <PhoneOff color="white" size={22} />
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-};
+    );
+  }
+);
 
 /* ----------------- Page ----------------- */
 export default function SessionPage() {
@@ -815,7 +853,7 @@ export default function SessionPage() {
   const [token, setToken] = React.useState<string | null>(null);
   const [roomName, setRoomName] = React.useState<string>("");
   const [isSidebarOpen, setIsSidebarOpen] = React.useState(false);
-  const [participants, setParticipants] = React.useState<unknown[]>([]);
+  const [participants, setParticipants] = React.useState<Participant[]>([]);
   const [currentUser, setCurrentUser] = React.useState<string>("");
   // const [currentTime, setCurrentTime] = React.useState<string>("");
   const [isBottomSheetOpen, setIsBottomSheetOpen] =
@@ -838,88 +876,99 @@ export default function SessionPage() {
   const [activeTab, setActiveTab] = React.useState("Session");
   const [showSideRail, setShowSideRail] = React.useState(true);
 
-  const emojis = [
-    "😀",
-    "😂",
-    "😍",
-    "🤔",
-    "😮",
-    "👍",
-    "👏",
-    "❤️",
-    "🔥",
-    "💯",
-    "😎",
-    "🎉",
-    "😊",
-    "👋",
-    "💪",
-  ];
+  const emojis = React.useMemo(
+    () => [
+      "😀",
+      "😂",
+      "😍",
+      "🤔",
+      "😮",
+      "👍",
+      "👏",
+      "❤️",
+      "🔥",
+      "💯",
+      "😎",
+      "🎉",
+      "😊",
+      "👋",
+      "💪",
+    ],
+    []
+  );
 
-  const sendEmoji = (username: string, emoji?: string) => {
-    const randomEmoji = emojis[Math.floor(Math.random() * emojis.length)];
-    const timestamp = Date.now();
-    setActiveEmojis((prev) => ({
-      ...prev,
-      [username]: { emoji: emoji ? emoji : randomEmoji, timestamp, username },
-    }));
-    window.sendEmojiToAll?.(emoji ? emoji : randomEmoji, username);
-    setTimeout(() => {
-      setActiveEmojis((prev) => {
-        const next = { ...prev };
-        delete next[username];
-        return next;
-      });
-    }, 3000);
-  };
+  const sendEmoji = React.useCallback(
+    (username: string, emoji?: string) => {
+      const randomEmoji = emojis[Math.floor(Math.random() * emojis.length)];
+      const timestamp = Date.now();
+      setActiveEmojis((prev) => ({
+        ...prev,
+        [username]: { emoji: emoji ? emoji : randomEmoji, timestamp, username },
+      }));
+      window.sendEmojiToAll?.(emoji ? emoji : randomEmoji, username);
+      setTimeout(() => {
+        setActiveEmojis((prev) => {
+          const next = { ...prev };
+          delete next[username];
+          return next;
+        });
+      }, 3000);
+    },
+    [emojis]
+  );
 
-  const handleEmojiReceived = (data: {
-    emoji: string;
-    timestamp: number;
-    username: string;
-  }) => {
-    setActiveEmojis((prev) => ({ ...prev, [data.username]: data }));
-    setTimeout(() => {
-      setActiveEmojis((prev) => {
-        const next = { ...prev };
-        delete next[data.username];
-        return next;
-      });
-    }, 3000);
-  };
+  const handleEmojiReceived = React.useCallback(
+    (data: { emoji: string; timestamp: number; username: string }) => {
+      setActiveEmojis((prev) => ({ ...prev, [data.username]: data }));
+      setTimeout(() => {
+        setActiveEmojis((prev) => {
+          const next = { ...prev };
+          delete next[data.username];
+          return next;
+        });
+      }, 3000);
+    },
+    []
+  );
 
-  const toggleHandRaise = (username: string) => {
-    const newState = !raisedHands[username];
-    setRaisedHands((prev) => ({ ...prev, [username]: newState }));
-    window.sendHandRaiseToAll?.(username, newState);
-  };
+  const toggleHandRaise = React.useCallback((username: string) => {
+    setRaisedHands((prev) => {
+      const newState = !prev[username];
+      const next = { ...prev, [username]: newState };
+      window.sendHandRaiseToAll?.(username, newState);
+      return next;
+    });
+  }, []);
 
-  const handleHandRaiseReceived = (data: {
-    username: string;
-    isRaised: boolean;
-  }) => {
-    setRaisedHands((prev) => ({ ...prev, [data.username]: data.isRaised }));
-  };
+  const handleHandRaiseReceived = React.useCallback(
+    (data: { username: string; isRaised: boolean }) => {
+      setRaisedHands((prev) => ({ ...prev, [data.username]: data.isRaised }));
+    },
+    []
+  );
 
-  const sendChatMessage = (message: string) => {
-    const timestamp = Date.now();
-    const chatData = { message, timestamp, username: currentUser };
-    setChatMessages((prev) => [...prev, chatData]);
-    window.sendChatToAll?.(message, currentUser);
-  };
+  const sendChatMessage = React.useCallback(
+    (message: string) => {
+      const timestamp = Date.now();
+      const chatData = { message, timestamp, username: currentUser };
+      setChatMessages((prev) => [...prev, chatData]);
+      window.sendChatToAll?.(message, currentUser);
+    },
+    [currentUser]
+  );
 
-  const handleChatReceived = (data: {
-    message: string;
-    timestamp: number;
-    username: string;
-  }) => setChatMessages((prev) => [...prev, data]);
+  const handleChatReceived = React.useCallback(
+    (data: { message: string; timestamp: number; username: string }) =>
+      setChatMessages((prev) => [...prev, data]),
+    []
+  );
 
   // Set meeting start time when token is received (joined session)
   React.useEffect(() => {
     if (token && !meetingStart) {
       setMeetingStart(Date.now());
     }
-  }, [token]);
+  }, [token, meetingStart]);
 
   // Update meeting duration every second
   React.useEffect(() => {
@@ -939,36 +988,39 @@ export default function SessionPage() {
   }, [meetingStart]);
 
   React.useEffect(() => {
-    const local = participants.find((p: unknown) => (p as Participant).isLocal);
+    const local = participants.find((p) => p.isLocal);
     if (local) setCurrentUser((local as Participant).identity);
   }, [participants]);
 
   React.useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const nameFromUrl = urlParams.get("name");
-    const key = `livekit_session_${roomName}`;
-    console.log('awal on top')
-    if (localStorage.getItem(key)) {
-      alert("You are already in this session on this device.");
-      return;
-    }
-
     if (!nameFromUrl) {
       setNameModalOpen(true);
       return;
     }
-
     setCurrentUser(nameFromUrl);
     const roomFromUrl = urlParams.get("room");
     const currentRoom =
       roomFromUrl || `room-${Math.random().toString(36).slice(2, 8)}`;
     setRoomName(currentRoom);
-    fetch(`/api/livekit-token?room=${currentRoom}&identity=${nameFromUrl}`)
-      .then((res) => res.json())
-      .then((data) => setToken(data.token));
+    (async () => {
+      try {
+        const res = await fetch(
+          `/api/livekit-token?room=${currentRoom}&identity=${nameFromUrl}`
+        );
+        if (!res.ok) throw new Error(`Token fetch failed: ${res.status}`);
+        const data = await res.json();
+        setToken(data.token);
+      } catch (err) {
+        console.error("Failed to fetch livekit token:", err);
+        toast.error("Unable to join session. Please try again.");
+        setNameModalOpen(true);
+      }
+    })();
   }, []);
 
-  const handleNameSubmit = () => {
+  const handleNameSubmit = async () => {
     if (!userNameInput.trim()) {
       setNameError("Name is required");
       return;
@@ -980,19 +1032,24 @@ export default function SessionPage() {
     const currentRoom =
       roomFromUrl || `room-${Math.random().toString(36).slice(2, 8)}`;
     setRoomName(currentRoom);
-    const key = `livekit_session_${roomName}`;
-    localStorage.setItem(key, "true");
-    fetch(
-      `/api/livekit-token?room=${currentRoom}&identity=${userNameInput.trim()}`
-    )
-      .then((res) => res.json())
-      .then((data) => setToken(data.token));
+    try {
+      const res = await fetch(
+        `/api/livekit-token?room=${currentRoom}&identity=${userNameInput.trim()}`
+      );
+      if (!res.ok) throw new Error(`Token fetch failed: ${res.status}`);
+      const data = await res.json();
+      setToken(data.token);
+    } catch (err) {
+      console.error("Failed to fetch livekit token on join:", err);
+      setNameError("Unable to join session. Please try again.");
+      toast.error("Unable to join session. Please try again.");
+    }
   };
   const messagesEndRef = React.useRef<HTMLDivElement>(null);
 
   React.useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [chatMessages]);
+  }, [chatMessages.length]);
   const [inputMessage, setInputMessage] = React.useState("");
 
   const handleSendMessage = () => {
@@ -1081,27 +1138,13 @@ export default function SessionPage() {
         <img
           src="/images/onboarding/bg.png"
           alt="background"
-          className="bg-image w-full h-full"
-          style={{
-            position: "absolute",
-            left: 0,
-            bottom: 0,
-            width: "-webkit-fill-available",
-            height: "-webkit-fill-available",
-          }}
+          className="bg-image absolute left-0 bottom-0 w-full h-full"
         />
       ) : (
         <img
           src="/images/onboarding/background-green.png"
           alt="background"
-          className="bg-image"
-          style={{
-            position: "absolute",
-            left: 0,
-            bottom: 0,
-            width: "-webkit-fill-available",
-            height: "-webkit-fill-available",
-          }}
+          className="bg-image absolute left-0 bottom-0 w-full h-full"
         />
       )}
 
@@ -1224,65 +1267,6 @@ export default function SessionPage() {
               </div>
             </div>
           </div>
-        </div> 
-
-        {isModalOpen && (
-          <div className="absolute inset-0 flex items-center justify-center z-100 bg-black/50">
-            <div className="bg-[#1e2328] border border-white/20 rounded-xl max-w-md w-full mx-6 relative">
-              <div className="flex items-center p-4">
-                {/* Close Button */}
-                <button
-                  onClick={() => setIsModalOpen(false)}
-                  className="absolute right-4 w-6 h-6 flex items-center justify-center text-white/60 hover:text-white"
-                >
-                  <svg
-                    width="14"
-                    height="14"
-                    viewBox="0 0 14 14"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M1 1l12 12M1 13L13 1"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                    />
-                  </svg>
-                </button>
-                <h2 className="text-white text-lg font-medium">
-                  Your Session is ready
-                </h2>
-              </div>
-              {/* divider */}
-              <div className="border-b border-white/10 mb-4"></div>
-              <div className="p-4">
-                <p className="text-white/70 text-sm mb-6 leading-relaxed">
-                  Send this link to people you want to invite to the
-                  Session. <br /> Don&apos;t forget to save the link, so you
-                  can use it later.
-                </p>
-                <div className="flex items-center gap-3 p-2 bg-[#0f1419] rounded-lg border border-white/10">
-                  <Link color="white" />
-                  <span className="text-white/80 text-sm flex-1 font-mono">
-                    {`${window.location.origin}/conference?room=${roomName}`}
-                  </span>
-                  <button
-                    className="p-1 hover:bg-white/10 rounded"
-                    onClick={() => {
-                      navigator.clipboard.writeText(
-                        `${window.location.origin}/conference?room=${roomName}`
-                      );
-                    }}
-                  >
-                    <Copy color="white" />
-                  </button>
-
-                </div>
-                <span className="text-sm font-medium">{meetingDuration}</span>
-              </div>
-            </div>
-          </div>
         )}
         {/* LiveKit Video Area */}
         {token ? (
@@ -1292,9 +1276,8 @@ export default function SessionPage() {
             connect
             video
             audio
-            className=""
+            style={{ height: "fit-content!important" }}
           >
-
             <div className="hidden md:flex items-center justify-between px-6 py-4 text-white mb-2 mt-3">
               {/* Left: Duration */}
               <div className="flex items-center gap-2 ml-4">
@@ -1309,7 +1292,7 @@ export default function SessionPage() {
 
               {/* Middle: Waveform */}
               <div className="flex items-center h-8">
-                <LiveWaveform />        {/* live waveform */}
+                <LiveWaveform />
               </div>
 
               {/* Divider */}
@@ -1320,7 +1303,6 @@ export default function SessionPage() {
                 <div className="w-4 h-4 flex items-center justify-center">
                   <Calendar color="white" />
                 </div>
-
                 <span className="text-sm font-medium">
                   {getFormattedDate()}
                 </span>
@@ -1345,7 +1327,6 @@ export default function SessionPage() {
                           />
                         </>
                       )}
-
                       <div className="">
                         {activeTab === "People" && (
                           <>
@@ -1415,9 +1396,7 @@ export default function SessionPage() {
                             <div className="fixed bottom-0 left-0 right-0 z-50 md:hidden px-4 pb-8">
                               <button
                                 onClick={() => {
-
                                   window.location.href = "/sessions";
-
                                 }}
                                 className="w-full grid grid-cols-[1fr_auto_1fr] items-center
                bg-[#0f1419] rounded-lg border border-white/10 shadow
@@ -1490,7 +1469,6 @@ export default function SessionPage() {
                   bg-white/5 rounded-lg p-3 border border-white/10 w-fit
                   max-w-[85%] sm:max-w-[75%]
                   whitespace-pre-wrap break-words
-                  [overflow-wrap:anywhere] [word-break:break-word]
                 "
                                     >
                                       <p className="text-white/80 text-sm">
@@ -1505,7 +1483,6 @@ export default function SessionPage() {
                                 </p>
                               )}
                               {/* <div ref={messagesEndRef} /> */}
-
                             </div>
 
                             {/* Sticky input (not fixed) so layout reserves space */}
@@ -1524,7 +1501,7 @@ export default function SessionPage() {
                                   }
                                   onKeyPress={handleKeyPress}
                                   placeholder="Type here..."
-                                  className="flex-1 w-full bg-[#080B1680] border border-white/20 rounded-lg px-3 py-4 text-white text-sm placeholder-white/50 focus:outline-none focus:border-blue-500"
+                                  className="flex-1 w-full bg-[#080B1680] border border-white/20 rounded-lg px-3 py-4 text-white text-sm placeholder-white/50 focus:outline-none "
                                 />
                               </div>
                             </div>
@@ -1534,12 +1511,12 @@ export default function SessionPage() {
 
                       {activeTab === "Transcript" && (
                         <div className="mt-[200px] p-3">
-                          <TranscriptTab />
+                          <InfoTab type="Transcript" />
                         </div>
                       )}
                       {activeTab === "Summary" && (
                         <div className="mt-[200px] p-3">
-                          <SummaryTab />
+                          <InfoTab type="Summary" />
                         </div>
                       )}
                     </>
@@ -1562,26 +1539,6 @@ export default function SessionPage() {
                     setIsMobileFull={setIsMobileFull}
                     isMobileFull={isMobileFull}
                   />
-                </div> */}
-                {/* <div className="sticky top-0 z-20 bg-[#0D101B] border-b border-white/10"> */}
-                <div
-                  className="md:hidden fixed top-0 left-0 right-0 z-40 
-                backdrop-blur border-b border-white/10
-                pt-[env(safe-area-inset-top)] bg-[#080b1649]"
-                >
-                  <MobileConferenceControls
-                    onInvite={() => setIsModalOpen(true)}
-                    onToggleHandRaise={toggleHandRaise}
-                    currentUser={currentUser}
-                    raisedHands={raisedHands}
-                    setActiveTab={setActiveTab}
-                    activeTab={activeTab}
-                    setIsBottomSheetOpen={setIsBottomSheetOpen}
-                    isBottomSheetOpen={isBottomSheetOpen}
-                    setIsMobileFull={setIsMobileFull}
-                    isMobileFull={isMobileFull}
-                  />
-
                 </div>
                 <ParticipantProvider onParticipantsChange={setParticipants} />
                 <RealtimeMessaging
@@ -1611,7 +1568,6 @@ export default function SessionPage() {
                     </div>
                   </div>
                 )}
-
                 <div className="absolute 2xl:bottom-[20px] sm:bottom-[15px] bottom-0 left-0 right-0 hidden md:block">
                   <ConferenceControls
                     onInvite={() => setIsModalOpen(true)}
@@ -1642,8 +1598,7 @@ export default function SessionPage() {
                           return (
                             <div
                               key={participant.sid}
-                              className="backdrop-blur-[16px] bg-white/10 border border-white/20 rounded-xl flex flex-col items-center min-w-[130px] max-w-[130px] h-[140px] shadow-lg justify-center text-center"
-                              style={{ flex: "0 0 auto" }}
+                              className="backdrop-blur-[16px] bg-white/10 border border-white/20 rounded-xl flex flex-col items-center min-w-[130px] max-w-[130px] h-[140px] shadow-lg justify-center text-center flex-none"
                             >
                               <HexAvatar
                                 initials={participant.identity
@@ -1656,7 +1611,13 @@ export default function SessionPage() {
                                 {participant.identity}
                               </span>
                             </div>
-
+                            // <SmallVideoTile
+                            //   key={p.identity}
+                            //   participant={p}
+                            //   trackMap={trackByParticipantAndSource}
+                            //   setFocusedIdentity={setFocusedIdentity}
+                            //   focusedIdentity={focusedIdentity}
+                            // />
                           );
                         })}
                       </div>
@@ -1675,7 +1636,6 @@ export default function SessionPage() {
                 {/* Desktop View Full Screen */}
                 {!showSideRail && participants && participants.length > 0 && (
                   <div
-
                     className={`absolute ${
                       showSideRail ? "bottom-28" : "bottom-32"
                     }  left-0 right-0 z-20 px-3 pb-2 hidden md:block`}
@@ -1685,7 +1645,6 @@ export default function SessionPage() {
                         participants.length <= 2 &&
                         "items-center justify-center"
                       }`}
-
                     >
                       {participants.map((p) => {
                         const participant = p as Participant;
@@ -1693,8 +1652,7 @@ export default function SessionPage() {
                         return (
                           <div
                             key={participant.sid}
-                            className="backdrop-blur-[16px] bg-white/10 border border-white/20 rounded-xl flex flex-col items-center min-w-[130px] max-w-[130px] h-[140px] shadow-lg justify-center text-center"
-                            style={{ flex: "0 0 auto" }}
+                            className="backdrop-blur-[16px] bg-white/10 border border-white/20 rounded-xl flex flex-col items-center min-w-[130px] max-w-[130px] h-[140px] shadow-lg justify-center text-center flex-none"
                           >
                             <HexAvatar
                               initials={participant.identity
@@ -1750,19 +1708,11 @@ export default function SessionPage() {
         }}
       >
         <div className=" justify-center items-center flex flex-col gap-3 p-4">
-          <div
-            className="backdrop-blur-[16px] text-[#FFFFFF] bg-[#080B1680] rounded-[15px] gap-4 flex flex-row items-center h-[44px] w-auto p-6 shadow-lg justify-center text-center"
-            style={{ flex: "0 0 auto" }}
-          >
-
+          <div className="backdrop-blur-[16px] text-[#FFFFFF] bg-[#080B1680] rounded-[15px] gap-4 flex flex-row items-center h-[44px] w-auto p-6 shadow-lg justify-center text-center flex-none">
             <Monitor size={18} />
             <span>Present</span>
           </div>
-          <div
-            className="backdrop-blur-[16px] text-[#FFFFFF] bg-[#080B1680] rounded-[15px] gap-4 flex flex-row items-center h-[44px] w-auto p-6 shadow-lg justify-center text-center"
-            style={{ flex: "0 0 auto" }}
-          >
-
+          <div className="backdrop-blur-[16px] text-[#FFFFFF] bg-[#080B1680] rounded-[15px] gap-4 flex flex-row items-center h-[44px] w-auto p-6 shadow-lg justify-center text-center flex-none">
             <Users size={18} />
             <span>Roles</span>
           </div>
@@ -1780,7 +1730,6 @@ export default function SessionPage() {
             <Link size={18} />
             <span>Share Session Link</span>
           </div>
-
         </div>
         {/* Divider */}
         <div className="border-t border-white/20 my-4" />
@@ -1790,7 +1739,6 @@ export default function SessionPage() {
           <span className="text-white/50 text-sm">|</span>
           <span className="text-[#FFFFFF] font-bold text-sm">65:23</span>
         </div>
-
       </BottomSheet>
     </div>
   );
