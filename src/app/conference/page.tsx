@@ -36,7 +36,7 @@ import { useMediaControls } from "@/hooks/useMediaControls";
 import { HexAvatar } from "@/components/HexAvatar/HexAvatar";
 import BottomSheet from "@/components/BottomSheet/BottomSheet";
 import { ShowSideRailProvider } from "@/hooks/sideRail";
-import { LiveWaveform } from "@/components/Audio/LiveWave";
+// import { LiveWaveform } from "@/components/Audio/LiveWave";
 import { toast } from "sonner";
 
 const mobileTabs = ["Session", "People", "Chat", "Transcript", "Summary"];
