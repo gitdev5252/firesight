@@ -207,7 +207,7 @@ export const slideData: ImageInfo[] = [
 ];
 
 export const slideDataMobile: ImageInfo[] = [
-  { title: "ai-co-pilot", image: "/images/session/ai-copilot-sm.svg" },
+  { title: "ai-co-pilot-1", image: "/images/session/ai-copilot-sm.svg" },
   {
     title: "meeting-summaries",
     image: "/images/session/ai-copilot-sm.svg",

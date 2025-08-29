@@ -20,19 +20,20 @@ export const LiveWaveform = () => {
 
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d")!;
-    const BAR_COUNT = 100;
-    const PADDING = 2;            // gap between bars
-    const BAR_RADIUS = 2;         // rounded top radius
+    const BAR_COUNT = 70;
+    const PADDING = 3; // gap between bars
+    const BAR_RADIUS = 2; // rounded top radius
 
     // one-time audio setup
     if (!audioCtxRef.current) {
-      audioCtxRef.current = new (
-        window.AudioContext ||
-        (window as typeof window & { webkitAudioContext?: typeof AudioContext }).webkitAudioContext!
-      )();
+      audioCtxRef.current = new (window.AudioContext ||
+        (window as typeof window & { webkitAudioContext?: typeof AudioContext })
+          .webkitAudioContext!)();
       analyserRef.current = audioCtxRef.current.createAnalyser();
       analyserRef.current.fftSize = 64;
-      dataArrayRef.current = new Uint8Array(analyserRef.current.frequencyBinCount);
+      dataArrayRef.current = new Uint8Array(
+        analyserRef.current.frequencyBinCount
+      );
     }
 
     // connect every remote track
@@ -52,7 +53,7 @@ export const LiveWaveform = () => {
         dataArrayRef.current! as Uint8Array<ArrayBuffer>
       );
       const { width, height } = canvas;
-      ctx.clearRect(0, 0, width, height);
+      ctx.clearRect(0, 0, width + 10, height);
 
       const barWidth = (width - (BAR_COUNT - 1) * PADDING) / BAR_COUNT;
 
@@ -73,7 +74,12 @@ export const LiveWaveform = () => {
 
         // rounded rectangle
         ctx.beginPath();
-        ctx.roundRect(x, y, barWidth, barHeight, [BAR_RADIUS, BAR_RADIUS, 0, 0]);
+        ctx.roundRect(x, y / 2, barWidth, barHeight, [
+          BAR_RADIUS,
+          BAR_RADIUS,
+          100,
+          0,
+        ]);
         ctx.fill();
       }
 
@@ -101,7 +107,6 @@ export const LiveWaveform = () => {
   return (
     <canvas
       ref={canvasRef}
-      width={300}
       height={40}
       style={{ width: "30vw", height: "auto", display: "block" }}
     />

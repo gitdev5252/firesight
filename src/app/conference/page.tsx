@@ -1560,6 +1560,13 @@ export default function SessionPage() {
                                 {participant.identity}
                               </span>
                             </div>
+                            // <SmallVideoTile
+                            //   key={p.identity}
+                            //   participant={p}
+                            //   trackMap={trackByParticipantAndSource}
+                            //   setFocusedIdentity={setFocusedIdentity}
+                            //   focusedIdentity={focusedIdentity}
+                            // />
                           );
                         })}
                       </div>
