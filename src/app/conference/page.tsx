@@ -1071,7 +1071,7 @@ export default function SessionPage() {
         <img
           src="/images/onboarding/bg.png"
           alt="background"
-          className="bg-image"
+          className="bg-image w-full h-full"
           style={{
             position: "absolute",
             left: 0,
@@ -1235,9 +1235,9 @@ export default function SessionPage() {
               <span className="mx-6 text-gray-400">|</span>
 
               {/* Middle: Waveform */}
-              <div className="flex items-center h-8">
+              {/* <div className="flex items-center h-8">
                 <LiveWaveform />
-              </div>
+              </div> */}
 
               {/* Divider */}
               <span className="mx-6 text-gray-400">|</span>
