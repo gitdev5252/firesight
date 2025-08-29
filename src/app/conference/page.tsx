@@ -1570,8 +1570,8 @@ export default function SessionPage() {
                           );
                         })}
                       </div>
-                      <div className="mt-4 mb-3 items-center justify-center flex">
-                        <img src="/images/icons/soundwave-small.svg" alt="" />
+                      <div className="items-center justify-center flex h-8">
+                        <LiveWaveform />
                       </div>
                       <div className="items-center justify-center">
                         <MobileTabBarControls
