@@ -36,7 +36,7 @@ import { useMediaControls } from "@/hooks/useMediaControls";
 import { HexAvatar } from "@/components/HexAvatar/HexAvatar";
 import BottomSheet from "@/components/BottomSheet/BottomSheet";
 import { ShowSideRailProvider } from "@/hooks/sideRail";
-// import { LiveWaveform } from "@/components/Audio/LiveWave";
+import { LiveWaveform } from "@/components/Audio/LiveWave";
 import { toast } from "sonner";
 
 const mobileTabs = ["Session", "People", "Chat", "Transcript", "Summary"];
@@ -115,7 +115,7 @@ const PeopleTab = ({
 }) => {
   return (
     <div>
-      <div className="bg-[rgba(255,255,255,0.02)] rounded-[20px] border border-[rgba(255,255,255,0.1)] md:backdrop-blur-[32px] p-2 mb-4 overflow-auto 2xl:h-[72vh] md:h-[71vh]">
+      <div className="bg-[rgba(255,255,255,0.02)] rounded-[20px] border border-[rgba(255,255,255,0.1)] md:backdrop-blur-[32px] p-2 mb-4 overflow-auto 2xl:h-[71vh] md:h-[70vh]">
         {participants && participants.length > 0 ? (
           participants.map((participant) => {
             const p = participant as Participant;
@@ -1235,9 +1235,9 @@ export default function SessionPage() {
               <span className="mx-6 text-gray-400">|</span>
 
               {/* Middle: Waveform */}
-              {/* <div className="flex items-center h-8">
+              <div className="flex items-center h-8">
                 <LiveWaveform />
-              </div> */}
+              </div>
 
               {/* Divider */}
               <span className="mx-6 text-gray-400">|</span>
@@ -1340,7 +1340,7 @@ export default function SessionPage() {
                             <div className="fixed bottom-0 left-0 right-0 z-50 md:hidden px-4 pb-8">
                               <button
                                 onClick={() => {
-                                  window.location.href = "/session";
+                                  window.location.href = "/sessions";
                                 }}
                                 className="w-full grid grid-cols-[1fr_auto_1fr] items-center
                bg-[#0f1419] rounded-lg border border-white/10 shadow
