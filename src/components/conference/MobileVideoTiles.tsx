@@ -189,13 +189,13 @@ const VideoSurface = ({
   }, [trackRef?.publication?.track]);
 
   return (
-    <div className="relative w-full h-full min-h-[60svh] bg-transparent">
+    <div className="relative w-full h-full min-h-[60vh] bg-transparent">
       <video
         ref={videoRef}
         autoPlay
         playsInline
         muted={participant.isLocal}
-        className="w-full h-full object-cover"
+        className="w-full object-cover"
       />
       <div
         className={`absolute inset-0 flex items-center justify-center transition-opacity duration-200 ${

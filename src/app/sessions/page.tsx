@@ -8,7 +8,6 @@ import FireSightFooter from "@/layouts/FireSightFooter";
 import { sessionFeaturedCardInfo } from "@/utils/constant/firesight";
 import { Button } from "@/components/ui/button";
 import PricingTag from "@/components/session/PricingTag";
-import "../page.css";
 
 export const dynamic = "force-static";
 
@@ -56,7 +55,7 @@ export default function SessionPage() {
         </div>
 
         {/* Header */}
-        <div className="flex md:gap-11 gap-3 text-white items-center justify-between md:mt-[185px] sm:mt-20 mt-[100px] mb-0 md:h-16 h-[30px]">
+        <div className="flex md:gap-11 gap-3 text-white items-center justify-between md:mt-[185px] sm:mt-20 mt-[100px] sm:mb-auto mb-[50px] md:h-16 h-[30px]">
           <Link href="/">
             <Image
               src="/images/logo.svg"
@@ -86,7 +85,7 @@ export default function SessionPage() {
         </div>
 
         {/* Mobile Background */}
-        <div className="w-[100vw] h-[206.07vw] bg-no-repeat block md:hidden bg-contain bg-[url('/images/mobile/sessions-show-mobile.svg')]"></div>
+        <div className="w-[80vw] h-[195vw] bg-no-repeat block md:hidden bg-contain bg-[url('/images/mobile/sessions-show-mobile.svg')]"></div>
 
         {/* Introduction */}
         <div className="flex flex-wrap sm:gap-1 gap-4 justify-between sm:absolute md:mx-[56px] mx-[16px] lg:mt-[66vw] md:mt-[89vw] mt-[-87.4vw]">

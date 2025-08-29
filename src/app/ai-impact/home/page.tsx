@@ -55,7 +55,6 @@ export default function Page() {
     };
     fetchData();
   }, [mainTabIndex]);
-  console.log(occupations, "fullOccupationsList");
 
   const getSortedOccupationsOrCategories = () => {
     // If Occupational Categories tab is active

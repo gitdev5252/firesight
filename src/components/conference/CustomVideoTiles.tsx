@@ -73,17 +73,6 @@ export const CustomVideoTiles = ({
     }
     return map;
   }, [tracks]);
-  const __id = React.useRef(Math.random().toString(36).slice(2, 7));
-
-  React.useEffect(() => {
-    console.log("[Tiles mount]", __id.current);
-    return () => console.log("[Tiles unmount]", __id.current);
-  }, []);
-
-  React.useEffect(() => {
-    console.log("[showSideRail]", __id.current, showSideRail);
-  }, [showSideRail]);
-
   /* choose/keep a main tile; prefer screenshare, else first remote */
   const [mainId, setMainId] = useState<string | null>(null);
   const promoteTimer = useRef<number | null>(null);
@@ -157,34 +146,26 @@ export const CustomVideoTiles = ({
   /* multi participant */
   // Always show the local participant as the main tile for themselves
   const localParticipant = participants.find((p) => p.isLocal);
-  const mainParticipant = focusedIdentity ? participants.find(p => p.identity === focusedIdentity) ?? participants[0] : localParticipant ||
-
-    participants.find((p) => p.identity === mainId) ||
-    participants.find((p) => !p.isLocal) ||
-    participants[0];
-  // const mainParticipant = useMemo(() => {
-  //   if (focusedIdentity) {
-  //     return participants.find(p => p.identity === focusedIdentity) ?? participants[0];
-  //   }
-
-  //   // fallback: local user hi dikhega agar koi focus na ho
-  //   return participants.find(p => p.isLocal) ?? participants[0];
-  // }, [participants, focusedIdentity]);
-  // For the local user, remove themselves from the side tiles
+  const mainParticipant = focusedIdentity
+    ? participants.find((p) => p.identity === focusedIdentity) ??
+      participants[0]
+    : localParticipant ||
+      participants.find((p) => p.identity === mainId) ||
+      participants.find((p) => !p.isLocal) ||
+      participants[0];
   const others = participants.filter(
     (p) => p.identity !== mainParticipant.identity
   );
   const maxIndividualTiles = 3;
   const displayed = others.slice(0, maxIndividualTiles);
   const overflow = others.slice(maxIndividualTiles);
-  const heightForTile = !showSideRail ? "md:h-auto" : "md:h-auto";
-  // console.log(showSideRail, "showSideRailshowSideRail")
+  // const heightForTile = !showSideRail ? "md:h-auto" : "md:h-auto";
   return (
     <>
       {/* Render remote audio tracks so you can hear other participants */}
       {audioTracks.map((t) => {
         // Only render for remote participants
-        if (t.participant.isLocal) return null;
+        // if (t.participant.isLocal) return null;
         return (
           <AudioTrackRenderer
             key={t.publication.trackSid}
@@ -194,15 +175,11 @@ export const CustomVideoTiles = ({
       })}
       <div className="w-full h-full flex gap-3 min-h-0">
         {/* Main area */}
-        <div className="flex-1 min-w-0 min-h-0 p-2 ">
+        <div className="flex-1 min-w-0 min-h-0">
           <div className="w-full h-full max-h-[99vh] md:h-[95vh]">
-            <div
-              className={`w-full aspect-video rounded-[15px] ${heightForTile}
-                p-0 sm:p-[2px] 
-                bg-none 
-                `}>
-                  {/* sm:bg-[linear-gradient(90deg,#14FF00_55%,#00F0FF_62%)] */}
-              <div className={`w-full rounded-[12px] md:bg-[#141622] bg-transparent  ${heightForTile}`}>
+            <div className="w-full aspect-video rounded-[15px] md:h-auto p-0 sm:p-[2px] bg-none">
+              {/* sm:bg-[linear-gradient(90deg,#14FF00_55%,#00F0FF_62%)] */}
+              <div className="w-full rounded-[12px] md:bg-[#141622] bg-transparent md:h-auto">
                 <MainVideoTile
                   participant={mainParticipant}
                   activeEmojis={activeEmojis}
@@ -219,7 +196,7 @@ export const CustomVideoTiles = ({
         {/* Right rail: lg+ only */}
         {showSideRail && (
           <>
-            <div className="hidden lg:flex w-56 flex-col gap-2 shrink-0 mr-3 mt-1 ">
+            <div className="hidden lg:flex w-56 flex-col gap-2 shrink-0">
               {displayed.map((p) => (
                 <SmallVideoTile
                   key={p.identity}
@@ -246,9 +223,6 @@ const VideoSurface = ({
   fallbackName,
   fillClass,
   variant = "",
-  isShort,
-  smallPiece = false,
-  isMobileFull = false,
 }: {
   participant: Participant;
   trackRef?: ReturnType<typeof useTracks>[number];
@@ -264,8 +238,6 @@ const VideoSurface = ({
   const [hasMedia, setHasMedia] = useState<boolean>(
     !!trackRef?.publication?.track
   );
-  const { value: sideRailOpen } = useShowSideRail();
-  console.log(!sideRailOpen ? "h-[86vh]" : "h-[96vh]", "value");
 
   useEffect(() => {
     const el = videoRef.current;
@@ -282,35 +254,35 @@ const VideoSurface = ({
       setHasMedia(false);
     }
   }, [trackRef?.publication?.track]);
-  const heightForTile =
-    smallPiece
-      ? "h-full min-h-[180px]"
-      : isMobileFull
-        ? "h-[98vh]"
-        : sideRailOpen
-          ? "h-full min-h-[280px]"
-          : "h-full md:h-[84vh]"; // mobile 94vh, md+ 84vh
+  // const heightForTile = smallPiece
+  //   ? "h-full min-h-[180px]"
+  //   : isMobileFull
+  //   ? "h-[98vh]"
+  //   : sideRailOpen
+  //   ? "h-full min-h-[280px]"
+  //   : "h-full md:h-[84vh]"; // mobile 94vh, md+ 84vh
 
-  console.log(heightForTile, "heightForTileheightForTile");
-  React.useEffect(() => {
-    console.log("[isShort]", isShort ? "h-[80vh]" : "h-[84vh]");
-  }, [isShort]);
   return (
-
-    <div className={` relative w-full ${heightForTile} bg-transparent md:rounded-xl overflow-hidden `}>
+    <div className="relative w-full bg-transparent md:rounded-xl overflow-hidden md:h-[69vh] sm:h-[67vh] h-full">
       <video
         ref={videoRef}
         autoPlay
         playsInline
         muted={participant.isLocal}
-        className={(trackRef?.source === Track.Source.ScreenShare
-          ? ''
-          : 'custom-video ') + `${fillClass ?? `w-full h-full object-cover p-0 sm:p-[2px] 
-                bg-none sm:bg-[linear-gradient(90deg,#14FF00_55%,#00F0FF_62%)]`}`}
+        className={
+          (trackRef?.source === Track.Source.ScreenShare
+            ? ""
+            : "custom-video ") +
+          `${
+            fillClass ??
+            `w-full object-cover p-0 sm:p-[2px] 
+                bg-none sm:bg-[linear-gradient(90deg,#14FF00_55%,#00F0FF_62%)]`
+          }`
+        }
       />
 
       <div
-        className={`absolute inset-0 flex flex-col items-center justify-center transition-opacity duration-200 ${
+        className={`absolute inset-0 flex flex-col items-center justify-center transition-opacity duration-200 not-sm:-top-[160px] ${
           hasMedia ? "opacity-0 pointer-events-none" : "opacity-100"
         }`}
       >
@@ -370,9 +342,8 @@ const MainVideoTile = ({
     : undefined;
   const displayName = participant.identity;
   const initials = getInitials(displayName);
-  console.log("[sideRailOpen]", sideRailOpen ? "h-[80vh]" : "h-[84vh]");
   const { value: showSideRail, toggle } = useShowSideRail();
-  const heightForTile = !showSideRail ? 'md:h-[84vh]' : 'md:h-[95vh]';
+  const heightForTile = !showSideRail ? "" : "md:h-[95vh]";
 
   return (
     <div className="relative w-full h-full rounded-xl text-white">
@@ -381,7 +352,7 @@ const MainVideoTile = ({
         trackRef={t}
         fallbackInitials={initials}
         fallbackName={displayName}
-        fillClass={`w-full h-full ${heightForTile} object-cover rounded-xl`}
+        fillClass={`w-full h-full ${heightForTile} object-cover rounded-xl not-sm:h-[100vh]`}
         isShort={sideRailOpen}
         isMobileFull={isMobileFull}
       />
@@ -436,7 +407,7 @@ const SmallVideoTile = ({
   participant,
   trackMap,
   setFocusedIdentity,
-  focusedIdentity
+  focusedIdentity,
 }: {
   participant: Participant;
   trackMap: Map<string, ReturnType<typeof useTracks>[number]>;
@@ -466,17 +437,17 @@ const SmallVideoTile = ({
 
   return (
     <div
-      className={`w-full h-[148px] min-h-[128px] bg-[#141622] rounded-lg relative overflow-hidden cursor-pointer hover:ring-2 hover:ring-blue-500/50 transition-all border-[#FFFFFF1A] border mt-1 ${focusedIdentity === participant.identity ? 'ring-2 ring-blue-500' : ''
-        }`}
-      style={{ boxShadow: '0px 25px 85px 0px rgba(8, 11, 22, 0.35)' }}
+      className={`w-full h-[148px] min-h-[128px] bg-[#141622] rounded-lg relative overflow-hidden cursor-pointer hover:ring-2 hover:ring-blue-500/50 transition-all border-[#FFFFFF1A] border mt-1 ${
+        focusedIdentity === participant.identity ? "ring-2 ring-blue-500" : ""
+      }`}
+      style={{ boxShadow: "0px 25px 85px 0px rgba(8, 11, 22, 0.35)" }}
       onClick={() => setFocusedIdentity(participant.identity)}
-
     >
       <VideoSurface
         participant={participant}
         trackRef={t}
         fallbackInitials={initials}
-        fillClass="w-full h-full object-cover"
+        fillClass="w-full object-cover"
         variant="tiles"
         smallPiece={true}
       />

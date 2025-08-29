@@ -36,12 +36,9 @@ export default function Page() {
   const onSubmit = async (data: SigninFormData) => {
     setIsLoading(true);
     try {
-      // Here you would typically make an API call to authenticate the user
-      console.log("Signin data:", data);
-
       // Simulate API call delay
       await new Promise((resolve) => setTimeout(resolve, 1000));
-
+      console.log("data--->", data);
       // Redirect to dashboard or home page after successful signin
       router.push("/");
     } catch (error) {
@@ -58,7 +55,22 @@ export default function Page() {
       <div className="blue-shine-pulse-overview w-[min(602px,41.8vw)] h-[min(602px,41.8vw)] bottom-[23vw] right-[19.3vw] md:block hidden"></div>
       <div className="blue-shine-pulse-overview bottom-[-12.555vw] right-[-12.277vw] w-[min(602px,55.8vw)] h-[min(602px,55.8vw)] md:block hidden"></div>
       <div className="auth-bg w-full">
-        <div className="flex flex-col justify-center items-start w-1/2 bg-white p-[93px] h-screen">
+        <div className="flex flex-col justify-center items-start md:w-1/2 w-full bg-white md:p-[93px] sm:p-[40px] p-[20px] sm:pt-auto pt-[0] h-screen">
+          <div className="flex items-center gap-2 h-6 mb-[50px] z-20 text-black">
+            <Link
+              href="/sessions/start-session"
+              className="flex items-center gap-2"
+            >
+              <Image
+                src="/images/icons/back-btn.svg"
+                alt="back-btn"
+                width={24}
+                height={24}
+                className="bg-black"
+              />
+              <p className="text-[16px]">Back to Home</p>
+            </Link>
+          </div>
           <div className="flex justify-between items-center w-full">
             <div className="border border-[rgba(134,135,141,0.2)] h-[1px] w-2/5" />
             <Image
@@ -70,7 +82,7 @@ export default function Page() {
             <div className="border bg-[rgba(134,135,141,0.2)] h-[1px] w-2/5" />
           </div>
 
-          <h2 className="uppercase text-center text-[52px] font-bold mt-[67px] w-full">
+          <h2 className="uppercase text-center sm:text-[52px] text-[40px] font-bold sm:mt-[67px] mt-[40px] w-full">
             welcome back
           </h2>
 
@@ -147,7 +159,6 @@ export default function Page() {
                       <Checkbox
                         checked={field.value}
                         onCheckedChange={field.onChange}
-                        className=""
                       />
                     </FormControl>
                     <div className="space-y-1 leading-none">

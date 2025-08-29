@@ -2,7 +2,6 @@
 import { Header } from "./Header";
 import "./layout.css";
 import { useEffect, useState } from "react";
-
 export default function FireSightLayout({
   children,
 }: {

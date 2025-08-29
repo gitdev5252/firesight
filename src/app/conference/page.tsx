@@ -37,6 +37,7 @@ import { HexAvatar } from "@/components/HexAvatar/HexAvatar";
 import BottomSheet from "@/components/BottomSheet/BottomSheet";
 import { ShowSideRailProvider } from "@/hooks/sideRail";
 import { LiveWaveform } from "@/components/Audio/LiveWave";
+import { toast } from "sonner";
 
 const mobileTabs = ["Session", "People", "Chat", "Transcript", "Summary"];
 
@@ -71,10 +72,11 @@ const Sidebar = ({
           <button
             key={tab}
             onClick={() => setActiveTab(tab)}
-            className={`flex-1 px-2 py-3 text-xs font-medium transition-colors ${activeTab === tab
-              ? "text-white border-b-1 border-green-400 mt-1"
-              : "text-white/60 hover:text-white/80 mt-1"
-              }`}
+            className={`flex-1 px-2 py-3 text-xs font-medium transition-colors ${
+              activeTab === tab
+                ? "text-white border-b-1 border-green-400 mt-1"
+                : "text-white/60 hover:text-white/80 mt-1"
+            }`}
           >
             {tab}
           </button>
@@ -90,7 +92,7 @@ const Sidebar = ({
           />
         )}
         {activeTab === "Chat" && (
-          <div className="h-[97vh] min-h-0 bg-[#141721] rounded-[10px] pt-4 border border-[#FFFFFF1A]">
+          <div className="h-[80vh] min-h-0 bg-[#141721] rounded-[10px] pt-4 border border-[#FFFFFF1A]">
             <ChatTab messages={chatMessages} onSendMessage={onSendMessage} />
           </div>
         )}
@@ -112,8 +114,8 @@ const PeopleTab = ({
   raisedHands: { [key: string]: boolean };
 }) => {
   return (
-    <div className="">
-      <div className="bg-[rgba(255,255,255,0.02)] rounded-[20px] border border-[rgba(255,255,255,0.1)] md:backdrop-blur-[32px] p-2 mb-4 max-h-[90vh] overflow-auto h-[98vh]">
+    <div>
+      <div className="bg-[rgba(255,255,255,0.02)] rounded-[20px] border border-[rgba(255,255,255,0.1)] md:backdrop-blur-[32px] p-2 mb-4 overflow-auto 2xl:h-[72.5vh] md:h-[71.5vh]">
         {participants && participants.length > 0 ? (
           participants.map((participant) => {
             const p = participant as Participant;
@@ -173,7 +175,7 @@ const PeopleTab = ({
 
       <div className="flex items-center gap-3 p-2 bg-[#0f1419] rounded-lg border border-white/10">
         <Link color="white" />
-        <span className="text-white/80 text-sm flex-1 font-mono">
+        <span className="text-white text-sm flex-1 font-mono">
           {`${window.location.origin}/conference?room=${roomName}`}
         </span>
         <button
@@ -182,6 +184,11 @@ const PeopleTab = ({
             navigator.clipboard.writeText(
               `${window.location.origin}/conference?room=${roomName}`
             );
+            toast.success("Copied to clipboard", {
+              style: {
+                width: "200px",
+              },
+            });
           }}
         >
           <Copy color="white" />
@@ -248,7 +255,7 @@ const ChatTab = ({
         {/* <div ref={messagesEndRef} /> */}
       </div>
 
-      <div className="pt-4 pb-4">
+      <div>
         <input
           type="text"
           value={inputMessage}
@@ -402,8 +409,8 @@ const ConferenceControls = ({
   const fullScreenStyle =
     !isSideRail && "bg-[#080B1680] p-3 rounded-[15px] mt-1";
   return (
-    <div className="px-6 pb-6">
-      <div className="px-2 py-4">
+    <div className="px-6">
+      <div className="px-2">
         <div className={`flex items-center justify-between ${fullScreenStyle}`}>
           <div className="flex items-center gap-4">
             <button
@@ -419,10 +426,11 @@ const ConferenceControls = ({
 
           <div className="flex items-center gap-6">
             <button
-              className={`flex flex-col items-center gap-1 transition-colors ${isMicrophoneEnabled
-                ? "text-gray-400 hover:text-gray-400"
-                : "text-red-400 hover:text-red-300"
-                }`}
+              className={`flex flex-col items-center gap-1 transition-colors ${
+                isMicrophoneEnabled
+                  ? "text-gray-400 hover:text-gray-400"
+                  : "text-red-400 hover:text-red-300"
+              }`}
               onClick={toggleMicrophone}
             >
               <div className="items-center justify-center">
@@ -438,10 +446,11 @@ const ConferenceControls = ({
             <div className="w-px h-8 bg-white/20"></div>
 
             <button
-              className={`flex flex-col items-center gap-1 transition-colors ${isCameraEnabled
-                ? "text-gray-400 hover:text-gray-400"
-                : "text-red-400 hover:text-red-300"
-                }`}
+              className={`flex flex-col items-center gap-1 transition-colors ${
+                isCameraEnabled
+                  ? "text-gray-400 hover:text-gray-400"
+                  : "text-red-400 hover:text-red-300"
+              }`}
               onClick={toggleCamera}
             >
               <div className="items-center justify-center">
@@ -457,10 +466,11 @@ const ConferenceControls = ({
             <div className="w-px h-8 bg-white/20"></div>
 
             <button
-              className={`flex flex-col items-center gap-1 transition-colors ${raisedHands[currentUser]
-                ? "text-gray-400 hover:text-gray-400"
-                : "text-gray-400 hover:text-gray-400"
-                }`}
+              className={`flex flex-col items-center gap-1 transition-colors ${
+                raisedHands[currentUser]
+                  ? "text-gray-400 hover:text-gray-400"
+                  : "text-gray-400 hover:text-gray-400"
+              }`}
               onClick={() => onToggleHandRaise(currentUser)}
             >
               <div className="items-center justify-center">
@@ -491,10 +501,11 @@ const ConferenceControls = ({
 
             <button
               onClick={isScreenSharing ? stopScreenShare : startScreenShare}
-              className={`flex flex-col items-center gap-1 transition-colors ${isScreenSharing
-                ? "text-green-400 hover:text-green-300"
-                : "text-gray-400 hover:text-gray-400"
-                }`}
+              className={`flex flex-col items-center gap-1 transition-colors ${
+                isScreenSharing
+                  ? "text-green-400 hover:text-green-300"
+                  : "text-gray-400 hover:text-gray-400"
+              }`}
             >
               <div className="items-center justify-center">
                 {/* <Monitor color={isScreenSharing ? "#10b981" : "white"} /> */}
@@ -633,10 +644,11 @@ const MobileConferenceControls = ({
             </button>
 
             <button
-              className={`flex flex-col items-center gap-1 transition-colors ${raisedHands[currentUser]
-                ? "text-yellow-400 hover:text-yellow-500"
-                : "text-gray-400 hover:text-gray-400"
-                }`}
+              className={`flex flex-col items-center gap-1 transition-colors ${
+                raisedHands[currentUser]
+                  ? "text-yellow-400 hover:text-yellow-500"
+                  : "text-gray-400 hover:text-gray-400"
+              }`}
               onClick={() => onToggleHandRaise(currentUser)}
             >
               <div className="items-center justify-center">
@@ -678,10 +690,11 @@ const MobileConferenceControls = ({
           {mobileTabs.map((tab) => (
             <button
               key={tab}
-              className={`flex-1 px-2 py-3 text-xs font-medium transition-colors ${activeTab === tab
-                ? "text-white border-b-2 border-green-500 bg-white/5"
-                : "text-white/60 hover:text-white/80"
-                }`}
+              className={`flex-1 px-2 py-3 text-xs font-medium transition-colors ${
+                activeTab === tab
+                  ? "text-white border-b-2 border-green-500 bg-white/5"
+                  : "text-white/60 hover:text-white/80"
+              }`}
               onClick={() => setActiveTab(tab)}
             >
               {tab}
@@ -995,7 +1008,6 @@ export default function SessionPage() {
       handleSendMessage();
     }
   };
-  // console.log(participants, "participantsparticipants")
   function getFormattedDate() {
     const now = new Date();
     const day = now.getDate();
@@ -1061,12 +1073,26 @@ export default function SessionPage() {
 
   return (
     <div
-      className={`${!isMobileFull && "p-4 md:p-8 bg-[#080B16] min-h-screen flex flex-col"
-        } md:p-8 md:bg-[#080B16] md:min-h-screen md:flex md:flex-col relative`}
+      className={`${
+        !isMobileFull && "p-4 md:p-8 bg-[#080B16] min-h-screen flex flex-col"
+      } md:p-8 md:bg-[#080B16] md:max-h-screen md:flex md:flex-col relative`}
     >
       {isDesktop ? (
         <img
           src="/images/onboarding/bg.png"
+          alt="background"
+          className="bg-image w-full h-full"
+          style={{
+            position: "absolute",
+            left: 0,
+            bottom: 0,
+            width: "-webkit-fill-available",
+            height: "-webkit-fill-available",
+          }}
+        />
+      ) : (
+        <img
+          src="/images/onboarding/background-green.png"
           alt="background"
           className="bg-image"
           style={{
@@ -1077,23 +1103,11 @@ export default function SessionPage() {
             height: "-webkit-fill-available",
           }}
         />
-      ) : <img
-        src="/images/onboarding/background-green.png"
-        alt="background"
-        className="bg-image"
-        style={{
-          position: "absolute",
-          left: 0,
-          bottom: 0,
-          width: "-webkit-fill-available",
-          height: "-webkit-fill-available",
-        }}
-      />}
-
+      )}
 
       {/* Name Input Modal */}
       {nameModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-[rgba(0,0,0,0.35)] backdrop-blur-[8px]">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-[rgba(255,255,255,0.1)] backdrop-blur-[30px]">
           <div className="bg-[#1e2328] border border-white/20 rounded-xl max-w-md w-full mx-6 relative p-8 flex flex-col items-center">
             <h2 className="text-white text-lg font-medium mb-2">
               Enter Your Name
@@ -1125,12 +1139,13 @@ export default function SessionPage() {
       )}
 
       <div
-        className={`w-full flex flex-col md:bg-[#0D101B] md:border md:border-[rgba(255,255,255,0.1)] rounded-[20px] md:backdrop-blur-[32px] relative transition-all duration-300 ${isSidebarOpen ? "pr-120" : ""
-          } flex-1 min-h-0`}
+        className={`w-full flex flex-col md:bg-[#0D101B] md:border md:border-[rgba(255,255,255,0.1)] rounded-[20px] md:backdrop-blur-[32px] relative transition-all duration-300 ${
+          isSidebarOpen ? "pr-120" : ""
+        } flex-1 min-h-0`}
       >
         {/* Sidebar */}
         {isSidebarOpen && (
-          <div className="absolute right-0 top-0 bottom-0 w-120 z-30 rounded-r-[20px] overflow-hidden border-l border-white/10 bg-[#0D101B]">
+          <div className="absolute right-0 top-0 bottom-0 w-120 z-30 rounded-r-[20px] overflow-hidden border-l border-white/10 bg-[#0D101B] md:h-[92vh]">
             <Sidebar
               participants={participants}
               roomName={roomName}
@@ -1140,63 +1155,77 @@ export default function SessionPage() {
             />
           </div>
         )}
-
-        {/* Header (desktop) */}
-        {/* <div className="hidden md:flex items-center justify-between px-6 py-4 text-white mb-2 mt-3">
-          <div className="flex items-center gap-2 ml-4">
-            <div className="w-4 h-4 flex items-center justify-center">
-              <Clock color="white" />
-            </div>
-            <span className="text-sm font-medium">{meetingDuration}</span>
-          </div>
-
-          <span className="mx-6 text-gray-400">|</span>
-
-          <div className="flex items-center h-8">
-            <img
-              src="/images/icons/soundwave.svg"
-              alt="soundwave"
-              style={{
-                width: "30vw",   
-                height: "auto"
-              }}
-            />
-          </div>
-
-          <span className="mx-6 text-gray-400">|</span>
-
-          <div className="flex items-center gap-2 mr-4">
-            <div className="w-4 h-4 flex items-center justify-center">
-              <Calendar color="white" />
-            </div>
-            <span className="text-sm font-medium">{getFormattedDate()}</span>
-          </div>
-        </div> */}
-
-        {/* Main Video Area */}
-        {/* <div className="flex-1  relative mx-0 md:mx-6 mb-4 md:mb-6 min-h-0">
-          <div
-            className={
-              "w-full md:h-[calc(100vh-20px)] border border-white/20 relative overflow-hidden min-h-[300px] h-[140vh] max-h-[100vh] rounded-2xl " +
-              // (isMobileFull
-              //   ? "h-[140vh] max-h-[100vh] rounded-2xl"
-              //   : "h-[97vh] max-h-[85vh]")
-              ""
-            }
-          > */}
-        {/* User Avatar (desktop) */}
-        {/* <div className="hidden md:block absolute top-6 left-6 bg-[#080B16] pb-2 pt-2 pl-4 pr-4 rounded-[11px] border border-[rgba(211,211,211,0.1)] z-10">
-              <div className="flex items-center gap-3">
-                <HexAvatar
-                  initials={currentUser.slice(0, 2).toUpperCase()}
-                  size={24}
-                  fontSize={10}
-                />
-                <span className="text-white text-sm font-medium">
-                  {currentUser}
-                </span>
+        {isModalOpen && (
+          <div className="absolute inset-0 flex items-center justify-center z-100 bg-black/50">
+            <div className="bg-[#1e2328] border border-white/20 rounded-xl max-w-md w-full mx-2 relative">
+              <div className="flex items-center p-4">
+                {/* Close Button */}
+                <button
+                  onClick={() => setIsModalOpen(false)}
+                  className="absolute right-4 w-6 h-6 flex items-center justify-center text-white/60 hover:text-white"
+                >
+                  <svg
+                    width="14"
+                    height="14"
+                    viewBox="0 0 14 14"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M1 1l12 12M1 13L13 1"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                    />
+                  </svg>
+                </button>
+                <h2 className="text-white text-lg font-medium">
+                  Your Session is ready
+                </h2>
               </div>
-            </div> */}
+              {/* divider */}
+              <div className="border-b border-white/10 mb-4"></div>
+              <div className="p-4">
+                <p className="text-white/70 text-sm sm:mb-6 mb-3 leading-relaxed">
+                  Send this link to people you want to invite to the Session.{" "}
+                  <br /> Don&apos;t forget to save the link, so you can use it
+                  later.
+                </p>
+                <div className="flex items-center sm:gap-3 gap-1 p-2 bg-[#0f1419] rounded-lg border border-white/10">
+                  <Link
+                    color="white"
+                    className="sm:w-auto sm:h-auto w-[15px] h-[15px] mr-[3px]"
+                  />
+                  <input
+                    value={`${window.location.origin}/conference?room=${roomName}`}
+                    readOnly
+                    className="text-white text-sm flex-1 font-mono "
+                  />
+
+                  <button
+                    className="p-1 hover:bg-white/10 rounded"
+                    onClick={() => {
+                      navigator.clipboard.writeText(
+                        `${window.location.origin}/conference?room=${roomName}`
+                      );
+                      toast.success("Copied to clipboard", {
+                        style: {
+                          width: "200px",
+                        },
+                      });
+                    }}
+                  >
+                    <Copy
+                      color="white"
+                      className="sm:w-auto sm:h-auto w-[15px] h-[15px]"
+                    />
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div> 
+
         {isModalOpen && (
           <div className="absolute inset-0 flex items-center justify-center z-100 bg-black/50">
             <div className="bg-[#1e2328] border border-white/20 rounded-xl max-w-md w-full mx-6 relative">
@@ -1248,7 +1277,9 @@ export default function SessionPage() {
                   >
                     <Copy color="white" />
                   </button>
+
                 </div>
+                <span className="text-sm font-medium">{meetingDuration}</span>
               </div>
             </div>
           </div>
@@ -1278,16 +1309,7 @@ export default function SessionPage() {
 
               {/* Middle: Waveform */}
               <div className="flex items-center h-8">
-                {/* <img
-                      src="/images/icons/soundwave.svg"
-                      alt="soundwave"
-                      style={{
-                        width: "30vw",   // always 30% of screen width
-                        height: "auto"
-                      }}
-                    /> */}
                 <LiveWaveform />        {/* live waveform */}
-
               </div>
 
               {/* Divider */}
@@ -1298,26 +1320,14 @@ export default function SessionPage() {
                 <div className="w-4 h-4 flex items-center justify-center">
                   <Calendar color="white" />
                 </div>
-                <span className="text-sm font-medium">{getFormattedDate()}</span>
+
+                <span className="text-sm font-medium">
+                  {getFormattedDate()}
+                </span>
               </div>
             </div>
-            <div className="flex-1  relative mx-0 md:mx-6 mb-4 md:mb-6 min-h-0">
-              <div
-                className={
-                  "w-full md:h-[calc(100vh-20px)] border border-white/20 relative overflow-hidden min-h-[300px] h-[140vh] max-h-[100vh] rounded-2xl " +
-                  // (isMobileFull
-                  //   ? "h-[140vh] max-h-[100vh] rounded-2xl"
-                  //   : "h-[97vh] max-h-[85vh]")
-                  ""
-                }
-              >
-                {/* DESKTOP / TABLET TILES */}
-                {/* <div className="hidden md:block w-full h-full">
-                  <CustomVideoTiles activeEmojis={activeEmojis} showSideRail={showSideRail}
-                    onToggleSideRail={() => setShowSideRail(!showSideRail)}
-
-                  />
-                </div> */}
+            <div className="flex-1  relative mx-0 md:mx-6 md:mb-6 mb-0">
+              <div className="w-full border border-white/20 relative overflow-hidden rounded-2xl sm:h-[80vh] h-screen">
                 <ShowSideRailProvider>
                   {isDesktop ? (
                     <CustomVideoTiles
@@ -1335,7 +1345,8 @@ export default function SessionPage() {
                           />
                         </>
                       )}
-                      <div className="p-1 ml-2 mr-2 ">
+
+                      <div className="">
                         {activeTab === "People" && (
                           <>
                             <div className="bg-[rgba(255,255,255,0.02)] rounded-[20px] border border-[rgba(255,255,255,0.1)] backdrop-blur-[32px] p-2 mb-4 max-h-[56vh] overflow-auto mt-38">
@@ -1404,7 +1415,9 @@ export default function SessionPage() {
                             <div className="fixed bottom-0 left-0 right-0 z-50 md:hidden px-4 pb-8">
                               <button
                                 onClick={() => {
-                                  window.location.href = "/session";
+
+                                  window.location.href = "/sessions";
+
                                 }}
                                 className="w-full grid grid-cols-[1fr_auto_1fr] items-center
                bg-[#0f1419] rounded-lg border border-white/10 shadow
@@ -1492,16 +1505,15 @@ export default function SessionPage() {
                                 </p>
                               )}
                               {/* <div ref={messagesEndRef} /> */}
+
                             </div>
 
                             {/* Sticky input (not fixed) so layout reserves space */}
                             <div
                               className="
-        sticky bottom-0 z-10
-        bg-[#080B16]/70 backdrop-blur
-        
-        px-4 pt-2 pb-4
-      "
+                                sticky bottom-0 z-10
+                                bg-[#080B16]/70 backdrop-blur
+                              "
                             >
                               <div className="flex gap-2">
                                 <input
@@ -1520,7 +1532,6 @@ export default function SessionPage() {
                         </div>
                       )}
 
-
                       {activeTab === "Transcript" && (
                         <div className="mt-[200px] p-3">
                           <TranscriptTab />
@@ -1531,19 +1542,14 @@ export default function SessionPage() {
                           <SummaryTab />
                         </div>
                       )}
-
-                      {/* <CustomVideoTiles activeEmojis={activeEmojis} /> */}
-                      {/* <PeopleTab
-            participants={participants}
-            roomName={roomName}
-            raisedHands={raisedHands}
-          /> */}
                     </>
                   )}
                 </ShowSideRailProvider>
-
-                {/* Mobile controls (top cluster) */}
-                {/* <div className="sticky top-0 left-0 right-0 z-20 block md:hidden">
+                <div
+                  className="md:hidden fixed top-0 left-0 right-0 z-40 
+                backdrop-blur border-b border-white/10
+                pt-[env(safe-area-inset-top)] bg-[#080b1649]"
+                >
                   <MobileConferenceControls
                     onInvite={() => setIsModalOpen(true)}
                     onToggleHandRaise={toggleHandRaise}
@@ -1551,6 +1557,10 @@ export default function SessionPage() {
                     raisedHands={raisedHands}
                     setActiveTab={setActiveTab}
                     activeTab={activeTab}
+                    setIsBottomSheetOpen={setIsBottomSheetOpen}
+                    isBottomSheetOpen={isBottomSheetOpen}
+                    setIsMobileFull={setIsMobileFull}
+                    isMobileFull={isMobileFull}
                   />
                 </div> */}
                 {/* <div className="sticky top-0 z-20 bg-[#0D101B] border-b border-white/10"> */}
@@ -1571,6 +1581,7 @@ export default function SessionPage() {
                     setIsMobileFull={setIsMobileFull}
                     isMobileFull={isMobileFull}
                   />
+
                 </div>
                 <ParticipantProvider onParticipantsChange={setParticipants} />
                 <RealtimeMessaging
@@ -1600,7 +1611,8 @@ export default function SessionPage() {
                     </div>
                   </div>
                 )}
-                <div className="absolute bottom-0 left-0 right-0 hidden md:block">
+
+                <div className="absolute 2xl:bottom-[20px] sm:bottom-[15px] bottom-0 left-0 right-0 hidden md:block">
                   <ConferenceControls
                     onInvite={() => setIsModalOpen(true)}
                     onToggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)}
@@ -1620,9 +1632,10 @@ export default function SessionPage() {
                   participants.length > 0 && (
                     <div className="absolute bottom-1 left-0 right-0 z-20 block md:hidden px-3 pb-2">
                       <div
-                        className={`flex gap-3 overflow-x-auto scrollbar-hide ${participants.length <= 2 &&
+                        className={`flex gap-3 overflow-x-auto scrollbar-hide ${
+                          participants.length <= 2 &&
                           "items-center justify-center"
-                          }`}
+                        }`}
                       >
                         {participants.map((p) => {
                           const participant = p as Participant;
@@ -1643,11 +1656,12 @@ export default function SessionPage() {
                                 {participant.identity}
                               </span>
                             </div>
+
                           );
                         })}
                       </div>
-                      <div className="mt-4 mb-3 items-center justify-center flex">
-                        <img src="/images/icons/soundwave-small.svg" alt="" />
+                      <div className="items-center justify-center flex h-8">
+                        <LiveWaveform />
                       </div>
                       <div className="items-center justify-center">
                         <MobileTabBarControls
@@ -1661,13 +1675,17 @@ export default function SessionPage() {
                 {/* Desktop View Full Screen */}
                 {!showSideRail && participants && participants.length > 0 && (
                   <div
-                    className={`absolute ${showSideRail ? "bottom-28" : "bottom-32"
-                      }  left-0 right-0 z-20 px-3 pb-2 hidden md:block`}
+
+                    className={`absolute ${
+                      showSideRail ? "bottom-28" : "bottom-32"
+                    }  left-0 right-0 z-20 px-3 pb-2 hidden md:block`}
                   >
                     <div
-                      className={`flex gap-3 overflow-x-auto scrollbar-hide ${participants.length <= 2 &&
+                      className={`flex gap-3 overflow-x-auto scrollbar-hide ${
+                        participants.length <= 2 &&
                         "items-center justify-center"
-                        }`}
+                      }`}
+
                     >
                       {participants.map((p) => {
                         const participant = p as Participant;
@@ -1736,6 +1754,7 @@ export default function SessionPage() {
             className="backdrop-blur-[16px] text-[#FFFFFF] bg-[#080B1680] rounded-[15px] gap-4 flex flex-row items-center h-[44px] w-auto p-6 shadow-lg justify-center text-center"
             style={{ flex: "0 0 auto" }}
           >
+
             <Monitor size={18} />
             <span>Present</span>
           </div>
@@ -1743,6 +1762,7 @@ export default function SessionPage() {
             className="backdrop-blur-[16px] text-[#FFFFFF] bg-[#080B1680] rounded-[15px] gap-4 flex flex-row items-center h-[44px] w-auto p-6 shadow-lg justify-center text-center"
             style={{ flex: "0 0 auto" }}
           >
+
             <Users size={18} />
             <span>Roles</span>
           </div>
@@ -1760,6 +1780,7 @@ export default function SessionPage() {
             <Link size={18} />
             <span>Share Session Link</span>
           </div>
+
         </div>
         {/* Divider */}
         <div className="border-t border-white/20 my-4" />
@@ -1769,6 +1790,7 @@ export default function SessionPage() {
           <span className="text-white/50 text-sm">|</span>
           <span className="text-[#FFFFFF] font-bold text-sm">65:23</span>
         </div>
+
       </BottomSheet>
     </div>
   );

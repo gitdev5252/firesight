@@ -6,7 +6,7 @@ import "./globals.css";
 import "./page.css";
 import ClientLayout from "./ClientLayout";
 import FireSightFooter from "@/layouts/FireSightFooter";
-
+import { Toaster } from "@/components/ui/sonner";
 const lekton = Lekton({
   weight: ["400", "700"],
   subsets: ["latin"],
@@ -35,6 +35,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={clsx(lekton.className, "bg-[#080B16] relative m-0")}>
         <ClientLayout>{children}</ClientLayout>
+        <Toaster />
         {["/", "/pulse/overview"].includes(pathname) && renderFooter()}
       </body>
     </html>

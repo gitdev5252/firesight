@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import {
   LiveKitRoom,
   VideoConference,
@@ -7,16 +7,12 @@ import {
   RoomAudioRenderer,
   ControlBar,
   useTracks,
-} from '@livekit/components-react';
-import { Track } from 'livekit-client';
-import '@livekit/components-styles';
-import { VideoRoomProps } from './types';
+} from "@livekit/components-react";
+import { Track } from "livekit-client";
+import "@livekit/components-styles";
+import { VideoRoomProps } from "./types";
 
-export default function VideoRoom({
-
-  serverUrl,
-  token,
-}: VideoRoomProps) {
+export default function VideoRoom({ serverUrl, token }: VideoRoomProps) {
   return (
     <LiveKitRoom
       token={token}
