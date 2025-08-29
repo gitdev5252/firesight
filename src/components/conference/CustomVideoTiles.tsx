@@ -159,7 +159,7 @@ export const CustomVideoTiles = ({
   const maxIndividualTiles = 3;
   const displayed = others.slice(0, maxIndividualTiles);
   const overflow = others.slice(maxIndividualTiles);
-  const heightForTile = !showSideRail ? "md:h-auto" : "md:h-auto";
+  // const heightForTile = !showSideRail ? "md:h-auto" : "md:h-auto";
   return (
     <>
       {/* Render remote audio tracks so you can hear other participants */}
