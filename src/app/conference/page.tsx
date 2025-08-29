@@ -1515,7 +1515,7 @@ export default function SessionPage() {
                     </div>
                   </div>
                 )}
-                <div className="absolute bottom-0 left-0 right-0 hidden md:block">
+                <div className="absolute 2xl:bottom-[20px] sm:bottom-[15px] bottom-0 left-0 right-0 hidden md:block">
                   <ConferenceControls
                     onInvite={() => setIsModalOpen(true)}
                     onToggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)}
