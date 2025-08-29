@@ -115,7 +115,7 @@ const PeopleTab = ({
 }) => {
   return (
     <div>
-      <div className="bg-[rgba(255,255,255,0.02)] rounded-[20px] border border-[rgba(255,255,255,0.1)] md:backdrop-blur-[32px] p-2 mb-4 overflow-auto 2xl:h-[71vh] md:h-[70vh]">
+      <div className="bg-[rgba(255,255,255,0.02)] rounded-[20px] border border-[rgba(255,255,255,0.1)] md:backdrop-blur-[32px] p-2 mb-4 overflow-auto 2xl:h-[72.5vh] md:h-[71.5vh]">
         {participants && participants.length > 0 ? (
           participants.map((participant) => {
             const p = participant as Participant;
@@ -255,7 +255,7 @@ const ChatTab = ({
         {/* <div ref={messagesEndRef} /> */}
       </div>
 
-      <div className="pt-4 pb-4">
+      <div>
         <input
           type="text"
           value={inputMessage}
@@ -1433,11 +1433,9 @@ export default function SessionPage() {
                             {/* Sticky input (not fixed) so layout reserves space */}
                             <div
                               className="
-        sticky bottom-0 z-10
-        bg-[#080B16]/70 backdrop-blur
-        
-        px-4 pt-2 pb-4
-      "
+                                sticky bottom-0 z-10
+                                bg-[#080B16]/70 backdrop-blur
+                              "
                             >
                               <div className="flex gap-2">
                                 <input

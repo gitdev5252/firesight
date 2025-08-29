@@ -165,7 +165,7 @@ export const CustomVideoTiles = ({
       {/* Render remote audio tracks so you can hear other participants */}
       {audioTracks.map((t) => {
         // Only render for remote participants
-        if (t.participant.isLocal) return null;
+        // if (t.participant.isLocal) return null;
         return (
           <AudioTrackRenderer
             key={t.publication.trackSid}
@@ -177,16 +177,9 @@ export const CustomVideoTiles = ({
         {/* Main area */}
         <div className="flex-1 min-w-0 min-h-0">
           <div className="w-full h-full max-h-[99vh] md:h-[95vh]">
-            <div
-              className={`w-full aspect-video rounded-[15px] ${heightForTile}
-                p-0 sm:p-[2px] 
-                bg-none 
-                `}
-            >
+            <div className="w-full aspect-video rounded-[15px] md:h-auto p-0 sm:p-[2px] bg-none">
               {/* sm:bg-[linear-gradient(90deg,#14FF00_55%,#00F0FF_62%)] */}
-              <div
-                className={`w-full rounded-[12px] md:bg-[#141622] bg-transparent  ${heightForTile}`}
-              >
+              <div className="w-full rounded-[12px] md:bg-[#141622] bg-transparent md:h-auto">
                 <MainVideoTile
                   participant={mainParticipant}
                   activeEmojis={activeEmojis}

@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { useEffect, useRef, useState, PropsWithChildren } from 'react';
+import { useEffect, useRef, useState, PropsWithChildren } from "react";
 
 type Props = {
   open: boolean;
@@ -15,7 +15,9 @@ export default function BottomSheet({
   children,
 }: PropsWithChildren<Props>) {
   // Animation state: 'closed', 'opening', 'open', 'closing'
-  const [animationState, setAnimationState] = useState<'closed' | 'opening' | 'open' | 'closing'>(open ? 'open' : 'closed');
+  const [animationState, setAnimationState] = useState<
+    "closed" | "opening" | "open" | "closing"
+  >(open ? "open" : "closed");
   const ref = useRef<HTMLDialogElement>(null);
 
   // Drag state for pan
@@ -40,7 +42,8 @@ export default function BottomSheet({
   // Handle drag end
   const handlePointerUp = () => {
     setIsDragging(false);
-    if (dragY > 80) { // threshold to close
+    if (dragY > 80) {
+      // threshold to close
       setDragY(0);
       onClose();
     } else {
@@ -54,12 +57,12 @@ export default function BottomSheet({
     if (!d) return;
     if (open) {
       if (!d.open) d.showModal();
-      setAnimationState('opening');
-      setTimeout(() => setAnimationState('open'), 20); // allow for reflow
+      setAnimationState("opening");
+      setTimeout(() => setAnimationState("open"), 20); // allow for reflow
     } else if (d.open) {
-      setAnimationState('closing');
+      setAnimationState("closing");
       setTimeout(() => {
-        setAnimationState('closed');
+        setAnimationState("closed");
         d.close();
         onClose();
       }, 250); // match transition duration
@@ -72,10 +75,10 @@ export default function BottomSheet({
     const d = ref.current;
     if (!d) return;
     const handleClose = () => {
-      if (animationState !== 'closing') onClose();
+      if (animationState !== "closing") onClose();
     };
-    d.addEventListener('close', handleClose);
-    return () => d.removeEventListener('close', handleClose);
+    d.addEventListener("close", handleClose);
+    return () => d.removeEventListener("close", handleClose);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [onClose, animationState]);
 
@@ -86,39 +89,45 @@ export default function BottomSheet({
     const handleClick = (e: MouseEvent) => {
       if (e.target === d) onClose();
     };
-    d.addEventListener('click', handleClick);
-    return () => d.removeEventListener('click', handleClick);
+    d.addEventListener("click", handleClick);
+    return () => d.removeEventListener("click", handleClick);
   }, [onClose]);
 
   // Animation classes
   const panelClass =
-    animationState === 'opening' || animationState === 'open'
-      ? 'translate-y-0 opacity-100'
-      : 'translate-y-full opacity-0';
+    animationState === "opening" || animationState === "open"
+      ? "translate-y-0 opacity-100"
+      : "translate-y-full opacity-0";
 
   return (
     <dialog
       ref={ref}
       className="bottom-sheet m-0 w-full max-w-none p-0 outline-none "
-      aria-labelledby={title ? 'sheet-title' : undefined}
-      style={{ pointerEvents: animationState === 'closed' ? 'none' : undefined }}
+      aria-labelledby={title ? "sheet-title" : undefined}
+      style={{
+        pointerEvents: animationState === "closed" ? "none" : undefined,
+      }}
     >
       {/* Sheet pan/handle floating above the sheet */}
       <div
-        className={`fixed left-1/2 bottom-[calc(45dvh+12px)] z-50 -translate-x-1/2 transition-all duration-250 ${panelClass}`}
-        style={{ pointerEvents: 'auto', touchAction: 'none', cursor: isDragging ? 'grabbing' : 'grab' }}
+        className={`fixed left-1/2 bottom-[calc(45dvh+30px)] z-50 -translate-x-1/2 transition-all duration-250 ${panelClass}`}
+        style={{
+          pointerEvents: "auto",
+          touchAction: "none",
+          cursor: isDragging ? "grabbing" : "grab",
+        }}
         aria-hidden
         onPointerDown={handlePointerDown}
         onPointerMove={handlePointerMove}
         onPointerUp={handlePointerUp}
         onPointerCancel={handlePointerUp}
       >
-          <div
-            className="h-[4px] w-[80px] rounded-full shadow-md"
-            style={{
-              background: 'linear-gradient(180deg, #14FF008C 55%, #00F0FF9E 62%)',
-            }}
-          />
+        <div
+          className="h-[4px] w-[80px] rounded-full shadow-md"
+          style={{
+            background: "linear-gradient(180deg, #14FF008C 55%, #00F0FF9E 62%)",
+          }}
+        />
       </div>
       {/* Inner panel: we animate this in from the bottom */}
       <div
@@ -128,7 +137,10 @@ export default function BottomSheet({
       >
         <div className="relative">
           {title ? (
-            <h2 id="sheet-title" className="px-4 pb-2 pt-4 text-base font-semibold">
+            <h2
+              id="sheet-title"
+              className="px-4 pb-2 pt-4 text-base font-semibold"
+            >
               {title}
             </h2>
           ) : null}
