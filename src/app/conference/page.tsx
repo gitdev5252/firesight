@@ -1186,9 +1186,12 @@ export default function SessionPage() {
                     color="white"
                     className="sm:w-auto sm:h-auto w-[15px] h-[15px] mr-[3px]"
                   />
-                  <span className="text-white text-sm flex-1 font-mono not-sm:max-w-[230px]">
-                    {`${window.location.origin}/conference?room=${roomName}`}
-                  </span>
+                  <input
+                    value={`${window.location.origin}/conference?room=${roomName}`}
+                    readOnly
+                    className="text-white text-sm flex-1 font-mono "
+                  />
+
                   <button
                     className="p-1 hover:bg-white/10 rounded"
                     onClick={() => {
