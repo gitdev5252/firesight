@@ -37,6 +37,7 @@ import { ShowSideRailProvider } from "@/hooks/sideRail";
 import { LiveWaveform } from "@/components/Audio/LiveWave";
 import { toast } from "sonner";
 import LiveKitBottomSheet from "./LiveKitBottomSheet";
+import { useFlipCamera } from "@/hooks/useFlipCamera";
 
 const mobileTabs = ["Session", "People", "Chat", "Transcript", "Summary"];
 
@@ -653,7 +654,6 @@ const MobileConferenceControls = React.memo(
     isMobileFull: boolean;
     setIsMobileFull: (isFull: boolean) => void;
   }) => {
-    const { toggleCamera } = useMediaControls();
     const { flipCamera, facing } = useFlipCamera();
 
     return (
