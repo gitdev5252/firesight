@@ -18,7 +18,6 @@ import {
   RefreshCcwDot,
   Volume2,
   EllipsisVertical,
-  Bot,
 } from "lucide-react";
 import React from "react";
 import {
@@ -34,10 +33,11 @@ import { LIVEKIT_CONFIG } from "@/lib/livekit/config";
 import { CustomVideoTiles } from "@/components/conference/CustomVideoTiles";
 import { useMediaControls } from "@/hooks/useMediaControls";
 import { HexAvatar } from "@/components/HexAvatar/HexAvatar";
-import BottomSheet from "@/components/BottomSheet/BottomSheet";
 import { ShowSideRailProvider } from "@/hooks/sideRail";
 import { LiveWaveform } from "@/components/Audio/LiveWave";
 import { toast } from "sonner";
+import LiveKitBottomSheet from "./LiveKitBottomSheet";
+import { useFlipCamera } from "@/hooks/useFlipCamera";
 
 const mobileTabs = ["Session", "People", "Chat", "Transcript", "Summary"];
 
@@ -539,11 +539,10 @@ const ConferenceControls = React.memo(
 
               <button
                 onClick={isScreenSharing ? stopScreenShare : startScreenShare}
-                className={`flex flex-col items-center gap-1 transition-colors ${
-                  isScreenSharing
-                    ? "text-green-400 hover:text-green-300"
-                    : "text-gray-400 hover:text-gray-400"
-                }`}
+                className={`flex flex-col items-center gap-1 transition-colors ${isScreenSharing
+                  ? "text-green-400 hover:text-green-300"
+                  : "text-gray-400 hover:text-gray-400"
+                  }`}
               >
                 <div className="items-center justify-center">
                   {/* <Monitor color={isScreenSharing ? "#10b981" : "white"} /> */}
@@ -655,7 +654,7 @@ const MobileConferenceControls = React.memo(
     isMobileFull: boolean;
     setIsMobileFull: (isFull: boolean) => void;
   }) => {
-    const { toggleCamera } = useMediaControls();
+    const { flipCamera, facing } = useFlipCamera();
 
     return (
       <div className="px-6 pb-6">
@@ -676,7 +675,9 @@ const MobileConferenceControls = React.memo(
               <div className="w-px h-8 bg-white/20"></div>
               <button
                 className="flex flex-col items-center gap-1 transition-colors text-white hover:text-gray-400"
-                onClick={toggleCamera}
+                onClick={flipCamera}
+                aria-label="Flip camera"
+                title={facing === "user" ? "Switch to back camera" : "Switch to front camera"}
               >
                 <div className="items-center justify-center">
                   <RefreshCcwDot color="white" />
@@ -684,11 +685,10 @@ const MobileConferenceControls = React.memo(
               </button>
 
               <button
-                className={`flex flex-col items-center gap-1 transition-colors ${
-                  raisedHands[currentUser]
-                    ? "text-yellow-400 hover:text-yellow-500"
-                    : "text-gray-400 hover:text-gray-400"
-                }`}
+                className={`flex flex-col items-center gap-1 transition-colors ${raisedHands[currentUser]
+                  ? "text-yellow-400 hover:text-yellow-500"
+                  : "text-gray-400 hover:text-gray-400"
+                  }`}
                 onClick={() => onToggleHandRaise(currentUser)}
               >
                 <div className="items-center justify-center">
@@ -1137,9 +1137,8 @@ export default function SessionPage() {
 
   return (
     <div
-      className={`${
-        !isMobileFull && "p-4 md:p-8 bg-[#080B16] min-h-screen flex flex-col"
-      } md:p-8 md:bg-[#080B16] md:max-h-screen md:flex md:flex-col relative`}
+      className={`${!isMobileFull && "md:p-8 bg-[#080B16] min-h-screen flex flex-col"
+        } md:p-8 md:bg-[#080B16] md:max-h-screen md:flex md:flex-col relative`}
     >
       {isDesktop ? (
         <img
@@ -1189,9 +1188,8 @@ export default function SessionPage() {
       )}
 
       <div
-        className={`w-full flex flex-col md:bg-[#0D101B] md:border md:border-[rgba(255,255,255,0.1)] rounded-[20px] md:backdrop-blur-[32px] relative transition-all duration-300 ${
-          isSidebarOpen ? "pr-120" : ""
-        } flex-1 min-h-0`}
+        className={`w-full flex flex-col md:bg-[#0D101B] md:border md:border-[rgba(255,255,255,0.1)] rounded-[20px] md:backdrop-blur-[32px] relative transition-all duration-300 ${isSidebarOpen ? "pr-120" : ""
+          } flex-1 min-h-0`}
       >
         {/* Sidebar */}
         {isSidebarOpen && (
@@ -1316,7 +1314,7 @@ export default function SessionPage() {
               </div>
             </div>
             <div className="flex-1  relative mx-0 md:mx-6 md:mb-6 mb-0">
-              <div className="w-full border border-white/20 relative overflow-hidden rounded-2xl sm:h-[80vh] h-screen">
+              <div className="w-full md:border md:border-white/20 relative overflow-hidden rounded-2xl sm:h-[80vh] h-screen">
                 <ShowSideRailProvider>
                   {isDesktop ? (
                     <CustomVideoTiles
@@ -1558,7 +1556,7 @@ export default function SessionPage() {
 
                 {/* Emoji Bar (desktop) */}
                 {showEmojiBar && (
-                  <div className="absolute left-1/2 bottom-35 -translate-x-1/2 z-50 flex justify-center w-auto pointer-events-none">
+                  <div className="absolute left-1/2 bottom-28 md:bottom-35 -translate-x-1/2 z-50 flex justify-center w-auto pointer-events-none">
                     <div className="bg-[#080B1680] px-6 py-3 flex items-center gap-4 rounded-[10px] shadow-lg animate-fade-in-up pointer-events-auto border border-[#FFFFFF1A]">
                       {["👋", "👍", "❤️", "😂", "😎", "💩"].map((emoji, i) => (
                         <button
@@ -1595,10 +1593,9 @@ export default function SessionPage() {
                   participants.length > 0 && (
                     <div className="absolute bottom-1 left-0 right-0 z-20 block md:hidden px-3 pb-2">
                       <div
-                        className={`flex gap-3 overflow-x-auto scrollbar-hide ${
-                          participants.length <= 2 &&
+                        className={`flex gap-3 overflow-x-auto scrollbar-hide ${participants.length <= 2 &&
                           "items-center justify-center"
-                        }`}
+                          }`}
                       >
                         {participants.map((p) => {
                           const participant = p as Participant;
@@ -1633,9 +1630,11 @@ export default function SessionPage() {
                       </div>
                       <div className="items-center justify-center">
                         <MobileTabBarControls
-                          onSendEmoji={sendEmoji}
+                          // onSendEmoji={sendEmoji}
                           currentUser={currentUser}
                           onInvite={() => setIsModalOpen(true)}
+                          onSendEmoji={() => setShowEmojiBar((v) => !v)}
+
                         />
                       </div>
                     </div>
@@ -1643,15 +1642,13 @@ export default function SessionPage() {
                 {/* Desktop View Full Screen */}
                 {!showSideRail && participants && participants.length > 0 && (
                   <div
-                    className={`absolute ${
-                      showSideRail ? "bottom-28" : "bottom-32"
-                    }  left-0 right-0 z-20 px-3 pb-2 hidden md:block`}
+                    className={`absolute ${showSideRail ? "bottom-28" : "bottom-32"
+                      }  left-0 right-0 z-20 px-3 pb-2 hidden md:block`}
                   >
                     <div
-                      className={`flex gap-3 overflow-x-auto scrollbar-hide ${
-                        participants.length <= 2 &&
+                      className={`flex gap-3 overflow-x-auto scrollbar-hide ${participants.length <= 2 &&
                         "items-center justify-center"
-                      }`}
+                        }`}
                     >
                       {participants.map((p) => {
                         const participant = p as Participant;
@@ -1683,6 +1680,12 @@ export default function SessionPage() {
                 )} */}
               </div>
             </div>
+            <LiveKitBottomSheet
+              open={isBottomSheetOpen}
+              onClose={() => setIsBottomSheetOpen(false)}
+              meetingDuration={meetingDuration}
+              onInvite={() => { setIsModalOpen(true); setIsBottomSheetOpen(false); }}
+            />
           </LiveKitRoom>
         ) : (
           <div className="w-full h-full flex items-center justify-center">
@@ -1708,45 +1711,7 @@ export default function SessionPage() {
         )}
       </div>
       {/* End button for mobile */}
-      <BottomSheet
-        open={isBottomSheetOpen}
-        onClose={() => {
-          setIsBottomSheetOpen(false);
-        }}
-      >
-        <div className=" justify-center items-center flex flex-col gap-3 p-4">
-          <div className="backdrop-blur-[16px] text-[#FFFFFF] bg-[#080B1680] rounded-[15px] gap-4 flex flex-row items-center h-[44px] w-auto p-6 shadow-lg justify-center text-center flex-none">
-            <Monitor size={18} />
-            <span>Present</span>
-          </div>
-          <div className="backdrop-blur-[16px] text-[#FFFFFF] bg-[#080B1680] rounded-[15px] gap-4 flex flex-row items-center h-[44px] w-auto p-6 shadow-lg justify-center text-center flex-none">
-            <Users size={18} />
-            <span>Roles</span>
-          </div>
-          <div
-            className="backdrop-blur-[16px] text-[#FFFFFF] bg-[#080B1680] rounded-[15px] gap-4 flex flex-row items-center h-[44px] w-auto p-6 shadow-lg justify-center text-center"
-            style={{ flex: "0 0 auto" }}
-          >
-            <Bot size={18} />
-            <span>AI Worker</span>
-          </div>
-          <div
-            className="backdrop-blur-[16px] text-[#FFFFFF] bg-[#080B1680] rounded-[15px] gap-4 flex flex-row items-center h-[44px] w-auto p-6 shadow-lg justify-center text-center"
-            style={{ flex: "0 0 auto" }}
-          >
-            <Link size={18} />
-            <span>Share Session Link</span>
-          </div>
-        </div>
-        {/* Divider */}
-        <div className="border-t border-white/20 my-4" />
-        <div className=" justify-center items-center flex  flex-row gap-3 ">
-          <span className="text-[#86878D] text-sm">Session State: </span>
-          <span className="text-[#FFFFFF] font-bold text-sm">Active</span>
-          <span className="text-white/50 text-sm">|</span>
-          <span className="text-[#FFFFFF] font-bold text-sm">65:23</span>
-        </div>
-      </BottomSheet>
+
     </div>
   );
 }
