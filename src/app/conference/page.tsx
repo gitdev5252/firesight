@@ -1,4 +1,12 @@
 "use client";
+
+// Extend the Window interface to include pinParticipant
+declare global {
+  interface Window {
+    pinParticipant?: (identity: string) => void;
+  }
+}
+
 import {
   BotMessageSquare,
   Calendar,
@@ -38,6 +46,8 @@ import { LiveWaveform } from "@/components/Audio/LiveWave";
 import { toast } from "sonner";
 import LiveKitBottomSheet from "./LiveKitBottomSheet";
 import { useFlipCamera } from "@/hooks/useFlipCamera";
+import { useTracks } from "@livekit/components-react";
+import { Track } from "livekit-client";
 
 const mobileTabs = ["Session", "People", "Chat", "Transcript", "Summary"];
 
@@ -45,6 +55,7 @@ const mobileTabs = ["Session", "People", "Chat", "Transcript", "Summary"];
 const classIf = (cond: boolean, a: string, b: string) => (cond ? a : b);
 
 type Participant = {
+  isScreenShareEnabled: unknown;
   identity: string;
   isLocal: boolean;
   isMicrophoneEnabled: boolean;
@@ -692,9 +703,19 @@ const MobileConferenceControls = React.memo(
                 onClick={() => onToggleHandRaise(currentUser)}
               >
                 <div className="items-center justify-center">
-                  <Hand
+                  {/* <Hand
                     color={raisedHands[currentUser] ? "#fbbf24" : "white"}
-                  />
+                  /> */}
+                  {raisedHands[currentUser] ? (
+                    <img
+                      src="/images/icons/hand-active.svg"
+                      alt=""
+                      width={32}
+                      height={32}
+                    />
+                  ) : (
+                    <Hand color="white" />
+                  )}
                 </div>
               </button>
 
@@ -847,6 +868,99 @@ const MobileTabBarControls = React.memo(
     );
   }
 );
+
+function MobileChipTile({ participant }: { participant: Participant }) {
+  const videoRef = React.useRef<HTMLVideoElement>(null);
+
+  // We can subscribe to both sources; useTracks works inside LiveKitRoom
+  const tracks = useTracks([Track.Source.Camera, Track.Source.ScreenShare]);
+
+  // pick screenshare first, else camera
+  const source: Track.Source | null = participant.isScreenShareEnabled
+    ? Track.Source.ScreenShare
+    : participant.isCameraEnabled
+      ? Track.Source.Camera
+      : null;
+
+  const t = React.useMemo(() => {
+    if (!source) return undefined;
+    return tracks.find(
+      (tr) =>
+        tr.participant.identity === participant.identity && tr.source === source
+    );
+  }, [tracks, participant.identity, source]);
+
+  // React.useEffect(() => {
+  //   const el = videoRef.current;
+  //   const mediaTrack = t?.publication?.track;
+  //   if (!el) return;
+  //   if (mediaTrack) {
+  //     mediaTrack.attach(el);
+  //     return () => mediaTrack.detach(el);
+  //   }
+  // }, [t?.publication?.track]);
+
+  React.useEffect(() => {
+    const el = videoRef.current;
+    const mediaTrack = t?.publication?.track;
+    if (!el) return;
+    if (mediaTrack) {
+      mediaTrack.attach(el);
+      return () => {
+        mediaTrack.detach(el);
+      };
+    }
+    return undefined;
+  }, [t?.publication?.track]);
+  const initials = participant.identity.slice(0, 2).toUpperCase();
+  const firstName = participant.identity;
+
+  return (
+    <div
+      className="relative backdrop-blur-[16px] bg-white/10 border border-white/20 rounded-xl
+                 flex flex-col items-center min-w-[130px] max-w-[130px] h-[140px] shadow-lg
+                 justify-center text-center overflow-hidden"
+      onClick={() => {
+        // Optional pin from mobile:
+        window.pinParticipant?.(participant.identity);
+      }}
+    >
+      {/* Video (or Hex fallback) */}
+      {t?.publication?.track ? (
+        <video
+          ref={videoRef}
+          autoPlay
+          playsInline
+          muted={participant.isLocal}
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+      ) : (
+        <div className="flex flex-col items-center justify-center">
+          <HexAvatar initials={initials} size={84} fontSize={24} />
+        </div>
+      )}
+
+      {/* overlays */}
+      {/* screenshare badge */}
+      {source === Track.Source.ScreenShare && (
+        <div className="absolute top-1 right-1 w-6 h-6 bg-green-600 rounded-full flex items-center justify-center shadow-lg">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
+            <path d="M3 5h18v12H3z" stroke="white" strokeWidth="2" />
+            <path d="M8 19h8" stroke="white" strokeWidth="2" />
+          </svg>
+        </div>
+      )}
+
+      {/* name chip */}
+      <div className="absolute bottom-2 left-1/2 -translate-x-1/2">
+        <div className="px-3 py-1 rounded-xl bg-black/40 border border-white/10 text-[11px] leading-none text-white/90 max-w-[90%] truncate">
+          {firstName}
+          {participant.isLocal && " (You)"}
+        </div>
+      </div>
+    </div>
+  );
+}
 
 /* ----------------- Page ----------------- */
 export default function SessionPage() {
@@ -1599,30 +1713,16 @@ export default function SessionPage() {
                       >
                         {participants.map((p) => {
                           const participant = p as Participant;
-                          return (
-                            <div
-                              key={participant.sid}
-                              className="backdrop-blur-[16px] bg-white/10 border border-white/20 rounded-xl flex flex-col items-center min-w-[130px] max-w-[130px] h-[140px] shadow-lg justify-center text-center flex-none"
-                            >
-                              <HexAvatar
-                                initials={participant.identity
-                                  .slice(0, 2)
-                                  .toUpperCase()}
-                                size={84}
-                                fontSize={24}
-                              />
-                              <span className="text-white text-xs font-medium mt-1 truncate max-w-[100px] text-center">
-                                {participant.identity}
-                              </span>
-                            </div>
-                            // <SmallVideoTile
-                            //   key={p.identity}
-                            //   participant={p}
-                            //   trackMap={trackByParticipantAndSource}
-                            //   setFocusedIdentity={setFocusedIdentity}
-                            //   focusedIdentity={focusedIdentity}
-                            // />
-                          );
+                          return(
+                            <>
+                            <MobileChipTile key={participant.sid} participant={participant} />
+                            <MobileChipTile key={participant.sid} participant={participant} />
+                            <MobileChipTile key={participant.sid} participant={participant} />
+                            <MobileChipTile key={participant.sid} participant={participant} />
+                            <MobileChipTile key={participant.sid} participant={participant} />
+                             </>
+                            );
+
                         })}
                       </div>
                       <div className="items-center justify-center flex h-8">
