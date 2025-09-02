@@ -42,19 +42,24 @@ export const CustomVideoTiles = ({
   showSideRail,
   onToggleSideRail,
   isMobileFull = false,
+  focusedIdentity,
+  setFocusedIdentity
 }: {
   activeEmojis?: {
     [key: string]: { emoji: string; timestamp: number; username: string };
+
   };
   showSideRail?: boolean;
   onToggleSideRail?: () => void;
   isMobileFull?: boolean;
+  setFocusedIdentity: (id: string | null) => void;
+  focusedIdentity: string | null;
 }) => {
   const participantsRaw = useParticipants();
   const tracks = useTracks([Track.Source.Camera, Track.Source.ScreenShare]);
   // Get all microphone tracks (audio)
   const audioTracks = useTracks([Track.Source.Microphone]);
-  const [focusedIdentity, setFocusedIdentity] = useState<string | null>(null);
+  // const [focusedIdentity, setFocusedIdentity] = useState<string | null>(null);
   /* stable sort: local last (so a remote is main if available) */
   const participants = useMemo(() => {
     return [...participantsRaw].sort((a, b) => {
