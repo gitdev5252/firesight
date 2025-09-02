@@ -132,7 +132,7 @@ const PeopleTab = React.memo(
   }) => {
     return (
       <div>
-        <div className="bg-[rgba(255,255,255,0.02)] rounded-[20px] border border-[rgba(255,255,255,0.1)] md:backdrop-blur-[32px] p-2 mb-4 overflow-auto 2xl:h-[72.5vh] md:h-[71.5vh]">
+          <div className="bg-[rgba(255,255,255,0.02)] rounded-[20px] border border-[rgba(255,255,255,0.1)] md:backdrop-blur-[32px] p-2 mb-4 overflow-auto min-h-[70vh] max-h-[90vh]">
           {participants && participants.length > 0 ? (
             participants.map((participant) => {
               const p = participant as Participant;
@@ -570,7 +570,7 @@ const ConferenceControls = React.memo(
                   )}
                 </div>
                 <span className="text-xs mt-2">
-                  {isScreenSharing ? "Present" : "Present"}
+                  {/* {isScreenSharing ? "Present" : "Present"} */}
                 </span>
               </button>
 
@@ -761,7 +761,7 @@ const MobileConferenceControls = React.memo(
                 key={tab}
                 className={`flex-1 px-2 py-3 text-xs font-medium transition-colors ${classIf(
                   activeTab === tab,
-                  "text-white border-b-2 border-green-500 bg-white/5",
+                  "text-white border-b-2 border-green-500",
                   "text-white/60 hover:text-white/80"
                 )}`}
                 onClick={() => setActiveTab(tab)}
@@ -999,6 +999,10 @@ export default function SessionPage() {
   const [activeEmojis, setActiveEmojis] = React.useState<{
     [key: string]: { emoji: string; timestamp: number; username: string };
   }>({});
+  // For hand raise overlays
+  const [activeHands, setActiveHands] = React.useState<{
+    [key: string]: { timestamp: number; username: string };
+  }>({});
   const [raisedHands, setRaisedHands] = React.useState<{
     [key: string]: boolean;
   }>({});
@@ -1080,6 +1084,20 @@ export default function SessionPage() {
   const handleHandRaiseReceived = React.useCallback(
     (data: { username: string; isRaised: boolean }) => {
       setRaisedHands((prev) => ({ ...prev, [data.username]: data.isRaised }));
+      if (data.isRaised) {
+        const timestamp = Date.now();
+        setActiveHands((prev) => ({
+          ...prev,
+          [data.username]: { timestamp, username: data.username },
+        }));
+        setTimeout(() => {
+          setActiveHands((prev) => {
+            const next = { ...prev };
+            delete next[data.username];
+            return next;
+          });
+        }, 3000);
+      }
     },
     []
   );
@@ -1451,6 +1469,7 @@ export default function SessionPage() {
                   {isDesktop ? (
                     <CustomVideoTiles
                       activeEmojis={activeEmojis}
+                      activeHands={activeHands}
                       showSideRail={showSideRail}
                       onToggleSideRail={handleToggleSideRail}
                       focusedIdentity={focusedIdentity}
@@ -1462,6 +1481,7 @@ export default function SessionPage() {
                         <>
                           <CustomVideoTiles
                             activeEmojis={activeEmojis}
+                            activeHands={activeHands}
                             isMobileFull={isMobileFull}
                             focusedIdentity={focusedIdentity}
                             setFocusedIdentity={setFocusedIdentity}
