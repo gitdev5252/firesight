@@ -1536,13 +1536,20 @@ export default function SessionPage() {
                             </div>
                             <div className="fixed bottom-0 left-0 right-0 z-50 md:hidden px-4 pb-8">
                               <button
-                                onClick={() => {
-                                  window.location.href = "/sessions";
-                                }}
                                 className="w-full grid grid-cols-[1fr_auto_1fr] items-center
-               bg-[#0f1419] rounded-lg border border-white/10 shadow
-               focus:outline-none focus:ring-2 focus:ring-red-400 transition
-               "
+                                bg-[#0f1419] rounded-lg border border-white/10 shadow
+                                focus:outline-none focus:ring-2 focus:ring-red-400 transition
+                                "
+                                onClick={() => {
+                                  navigator.clipboard.writeText(
+                                    `${window.location.origin}/conference?room=${roomName}`
+                                  );
+                                  toast.success("Copied to clipboard", {
+                                    style: {
+                                      width: "200px",
+                                    },
+                                  });
+                                }}
                               >
                                 {/* left spacer to balance the right icon */}
                                 <span />

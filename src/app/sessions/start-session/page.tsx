@@ -51,15 +51,18 @@ export default function StartSessionPage() {
   );
 
   useEffect(() => {
+    const standstill = 10000;
+    const transition = 1000;
     const interval = setInterval(() => {
       paginate(1);
-    }, 4000);
+    }, standstill + transition);
     return () => clearInterval(interval);
   }, [paginate]);
 
   return (
     <div className="w-full flex relative flex-col items-center justify-center min-h-screen overflow-hidden sm:mt-[120px] mt-[90px]">
       <div className="sm:px-14 px-4 sm:mb-auto mb-[28px]">
+        {/* Modals */}
         {modalOpen && (
           <SessionModal
             onClose={() => setModalOpen(false)}
@@ -73,6 +76,8 @@ export default function StartSessionPage() {
           />
         )}
         {modalLink && <EnterLinkModal onClose={() => setModalLink(false)} />}
+
+        {/* Modal overlay */}
         <AnimatePresence>
           {(modalOpen || modalOpenFuture) && (
             <motion.div
@@ -84,6 +89,8 @@ export default function StartSessionPage() {
             />
           )}
         </AnimatePresence>
+
+        {/* Background shine effects */}
         <div className="absolute inset-0 pointer-events-none z-[-100]">
           <div className="green-shine-session-mobile md:hidden block"></div>
           <div className="green-shine-session md:block hidden"></div>
@@ -91,7 +98,10 @@ export default function StartSessionPage() {
           <div className="green-shine-session-2nd-small md:block hidden"></div>
           <div className="green-shine-session-3rd-small md:block hidden"></div>
         </div>
+
+        {/* Main container */}
         <div className="flex flex-wrap sm:p-[50px] p-[16px] text-white items-center justify-between border bg-[rgba(255,255,255,0.01)] border-[rgba(255,255,255,0.1)] backdrop-blur-[32px] rounded-[20px] w-full relative md:mb-[30px]">
+          {/* Left side text */}
           <div className="md:w-5/9 w-full sm:block flex flex-col justify-center items-center pt-[30px] sm:pr-[100px] pr-0">
             <h2 className="uppercase sm:text-[35px] text-[28px] font-bold sm:text-start text-center">
               smarter calls,{" "}
@@ -107,6 +117,7 @@ export default function StartSessionPage() {
               and your real-time decision co-pilot. Move from discussion to
               decision faster with Firesight | Sessions.
             </p>
+            {/* Buttons */}
             <div className="flex flex-wrap sm:w-auto w-full sm:mt-[50px] mt-[24px] gap-4">
               <button
                 className="flex items-center sm:text-[18px] text-[16px] px-[36px] py-[14px] text-white font-bold cursor-pointer text-center sm:w-auto w-full"
@@ -152,6 +163,7 @@ export default function StartSessionPage() {
                 </div>
               </button>
             </div>
+            {/* Sub data lists */}
             <div className="border-b-[1px] border-[rgba(255,255,255,0.1)] sm:mt-[45px] mt-[36px] w-full"></div>
             <div className="sm:flex w-full justify-around hidden flex-wrap sm:mt-[30px] gap-4">
               {subData.map((item, index) => (
@@ -190,6 +202,8 @@ export default function StartSessionPage() {
             </div>
             <div className="sm: border-0 border-b-[1px] border-[rgba(255,255,255,0.1)] block sm:hidden w-full"></div>
           </div>
+
+          {/* Right side slider */}
           <div className="sm:border border-0 border-[rgba(255,255,255,0.1)] md:w-4/9 w-full rounded-[20px] relative flex flex-col items-center min-h-[450px] h-[460px] justify-between">
             <div className="flex-1 w-full flex items-center justify-center">
               <AnimatePresence initial={false} custom={direction}>
@@ -224,7 +238,9 @@ export default function StartSessionPage() {
                   className="w-full flex items-center justify-center"
                 >
                   {(() => {
-                    const currentIndex = page % slideData.length;
+                    const currentIndex =
+                      ((page % slideData.length) + slideData.length) %
+                      slideData.length;
                     const item = slideData[currentIndex];
                     return (
                       <div>
@@ -250,6 +266,7 @@ export default function StartSessionPage() {
                 </motion.div>
               </AnimatePresence>
             </div>
+
             {/* Custom Polygon Pagination */}
             <div className="flex items-center justify-center gap-3 mt-1 mb-5 z-10 absolute bottom-[10px]">
               {slideData.map((item, idx) => (
@@ -285,6 +302,8 @@ export default function StartSessionPage() {
           </div>
         </div>
       </div>
+
+      {/* Footer */}
       <div className="w-full">
         <FireSightFooter>
           <div className="green-shine-footer-mobile md:hidden block z-[-2342]"></div>
