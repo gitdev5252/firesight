@@ -875,8 +875,12 @@ const MobileTabBarControls = React.memo(
   }
 );
 
-function MobileChipTile({ participant, setFocusedIdentity }: {
-  participant: Participant, setFocusedIdentity: (id: string | null) => void;
+function MobileChipTile({
+  participant,
+  setFocusedIdentity,
+}: {
+  participant: Participant;
+  setFocusedIdentity: (id: string | null) => void;
 }) {
   const videoRef = React.useRef<HTMLVideoElement>(null);
 
@@ -931,7 +935,7 @@ function MobileChipTile({ participant, setFocusedIdentity }: {
       onClick={() => {
         // Optional pin from mobile:
         window.pinParticipant?.(participant.identity);
-        setFocusedIdentity(participant.identity)
+        setFocusedIdentity(participant.identity);
       }}
     >
       {/* Video (or Hex fallback) */}
@@ -985,7 +989,9 @@ export default function SessionPage() {
   const [isSidebarOpen, setIsSidebarOpen] = React.useState(false);
   const [participants, setParticipants] = React.useState<Participant[]>([]);
   const [currentUser, setCurrentUser] = React.useState<string>("");
-  const [focusedIdentity, setFocusedIdentity] = React.useState<string | null>(null);
+  const [focusedIdentity, setFocusedIdentity] = React.useState<string | null>(
+    null
+  );
   // const [currentTime, setCurrentTime] = React.useState<string>("");
   const [isBottomSheetOpen, setIsBottomSheetOpen] =
     React.useState<boolean>(false);
@@ -1741,7 +1747,7 @@ export default function SessionPage() {
                           );
                         })}
                       </div>
-                      <div className="items-center justify-center flex h-8">
+                      <div className="items-center justify-center flex h-[80px]">
                         <LiveWaveform />
                       </div>
                       <div className="items-center justify-center">
