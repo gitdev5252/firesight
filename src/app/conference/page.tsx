@@ -941,7 +941,7 @@ function MobileChipTile({ participant, setFocusedIdentity }: {
           autoPlay
           playsInline
           muted={participant.isLocal}
-          className="absolute inset-0 w-full h-full object-cover"
+          className="absolute inset-0 w-full h-full object-cover custom-video"
         />
       ) : (
         <div className="flex flex-col items-center justify-center">
