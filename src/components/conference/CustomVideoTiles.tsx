@@ -182,6 +182,8 @@ export const CustomVideoTiles = ({
       {audioTracks.map((t) => {
         // Only render for remote participants
         // if (t.participant.isLocal) return null;
+        if (t.participant.isLocal) return null;  // ✅ do not render local audio
+
         return (
           <AudioTrackRenderer
             key={t.publication.trackSid}
