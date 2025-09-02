@@ -132,7 +132,7 @@ const PeopleTab = React.memo(
   }) => {
     return (
       <div>
-          <div className="bg-[rgba(255,255,255,0.02)] rounded-[20px] border border-[rgba(255,255,255,0.1)] md:backdrop-blur-[32px] p-2 mb-4 overflow-auto min-h-[70vh] max-h-[90vh]">
+        <div className="bg-[rgba(255,255,255,0.02)] rounded-[20px] border border-[rgba(255,255,255,0.1)] md:backdrop-blur-[32px] p-2 mb-4 overflow-auto min-h-[70vh] max-h-[90vh]">
           {participants && participants.length > 0 ? (
             participants.map((participant) => {
               const p = participant as Participant;
@@ -144,8 +144,34 @@ const PeopleTab = React.memo(
               return (
                 <div
                   key={p.sid}
-                  className="flex items-center gap-3 p-3 rounded-lg mb-2"
+                  className="relative flex items-center gap-3 p-3 rounded-lg mb-2"
                 >
+                  {/* Camera Off Icon (left) */}
+                  {!isCameraEnabled && (
+                    <div className="absolute right-2 top-1">
+                      <VideoOff size={20} color="#E93249" />
+                    </div>
+                  )}
+
+                  {/* Hand Raised Icon (center top) */}
+                  {raisedHands[p.identity] && (
+                    <div className="absolute left-1/2 -translate-x-1/2 top-1">
+                      <img
+                        src="/images/icons/hand-active.svg"
+                        alt="Hand Raised"
+                        width={24}
+                        height={24}
+                      />
+                    </div>
+                  )}
+
+                  {/* Mic Off Icon (top right) */}
+                  {!isMicEnabled && (
+                    <div className="absolute right-2 top-1">
+                      <MicOff size={20} color="#E93249" />
+                    </div>
+                  )}
+
                   <HexAvatar initials={initials} size={32} fontSize={12} />
 
                   <div className="flex-1">
@@ -153,33 +179,6 @@ const PeopleTab = React.memo(
                       <p className="text-white text-sm font-medium">
                         {p.identity} {isLocal && "(Host)"}
                       </p>
-                    </div>
-                  </div>
-                  <div className="flex gap-5 mr-4 items-center">
-                    <div className="w-8 h-8 rounded-full flex items-center justify-center">
-                      {raisedHands[p.identity] && (
-                        <img
-                          src="/images/icons/hand-active.svg"
-                          alt=""
-                          width={32}
-                          height={32}
-                        />
-                      )}
-                    </div>
-                    <div className="w-5 h-5 rounded-full flex items-center justify-center">
-                      {isMicEnabled ? (
-                        <Mic size={24} color="white" />
-                      ) : (
-                        <MicOff size={24} color="#E93249" />
-                      )}
-                    </div>
-
-                    <div className="w-5 h-5 rounded-full flex items-center justify-center">
-                      {isCameraEnabled ? (
-                        <Video size={24} color="white" />
-                      ) : (
-                        <VideoOff size={24} color="#E93249" />
-                      )}
                     </div>
                   </div>
                 </div>
@@ -550,11 +549,10 @@ const ConferenceControls = React.memo(
 
               <button
                 onClick={isScreenSharing ? stopScreenShare : startScreenShare}
-                className={`flex flex-col items-center gap-1 transition-colors ${
-                  isScreenSharing
-                    ? "text-green-400 hover:text-green-300"
-                    : "text-gray-400 hover:text-gray-400"
-                }`}
+                className={`flex flex-col items-center gap-1 transition-colors ${isScreenSharing
+                  ? "text-green-400 hover:text-green-300"
+                  : "text-gray-400 hover:text-gray-400"
+                  }`}
               >
                 <div className="items-center justify-center">
                   {/* <Monitor color={isScreenSharing ? "#10b981" : "white"} /> */}
@@ -570,7 +568,7 @@ const ConferenceControls = React.memo(
                   )}
                 </div>
                 <span className="text-xs mt-2">
-                  {/* {isScreenSharing ? "Present" : "Present"} */}
+                  {isScreenSharing ? "Present" : "Present"}
                 </span>
               </button>
 
@@ -701,11 +699,10 @@ const MobileConferenceControls = React.memo(
               </button>
 
               <button
-                className={`flex flex-col items-center gap-1 transition-colors ${
-                  raisedHands[currentUser]
-                    ? "text-yellow-400 hover:text-yellow-500"
-                    : "text-gray-400 hover:text-gray-400"
-                }`}
+                className={`flex flex-col items-center gap-1 transition-colors ${raisedHands[currentUser]
+                  ? "text-yellow-400 hover:text-yellow-500"
+                  : "text-gray-400 hover:text-gray-400"
+                  }`}
                 onClick={() => onToggleHandRaise(currentUser)}
               >
                 <div className="items-center justify-center">
@@ -875,25 +872,20 @@ const MobileTabBarControls = React.memo(
   }
 );
 
-function MobileChipTile({
-  participant,
-  setFocusedIdentity,
-}: {
-  participant: Participant;
-  setFocusedIdentity: (id: string | null) => void;
+
+function MobileChipTile({ participant, setFocusedIdentity, raisedHands }: {
+  participant: Participant,
+  setFocusedIdentity: (id: string | null) => void,
+  raisedHands: { [key: string]: boolean }
+
 }) {
   const videoRef = React.useRef<HTMLVideoElement>(null);
-
-  // We can subscribe to both sources; useTracks works inside LiveKitRoom
   const tracks = useTracks([Track.Source.Camera, Track.Source.ScreenShare]);
-
-  // pick screenshare first, else camera
   const source: Track.Source | null = participant.isScreenShareEnabled
     ? Track.Source.ScreenShare
     : participant.isCameraEnabled
-    ? Track.Source.Camera
-    : null;
-
+      ? Track.Source.Camera
+      : null;
   const t = React.useMemo(() => {
     if (!source) return undefined;
     return tracks.find(
@@ -901,17 +893,6 @@ function MobileChipTile({
         tr.participant.identity === participant.identity && tr.source === source
     );
   }, [tracks, participant.identity, source]);
-
-  // React.useEffect(() => {
-  //   const el = videoRef.current;
-  //   const mediaTrack = t?.publication?.track;
-  //   if (!el) return;
-  //   if (mediaTrack) {
-  //     mediaTrack.attach(el);
-  //     return () => mediaTrack.detach(el);
-  //   }
-  // }, [t?.publication?.track]);
-
   React.useEffect(() => {
     const el = videoRef.current;
     const mediaTrack = t?.publication?.track;
@@ -926,18 +907,48 @@ function MobileChipTile({
   }, [t?.publication?.track]);
   const initials = participant.identity.slice(0, 2).toUpperCase();
   const firstName = participant.identity;
-
+  const isMicEnabled = !participant.isMicrophoneEnabled === false;
+  const isCameraEnabled = !participant.isCameraEnabled === false;
+  console.log(raisedHands, "raisedHands")
   return (
     <div
       className="relative backdrop-blur-[16px] bg-white/10 border border-white/20 rounded-xl
                  flex flex-col items-center min-w-[130px] max-w-[130px] h-[140px] shadow-lg
                  justify-center text-center overflow-hidden"
       onClick={() => {
-        // Optional pin from mobile:
         window.pinParticipant?.(participant.identity);
         setFocusedIdentity(participant.identity);
       }}
     >
+
+      {/* Camera Off Icon (top left) */}
+      {!isCameraEnabled && (
+        <div className="absolute left-2 top-1">
+          <VideoOff size={20} color="gray" />
+        </div>
+      )}
+
+      {/* Hand Raised Icon (center top) */}
+      {raisedHands && raisedHands[participant.identity] && (
+        <div className="absolute left-1/2 -translate-x-1/2 top-1">
+          {/* <img
+            src="/images/icons/hand-active.svg"
+            alt="Hand Raised"
+            width={24}
+            height={24}
+          /> */}
+          <Hand color="gray" size={20} />
+
+        </div>
+      )}
+
+      {/* Mic Off Icon (top right) */}
+      {!isMicEnabled && (
+        <div className="absolute right-2 top-1">
+          <MicOff size={20} color="gray" />
+        </div>
+      )}
+
       {/* Video (or Hex fallback) */}
       {t?.publication?.track ? (
         <video
@@ -953,7 +964,6 @@ function MobileChipTile({
         </div>
       )}
 
-      {/* overlays */}
       {/* screenshare badge */}
       {source === Track.Source.ScreenShare && (
         <div className="absolute top-1 right-1 w-6 h-6 bg-green-600 rounded-full flex items-center justify-center shadow-lg">
@@ -1285,9 +1295,8 @@ export default function SessionPage() {
 
   return (
     <div
-      className={`${
-        !isMobileFull && "md:p-8 bg-[#080B16] min-h-screen flex flex-col"
-      } md:p-8 md:bg-[#080B16] md:max-h-screen md:flex md:flex-col relative`}
+      className={`${!isMobileFull && "md:p-8 bg-[#080B16] min-h-screen flex flex-col"
+        } md:p-8 md:bg-[#080B16] md:max-h-screen md:flex md:flex-col relative`}
     >
       {isDesktop ? (
         <img
@@ -1337,9 +1346,8 @@ export default function SessionPage() {
       )}
 
       <div
-        className={`w-full flex flex-col md:bg-[#0D101B] md:border md:border-[rgba(255,255,255,0.1)] rounded-[20px] md:backdrop-blur-[32px] relative transition-all duration-300 ${
-          isSidebarOpen ? "pr-120" : ""
-        } flex-1 min-h-0`}
+        className={`w-full flex flex-col md:bg-[#0D101B] md:border md:border-[rgba(255,255,255,0.1)] rounded-[20px] md:backdrop-blur-[32px] relative transition-all duration-300 ${isSidebarOpen ? "pr-120" : ""
+          } flex-1 min-h-0`}
       >
         {/* Sidebar */}
         {isSidebarOpen && (
@@ -1756,10 +1764,9 @@ export default function SessionPage() {
                   participants.length > 0 && (
                     <div className="absolute bottom-1 left-0 right-0 z-20 block md:hidden px-3 pb-2">
                       <div
-                        className={`flex gap-3 overflow-x-auto scrollbar-hide ${
-                          participants.length <= 2 &&
+                        className={`flex gap-3 overflow-x-auto scrollbar-hide ${participants.length <= 2 &&
                           "items-center justify-center"
-                        }`}
+                          }`}
                       >
                         {participants.map((p) => {
                           const participant = p as Participant;
@@ -1769,6 +1776,7 @@ export default function SessionPage() {
                                 key={participant.sid}
                                 participant={participant}
                                 setFocusedIdentity={setFocusedIdentity}
+                                raisedHands={raisedHands}
                               />
                             </>
                           );
@@ -1790,15 +1798,13 @@ export default function SessionPage() {
                 {/* Desktop View Full Screen */}
                 {!showSideRail && participants && participants.length > 0 && (
                   <div
-                    className={`absolute ${
-                      showSideRail ? "bottom-28" : "bottom-32"
-                    }  left-0 right-0 z-20 px-3 pb-2 hidden md:block`}
+                    className={`absolute ${showSideRail ? "bottom-28" : "bottom-32"
+                      }  left-0 right-0 z-20 px-3 pb-2 hidden md:block`}
                   >
                     <div
-                      className={`flex gap-3 overflow-x-auto scrollbar-hide ${
-                        participants.length <= 2 &&
+                      className={`flex gap-3 overflow-x-auto scrollbar-hide ${participants.length <= 2 &&
                         "items-center justify-center"
-                      }`}
+                        }`}
                     >
                       {participants.map((p) => {
                         const participant = p as Participant;
