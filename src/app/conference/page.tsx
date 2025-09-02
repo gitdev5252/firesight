@@ -872,10 +872,12 @@ const MobileTabBarControls = React.memo(
   }
 );
 
+
 function MobileChipTile({ participant, setFocusedIdentity, raisedHands }: {
   participant: Participant,
   setFocusedIdentity: (id: string | null) => void,
   raisedHands: { [key: string]: boolean }
+
 }) {
   const videoRef = React.useRef<HTMLVideoElement>(null);
   const tracks = useTracks([Track.Source.Camera, Track.Source.ScreenShare]);
@@ -915,7 +917,7 @@ function MobileChipTile({ participant, setFocusedIdentity, raisedHands }: {
                  justify-center text-center overflow-hidden"
       onClick={() => {
         window.pinParticipant?.(participant.identity);
-        setFocusedIdentity(participant.identity)
+        setFocusedIdentity(participant.identity);
       }}
     >
 
@@ -997,7 +999,9 @@ export default function SessionPage() {
   const [isSidebarOpen, setIsSidebarOpen] = React.useState(false);
   const [participants, setParticipants] = React.useState<Participant[]>([]);
   const [currentUser, setCurrentUser] = React.useState<string>("");
-  const [focusedIdentity, setFocusedIdentity] = React.useState<string | null>(null);
+  const [focusedIdentity, setFocusedIdentity] = React.useState<string | null>(
+    null
+  );
   // const [currentTime, setCurrentTime] = React.useState<string>("");
   const [isBottomSheetOpen, setIsBottomSheetOpen] =
     React.useState<boolean>(false);
@@ -1560,13 +1564,20 @@ export default function SessionPage() {
                             </div>
                             <div className="fixed bottom-0 left-0 right-0 z-50 md:hidden px-4 pb-8">
                               <button
-                                onClick={() => {
-                                  window.location.href = "/sessions";
-                                }}
                                 className="w-full grid grid-cols-[1fr_auto_1fr] items-center
-               bg-[#0f1419] rounded-lg border border-white/10 shadow
-               focus:outline-none focus:ring-2 focus:ring-red-400 transition
-               "
+                                bg-[#0f1419] rounded-lg border border-white/10 shadow
+                                focus:outline-none focus:ring-2 focus:ring-red-400 transition
+                                "
+                                onClick={() => {
+                                  navigator.clipboard.writeText(
+                                    `${window.location.origin}/conference?room=${roomName}`
+                                  );
+                                  toast.success("Copied to clipboard", {
+                                    style: {
+                                      width: "200px",
+                                    },
+                                  });
+                                }}
                               >
                                 {/* left spacer to balance the right icon */}
                                 <span />
@@ -1771,7 +1782,7 @@ export default function SessionPage() {
                           );
                         })}
                       </div>
-                      <div className="items-center justify-center flex h-8">
+                      <div className="items-center justify-center flex h-[80px]">
                         <LiveWaveform />
                       </div>
                       <div className="items-center justify-center">

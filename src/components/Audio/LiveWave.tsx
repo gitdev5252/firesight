@@ -108,7 +108,7 @@ export const LiveWaveform = () => {
     <canvas
       ref={canvasRef}
       height={40}
-      style={{ width: "30vw", height: "40px", display: "block" }}
+      style={{ width: "30vw", height: "60px", display: "block" }}
     />
   );
 };
