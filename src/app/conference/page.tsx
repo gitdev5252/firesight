@@ -550,10 +550,11 @@ const ConferenceControls = React.memo(
 
               <button
                 onClick={isScreenSharing ? stopScreenShare : startScreenShare}
-                className={`flex flex-col items-center gap-1 transition-colors ${isScreenSharing
-                  ? "text-green-400 hover:text-green-300"
-                  : "text-gray-400 hover:text-gray-400"
-                  }`}
+                className={`flex flex-col items-center gap-1 transition-colors ${
+                  isScreenSharing
+                    ? "text-green-400 hover:text-green-300"
+                    : "text-gray-400 hover:text-gray-400"
+                }`}
               >
                 <div className="items-center justify-center">
                   {/* <Monitor color={isScreenSharing ? "#10b981" : "white"} /> */}
@@ -700,10 +701,11 @@ const MobileConferenceControls = React.memo(
               </button>
 
               <button
-                className={`flex flex-col items-center gap-1 transition-colors ${raisedHands[currentUser]
-                  ? "text-yellow-400 hover:text-yellow-500"
-                  : "text-gray-400 hover:text-gray-400"
-                  }`}
+                className={`flex flex-col items-center gap-1 transition-colors ${
+                  raisedHands[currentUser]
+                    ? "text-yellow-400 hover:text-yellow-500"
+                    : "text-gray-400 hover:text-gray-400"
+                }`}
                 onClick={() => onToggleHandRaise(currentUser)}
               >
                 <div className="items-center justify-center">
@@ -885,8 +887,8 @@ function MobileChipTile({ participant, setFocusedIdentity }: {
   const source: Track.Source | null = participant.isScreenShareEnabled
     ? Track.Source.ScreenShare
     : participant.isCameraEnabled
-      ? Track.Source.Camera
-      : null;
+    ? Track.Source.Camera
+    : null;
 
   const t = React.useMemo(() => {
     if (!source) return undefined;
@@ -1259,8 +1261,9 @@ export default function SessionPage() {
 
   return (
     <div
-      className={`${!isMobileFull && "md:p-8 bg-[#080B16] min-h-screen flex flex-col"
-        } md:p-8 md:bg-[#080B16] md:max-h-screen md:flex md:flex-col relative`}
+      className={`${
+        !isMobileFull && "md:p-8 bg-[#080B16] min-h-screen flex flex-col"
+      } md:p-8 md:bg-[#080B16] md:max-h-screen md:flex md:flex-col relative`}
     >
       {isDesktop ? (
         <img
@@ -1310,8 +1313,9 @@ export default function SessionPage() {
       )}
 
       <div
-        className={`w-full flex flex-col md:bg-[#0D101B] md:border md:border-[rgba(255,255,255,0.1)] rounded-[20px] md:backdrop-blur-[32px] relative transition-all duration-300 ${isSidebarOpen ? "pr-120" : ""
-          } flex-1 min-h-0`}
+        className={`w-full flex flex-col md:bg-[#0D101B] md:border md:border-[rgba(255,255,255,0.1)] rounded-[20px] md:backdrop-blur-[32px] relative transition-all duration-300 ${
+          isSidebarOpen ? "pr-120" : ""
+        } flex-1 min-h-0`}
       >
         {/* Sidebar */}
         {isSidebarOpen && (
@@ -1719,9 +1723,10 @@ export default function SessionPage() {
                   participants.length > 0 && (
                     <div className="absolute bottom-1 left-0 right-0 z-20 block md:hidden px-3 pb-2">
                       <div
-                        className={`flex gap-3 overflow-x-auto scrollbar-hide ${participants.length <= 2 &&
+                        className={`flex gap-3 overflow-x-auto scrollbar-hide ${
+                          participants.length <= 2 &&
                           "items-center justify-center"
-                          }`}
+                        }`}
                       >
                         {participants.map((p) => {
                           const participant = p as Participant;
@@ -1752,13 +1757,15 @@ export default function SessionPage() {
                 {/* Desktop View Full Screen */}
                 {!showSideRail && participants && participants.length > 0 && (
                   <div
-                    className={`absolute ${showSideRail ? "bottom-28" : "bottom-32"
-                      }  left-0 right-0 z-20 px-3 pb-2 hidden md:block`}
+                    className={`absolute ${
+                      showSideRail ? "bottom-28" : "bottom-32"
+                    }  left-0 right-0 z-20 px-3 pb-2 hidden md:block`}
                   >
                     <div
-                      className={`flex gap-3 overflow-x-auto scrollbar-hide ${participants.length <= 2 &&
+                      className={`flex gap-3 overflow-x-auto scrollbar-hide ${
+                        participants.length <= 2 &&
                         "items-center justify-center"
-                        }`}
+                      }`}
                     >
                       {participants.map((p) => {
                         const participant = p as Participant;
