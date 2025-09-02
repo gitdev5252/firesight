@@ -875,7 +875,9 @@ const MobileTabBarControls = React.memo(
   }
 );
 
-function MobileChipTile({ participant }: { participant: Participant }) {
+function MobileChipTile({ participant, setFocusedIdentity }: {
+  participant: Participant, setFocusedIdentity: (id: string | null) => void;
+}) {
   const videoRef = React.useRef<HTMLVideoElement>(null);
 
   // We can subscribe to both sources; useTracks works inside LiveKitRoom
@@ -929,6 +931,7 @@ function MobileChipTile({ participant }: { participant: Participant }) {
       onClick={() => {
         // Optional pin from mobile:
         window.pinParticipant?.(participant.identity);
+        setFocusedIdentity(participant.identity)
       }}
     >
       {/* Video (or Hex fallback) */}
@@ -982,6 +985,7 @@ export default function SessionPage() {
   const [isSidebarOpen, setIsSidebarOpen] = React.useState(false);
   const [participants, setParticipants] = React.useState<Participant[]>([]);
   const [currentUser, setCurrentUser] = React.useState<string>("");
+  const [focusedIdentity, setFocusedIdentity] = React.useState<string | null>(null);
   // const [currentTime, setCurrentTime] = React.useState<string>("");
   const [isBottomSheetOpen, setIsBottomSheetOpen] =
     React.useState<boolean>(false);
@@ -1443,6 +1447,8 @@ export default function SessionPage() {
                       activeEmojis={activeEmojis}
                       showSideRail={showSideRail}
                       onToggleSideRail={handleToggleSideRail}
+                      focusedIdentity={focusedIdentity}
+                      setFocusedIdentity={setFocusedIdentity}
                     />
                   ) : (
                     <>
@@ -1451,6 +1457,8 @@ export default function SessionPage() {
                           <CustomVideoTiles
                             activeEmojis={activeEmojis}
                             isMobileFull={isMobileFull}
+                            focusedIdentity={focusedIdentity}
+                            setFocusedIdentity={setFocusedIdentity}
                           />
                         </>
                       )}
@@ -1727,6 +1735,7 @@ export default function SessionPage() {
                               <MobileChipTile
                                 key={participant.sid}
                                 participant={participant}
+                                setFocusedIdentity={setFocusedIdentity}
                               />
                             </>
                           );
