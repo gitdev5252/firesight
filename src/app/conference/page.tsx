@@ -26,6 +26,7 @@ import {
   RefreshCcwDot,
   Volume2,
   EllipsisVertical,
+  MicIcon,
 } from "lucide-react";
 import React from "react";
 import {
@@ -51,8 +52,32 @@ import { Track } from "livekit-client";
 
 const mobileTabs = ["Session", "People", "Chat", "Transcript", "Summary"];
 
-// Small helper to extract ternary class logic for readability
-const classIf = (cond: boolean, a: string, b: string) => (cond ? a : b);
+// only for development to restart meeting
+// const STORAGE_KEY = "lk-session-v1";
+
+// type Persisted = {
+//   currentUser: string;
+//   roomName: string;
+//   token: string | null;
+// };
+
+// const loadPersisted = (): Persisted | null => {
+//   try {
+//     const raw = sessionStorage.getItem(STORAGE_KEY);
+//     return raw ? JSON.parse(raw) : null;
+//   } catch { return null; }
+// };
+
+// const savePersisted = (data: Persisted) => {
+//   try { sessionStorage.setItem(STORAGE_KEY, JSON.stringify(data)); } catch { }
+// };
+
+// const clearPersisted = () => {
+//   try { sessionStorage.removeItem(STORAGE_KEY); } catch { }
+// };
+
+// // Small helper to extract ternary class logic for readability
+// const classIf = (cond: boolean, a: string, b: string) => (cond ? a : b);
 
 type Participant = {
   isScreenShareEnabled: unknown;
@@ -80,6 +105,10 @@ const Sidebar = React.memo(
     const [activeTab, setActiveTab] = React.useState("People");
     const tabs = ["People", "Chat", "Transcript", "Summary", "Prompts"];
 
+    // Helper function to choose between two class strings based on a condition
+    function classIf(cond: boolean, a: string, b: string) {
+      return cond ? a : b;
+    }
     return (
       <div className="flex flex-col min-h-0">
         <div className="flex border-b border-white/10 p-3">
@@ -147,38 +176,46 @@ const PeopleTab = React.memo(
                   className="relative flex items-center gap-3 p-3 rounded-lg mb-2"
                 >
                   {/* Camera Off Icon (left) */}
-                  {!isCameraEnabled && (
-                    <div className="absolute right-2 top-1">
-                      <VideoOff size={20} color="#E93249" />
-                    </div>
-                  )}
 
-                  {/* Hand Raised Icon (center top) */}
-                  {raisedHands[p.identity] && (
-                    <div className="absolute left-1/2 -translate-x-1/2 top-1">
-                      <img
-                        src="/images/icons/hand-active.svg"
-                        alt="Hand Raised"
-                        width={24}
-                        height={24}
-                      />
-                    </div>
-                  )}
-
-                  {/* Mic Off Icon (top right) */}
-                  {!isMicEnabled && (
-                    <div className="absolute right-2 top-1">
-                      <MicOff size={20} color="#E93249" />
-                    </div>
-                  )}
 
                   <HexAvatar initials={initials} size={32} fontSize={12} />
 
-                  <div className="flex-1">
+                  <div className="flex justify-between w-full">
                     <div className="flex items-center gap-2">
                       <p className="text-white text-sm font-medium">
                         {p.identity} {isLocal && "(Host)"}
                       </p>
+                    </div>
+                    <div className="flex items-center gap-2">
+                     
+
+                      {/* Hand Raised Icon (center top) */}
+                      {raisedHands[p.identity] && (
+                        <div className="">
+                          <img
+                            src="/images/icons/hand-active.svg"
+                            alt="Hand Raised"
+                            width={32}
+                            height={32}
+                          />
+                        </div>
+                      )}
+
+                      {/* Mic Off Icon (top right) */}
+                      {!isMicEnabled ? (
+                        <div className="">
+                          <MicOff size={20} color={!isMicEnabled ? "#E93249" : "#FFFFFF"} />
+                        </div>
+                      ) : (
+                        <div className="">
+                          <MicIcon size={20} color={!isMicEnabled ? "#E93249" : "#FFFFFF"} />
+                        </div>
+                      )}
+                       {!isCameraEnabled && (
+                        <div className="">
+                          <VideoOff size={20} color="#E93249" />
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -1026,6 +1063,63 @@ export default function SessionPage() {
   const [nameError, setNameError] = React.useState("");
   const [activeTab, setActiveTab] = React.useState("Session");
   const [showSideRail, setShowSideRail] = React.useState(true);
+  // ONLY FOR DEVELOPMENT
+  // React.useEffect(() => {
+  //   // 1) Try persisted first
+  //   const persisted = loadPersisted();
+  //   if (persisted?.currentUser && persisted?.roomName) {
+  //     setCurrentUser(persisted.currentUser);
+  //     setRoomName(persisted.roomName);
+  //     if (persisted.token) setToken(persisted.token);
+  //   }
+
+  //   // 2) Then parse URL as a fallback (first time join)
+  //   const urlParams = new URLSearchParams(window.location.search);
+  //   const nameFromUrl = urlParams.get("name");
+  //   const roomFromUrl = urlParams.get("room");
+
+  //   // If we already had persisted state, do not force the name modal again
+  //   if (!persisted?.currentUser) {
+  //     if (!nameFromUrl) {
+  //       setNameModalOpen(true);
+  //       return;
+  //     }
+  //     setCurrentUser(nameFromUrl);
+  //   }
+
+  //   // Prefer existing room; else from URL; else random
+  //   const currentRoom =
+  //     persisted?.roomName ||
+  //     roomFromUrl ||
+  //     `room-${Math.random().toString(36).slice(2, 8)}`;
+
+  //   setRoomName(currentRoom);
+
+  //   // If we already have a token, don’t fetch.
+  //   if (persisted?.token) return;
+
+  //   (async () => {
+  //     try {
+  //       const identity = persisted?.currentUser || nameFromUrl!;
+  //       const res = await fetch(
+  //         `/api/livekit-token?room=${currentRoom}&identity=${identity}`
+  //       );
+  //       if (!res.ok) throw new Error(`Token fetch failed: ${res.status}`);
+  //       const data = await res.json();
+  //       setToken(data.token);
+  //     } catch (err) {
+  //       console.error("Failed to fetch livekit token:", err);
+  //       toast.error("Unable to join session. Please try again.");
+  //       if (!persisted?.currentUser) setNameModalOpen(true);
+  //     }
+  //   })();
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
+  // React.useEffect(() => {
+  //   if (!currentUser || !roomName) return;
+  //   savePersisted({ currentUser, roomName, token });
+  //   console.log('oka')
+  // }, [currentUser, roomName, token]);
 
   const emojis = React.useMemo(
     () => [
