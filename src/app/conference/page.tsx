@@ -177,7 +177,6 @@ const PeopleTab = React.memo(
                 >
                   {/* Camera Off Icon (left) */}
 
-
                   <HexAvatar initials={initials} size={32} fontSize={12} />
 
                   <div className="flex justify-between w-full">
@@ -187,8 +186,6 @@ const PeopleTab = React.memo(
                       </p>
                     </div>
                     <div className="flex items-center gap-2">
-
-
                       {/* Hand Raised Icon (center top) */}
                       {raisedHands[p.identity] && (
                         <div className="">
@@ -204,11 +201,17 @@ const PeopleTab = React.memo(
                       {/* Mic Off Icon (top right) */}
                       {!isMicEnabled ? (
                         <div className="">
-                          <MicOff size={20} color={!isMicEnabled ? "#E93249" : "#FFFFFF"} />
+                          <MicOff
+                            size={20}
+                            color={!isMicEnabled ? "#E93249" : "#FFFFFF"}
+                          />
                         </div>
                       ) : (
                         <div className="">
-                          <MicIcon size={20} color={!isMicEnabled ? "#E93249" : "#FFFFFF"} />
+                          <MicIcon
+                            size={20}
+                            color={!isMicEnabled ? "#E93249" : "#FFFFFF"}
+                          />
                         </div>
                       )}
                       {!isCameraEnabled && (
@@ -946,7 +949,6 @@ function MobileChipTile({
   const firstName = participant.identity;
   const isMicEnabled = !participant.isMicrophoneEnabled === false;
   const isCameraEnabled = !participant.isCameraEnabled === false;
-  console.log(raisedHands, "raisedHands");
   return (
     <div
       className="relative backdrop-blur-[16px] bg-white/10 border border-white/20 rounded-xl
@@ -1061,63 +1063,6 @@ export default function SessionPage() {
   const [nameError, setNameError] = React.useState("");
   const [activeTab, setActiveTab] = React.useState("Session");
   const [showSideRail, setShowSideRail] = React.useState(true);
-  // ONLY FOR DEVELOPMENT
-  // React.useEffect(() => {
-  //   // 1) Try persisted first
-  //   const persisted = loadPersisted();
-  //   if (persisted?.currentUser && persisted?.roomName) {
-  //     setCurrentUser(persisted.currentUser);
-  //     setRoomName(persisted.roomName);
-  //     if (persisted.token) setToken(persisted.token);
-  //   }
-
-  //   // 2) Then parse URL as a fallback (first time join)
-  //   const urlParams = new URLSearchParams(window.location.search);
-  //   const nameFromUrl = urlParams.get("name");
-  //   const roomFromUrl = urlParams.get("room");
-
-  //   // If we already had persisted state, do not force the name modal again
-  //   if (!persisted?.currentUser) {
-  //     if (!nameFromUrl) {
-  //       setNameModalOpen(true);
-  //       return;
-  //     }
-  //     setCurrentUser(nameFromUrl);
-  //   }
-
-  //   // Prefer existing room; else from URL; else random
-  //   const currentRoom =
-  //     persisted?.roomName ||
-  //     roomFromUrl ||
-  //     `room-${Math.random().toString(36).slice(2, 8)}`;
-
-  //   setRoomName(currentRoom);
-
-  //   // If we already have a token, don’t fetch.
-  //   if (persisted?.token) return;
-
-  //   (async () => {
-  //     try {
-  //       const identity = persisted?.currentUser || nameFromUrl!;
-  //       const res = await fetch(
-  //         `/api/livekit-token?room=${currentRoom}&identity=${identity}`
-  //       );
-  //       if (!res.ok) throw new Error(`Token fetch failed: ${res.status}`);
-  //       const data = await res.json();
-  //       setToken(data.token);
-  //     } catch (err) {
-  //       console.error("Failed to fetch livekit token:", err);
-  //       toast.error("Unable to join session. Please try again.");
-  //       if (!persisted?.currentUser) setNameModalOpen(true);
-  //     }
-  //   })();
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []);
-  // React.useEffect(() => {
-  //   if (!currentUser || !roomName) return;
-  //   savePersisted({ currentUser, roomName, token });
-  //   console.log('oka')
-  // }, [currentUser, roomName, token]);
 
   const emojis = React.useMemo(
     () => [
@@ -1736,10 +1681,10 @@ export default function SessionPage() {
                                     />
                                     <div
                                       className="
-                  bg-white/5 rounded-lg p-3 border border-white/10 w-fit
-                  max-w-[85%] sm:max-w-[75%]
-                  whitespace-pre-wrap break-words
-                "
+                                        bg-white/5 rounded-lg p-3 border border-white/10 w-fit
+                                        max-w-[85%] sm:max-w-[75%]
+                                        whitespace-pre-wrap break-words
+                                      "
                                     >
                                       <p className="text-white/80 text-sm">
                                         {msg.message}
@@ -1863,17 +1808,17 @@ export default function SessionPage() {
                           "items-center justify-center"
                         }`}
                       >
-                        {participants.map((p) => {
+                        {participants.map((p, index) => {
                           const participant = p as Participant;
                           return (
-                            <>
+                            <div key={index}>
                               <MobileChipTile
                                 key={participant.sid}
                                 participant={participant}
                                 setFocusedIdentity={setFocusedIdentity}
                                 raisedHands={raisedHands}
                               />
-                            </>
+                            </div>
                           );
                         })}
                       </div>

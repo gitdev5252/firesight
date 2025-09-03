@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { AccessToken } from "livekit-server-sdk";
 
-export const runtime = "edge";
+// export const runtime = "edge";
+
 export async function GET(req: NextRequest) {
   const url = new URL(req.url);
   const room = url.searchParams.get("room");
