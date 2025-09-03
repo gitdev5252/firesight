@@ -549,10 +549,11 @@ const ConferenceControls = React.memo(
 
               <button
                 onClick={isScreenSharing ? stopScreenShare : startScreenShare}
-                className={`flex flex-col items-center gap-1 transition-colors ${isScreenSharing
-                  ? "text-green-400 hover:text-green-300"
-                  : "text-gray-400 hover:text-gray-400"
-                  }`}
+                className={`flex flex-col items-center gap-1 transition-colors ${
+                  isScreenSharing
+                    ? "text-green-400 hover:text-green-300"
+                    : "text-gray-400 hover:text-gray-400"
+                }`}
               >
                 <div className="items-center justify-center">
                   {/* <Monitor color={isScreenSharing ? "#10b981" : "white"} /> */}
@@ -699,10 +700,11 @@ const MobileConferenceControls = React.memo(
               </button>
 
               <button
-                className={`flex flex-col items-center gap-1 transition-colors ${raisedHands[currentUser]
-                  ? "text-yellow-400 hover:text-yellow-500"
-                  : "text-gray-400 hover:text-gray-400"
-                  }`}
+                className={`flex flex-col items-center gap-1 transition-colors ${
+                  raisedHands[currentUser]
+                    ? "text-yellow-400 hover:text-yellow-500"
+                    : "text-gray-400 hover:text-gray-400"
+                }`}
                 onClick={() => onToggleHandRaise(currentUser)}
               >
                 <div className="items-center justify-center">
@@ -800,11 +802,7 @@ const MobileTabBarControls = React.memo(
       <div className="px-4 pb-[max(env(safe-area-inset-bottom),1rem)]">
         <div className="w-full rounded-2xl border border-white/10 bg-[#080B1680] backdrop-blur-md">
           {/* GRID that auto-fits items and wraps on tiny screens */}
-          <div
-            className="
-            flex gap-3 p-3 overflow-x-auto snap-x no-scrollbar items-center
-          "
-          >
+          <div className="flex gap-3 p-3 overflow-x-auto snap-x no-scrollbar items-center">
             {/* mic */}
             <button
               onClick={toggleMicrophone}
@@ -819,7 +817,7 @@ const MobileTabBarControls = React.memo(
                 <MicOff color="red" size={22} />
               )}
             </button>
-            <div className="w-px h-8 bg-white/20 "></div>
+            <div className="w-px h-[16px] bg-white/20 "></div>
             {/* camera */}
             <button
               onClick={toggleCamera}
@@ -834,7 +832,7 @@ const MobileTabBarControls = React.memo(
                 <VideoOff color="red" size={22} />
               )}
             </button>
-            <div className="w-px h-8 bg-white/20 "></div>
+            <div className="w-px h-[16px] bg-white/20 "></div>
 
             {/* emoji */}
             <button
@@ -844,7 +842,7 @@ const MobileTabBarControls = React.memo(
             >
               <Smile color="white" size={22} />
             </button>
-            <div className="w-px h-8 bg-white/20 "></div>
+            <div className="w-px h-[16px] bg-white/20 "></div>
 
             {/* invite */}
             <button
@@ -854,7 +852,7 @@ const MobileTabBarControls = React.memo(
             >
               <Link color="white" size={22} />
             </button>
-            <div className="w-px h-8 bg-white/20 "></div>
+            <div className="w-px h-[16px] bg-white/20 "></div>
 
             {/* end call */}
             <button
@@ -872,20 +870,22 @@ const MobileTabBarControls = React.memo(
   }
 );
 
-
-function MobileChipTile({ participant, setFocusedIdentity, raisedHands }: {
-  participant: Participant,
-  setFocusedIdentity: (id: string | null) => void,
-  raisedHands: { [key: string]: boolean }
-
+function MobileChipTile({
+  participant,
+  setFocusedIdentity,
+  raisedHands,
+}: {
+  participant: Participant;
+  setFocusedIdentity: (id: string | null) => void;
+  raisedHands: { [key: string]: boolean };
 }) {
   const videoRef = React.useRef<HTMLVideoElement>(null);
   const tracks = useTracks([Track.Source.Camera, Track.Source.ScreenShare]);
   const source: Track.Source | null = participant.isScreenShareEnabled
     ? Track.Source.ScreenShare
     : participant.isCameraEnabled
-      ? Track.Source.Camera
-      : null;
+    ? Track.Source.Camera
+    : null;
   const t = React.useMemo(() => {
     if (!source) return undefined;
     return tracks.find(
@@ -909,7 +909,7 @@ function MobileChipTile({ participant, setFocusedIdentity, raisedHands }: {
   const firstName = participant.identity;
   const isMicEnabled = !participant.isMicrophoneEnabled === false;
   const isCameraEnabled = !participant.isCameraEnabled === false;
-  console.log(raisedHands, "raisedHands")
+  console.log(raisedHands, "raisedHands");
   return (
     <div
       className="relative backdrop-blur-[16px] bg-white/10 border border-white/20 rounded-xl
@@ -920,7 +920,6 @@ function MobileChipTile({ participant, setFocusedIdentity, raisedHands }: {
         setFocusedIdentity(participant.identity);
       }}
     >
-
       {/* Camera Off Icon (top left) */}
       {!isCameraEnabled && (
         <div className="absolute left-2 top-1">
@@ -938,7 +937,6 @@ function MobileChipTile({ participant, setFocusedIdentity, raisedHands }: {
             height={24}
           /> */}
           <Hand color="gray" size={20} />
-
         </div>
       )}
 
@@ -1295,8 +1293,9 @@ export default function SessionPage() {
 
   return (
     <div
-      className={`${!isMobileFull && "md:p-8 bg-[#080B16] min-h-screen flex flex-col"
-        } md:p-8 md:bg-[#080B16] md:max-h-screen md:flex md:flex-col relative`}
+      className={`${
+        !isMobileFull && "md:p-8 bg-[#080B16] min-h-screen flex flex-col"
+      } md:p-8 md:bg-[#080B16] md:max-h-screen md:flex md:flex-col relative`}
     >
       {isDesktop ? (
         <img
@@ -1346,8 +1345,9 @@ export default function SessionPage() {
       )}
 
       <div
-        className={`w-full flex flex-col md:bg-[#0D101B] md:border md:border-[rgba(255,255,255,0.1)] rounded-[20px] md:backdrop-blur-[32px] relative transition-all duration-300 ${isSidebarOpen ? "pr-120" : ""
-          } flex-1 min-h-0`}
+        className={`w-full flex flex-col md:bg-[#0D101B] md:border md:border-[rgba(255,255,255,0.1)] rounded-[20px] md:backdrop-blur-[32px] relative transition-all duration-300 ${
+          isSidebarOpen ? "pr-120" : ""
+        } flex-1 min-h-0`}
       >
         {/* Sidebar */}
         {isSidebarOpen && (
@@ -1764,9 +1764,10 @@ export default function SessionPage() {
                   participants.length > 0 && (
                     <div className="absolute bottom-1 left-0 right-0 z-20 block md:hidden px-3 pb-2">
                       <div
-                        className={`flex gap-3 overflow-x-auto scrollbar-hide ${participants.length <= 2 &&
+                        className={`flex gap-3 overflow-x-auto scrollbar-hide ${
+                          participants.length <= 2 &&
                           "items-center justify-center"
-                          }`}
+                        }`}
                       >
                         {participants.map((p) => {
                           const participant = p as Participant;
@@ -1798,13 +1799,15 @@ export default function SessionPage() {
                 {/* Desktop View Full Screen */}
                 {!showSideRail && participants && participants.length > 0 && (
                   <div
-                    className={`absolute ${showSideRail ? "bottom-28" : "bottom-32"
-                      }  left-0 right-0 z-20 px-3 pb-2 hidden md:block`}
+                    className={`absolute ${
+                      showSideRail ? "bottom-28" : "bottom-32"
+                    }  left-0 right-0 z-20 px-3 pb-2 hidden md:block`}
                   >
                     <div
-                      className={`flex gap-3 overflow-x-auto scrollbar-hide ${participants.length <= 2 &&
+                      className={`flex gap-3 overflow-x-auto scrollbar-hide ${
+                        participants.length <= 2 &&
                         "items-center justify-center"
-                        }`}
+                      }`}
                     >
                       {participants.map((p) => {
                         const participant = p as Participant;
