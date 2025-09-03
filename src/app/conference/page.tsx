@@ -53,7 +53,6 @@ function classIf(cond: boolean, a: string, b: string) {
   return cond ? a : b;
 }
 
-
 type Participant = {
   isScreenShareEnabled: unknown;
   identity: string;
@@ -134,9 +133,12 @@ const PeopleTab = React.memo(
   }) => {
     return (
       <div>
-        <div className="bg-[rgba(255,255,255,0.02)] rounded-[20px] border border-[rgba(255,255,255,0.1)] md:backdrop-blur-[32px] p-2 mb-4 overflow-auto
+        <div
+          className="bg-[rgba(255,255,255,0.02)] rounded-[20px] border border-[rgba(255,255,255,0.1)] md:backdrop-blur-[32px] p-2 mb-4 overflow-auto
         // min-h-[70vh] max-h-[90vh]
-        " style={{height: '72vh'}}>
+        "
+          style={{ height: "72vh" }}
+        >
           {participants && participants.length > 0 ? (
             participants.map((participant) => {
               const p = participant as Participant;
@@ -162,7 +164,6 @@ const PeopleTab = React.memo(
                     </div>
 
                     <div className="flex items-center gap-6">
-
                       {/* Hand Raised Icon (center top) */}
                       {raisedHands[p.identity] && (
                         <div className="">
@@ -718,14 +719,14 @@ const MobileConferenceControls = React.memo(
               </div>
             </button>
             <button
-              className={`flex flex-col items-center gap-1 transition-colors ${raisedHands[currentUser]
-                ? "text-yellow-400 hover:text-yellow-500"
-                : "text-gray-400 hover:text-gray-400"
-                }`}
+              className={`flex flex-col items-center gap-1 transition-colors ${
+                raisedHands[currentUser]
+                  ? "text-yellow-400 hover:text-yellow-500"
+                  : "text-gray-400 hover:text-gray-400"
+              }`}
               onClick={() => onToggleHandRaise(currentUser)}
             >
               <div className="items-center justify-center">
-
                 {raisedHands[currentUser] ? (
                   <img
                     src="/images/icons/hand-active.svg"
@@ -751,7 +752,8 @@ const MobileConferenceControls = React.memo(
                   alt=""
                   width={40}
                   height={40}
-                />                </div>
+                />{" "}
+              </div>
             </button>
             <div className="w-px h-4 bg-white/20"></div>
 
@@ -766,7 +768,8 @@ const MobileConferenceControls = React.memo(
                     alt=""
                     width={40}
                     height={40}
-                  />) : (
+                  />
+                ) : (
                   <img
                     src="/images/icons/hex-options.svg"
                     alt=""
@@ -777,7 +780,6 @@ const MobileConferenceControls = React.memo(
               </div>
             </button>
           </div>
-
         </div>
         {!isMobileFull && (
           <div className="flex border-b border-white/10">
@@ -805,7 +807,7 @@ const MobileTabBarControls = React.memo(
     onSendEmoji,
     currentUser,
     onInvite,
-    showEmojiBar
+    showEmojiBar,
   }: {
     onSendEmoji: (username: string) => void;
     currentUser: string;
@@ -868,12 +870,16 @@ const MobileTabBarControls = React.memo(
               className="flex h-12 w-full items-center justify-center rounded-xl transition"
               aria-label="Send emoji"
             >
-              {showEmojiBar ? <img
-                src="/images/icons/active-emoji-hex.svg"
-                alt=""
-                width={40}
-                height={40}
-              /> : <Smile color="white" size={22} />}
+              {showEmojiBar ? (
+                <img
+                  src="/images/icons/active-emoji-hex.svg"
+                  alt=""
+                  width={40}
+                  height={40}
+                />
+              ) : (
+                <Smile color="white" size={22} />
+              )}
             </button>
             <div className="w-px h-[16px] bg-white/20 "></div>
 
@@ -913,23 +919,34 @@ function MobileChipTile({
   raisedHands: { [key: string]: boolean };
 }) {
   const videoRef = React.useRef<HTMLVideoElement>(null);
-  const tracks = useTracks([Track.Source.Camera, Track.Source.ScreenShare, Track.Source.Microphone]);
+  const tracks = useTracks([
+    Track.Source.Camera,
+    Track.Source.ScreenShare,
+    Track.Source.Microphone,
+  ]);
 
   /** Which video source to render (camera/screenshare) */
   const source: Track.Source | null = participant.isScreenShareEnabled
     ? Track.Source.ScreenShare
     : participant.isCameraEnabled
+    ? Track.Source.Camera
+    : null;
   const videoRefTrack = React.useMemo(() => {
     if (!source) return undefined;
     return tracks.find(
-      tr => tr.participant.identity === participant.identity && tr.source === source
+      (tr) =>
+        tr.participant.identity === participant.identity && tr.source === source
     );
   }, [tracks, participant.identity, source]);
 
   React.useEffect(() => {
     const el = videoRef.current;
     // Use the correct type for mediaTrack
-    const mediaTrack = videoRefTrack?.publication?.track as unknown as (MediaStreamTrack & { attach?: (element: HTMLVideoElement) => void; detach?: (element: HTMLVideoElement) => void });
+    const mediaTrack = videoRefTrack?.publication
+      ?.track as unknown as MediaStreamTrack & {
+      attach?: (element: HTMLVideoElement) => void;
+      detach?: (element: HTMLVideoElement) => void;
+    };
     if (!el || !mediaTrack || typeof mediaTrack.attach !== "function") return;
     mediaTrack.attach(el);
     return () => {
@@ -943,7 +960,7 @@ function MobileChipTile({
   const micRef = React.useMemo(
     () =>
       tracks.find(
-        tr =>
+        (tr) =>
           tr.participant.identity === participant.identity &&
           tr.source === Track.Source.Microphone
       ),
@@ -989,14 +1006,13 @@ function MobileChipTile({
         // when talking → gradient border; else normal thin border
         isTalking
           ? "p-[2px] bg-[linear-gradient(90deg,#14FF00_55%,#00F0FF_62%)]"
-          : "border border-white/20"
+          : "border border-white/20",
       ].join(" ")}
       onClick={() => {
         window.pinParticipant?.(participant.identity);
         setFocusedIdentity(participant.identity);
       }}
     >
-
       {/* Inner content container (sits inside the border) */}
       <div className="relative flex-1 rounded-[10px] overflow-hidden bg-black/20">
         {/* camera off */}
@@ -1012,7 +1028,6 @@ function MobileChipTile({
             <Hand color="gray" size={20} />
           </div>
         )}
-
 
         {/* mic off */}
         {!isMicEnabled && (
@@ -1056,9 +1071,7 @@ function MobileChipTile({
       </div>
     </div>
   );
-
 }
-
 
 /* ----------------- Page ----------------- */
 export default function SessionPage() {
