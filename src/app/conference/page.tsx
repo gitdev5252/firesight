@@ -22,10 +22,6 @@ import {
   Video,
   MicOff,
   VideoOff,
-  Expand,
-  RefreshCcwDot,
-  Volume2,
-  EllipsisVertical,
   MicIcon,
 } from "lucide-react";
 import React from "react";
@@ -50,36 +46,13 @@ import { useFlipCamera } from "@/hooks/useFlipCamera";
 import { useTracks } from "@livekit/components-react";
 import { Track } from "livekit-client";
 
+import { ParticipantEvent } from "livekit-client";
+
 const mobileTabs = ["Session", "People", "Chat", "Transcript", "Summary"];
 function classIf(cond: boolean, a: string, b: string) {
   return cond ? a : b;
 }
-// only for development to restart meeting
-// const STORAGE_KEY = "lk-session-v1";
 
-// type Persisted = {
-//   currentUser: string;
-//   roomName: string;
-//   token: string | null;
-// };
-
-// const loadPersisted = (): Persisted | null => {
-//   try {
-//     const raw = sessionStorage.getItem(STORAGE_KEY);
-//     return raw ? JSON.parse(raw) : null;
-//   } catch { return null; }
-// };
-
-// const savePersisted = (data: Persisted) => {
-//   try { sessionStorage.setItem(STORAGE_KEY, JSON.stringify(data)); } catch { }
-// };
-
-// const clearPersisted = () => {
-//   try { sessionStorage.removeItem(STORAGE_KEY); } catch { }
-// };
-
-// // Small helper to extract ternary class logic for readability
-// const classIf = (cond: boolean, a: string, b: string) => (cond ? a : b);
 
 type Participant = {
   isScreenShareEnabled: unknown;
@@ -161,7 +134,9 @@ const PeopleTab = React.memo(
   }) => {
     return (
       <div>
-        <div className="bg-[rgba(255,255,255,0.02)] rounded-[20px] border border-[rgba(255,255,255,0.1)] md:backdrop-blur-[32px] p-2 mb-4 overflow-auto min-h-[70vh] max-h-[90vh]">
+        <div className="bg-[rgba(255,255,255,0.02)] rounded-[20px] border border-[rgba(255,255,255,0.1)] md:backdrop-blur-[32px] p-2 mb-4 overflow-auto
+        // min-h-[70vh] max-h-[90vh]
+        " style={{height: '72vh'}}>
           {participants && participants.length > 0 ? (
             participants.map((participant) => {
               const p = participant as Participant;
@@ -185,7 +160,9 @@ const PeopleTab = React.memo(
                         {p.identity} {isLocal && "(Host)"}
                       </p>
                     </div>
-                    <div className="flex items-center gap-2">
+
+                    <div className="flex items-center gap-6">
+
                       {/* Hand Raised Icon (center top) */}
                       {raisedHands[p.identity] && (
                         <div className="">
@@ -486,11 +463,6 @@ const ConferenceControls = React.memo(
     const { buttonProps: disconnectButtonProps } = useDisconnectButton({});
     const router = useRouter();
 
-    // const handleScreenToggle = () => {
-    //   if (isScreenSharing) stopScreenShare();
-    //   else startScreenShare();
-    // };
-
     const handleEndCall = async (e: React.MouseEvent<HTMLButtonElement>) => {
       if (disconnectButtonProps.onClick) await disconnectButtonProps.onClick(e);
       router.push("/sessions");
@@ -708,90 +680,104 @@ const MobileConferenceControls = React.memo(
     const { flipCamera, facing } = useFlipCamera();
 
     return (
-      <div className="px-6 pb-6">
+      <div className="px-2 pb-6">
         <div className="px-2 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <button
-                className="flex flex-col items-center gap-1 text-gray-400/60 hover:text-gray-400 transition-colors"
-                onClick={() => setIsMobileFull(!isMobileFull)}
-              >
-                <div className="flex items-center justify-center">
-                  <Expand color="white" />
-                </div>
-              </button>
-            </div>
+          <div className="flex gap-2 justify-evenly items-center">
+            <button
+              className="flex flex-col items-center gap-1 text-gray-400/60 hover:text-gray-400 transition-colors"
+              onClick={() => setIsMobileFull(!isMobileFull)}
+            >
+              <div className="flex items-center justify-center">
+                <img
+                  src="/images/icons/full-screen-hex.svg"
+                  alt=""
+                  width={40}
+                  height={40}
+                />
+              </div>
+            </button>
+            <div className="w-px h-4 bg-white/20"></div>
 
-            <div className="flex items-center gap-6">
-              <div className="w-px h-8 bg-white/20"></div>
-              <button
-                className="flex flex-col items-center gap-1 transition-colors text-white hover:text-gray-400"
-                onClick={flipCamera}
-                aria-label="Flip camera"
-                title={
-                  facing === "user"
-                    ? "Switch to back camera"
-                    : "Switch to front camera"
-                }
-              >
-                <div className="items-center justify-center">
-                  <RefreshCcwDot color="white" />
-                </div>
-              </button>
-
-              <button
-                className={`flex flex-col items-center gap-1 transition-colors ${
-                  raisedHands[currentUser]
-                    ? "text-yellow-400 hover:text-yellow-500"
-                    : "text-gray-400 hover:text-gray-400"
+            <button
+              className="flex flex-col items-center gap-1 transition-colors text-white hover:text-gray-400"
+              onClick={flipCamera}
+              aria-label="Flip camera"
+              title={
+                facing === "user"
+                  ? "Switch to back camera"
+                  : "Switch to front camera"
+              }
+            >
+              <div className="items-center justify-center">
+                <img
+                  src="/images/icons/turn-camera-hex.svg"
+                  alt=""
+                  width={40}
+                  height={40}
+                />
+              </div>
+            </button>
+            <button
+              className={`flex flex-col items-center gap-1 transition-colors ${raisedHands[currentUser]
+                ? "text-yellow-400 hover:text-yellow-500"
+                : "text-gray-400 hover:text-gray-400"
                 }`}
-                onClick={() => onToggleHandRaise(currentUser)}
-              >
-                <div className="items-center justify-center">
-                  {/* <Hand
-                    color={raisedHands[currentUser] ? "#fbbf24" : "white"}
-                  /> */}
-                  {raisedHands[currentUser] ? (
-                    <img
-                      src="/images/icons/hand-active.svg"
-                      alt=""
-                      width={32}
-                      height={32}
-                    />
-                  ) : (
-                    <Hand color="white" />
-                  )}
-                </div>
-              </button>
+              onClick={() => onToggleHandRaise(currentUser)}
+            >
+              <div className="items-center justify-center">
 
-              <button className="flex flex-col items-center gap-1 text-gray-400 hover:text-gray-400 transition-colors">
-                <div className="items-center justify-center">
-                  <Volume2 color="white" />
-                </div>
-              </button>
-              <div className="w-px h-8 bg-white/20"></div>
-            </div>
+                {raisedHands[currentUser] ? (
+                  <img
+                    src="/images/icons/hand-active.svg"
+                    alt=""
+                    width={40}
+                    height={40}
+                  />
+                ) : (
+                  <img
+                    src="/images/icons/raise-hand-hex.svg"
+                    alt=""
+                    width={40}
+                    height={40}
+                  />
+                )}
+              </div>
+            </button>
 
-            <div className="flex items-center gap-4">
-              <button
-                className="flex flex-col items-center gap-1 transition-colors text-gray-400 hover:text-gray-400"
-                onClick={() => setIsBottomSheetOpen(true)}
-              >
-                <div className="items-center justify-center">
-                  {!isBottomSheetOpen ? (
-                    <EllipsisVertical color="white" />
-                  ) : (
-                    <img
-                      src="/images/icons/hex-options.svg"
-                      alt=""
-                      width={28}
-                      height={28}
-                    />
-                  )}
-                </div>
-              </button>
-            </div>
+            <button className="flex flex-col items-center gap-1 text-gray-400 hover:text-gray-400 transition-colors">
+              <div className="items-center justify-center">
+                <img
+                  src="/images/icons/sound-hex.svg"
+                  alt=""
+                  width={40}
+                  height={40}
+                />                </div>
+            </button>
+            <div className="w-px h-4 bg-white/20"></div>
+
+            <button
+              className="flex flex-col items-center gap-1 transition-colors text-gray-400 hover:text-gray-400"
+              onClick={() => setIsBottomSheetOpen(true)}
+            >
+              <div className="items-center justify-center">
+                {!isBottomSheetOpen ? (
+                  <img
+                    src="/images/icons/three-dots-hex.svg"
+                    alt=""
+                    width={40}
+                    height={40}
+                  />) : (
+                  <img
+                    src="/images/icons/hex-options.svg"
+                    alt=""
+                    width={40}
+                    height={40}
+                  />
+                )}
+              </div>
+            </button>
           </div>
+
         </div>
         {!isMobileFull && (
           <div className="flex border-b border-white/10">
@@ -819,10 +805,12 @@ const MobileTabBarControls = React.memo(
     onSendEmoji,
     currentUser,
     onInvite,
+    showEmojiBar
   }: {
     onSendEmoji: (username: string) => void;
     currentUser: string;
     onInvite: () => void;
+    showEmojiBar: boolean;
   }) => {
     const {
       isMicrophoneEnabled,
@@ -880,7 +868,12 @@ const MobileTabBarControls = React.memo(
               className="flex h-12 w-full items-center justify-center rounded-xl transition"
               aria-label="Send emoji"
             >
-              <Smile color="white" size={22} />
+              {showEmojiBar ? <img
+                src="/images/icons/active-emoji-hex.svg"
+                alt=""
+                width={40}
+                height={40}
+              /> : <Smile color="white" size={22} />}
             </button>
             <div className="w-px h-[16px] bg-white/20 "></div>
 
@@ -920,107 +913,152 @@ function MobileChipTile({
   raisedHands: { [key: string]: boolean };
 }) {
   const videoRef = React.useRef<HTMLVideoElement>(null);
-  const tracks = useTracks([Track.Source.Camera, Track.Source.ScreenShare]);
+  const tracks = useTracks([Track.Source.Camera, Track.Source.ScreenShare, Track.Source.Microphone]);
+
+  /** Which video source to render (camera/screenshare) */
   const source: Track.Source | null = participant.isScreenShareEnabled
     ? Track.Source.ScreenShare
     : participant.isCameraEnabled
-    ? Track.Source.Camera
-    : null;
-  const t = React.useMemo(() => {
+  const videoRefTrack = React.useMemo(() => {
     if (!source) return undefined;
     return tracks.find(
-      (tr) =>
-        tr.participant.identity === participant.identity && tr.source === source
+      tr => tr.participant.identity === participant.identity && tr.source === source
     );
   }, [tracks, participant.identity, source]);
+
   React.useEffect(() => {
     const el = videoRef.current;
-    const mediaTrack = t?.publication?.track;
-    if (!el) return;
-    if (mediaTrack) {
-      mediaTrack.attach(el);
-      return () => {
+    // Use the correct type for mediaTrack
+    const mediaTrack = videoRefTrack?.publication?.track as unknown as (MediaStreamTrack & { attach?: (element: HTMLVideoElement) => void; detach?: (element: HTMLVideoElement) => void });
+    if (!el || !mediaTrack || typeof mediaTrack.attach !== "function") return;
+    mediaTrack.attach(el);
+    return () => {
+      if (typeof mediaTrack.detach === "function") {
         mediaTrack.detach(el);
-      };
-    }
-    return undefined;
-  }, [t?.publication?.track]);
+      }
+    };
+  }, [videoRefTrack?.publication?.track]);
+
+  /** Find this participant's mic track (for speaking state) */
+  const micRef = React.useMemo(
+    () =>
+      tracks.find(
+        tr =>
+          tr.participant.identity === participant.identity &&
+          tr.source === Track.Source.Microphone
+      ),
+    [tracks, participant.identity]
+  );
+
+  /** Speaking state with a tiny decay to avoid flicker */
+  const [isTalking, setIsTalking] = React.useState(false);
+  React.useEffect(() => {
+    const p = micRef?.participant;
+    if (!p) return;
+
+    let offTimer: ReturnType<typeof setTimeout> | undefined;
+    const handleSpeaking = () => {
+      if (p.isSpeaking) {
+        // immediate on
+        if (offTimer) clearTimeout(offTimer);
+        setIsTalking(true);
+      } else {
+        // delay turning off a touch to reduce flicker
+        offTimer = setTimeout(() => setIsTalking(false), 180);
+      }
+    };
+
+    // set initial
+    handleSpeaking();
+
+    p.on(ParticipantEvent.IsSpeakingChanged, handleSpeaking);
+    return () => {
+      p.off(ParticipantEvent.IsSpeakingChanged, handleSpeaking);
+      if (offTimer) clearTimeout(offTimer);
+    };
+  }, [micRef?.participant]);
+
   const initials = participant.identity.slice(0, 2).toUpperCase();
-  const firstName = participant.identity;
   const isMicEnabled = !participant.isMicrophoneEnabled === false;
   const isCameraEnabled = !participant.isCameraEnabled === false;
   return (
     <div
-      className="relative backdrop-blur-[16px] bg-white/10 border border-white/20 rounded-xl
-                 flex flex-col items-center min-w-[130px] max-w-[130px] h-[140px] shadow-lg
-                 justify-center text-center overflow-hidden"
+      className={[
+        "relative rounded-xl shadow-lg",
+        "flex min-w-[130px] max-w-[130px] h-[140px]",
+        // when talking → gradient border; else normal thin border
+        isTalking
+          ? "p-[2px] bg-[linear-gradient(90deg,#14FF00_55%,#00F0FF_62%)]"
+          : "border border-white/20"
+      ].join(" ")}
       onClick={() => {
         window.pinParticipant?.(participant.identity);
         setFocusedIdentity(participant.identity);
       }}
     >
-      {/* Camera Off Icon (top left) */}
-      {!isCameraEnabled && (
-        <div className="absolute left-2 top-1">
-          <VideoOff size={20} color="gray" />
-        </div>
-      )}
 
-      {/* Hand Raised Icon (center top) */}
-      {raisedHands && raisedHands[participant.identity] && (
-        <div className="absolute left-1/2 -translate-x-1/2 top-1">
-          {/* <img
-            src="/images/icons/hand-active.svg"
-            alt="Hand Raised"
-            width={24}
-            height={24}
-          /> */}
-          <Hand color="gray" size={20} />
-        </div>
-      )}
+      {/* Inner content container (sits inside the border) */}
+      <div className="relative flex-1 rounded-[10px] overflow-hidden bg-black/20">
+        {/* camera off */}
+        {!isCameraEnabled && (
+          <div className="absolute left-2 top-1 z-10">
+            <VideoOff size={20} color="gray" />
+          </div>
+        )}
 
-      {/* Mic Off Icon (top right) */}
-      {!isMicEnabled && (
-        <div className="absolute right-2 top-1">
-          <MicOff size={20} color="gray" />
-        </div>
-      )}
+        {/* hand raised */}
+        {raisedHands?.[participant.identity] && (
+          <div className="absolute left-1/2 -translate-x-1/2 top-1 z-10">
+            <Hand color="gray" size={20} />
+          </div>
+        )}
 
-      {/* Video (or Hex fallback) */}
-      {t?.publication?.track ? (
-        <video
-          ref={videoRef}
-          autoPlay
-          playsInline
-          muted={participant.isLocal}
-          className="absolute inset-0 w-full h-full object-cover custom-video"
-        />
-      ) : (
-        <div className="flex flex-col items-center justify-center">
-          <HexAvatar initials={initials} size={84} fontSize={24} />
-        </div>
-      )}
 
-      {/* screenshare badge */}
-      {source === Track.Source.ScreenShare && (
-        <div className="absolute top-1 right-1 w-6 h-6 bg-green-600 rounded-full flex items-center justify-center shadow-lg">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
-            <path d="M3 5h18v12H3z" stroke="white" strokeWidth="2" />
-            <path d="M8 19h8" stroke="white" strokeWidth="2" />
-          </svg>
-        </div>
-      )}
+        {/* mic off */}
+        {!isMicEnabled && (
+          <div className="absolute right-2 top-1 z-10">
+            <MicOff size={20} color="gray" />
+          </div>
+        )}
 
-      {/* name chip */}
-      <div className="absolute bottom-2 left-1/2 -translate-x-1/2">
-        <div className="px-3 py-1 rounded-xl bg-black/40 border border-white/10 text-[11px] leading-none text-white/90 max-w-[90%] truncate">
-          {firstName}
-          {participant.isLocal && " (You)"}
+        {/* video or avatar (now inside inner wrapper) */}
+        {videoRefTrack?.publication?.track ? (
+          <video
+            ref={videoRef}
+            autoPlay
+            playsInline
+            muted={participant.isLocal}
+            className="absolute inset-0 w-full h-full object-cover"
+          />
+        ) : (
+          <div className="absolute inset-0 flex items-center justify-center">
+            <HexAvatar initials={initials} size={84} fontSize={24} />
+          </div>
+        )}
+
+        {/* screenshare badge */}
+        {source === Track.Source.ScreenShare && (
+          <div className="absolute top-1 right-1 w-6 h-6 bg-green-600 rounded-full flex items-center justify-center shadow-lg z-10">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
+              <path d="M3 5h18v12H3z" stroke="white" strokeWidth="2" />
+              <path d="M8 19h8" stroke="white" strokeWidth="2" />
+            </svg>
+          </div>
+        )}
+
+        {/* name chip */}
+        <div className="absolute bottom-2 left-1/2 -translate-x-1/2 z-10">
+          <div className="px-3 py-1 rounded-xl bg-black/40 border border-white/10 text-[11px] leading-none text-white/90 max-w-[90%] truncate">
+            {participant.identity}
+            {participant.isLocal && " (You)"}
+          </div>
         </div>
       </div>
     </div>
   );
+
 }
+
 
 /* ----------------- Page ----------------- */
 export default function SessionPage() {
@@ -1738,9 +1776,10 @@ export default function SessionPage() {
                   )}
                 </ShowSideRailProvider>
                 <div
-                  className="md:hidden fixed top-0 left-0 right-0 z-40 
-                backdrop-blur border-b border-white/10
-                pt-[env(safe-area-inset-top)] bg-[#080b1649]"
+                  className="md:hidden fixed top-0 left-0 right-0 z-40
+             backdrop-blur
+             pt-[env(safe-area-inset-top)]
+             bg-gradient-to-b from-black/80 to-transparent"
                 >
                   <MobileConferenceControls
                     onInvite={() => setIsModalOpen(true)}
@@ -1831,6 +1870,7 @@ export default function SessionPage() {
                           currentUser={currentUser}
                           onInvite={() => setIsModalOpen(true)}
                           onSendEmoji={() => setShowEmojiBar((v) => !v)}
+                          showEmojiBar={showEmojiBar}
                         />
                       </div>
                     </div>
