@@ -39,6 +39,7 @@ const pickSource = (p: Participant): Track.Source | null => {
 
 export const CustomVideoTiles = ({
   activeEmojis,
+  activeHands,
   showSideRail,
   onToggleSideRail,
   isMobileFull = false,
@@ -47,7 +48,9 @@ export const CustomVideoTiles = ({
 }: {
   activeEmojis?: {
     [key: string]: { emoji: string; timestamp: number; username: string };
-
+  };
+  activeHands?: {
+    [key: string]: { timestamp: number; username: string };
   };
   showSideRail?: boolean;
   onToggleSideRail?: () => void;
@@ -192,6 +195,24 @@ export const CustomVideoTiles = ({
         );
       })}
       <div className="w-full h-full flex gap-3 min-h-0">
+        {/* Hand raise overlays (like emoji overlays) */}
+        {activeHands &&
+          Object.values(activeHands).map((handData, index) => (
+            <div
+              key={`hand-${handData.username}-${handData.timestamp}`}
+              className="absolute bottom-36 z-40 pointer-events-none"
+              style={{ left: `${8 + index * 120}px` }}
+            >
+              <div className="animate-float-up">
+                <div className="bg-[#080B16] backdrop-blur-lg rounded-full px-5 py-3 gap-3 shadow-2xl items-center flex flex-col">
+                  <span className="text-5xl">✋</span>
+                  <p className="text-white font-bold text-lg">
+                    {handData.username}
+                  </p>
+                </div>
+              </div>
+            </div>
+          ))}
         {/* Main area */}
         <div className="flex-1 min-w-0 min-h-0">
           <div className="w-full h-full max-h-[99vh] md:h-[95vh]">
