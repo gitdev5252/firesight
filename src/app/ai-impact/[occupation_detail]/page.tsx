@@ -6,6 +6,8 @@ import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import React from "react";
 
+export const runtime = "edge";
+
 import { Button } from "@/components/ui/button";
 import {
   useGetOccupationByNameQuery,
