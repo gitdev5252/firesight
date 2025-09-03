@@ -51,7 +51,9 @@ import { useTracks } from "@livekit/components-react";
 import { Track } from "livekit-client";
 
 const mobileTabs = ["Session", "People", "Chat", "Transcript", "Summary"];
-
+function classIf(cond: boolean, a: string, b: string) {
+  return cond ? a : b;
+}
 // only for development to restart meeting
 // const STORAGE_KEY = "lk-session-v1";
 
@@ -106,9 +108,7 @@ const Sidebar = React.memo(
     const tabs = ["People", "Chat", "Transcript", "Summary", "Prompts"];
 
     // Helper function to choose between two class strings based on a condition
-    function classIf(cond: boolean, a: string, b: string) {
-      return cond ? a : b;
-    }
+
     return (
       <div className="flex flex-col min-h-0">
         <div className="flex border-b border-white/10 p-3">
@@ -187,7 +187,7 @@ const PeopleTab = React.memo(
                       </p>
                     </div>
                     <div className="flex items-center gap-2">
-                     
+
 
                       {/* Hand Raised Icon (center top) */}
                       {raisedHands[p.identity] && (
@@ -211,7 +211,7 @@ const PeopleTab = React.memo(
                           <MicIcon size={20} color={!isMicEnabled ? "#E93249" : "#FFFFFF"} />
                         </div>
                       )}
-                       {!isCameraEnabled && (
+                      {!isCameraEnabled && (
                         <div className="">
                           <VideoOff size={20} color="#E93249" />
                         </div>
