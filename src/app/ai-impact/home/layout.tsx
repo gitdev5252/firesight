@@ -5,10 +5,10 @@ import { Button } from "@/components/ui/button";
 import "./page.css";
 import { motion } from "framer-motion";
 import React, { useEffect, useRef, useState, createContext } from "react";
-// import { usePathname } from "next/navigation";
 import Link from "next/link";
 import AIImpactFooter from "@/layouts/AIImpactFooter";
 
+export const runtime = "edge";
 export const SearchContext = createContext<{
   searchTerm: string;
   setSearchTerm: (v: string) => void;
