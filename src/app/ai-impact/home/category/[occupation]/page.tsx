@@ -11,6 +11,8 @@ import { useState, useContext } from "react";
 import { SearchContext } from "../../layout";
 import { Occupation } from "@/types/occupation";
 
+export const runtime = "edge";
+
 export default function OccupationPage() {
   const params = useParams();
   const occupation = params.occupation

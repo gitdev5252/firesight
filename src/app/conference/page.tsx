@@ -22,10 +22,6 @@ import {
   Video,
   MicOff,
   VideoOff,
-  // Expand,
-  // RefreshCcwDot,
-  // Volume2,
-  // EllipsisVertical,
   MicIcon,
 } from "lucide-react";
 import React from "react";
@@ -56,31 +52,7 @@ const mobileTabs = ["Session", "People", "Chat", "Transcript", "Summary"];
 function classIf(cond: boolean, a: string, b: string) {
   return cond ? a : b;
 }
-// only for development to restart meeting
-// const STORAGE_KEY = "lk-session-v1";
 
-// type Persisted = {
-//   currentUser: string;
-//   roomName: string;
-//   token: string | null;
-// };
-
-// const loadPersisted = (): Persisted | null => {
-//   try {
-//     const raw = sessionStorage.getItem(STORAGE_KEY);
-//     return raw ? JSON.parse(raw) : null;
-//   } catch { return null; }
-// };
-
-// const savePersisted = (data: Persisted) => {
-//   try { sessionStorage.setItem(STORAGE_KEY, JSON.stringify(data)); } catch { }
-// };
-
-// const clearPersisted = () => {
-//   try { sessionStorage.removeItem(STORAGE_KEY); } catch { }
-// };
-
-// Small helper to extract ternary class logic for readability
 
 type Participant = {
   isScreenShareEnabled: unknown;
@@ -180,7 +152,6 @@ const PeopleTab = React.memo(
                 >
                   {/* Camera Off Icon (left) */}
 
-
                   <HexAvatar initials={initials} size={32} fontSize={12} />
 
                   <div className="flex justify-between w-full">
@@ -189,8 +160,8 @@ const PeopleTab = React.memo(
                         {p.identity} {isLocal && "(Host)"}
                       </p>
                     </div>
-                    <div className="flex items-center gap-6">
 
+                    <div className="flex items-center gap-6">
 
                       {/* Hand Raised Icon (center top) */}
                       {raisedHands[p.identity] && (
@@ -207,11 +178,17 @@ const PeopleTab = React.memo(
                       {/* Mic Off Icon (top right) */}
                       {!isMicEnabled ? (
                         <div className="">
-                          <MicOff size={20} color={!isMicEnabled ? "#E93249" : "#FFFFFF"} />
+                          <MicOff
+                            size={20}
+                            color={!isMicEnabled ? "#E93249" : "#FFFFFF"}
+                          />
                         </div>
                       ) : (
                         <div className="">
-                          <MicIcon size={20} color={!isMicEnabled ? "#E93249" : "#FFFFFF"} />
+                          <MicIcon
+                            size={20}
+                            color={!isMicEnabled ? "#E93249" : "#FFFFFF"}
+                          />
                         </div>
                       )}
                       {!isCameraEnabled && (
@@ -486,11 +463,6 @@ const ConferenceControls = React.memo(
     const { buttonProps: disconnectButtonProps } = useDisconnectButton({});
     const router = useRouter();
 
-    // const handleScreenToggle = () => {
-    //   if (isScreenSharing) stopScreenShare();
-    //   else startScreenShare();
-    // };
-
     const handleEndCall = async (e: React.MouseEvent<HTMLButtonElement>) => {
       if (disconnectButtonProps.onClick) await disconnectButtonProps.onClick(e);
       router.push("/sessions");
@@ -589,10 +561,11 @@ const ConferenceControls = React.memo(
 
               <button
                 onClick={isScreenSharing ? stopScreenShare : startScreenShare}
-                className={`flex flex-col items-center gap-1 transition-colors ${isScreenSharing
-                  ? "text-green-400 hover:text-green-300"
-                  : "text-gray-400 hover:text-gray-400"
-                  }`}
+                className={`flex flex-col items-center gap-1 transition-colors ${
+                  isScreenSharing
+                    ? "text-green-400 hover:text-green-300"
+                    : "text-gray-400 hover:text-gray-400"
+                }`}
               >
                 <div className="items-center justify-center">
                   {/* <Monitor color={isScreenSharing ? "#10b981" : "white"} /> */}
@@ -803,112 +776,8 @@ const MobileConferenceControls = React.memo(
                 )}
               </div>
             </button>
-            {/* <div className="w-px h-8 bg-white/20 ml-2"></div> */}
-
-            {/* <span className="text-white">Hello</span> */}
           </div>
-          {/* <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <button
-                className="flex flex-col items-center gap-1 text-gray-400/60 hover:text-gray-400 transition-colors"
-                onClick={() => setIsMobileFull(!isMobileFull)}
-              >
-                <div className="flex items-center justify-center">
-                  <img
-                    src="/images/icons/full-screen-hex.svg"
-                    alt=""
-                    width={40}
-                    height={40}
-                  />
-                </div>
-              </button>
-            </div>
 
-            <div className="flex items-center gap-6">
-              <div className="w-px h-8 bg-white/20"></div>
-              <button
-                className="flex flex-col items-center gap-1 transition-colors text-white hover:text-gray-400"
-                onClick={flipCamera}
-                aria-label="Flip camera"
-                title={
-                  facing === "user"
-                    ? "Switch to back camera"
-                    : "Switch to front camera"
-                }
-              >
-                <div className="items-center justify-center">
-                  <img
-                    src="/images/icons/turn-camera-hex.svg"
-                    alt=""
-                    width={40}
-                    height={40}
-                  />
-                </div>
-              </button>
-
-              <button
-                className={`flex flex-col items-center gap-1 transition-colors ${raisedHands[currentUser]
-                  ? "text-yellow-400 hover:text-yellow-500"
-                  : "text-gray-400 hover:text-gray-400"
-                  }`}
-                onClick={() => onToggleHandRaise(currentUser)}
-              >
-                <div className="items-center justify-center">
-          
-                  {raisedHands[currentUser] ? (
-                    <img
-                      src="/images/icons/hand-active.svg"
-                      alt=""
-                      width={50}
-                      height={50}
-                    />
-                  ) : (
-                    <img
-                      src="/images/icons/raise-hand-hex.svg"
-                      alt=""
-                      width={40}
-                      height={40}
-                    />
-                  )}
-                </div>
-              </button>
-
-              <button className="flex flex-col items-center gap-1 text-gray-400 hover:text-gray-400 transition-colors">
-                <div className="items-center justify-center">
-                  <img
-                    src="/images/icons/sound-hex.svg"
-                    alt=""
-                    width={40}
-                    height={40}
-                  />                </div>
-              </button>
-              <div className="w-px h-8 bg-white/20"></div>
-            </div>
-
-            <div className="flex items-center gap-4">
-              <button
-                className="flex flex-col items-center gap-1 transition-colors text-gray-400 hover:text-gray-400"
-                onClick={() => setIsBottomSheetOpen(true)}
-              >
-                <div className="items-center justify-center">
-                  {!isBottomSheetOpen ? (
-                    <img
-                      src="/images/icons/three-dots-hex.svg"
-                      alt=""
-                      width={40}
-                      height={40}
-                    />) : (
-                    <img
-                      src="/images/icons/hex-options.svg"
-                      alt=""
-                      width={40}
-                      height={40}
-                    />
-                  )}
-                </div>
-              </button>
-            </div>
-          </div> */}
         </div>
         {!isMobileFull && (
           <div className="flex border-b border-white/10">
@@ -961,11 +830,7 @@ const MobileTabBarControls = React.memo(
       <div className="px-4 pb-[max(env(safe-area-inset-bottom),1rem)]">
         <div className="w-full rounded-2xl border border-white/10 bg-[#080B1680] backdrop-blur-md">
           {/* GRID that auto-fits items and wraps on tiny screens */}
-          <div
-            className="
-            flex gap-3 p-3 overflow-x-auto snap-x no-scrollbar items-center
-          "
-          >
+          <div className="flex gap-3 p-3 overflow-x-auto snap-x no-scrollbar items-center">
             {/* mic */}
             <button
               onClick={toggleMicrophone}
@@ -980,7 +845,7 @@ const MobileTabBarControls = React.memo(
                 <MicOff color="red" size={22} />
               )}
             </button>
-            <div className="w-px h-8 bg-white/20 "></div>
+            <div className="w-px h-[16px] bg-white/20 "></div>
             {/* camera */}
             <button
               onClick={toggleCamera}
@@ -995,7 +860,7 @@ const MobileTabBarControls = React.memo(
                 <VideoOff color="red" size={22} />
               )}
             </button>
-            <div className="w-px h-8 bg-white/20 "></div>
+            <div className="w-px h-[16px] bg-white/20 "></div>
 
             {/* emoji */}
             <button
@@ -1010,7 +875,7 @@ const MobileTabBarControls = React.memo(
                 height={40}
               /> : <Smile color="white" size={22} />}
             </button>
-            <div className="w-px h-8 bg-white/20 "></div>
+            <div className="w-px h-[16px] bg-white/20 "></div>
 
             {/* invite */}
             <button
@@ -1020,7 +885,7 @@ const MobileTabBarControls = React.memo(
             >
               <Link color="white" size={22} />
             </button>
-            <div className="w-px h-8 bg-white/20 "></div>
+            <div className="w-px h-[16px] bg-white/20 "></div>
 
             {/* end call */}
             <button
@@ -1037,6 +902,7 @@ const MobileTabBarControls = React.memo(
     );
   }
 );
+
 function MobileChipTile({
   participant,
   setFocusedIdentity,
@@ -1053,9 +919,6 @@ function MobileChipTile({
   const source: Track.Source | null = participant.isScreenShareEnabled
     ? Track.Source.ScreenShare
     : participant.isCameraEnabled
-      ? Track.Source.Camera
-      : null;
-
   const videoRefTrack = React.useMemo(() => {
     if (!source) return undefined;
     return tracks.find(
@@ -1118,7 +981,6 @@ function MobileChipTile({
   const initials = participant.identity.slice(0, 2).toUpperCase();
   const isMicEnabled = !participant.isMicrophoneEnabled === false;
   const isCameraEnabled = !participant.isCameraEnabled === false;
-
   return (
     <div
       className={[
@@ -1134,6 +996,7 @@ function MobileChipTile({
         setFocusedIdentity(participant.identity);
       }}
     >
+
       {/* Inner content container (sits inside the border) */}
       <div className="relative flex-1 rounded-[10px] overflow-hidden bg-black/20">
         {/* camera off */}
@@ -1149,6 +1012,7 @@ function MobileChipTile({
             <Hand color="gray" size={20} />
           </div>
         )}
+
 
         {/* mic off */}
         {!isMicEnabled && (
@@ -1237,63 +1101,6 @@ export default function SessionPage() {
   const [nameError, setNameError] = React.useState("");
   const [activeTab, setActiveTab] = React.useState("Session");
   const [showSideRail, setShowSideRail] = React.useState(true);
-  // ONLY FOR DEVELOPMENT
-  // React.useEffect(() => {
-  //   // 1) Try persisted first
-  //   const persisted = loadPersisted();
-  //   if (persisted?.currentUser && persisted?.roomName) {
-  //     setCurrentUser(persisted.currentUser);
-  //     setRoomName(persisted.roomName);
-  //     if (persisted.token) setToken(persisted.token);
-  //   }
-
-  //   // 2) Then parse URL as a fallback (first time join)
-  //   const urlParams = new URLSearchParams(window.location.search);
-  //   const nameFromUrl = urlParams.get("name");
-  //   const roomFromUrl = urlParams.get("room");
-
-  //   // If we already had persisted state, do not force the name modal again
-  //   if (!persisted?.currentUser) {
-  //     if (!nameFromUrl) {
-  //       setNameModalOpen(true);
-  //       return;
-  //     }
-  //     setCurrentUser(nameFromUrl);
-  //   }
-
-  //   // Prefer existing room; else from URL; else random
-  //   const currentRoom =
-  //     persisted?.roomName ||
-  //     roomFromUrl ||
-  //     `room-${Math.random().toString(36).slice(2, 8)}`;
-
-  //   setRoomName(currentRoom);
-
-  //   // If we already have a token, don’t fetch.
-  //   if (persisted?.token) return;
-
-  //   (async () => {
-  //     try {
-  //       const identity = persisted?.currentUser || nameFromUrl!;
-  //       const res = await fetch(
-  //         `/api/livekit-token?room=${currentRoom}&identity=${identity}`
-  //       );
-  //       if (!res.ok) throw new Error(`Token fetch failed: ${res.status}`);
-  //       const data = await res.json();
-  //       setToken(data.token);
-  //     } catch (err) {
-  //       console.error("Failed to fetch livekit token:", err);
-  //       toast.error("Unable to join session. Please try again.");
-  //       if (!persisted?.currentUser) setNameModalOpen(true);
-  //     }
-  //   })();
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []);
-  // React.useEffect(() => {
-  //   if (!currentUser || !roomName) return;
-  //   savePersisted({ currentUser, roomName, token });
-  //   console.log('oka')
-  // }, [currentUser, roomName, token]);
 
   const emojis = React.useMemo(
     () => [
@@ -1563,8 +1370,9 @@ export default function SessionPage() {
 
   return (
     <div
-      className={`${!isMobileFull && "md:p-8 bg-[#080B16] min-h-screen flex flex-col"
-        } md:p-8 md:bg-[#080B16] md:max-h-screen md:flex md:flex-col relative`}
+      className={`${
+        !isMobileFull && "md:p-8 bg-[#080B16] min-h-screen flex flex-col"
+      } md:p-8 md:bg-[#080B16] md:max-h-screen md:flex md:flex-col relative`}
     >
       {isDesktop ? (
         <img
@@ -1614,8 +1422,9 @@ export default function SessionPage() {
       )}
 
       <div
-        className={`w-full flex flex-col md:bg-[#0D101B] md:border md:border-[rgba(255,255,255,0.1)] rounded-[20px] md:backdrop-blur-[32px] relative transition-all duration-300 ${isSidebarOpen ? "pr-120" : ""
-          } flex-1 min-h-0`}
+        className={`w-full flex flex-col md:bg-[#0D101B] md:border md:border-[rgba(255,255,255,0.1)] rounded-[20px] md:backdrop-blur-[32px] relative transition-all duration-300 ${
+          isSidebarOpen ? "pr-120" : ""
+        } flex-1 min-h-0`}
       >
         {/* Sidebar */}
         {isSidebarOpen && (
@@ -1910,10 +1719,10 @@ export default function SessionPage() {
                                     />
                                     <div
                                       className="
-                  bg-white/5 rounded-lg p-3 border border-white/10 w-fit
-                  max-w-[85%] sm:max-w-[75%]
-                  whitespace-pre-wrap break-words
-                "
+                                        bg-white/5 rounded-lg p-3 border border-white/10 w-fit
+                                        max-w-[85%] sm:max-w-[75%]
+                                        whitespace-pre-wrap break-words
+                                      "
                                     >
                                       <p className="text-white/80 text-sm">
                                         {msg.message}
@@ -2033,21 +1842,22 @@ export default function SessionPage() {
                   participants.length > 0 && (
                     <div className="absolute bottom-1 left-0 right-0 z-20 block md:hidden px-3 pb-2">
                       <div
-                        className={`flex gap-3 overflow-x-auto scrollbar-hide ${participants.length <= 2 &&
+                        className={`flex gap-3 overflow-x-auto scrollbar-hide ${
+                          participants.length <= 2 &&
                           "items-center justify-center"
-                          }`}
+                        }`}
                       >
-                        {participants.map((p) => {
+                        {participants.map((p, index) => {
                           const participant = p as Participant;
                           return (
-                            <>
+                            <div key={index}>
                               <MobileChipTile
                                 key={participant.sid}
                                 participant={participant}
                                 setFocusedIdentity={setFocusedIdentity}
                                 raisedHands={raisedHands}
                               />
-                            </>
+                            </div>
                           );
                         })}
                       </div>
@@ -2068,13 +1878,15 @@ export default function SessionPage() {
                 {/* Desktop View Full Screen */}
                 {!showSideRail && participants && participants.length > 0 && (
                   <div
-                    className={`absolute ${showSideRail ? "bottom-28" : "bottom-32"
-                      }  left-0 right-0 z-20 px-3 pb-2 hidden md:block`}
+                    className={`absolute ${
+                      showSideRail ? "bottom-28" : "bottom-32"
+                    }  left-0 right-0 z-20 px-3 pb-2 hidden md:block`}
                   >
                     <div
-                      className={`flex gap-3 overflow-x-auto scrollbar-hide ${participants.length <= 2 &&
+                      className={`flex gap-3 overflow-x-auto scrollbar-hide ${
+                        participants.length <= 2 &&
                         "items-center justify-center"
-                        }`}
+                      }`}
                     >
                       {participants.map((p) => {
                         const participant = p as Participant;

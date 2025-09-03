@@ -1,14 +1,19 @@
-'use client';
-import { use } from 'react';
-import { useSearchParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
-import VideoRoom from '@/components/video/VideoRoom';
-import { LIVEKIT_CONFIG } from '@/lib/livekit/config';
+"use client";
+import { use } from "react";
+import { useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
+import VideoRoom from "@/components/video/VideoRoom";
+import { LIVEKIT_CONFIG } from "@/lib/livekit/config";
 
-export default function SessionPage({ params }: { params: Promise<{ id: string }> }) {
+export const runtime = "edge";
+export default function SessionPage({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
   const { id } = use(params); // Unwrap the params Promise
   const searchParams = useSearchParams();
-  const type = searchParams.get('type');
+  const type = searchParams.get("type");
   const [token, setToken] = useState<string | null>(null);
 
   useEffect(() => {
@@ -23,9 +28,12 @@ export default function SessionPage({ params }: { params: Promise<{ id: string }
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50">
-      <h1 className="text-2xl font-bold mb-4 text-gray-800">Session ID: {id}</h1>
+      <h1 className="text-2xl font-bold mb-4 text-gray-800">
+        Session ID: {id}
+      </h1>
       <h2 className="text-xl text-gray-700 mb-8">
-        Session Type: {type === 'agent' ? 'Agent (1:1 with AI)' : 'Conference (Multi-user)'}
+        Session Type:{" "}
+        {type === "agent" ? "Agent (1:1 with AI)" : "Conference (Multi-user)"}
       </h2>
       {token ? (
         <div className="w-full max-w-6xl">

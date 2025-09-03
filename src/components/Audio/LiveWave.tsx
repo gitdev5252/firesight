@@ -20,9 +20,9 @@ export const LiveWaveform = () => {
 
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d")!;
-    const BAR_COUNT = 70;
-    const PADDING = 3; // gap between bars
-    const BAR_RADIUS = 2; // rounded top radius
+    const BAR_COUNT = 40;
+    const PADDING = 5; // gap between bars
+    const BAR_RADIUS = 0; // rounded top radius
 
     // one-time audio setup
     if (!audioCtxRef.current) {
@@ -60,7 +60,7 @@ export const LiveWaveform = () => {
       for (let i = 0; i < BAR_COUNT; i++) {
         const raw = dataArrayRef.current[i] || 0;
         // scale to canvas height
-        const barHeight = (raw / 255) * height;
+        const barHeight = (raw / 150) * height;
 
         // horizontal position
         const x = i * (barWidth + PADDING);
@@ -77,7 +77,7 @@ export const LiveWaveform = () => {
         ctx.roundRect(x, y / 2, barWidth, barHeight, [
           BAR_RADIUS,
           BAR_RADIUS,
-          100,
+          200,
           0,
         ]);
         ctx.fill();
@@ -108,7 +108,8 @@ export const LiveWaveform = () => {
     <canvas
       ref={canvasRef}
       height={40}
-      style={{ width: "30vw", height: "60px", display: "block" }}
+      style={{ height: "60px", display: "block" }}
+      className="sm:w-[30vw] w-[80vw]"
     />
   );
 };
