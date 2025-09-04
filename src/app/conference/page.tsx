@@ -88,13 +88,17 @@ const Sidebar = React.memo(
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
-              className={`flex-1 px-2 py-3 text-xs font-medium transition-colors ${classIf(
-                activeTab === tab,
-                "text-white border-b-1 border-green-400 mt-1",
-                "text-white/60 hover:text-white/80 mt-1"
-              )}`}
+              className={`flex-1 px-2 py-3 text-xs font-medium transition-colors `}
             >
-              {tab}
+              <span
+                className={` ${classIf(
+                  activeTab === tab,
+                  "text-white border-b-3 border-green-400 mt-1 sm:pb-[20px]",
+                  "text-white/60 hover:text-white/80 mt-1"
+                )}`}
+              >
+                {tab}
+              </span>
             </button>
           ))}
         </div>
@@ -786,14 +790,18 @@ const MobileConferenceControls = React.memo(
             {mobileTabs.map((tab) => (
               <button
                 key={tab}
-                className={`flex-1 px-2 py-3 text-xs font-medium transition-colors ${classIf(
-                  activeTab === tab,
-                  "text-white border-b-2 border-green-500",
-                  "text-white/60 hover:text-white/80"
-                )}`}
                 onClick={() => setActiveTab(tab)}
+                className={`flex-1 px-2 py-3 text-xs font-medium transition-colors `}
               >
-                {tab}
+                <span
+                  className={` ${classIf(
+                    activeTab === tab,
+                    "text-white border-b-3 border-green-400 mt-1 pb-[9px]",
+                    "text-white/60 hover:text-white/80 mt-1"
+                  )}`}
+                >
+                  {tab}
+                </span>
               </button>
             ))}
           </div>

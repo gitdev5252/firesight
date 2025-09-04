@@ -99,7 +99,7 @@ export const LiveWaveform = () => {
       <img
         src="/images/icons/soundwave.svg"
         alt="soundwave"
-        style={{ width: "30vw", height: "auto" }}
+        className="lg:w-[40vw] w-[80vw] h-auto"
       />
     );
   }
