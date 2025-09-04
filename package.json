@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "start:caption-bot": "tsx bots/livekit-caption-bot/bot.ts"
+    "start:caption-bot": "tsx bots/livekit-caption-bot/bot.ts",
+    "build:cf": "next build && npx @cloudflare/next-on-pages"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.1",
@@ -40,6 +41,7 @@
     "zod": "^4.0.17"
   },
   "devDependencies": {
+    "@cloudflare/next-on-pages": "^1.13.15",
     "@eslint/eslintrc": "^3",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
