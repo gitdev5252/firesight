@@ -856,7 +856,9 @@ const MobileTabBarControls = React.memo(
                 <MicOff color="red" size={22} />
               )}
             </button>
-            <div className="w-px h-8 bg-white/20 "></div>
+            {/* <div className="w-px h-8 bg-white/20 "></div> */}
+            <div className="self-stretch shrink-0 border-l border-white/20" />
+
             {/* camera */}
             <button
               onClick={toggleCamera}
@@ -871,7 +873,8 @@ const MobileTabBarControls = React.memo(
                 <VideoOff color="red" size={22} />
               )}
             </button>
-            <div className="w-px h-8 bg-white/20 "></div>
+            {/* <div className="w-px h-8 bg-white/20 "></div> */}
+            <div className="self-stretch shrink-0 border-l border-white/20" />
 
             {/* emoji */}
             <button
@@ -890,7 +893,8 @@ const MobileTabBarControls = React.memo(
                 <Smile color="white" size={22} />
               )}
             </button>
-            <div className="w-px h-8 bg-white/20 "></div>
+            {/* <div className="w-px h-8 bg-white/20 "></div> */}
+            <div className="self-stretch shrink-0 border-l border-white/20" />
 
             {/* invite */}
             <button
@@ -900,7 +904,8 @@ const MobileTabBarControls = React.memo(
             >
               <Link color="white" size={22} />
             </button>
-            <div className="w-px h-8 bg-white/20 "></div>
+            {/* <div className="w-px h-8 bg-white/20 "></div> */}
+            <div className="self-stretch shrink-0 border-l border-white/20" />
 
             {/* end call */}
             <button
