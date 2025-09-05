@@ -203,11 +203,9 @@ export default function FireSightFooter({
                 <div>
                   <div className="flex items-center gap-2 text-white">
                     <span className="font-bold">FAREHAM</span>
-                    <span className="italic text-[#A0AEC0] text-xs">
-                      (Corporate HQ)
-                    </span>
+                    <span className="italic  text-xs">(Corporate HQ)</span>
                   </div>
-                  <div className="text-[#A0AEC0] text-xs text-center md:text-left">
+                  <div className=" text-xs text-center md:text-left">
                     203 West St, Fareham,
                     <br />
                     Hampshire, PO16 0EN, UNITED KINGDOM
@@ -227,11 +225,9 @@ export default function FireSightFooter({
                 <div>
                   <div className="flex items-center gap-2 text-white">
                     <span className="font-bold">CANBERRA</span>
-                    <span className="italic text-[#A0AEC0] text-xs">
-                      (Outpost)
-                    </span>
+                    <span className="italic  text-xs">(Outpost)</span>
                   </div>
-                  <div className="text-[#A0AEC0] text-xs text-center md:text-left">
+                  <div className=" text-xs text-center md:text-left">
                     1 Moore St, Canberra,
                     <br />
                     ACT, 2601, AUSTRALIA
@@ -251,11 +247,9 @@ export default function FireSightFooter({
                 <div>
                   <div className="flex items-center gap-2 text-white">
                     <span className="font-bold">HA NOI</span>
-                    <span className="italic text-[#A0AEC0] text-xs">
-                      (Outpost)
-                    </span>
+                    <span className="italic  text-xs">(Outpost)</span>
                   </div>
-                  <div className="text-[#A0AEC0] text-xs text-center md:text-left">
+                  <div className=" text-xs text-center md:text-left">
                     1 Thai ha St, Trung Liet
                     <br />
                     Ward, Ha Noi, VIETNAM
@@ -277,9 +271,9 @@ export default function FireSightFooter({
             {/* Partner */}
           </div>
           {/* Bottom Bar */}
-          <div className="flex flex-col md:flex-row justify-between items-center pt-6 text-xs text-[#A0AEC0] md:!px-[41px] !px-[24px]">
+          <div className="flex flex-col md:flex-row justify-between items-center pt-6 text-xs  md:!px-[41px] !px-[24px]">
             <div className="flex items-center mb-2 md:mb-0 min-w-[135px]">
-              <Link href="http://dvincigroup.com/">
+              <Link href="http://dvincigroup.com/" type="_blank">
                 <Image
                   src="/images/icons/dvinci.svg"
                   alt="D'VINCI"
@@ -287,11 +281,11 @@ export default function FireSightFooter({
                   height={17}
                 />
               </Link>
-              <span className="text-[10px] font-bold border-l-2 border-l-white pl-3 ml-3">
+              <span className="text-white text-[10px] font-bold border-l-2 border-l-white pl-3 ml-3">
                 Crafted by D&apos;Vinci
               </span>
             </div>
-            <div className="flex flex-wrap w-full justify-center gap-[34px] underline md:text-[12px] text-[8px] font-bold">
+            <div className="flex flex-wrap w-full justify-center gap-[34px] underline md:text-[12px] text-[8px] font-bold text-white">
               <Link href="/terms">Terms & Conditions</Link>
               <Link href="/privacy">Privacy Policy</Link>
               <span>Firesight Ltd 2025. All Rights Reserved.</span>
@@ -505,11 +499,9 @@ export default function FireSightFooter({
                 <div>
                   <div className="flex items-center gap-2 text-white">
                     <span className="font-bold">FAREHAM</span>
-                    <span className="italic text-[#A0AEC0] text-xs">
-                      (Corporate HQ)
-                    </span>
+                    <span className="italic  text-xs">(Corporate HQ)</span>
                   </div>
-                  <div className="text-[#A0AEC0] text-xs text-center md:text-left">
+                  <div className=" text-xs text-center md:text-left">
                     203 West St,
                     <br />
                     Fareham, PO16 0EN, UNITED KINGDOM
@@ -529,11 +521,9 @@ export default function FireSightFooter({
                 <div>
                   <div className="flex items-center gap-2 text-white">
                     <span className="font-bold">CANBERRA</span>
-                    <span className="italic text-[#A0AEC0] text-xs">
-                      (Outpost)
-                    </span>
+                    <span className="italic  text-xs">(Outpost)</span>
                   </div>
-                  <div className="text-[#A0AEC0] text-xs text-center md:text-left">
+                  <div className=" text-xs text-center md:text-left">
                     1 Moore St, Canberra,
                     <br />
                     ACT, 2601, AUSTRALIA
@@ -553,11 +543,9 @@ export default function FireSightFooter({
                 <div>
                   <div className="flex items-center gap-2 text-white">
                     <span className="font-bold">HA NOI</span>
-                    <span className="italic text-[#A0AEC0] text-xs">
-                      (Outpost)
-                    </span>
+                    <span className="italic  text-xs">(Outpost)</span>
                   </div>
-                  <div className="text-[#A0AEC0] text-xs text-center md:text-left">
+                  <div className=" text-xs text-center md:text-left">
                     1 Thai ha St, Trung Liet
                     <br />
                     Ward, Ha Noi, VIETNAM
@@ -761,11 +749,9 @@ export default function FireSightFooter({
                 <div>
                   <div className="flex items-center gap-2 text-white">
                     <span className="font-bold">FAREHAM</span>
-                    <span className="italic text-[#A0AEC0] text-xs">
-                      (Corporate HQ)
-                    </span>
+                    <span className="italic  text-xs">(Corporate HQ)</span>
                   </div>
-                  <div className="text-[#A0AEC0] text-xs text-center md:text-left">
+                  <div className=" text-xs text-center md:text-left">
                     1 Moore St, Fareham,
                     <br />
                     PO16 0EN, UNITED KINGDOM
@@ -784,11 +770,9 @@ export default function FireSightFooter({
                 <div>
                   <div className="flex items-center gap-2 text-white">
                     <span className="font-bold">CANBERRA</span>
-                    <span className="italic text-[#A0AEC0] text-xs">
-                      (Corporate HQ)
-                    </span>
+                    <span className="italic  text-xs">(Corporate HQ)</span>
                   </div>
-                  <div className="text-[#A0AEC0] text-xs text-center md:text-left">
+                  <div className=" text-xs text-center md:text-left">
                     1 Moore St, Canberra,
                     <br />
                     ACT, 2601, AUSTRALIA
@@ -796,7 +780,7 @@ export default function FireSightFooter({
                 </div>
               </div>
               {/* Miami */}
-              <div className="flex items-start">
+              <div className="flex items-start not-sm:ml-[15px]">
                 <Image
                   src="/images/icons/location.svg"
                   alt="Game"
@@ -807,11 +791,9 @@ export default function FireSightFooter({
                 <div>
                   <div className="flex items-center gap-2 text-white">
                     <span className="font-bold">HA NOI</span>
-                    <span className="italic text-[#A0AEC0] text-xs">
-                      (Outpost)
-                    </span>
+                    <span className="italic  text-xs">(Outpost)</span>
                   </div>
-                  <div className="text-[#A0AEC0] text-xs text-center md:text-left">
+                  <div className=" text-xs text-center md:text-left">
                     1 Thai Ha St, Trung Liet,
                     <br />
                     Ha Noi, 100000, VIETNAM
@@ -888,8 +870,8 @@ export default function FireSightFooter({
                   height={17}
                 />
               </Link>
-              <p className="text-[10px] font-bold border-l-2 border-l-white pl-3">
-                Crafted by <b className="text-[#E93249]">D&apos;Vinci</b>
+              <p className="text-white text-[10px] font-bold border-l-2 border-l-white pl-3">
+                Crafted by <b className="!text-[#E93249]">D&apos;Vinci</b>
               </p>
             </div>
             <div className="flex flex-wrap w-full justify-between underline text-[8px] font-normal">
