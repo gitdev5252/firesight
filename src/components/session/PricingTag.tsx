@@ -120,8 +120,8 @@ export default function PricingTag() {
       },
       priceDes: "Contact Us",
       cta: {
-        normal: "14 Day Trial | ",
-        bold: "Start Now",
+        normal: "Try For Free",
+        bold: "",
       },
       description: {
         content:
@@ -170,8 +170,8 @@ export default function PricingTag() {
       },
       priceDes: "Contact Us",
       cta: {
-        normal: "14 Day Trial | ",
-        bold: "Start Now",
+        normal: "Try For Free",
+        bold: "",
       },
       description: {
         content:
@@ -401,7 +401,7 @@ export default function PricingTag() {
               className="lg:min-w-[40.9vw] sm:min-w-[60vw] min-w-[84vw]"
             >
               <div
-                className={`h-full my-9 mx-[50px] md:px-[82px] px-[20px] md:py-[70px] py-[30px] gap-9 flex flex-col items-center justify-start border border-[rgba(255,255,255,0.1)] rounded-[20px] relative w-full backdrop-blur-[32px]
+                className={`h-full mt-9 mx-[50px] md:px-[82px] px-[20px] md:py-[70px] py-[30px] gap-9 flex flex-col items-center justify-start border border-[rgba(255,255,255,0.1)] rounded-[20px] relative w-full backdrop-blur-[32px]
                 ${
                   index === 0
                     ? "bg-[linear-gradient(86deg,rgba(3,139,152,0.16)_9.54%,rgba(15,251,73,0.15)_72.65%)]"
@@ -452,21 +452,8 @@ export default function PricingTag() {
                     </span>
                   </div>
                 )}
-                {index === 1 ? (
-                  <Link href="/sessions/start-session">
-                    {" "}
-                    <Button
-                      variant="outline"
-                      className="cursor-pointer green-gradient-border-btn text-[16px] g-transparent rounded-full px-8 py-5 text-white hover:text-white"
-                    >
-                      {tier.cta && tier.cta.normal}{" "}
-                      <span className="font-bold">
-                        {" "}
-                        {tier.cta && tier.cta.bold}
-                      </span>
-                    </Button>
-                  </Link>
-                ) : (
+                <Link href="/sessions/start-session">
+                  {" "}
                   <Button
                     variant="outline"
                     className="cursor-pointer green-gradient-border-btn text-[16px] g-transparent rounded-full px-8 py-5 text-white hover:text-white"
@@ -477,7 +464,7 @@ export default function PricingTag() {
                       {tier.cta && tier.cta.bold}
                     </span>
                   </Button>
-                )}
+                </Link>
 
                 <div className="border-y-[rgba(255,255,255,0.1)] border-y-[1px] text-white flex flex-col items-center justify-center py-[30px] px-[7px] gap-[30px]">
                   <p className="text-center text-[15px]">
@@ -495,7 +482,7 @@ export default function PricingTag() {
                   )}
                 </div>
 
-                <div className="flex flex-col gap-5 mt-8 mb-10">
+                <div className="flex flex-col gap-5 mt-8">
                   {index !== 0 && (
                     <div className="flex gap-4">
                       <svg
@@ -708,7 +695,7 @@ export default function PricingTag() {
                     </p>
                   </div>
 
-                  <div className="flex flex-col gap-5 mt-8 mb-10">
+                  <div className="flex flex-col gap-5 mt-8">
                     {page !== 0 && (
                       <div className="flex gap-4">
                         <svg
