@@ -490,13 +490,6 @@ export default function Overview() {
           FIND OUT HOW <br className="md:hidden block" />{" "}
           <b className="text-[#219A98]">Pulse</b> CAN TRANSFORM YOUR WORKDAY
         </h2>
-
-        <Button
-          variant="outline"
-          className="cursor-pointer gradient-border-btn md:text-[22px] text-[14px] md:mt-9 mt-6 bg-transparent rounded-full md:px-[50px] px-9 md:py-[20px] py-3 text-white leading-normal md:h-18 h-11 hover:text-white"
-        >
-          14 Day Trial | <span className="font-bold">Start Now</span>
-        </Button>
       </section>
 
       {/* Feature section */}
@@ -656,13 +649,6 @@ export default function Overview() {
               decisions. It becomes your second brain in the cloud—offering
               smarter, faster, and more strategic clarity every step of the way.
             </p>
-
-            <Button
-              variant="outline"
-              className="cursor-pointer gradient-border-btn md:text-[22px] text-[14px] mt-2 bg-transparent rounded-full md:px-[50px] px-9 md:py-[20px] py-3 text-white leading-normal md:h-18 h-11 hover:text-white"
-            >
-              14 Day Trial | <span className="font-bold">Start Now</span>
-            </Button>
           </div>
           <div className="w-[1px] h-[123px] opacity-30 bg-white md:block hidden"></div>
           <p className="text-white text-[16px] leading-normal lg:max-w-[32.64%] md:max-w-[35%] md:block hidden">
@@ -674,7 +660,7 @@ export default function Overview() {
             smarter, faster, and more strategic clarity every step of the way.
           </p>
         </div>
-        <div className="sm:flex flex-wrap justify-between gap-y-26 items-stretch px-2 w-full mt-[213px] hidden">
+        <div className="sm:flex flex-wrap justify-between gap-y-26 items-stretch md:px-17 px-4 w-full mt-[213px] hidden">
           {platformSectionCardInfo.map((ele, index) => (
             <div
               className="md:w-[27.9%] sm:w-[45%] w-full flex flex-col gap-[26px]"
@@ -803,30 +789,6 @@ export default function Overview() {
             </motion.div>
           </AnimatePresence>
         </div>
-      </section>
-
-      {/* Explore1 section */}
-      <section
-        id="explore1"
-        className="relative mt-auto flex flex-col items-center justify-center w-full md:px-14 px-4 md:pb-[115px] pb-15 overflow-hidden"
-      >
-        <div className="absolute inset-0 bg-[url('/images/pulse-bg-2.svg')] bg-no-repeat bg-cover w-full h-[40.2778vw] opacity-50 md:block hidden -z-10"></div>
-        <div className="absolute inset-0 bg-[url('/images/mobile/pulse-bg-0-mobile.svg')] bg-no-repeat bg-cover w-full h-[66.66vw] opacity-50 md:hidden block -z-10"></div>
-
-        <p className="sub-header-title md:text-[24px] text-[16px] md:mt-[104px] mt-8 md:mb-[50px] mb-3">
-          EXPLORE
-        </p>
-        <h2 className="text-white md:text-[43.8px] text-[28px] font-extrabold uppercase md:leading-[50px] leading-[120%] !m-0 md:max-w-[640px] max-w-[266px] text-center">
-          FIND OUT HOW <br className="md:hidden block" />{" "}
-          <b className="text-[#219A98]">Pulse</b> CAN TRANSFORM YOUR WORKDAY
-        </h2>
-
-        <Button
-          variant="outline"
-          className="cursor-pointer gradient-border-btn md:text-[22px] text-[14px] md:mt-9 mt-6 bg-transparent rounded-full md:px-[50px] px-9 md:py-[20px] py-3 text-white leading-normal md:h-18 h-11 hover:text-white"
-        >
-          14 Day Trial | <span className="font-bold">Start Now</span>
-        </Button>
       </section>
     </>
   );

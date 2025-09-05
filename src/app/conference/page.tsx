@@ -56,31 +56,6 @@ const mobileTabs = ["Session", "People", "Chat", "Transcript", "Summary"];
 function classIf(cond: boolean, a: string, b: string) {
   return cond ? a : b;
 }
-// only for development to restart meeting
-// const STORAGE_KEY = "lk-session-v1";
-
-// type Persisted = {
-//   currentUser: string;
-//   roomName: string;
-//   token: string | null;
-// };
-
-// const loadPersisted = (): Persisted | null => {
-//   try {
-//     const raw = sessionStorage.getItem(STORAGE_KEY);
-//     return raw ? JSON.parse(raw) : null;
-//   } catch { return null; }
-// };
-
-// const savePersisted = (data: Persisted) => {
-//   try { sessionStorage.setItem(STORAGE_KEY, JSON.stringify(data)); } catch { }
-// };
-
-// const clearPersisted = () => {
-//   try { sessionStorage.removeItem(STORAGE_KEY); } catch { }
-// };
-
-// Small helper to extract ternary class logic for readability
 
 type Participant = {
   isScreenShareEnabled: unknown;
@@ -117,13 +92,17 @@ const Sidebar = React.memo(
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
-              className={`flex-1 px-2 py-3 text-xs font-medium transition-colors ${classIf(
-                activeTab === tab,
-                "text-white border-b-1 border-green-400 mt-1",
-                "text-white/60 hover:text-white/80 mt-1"
-              )}`}
+              className={`flex-1 px-2 py-3 text-xs font-medium transition-colors `}
             >
-              {tab}
+              <span
+                className={` ${classIf(
+                  activeTab === tab,
+                  "text-white border-b-3 border-green-400 mt-1 sm:pb-[20px]",
+                  "text-white/60 hover:text-white/80 mt-1"
+                )}`}
+              >
+                {tab}
+              </span>
             </button>
           ))}
         </div>
@@ -162,9 +141,11 @@ const PeopleTab = React.memo(
   }) => {
     return (
       <div>
-        <div className="bg-[rgba(255,255,255,0.02)] rounded-[20px] border border-[rgba(255,255,255,0.1)] md:backdrop-blur-[32px] p-2 mb-4 overflow-auto
-        // min-h-[70vh] max-h-[90vh]
-        " style={{ height: '72vh' }}>
+        <div
+          className="bg-[rgba(255,255,255,0.02)] rounded-[20px] border border-[rgba(255,255,255,0.1)] md:backdrop-blur-[32px] p-2 mb-4 overflow-auto
+          style={{ height: "72vh" }}
+        >
+
           {participants && participants.length > 0 ? (
             participants.map((participant) => {
               const p = participant as Participant;
@@ -190,8 +171,6 @@ const PeopleTab = React.memo(
                       </p>
                     </div>
                     <div className="flex items-center gap-6">
-
-
                       {/* Hand Raised Icon (center top) */}
                       {raisedHands[p.identity] && (
                         <div className="">
@@ -745,14 +724,14 @@ const MobileConferenceControls = React.memo(
               </div>
             </button>
             <button
-              className={`flex flex-col items-center gap-1 transition-colors ${raisedHands[currentUser]
-                ? "text-yellow-400 hover:text-yellow-500"
-                : "text-gray-400 hover:text-gray-400"
-                }`}
+              className={`flex flex-col items-center gap-1 transition-colors ${
+                raisedHands[currentUser]
+                  ? "text-yellow-400 hover:text-yellow-500"
+                  : "text-gray-400 hover:text-gray-400"
+              }`}
               onClick={() => onToggleHandRaise(currentUser)}
             >
               <div className="items-center justify-center">
-
                 {raisedHands[currentUser] ? (
                   <img
                     src="/images/icons/hand-active.svg"
@@ -778,7 +757,8 @@ const MobileConferenceControls = React.memo(
                   alt=""
                   width={40}
                   height={40}
-                />                </div>
+                />{" "}
+              </div>
             </button>
             <div className="w-px h-4 bg-white/20"></div>
 
@@ -793,7 +773,8 @@ const MobileConferenceControls = React.memo(
                     alt=""
                     width={40}
                     height={40}
-                  />) : (
+                  />
+                ) : (
                   <img
                     src="/images/icons/hex-options.svg"
                     alt=""
@@ -803,126 +784,26 @@ const MobileConferenceControls = React.memo(
                 )}
               </div>
             </button>
-            {/* <div className="w-px h-8 bg-white/20 ml-2"></div> */}
-
-            {/* <span className="text-white">Hello</span> */}
           </div>
-          {/* <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <button
-                className="flex flex-col items-center gap-1 text-gray-400/60 hover:text-gray-400 transition-colors"
-                onClick={() => setIsMobileFull(!isMobileFull)}
-              >
-                <div className="flex items-center justify-center">
-                  <img
-                    src="/images/icons/full-screen-hex.svg"
-                    alt=""
-                    width={40}
-                    height={40}
-                  />
-                </div>
-              </button>
-            </div>
 
-            <div className="flex items-center gap-6">
-              <div className="w-px h-8 bg-white/20"></div>
-              <button
-                className="flex flex-col items-center gap-1 transition-colors text-white hover:text-gray-400"
-                onClick={flipCamera}
-                aria-label="Flip camera"
-                title={
-                  facing === "user"
-                    ? "Switch to back camera"
-                    : "Switch to front camera"
-                }
-              >
-                <div className="items-center justify-center">
-                  <img
-                    src="/images/icons/turn-camera-hex.svg"
-                    alt=""
-                    width={40}
-                    height={40}
-                  />
-                </div>
-              </button>
-
-              <button
-                className={`flex flex-col items-center gap-1 transition-colors ${raisedHands[currentUser]
-                  ? "text-yellow-400 hover:text-yellow-500"
-                  : "text-gray-400 hover:text-gray-400"
-                  }`}
-                onClick={() => onToggleHandRaise(currentUser)}
-              >
-                <div className="items-center justify-center">
-          
-                  {raisedHands[currentUser] ? (
-                    <img
-                      src="/images/icons/hand-active.svg"
-                      alt=""
-                      width={50}
-                      height={50}
-                    />
-                  ) : (
-                    <img
-                      src="/images/icons/raise-hand-hex.svg"
-                      alt=""
-                      width={40}
-                      height={40}
-                    />
-                  )}
-                </div>
-              </button>
-
-              <button className="flex flex-col items-center gap-1 text-gray-400 hover:text-gray-400 transition-colors">
-                <div className="items-center justify-center">
-                  <img
-                    src="/images/icons/sound-hex.svg"
-                    alt=""
-                    width={40}
-                    height={40}
-                  />                </div>
-              </button>
-              <div className="w-px h-8 bg-white/20"></div>
-            </div>
-
-            <div className="flex items-center gap-4">
-              <button
-                className="flex flex-col items-center gap-1 transition-colors text-gray-400 hover:text-gray-400"
-                onClick={() => setIsBottomSheetOpen(true)}
-              >
-                <div className="items-center justify-center">
-                  {!isBottomSheetOpen ? (
-                    <img
-                      src="/images/icons/three-dots-hex.svg"
-                      alt=""
-                      width={40}
-                      height={40}
-                    />) : (
-                    <img
-                      src="/images/icons/hex-options.svg"
-                      alt=""
-                      width={40}
-                      height={40}
-                    />
-                  )}
-                </div>
-              </button>
-            </div>
-          </div> */}
         </div>
         {!isMobileFull && (
           <div className="flex border-b border-white/10">
             {mobileTabs.map((tab) => (
               <button
                 key={tab}
-                className={`flex-1 px-2 py-3 text-xs font-medium transition-colors ${classIf(
-                  activeTab === tab,
-                  "text-white border-b-2 border-green-500",
-                  "text-white/60 hover:text-white/80"
-                )}`}
                 onClick={() => setActiveTab(tab)}
+                className={`flex-1 px-2 py-3 text-xs font-medium transition-colors `}
               >
-                {tab}
+                <span
+                  className={` ${classIf(
+                    activeTab === tab,
+                    "text-white border-b-3 border-green-400 mt-1 pb-[9px]",
+                    "text-white/60 hover:text-white/80 mt-1"
+                  )}`}
+                >
+                  {tab}
+                </span>
               </button>
             ))}
           </div>
@@ -936,7 +817,7 @@ const MobileTabBarControls = React.memo(
     onSendEmoji,
     currentUser,
     onInvite,
-    showEmojiBar
+    showEmojiBar,
   }: {
     onSendEmoji: (username: string) => void;
     currentUser: string;
@@ -1003,12 +884,16 @@ const MobileTabBarControls = React.memo(
               className="flex h-12 w-full items-center justify-center rounded-xl transition"
               aria-label="Send emoji"
             >
-              {showEmojiBar ? <img
-                src="/images/icons/active-emoji-hex.svg"
-                alt=""
-                width={40}
-                height={40}
-              /> : <Smile color="white" size={22} />}
+              {showEmojiBar ? (
+                <img
+                  src="/images/icons/active-emoji-hex.svg"
+                  alt=""
+                  width={40}
+                  height={40}
+                />
+              ) : (
+                <Smile color="white" size={22} />
+              )}
             </button>
             <div className="w-px h-8 bg-white/20 "></div>
 
@@ -1047,7 +932,11 @@ function MobileChipTile({
   raisedHands: { [key: string]: boolean };
 }) {
   const videoRef = React.useRef<HTMLVideoElement>(null);
-  const tracks = useTracks([Track.Source.Camera, Track.Source.ScreenShare, Track.Source.Microphone]);
+  const tracks = useTracks([
+    Track.Source.Camera,
+    Track.Source.ScreenShare,
+    Track.Source.Microphone,
+  ]);
 
   /** Which video source to render (camera/screenshare) */
   const source: Track.Source | null = participant.isScreenShareEnabled
@@ -1055,18 +944,22 @@ function MobileChipTile({
     : participant.isCameraEnabled
       ? Track.Source.Camera
       : null;
-
   const videoRefTrack = React.useMemo(() => {
     if (!source) return undefined;
     return tracks.find(
-      tr => tr.participant.identity === participant.identity && tr.source === source
+      (tr) =>
+        tr.participant.identity === participant.identity && tr.source === source
     );
   }, [tracks, participant.identity, source]);
 
   React.useEffect(() => {
     const el = videoRef.current;
     // Use the correct type for mediaTrack
-    const mediaTrack = videoRefTrack?.publication?.track as unknown as (MediaStreamTrack & { attach?: (element: HTMLVideoElement) => void; detach?: (element: HTMLVideoElement) => void });
+    const mediaTrack = videoRefTrack?.publication
+      ?.track as unknown as MediaStreamTrack & {
+      attach?: (element: HTMLVideoElement) => void;
+      detach?: (element: HTMLVideoElement) => void;
+    };
     if (!el || !mediaTrack || typeof mediaTrack.attach !== "function") return;
     mediaTrack.attach(el);
     return () => {
@@ -1080,7 +973,7 @@ function MobileChipTile({
   const micRef = React.useMemo(
     () =>
       tracks.find(
-        tr =>
+        (tr) =>
           tr.participant.identity === participant.identity &&
           tr.source === Track.Source.Microphone
       ),
@@ -1125,7 +1018,7 @@ function MobileChipTile({
         "relative rounded-xl shadow-lg",
         isTalking
           ? "p-[2px] bg-[linear-gradient(90deg,#14FF00_55%,#00F0FF_62%)]"
-          : "border border-white/20"
+          : "border border-white/20",
       ].join(" ")}
       onClick={() => {
         window.pinParticipant?.(participant.identity);
@@ -1155,6 +1048,7 @@ function MobileChipTile({
               <MicOff size={20} color="gray" />
             </div>
           )}
+
 
           {/* video or avatar (now inside inner wrapper) */}
           {videoRefTrack?.publication?.track ? (
@@ -1191,13 +1085,12 @@ function MobileChipTile({
         </div>
         </div>
       </div>
-      );
-
+    </div>
+  );
 }
 
-
-      /* ----------------- Page ----------------- */
-      export default function SessionPage() {
+/* ----------------- Page ----------------- */
+export default function SessionPage() {
   // Emoji bar state
   const [showEmojiBar, setShowEmojiBar] = React.useState(false);
       // Track when the user joined the session
@@ -1237,63 +1130,6 @@ function MobileChipTile({
                 const [nameError, setNameError] = React.useState("");
                 const [activeTab, setActiveTab] = React.useState("Session");
                 const [showSideRail, setShowSideRail] = React.useState(true);
-  // ONLY FOR DEVELOPMENT
-  // React.useEffect(() => {
-  //   // 1) Try persisted first
-  //   const persisted = loadPersisted();
-  //   if (persisted?.currentUser && persisted?.roomName) {
-  //     setCurrentUser(persisted.currentUser);
-  //     setRoomName(persisted.roomName);
-  //     if (persisted.token) setToken(persisted.token);
-  //   }
-
-  //   // 2) Then parse URL as a fallback (first time join)
-  //   const urlParams = new URLSearchParams(window.location.search);
-  //   const nameFromUrl = urlParams.get("name");
-  //   const roomFromUrl = urlParams.get("room");
-
-  //   // If we already had persisted state, do not force the name modal again
-  //   if (!persisted?.currentUser) {
-  //     if (!nameFromUrl) {
-  //       setNameModalOpen(true);
-  //       return;
-  //     }
-  //     setCurrentUser(nameFromUrl);
-  //   }
-
-  //   // Prefer existing room; else from URL; else random
-  //   const currentRoom =
-  //     persisted?.roomName ||
-  //     roomFromUrl ||
-  //     `room-${Math.random().toString(36).slice(2, 8)}`;
-
-  //   setRoomName(currentRoom);
-
-  //   // If we already have a token, don’t fetch.
-  //   if (persisted?.token) return;
-
-  //   (async () => {
-  //     try {
-  //       const identity = persisted?.currentUser || nameFromUrl!;
-  //       const res = await fetch(
-  //         `/api/livekit-token?room=${currentRoom}&identity=${identity}`
-  //       );
-  //       if (!res.ok) throw new Error(`Token fetch failed: ${res.status}`);
-  //       const data = await res.json();
-  //       setToken(data.token);
-  //     } catch (err) {
-  //       console.error("Failed to fetch livekit token:", err);
-  //       toast.error("Unable to join session. Please try again.");
-  //       if (!persisted?.currentUser) setNameModalOpen(true);
-  //     }
-  //   })();
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []);
-  // React.useEffect(() => {
-  //   if (!currentUser || !roomName) return;
-  //   savePersisted({currentUser, roomName, token});
-  //   console.log('oka')
-  // }, [currentUser, roomName, token]);
 
   const emojis = React.useMemo(
     () => [
