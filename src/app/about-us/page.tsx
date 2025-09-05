@@ -20,7 +20,7 @@ export default function Page() {
             </h3>
             <p className="text-white text-start md:mt-[47px] mt-[42px] md:text-[17.6px] text-[12px]">
               Founded in February 2023, Firesight is a
-              <span className="font-extrabold">horizon-driven AI project</span>{" "}
+              <span className="font-extrabold"> horizon-driven AI project</span>{" "}
               exploring the productisation of natural language AI and advanced
               automation technologies. Our goal is to investigate, research, and
               refine practical solutions that help independent professionals,
@@ -41,7 +41,7 @@ export default function Page() {
                 D2C AI-native media intelligence
               </span>{" "}
               technology (powering
-              <span className="font-extrabold">Firesight | Pulse</span>) are
+              <span className="font-extrabold"> Firesight | Pulse</span>) are
               just a few of the projects currently underway at Firesight. Each
               reflects our commitment to building useful, context-aware systems
               that meet the evolving needs of modern professionals; irrespective

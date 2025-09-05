@@ -22,10 +22,6 @@ import {
   Video,
   MicOff,
   VideoOff,
-  // Expand,
-  // RefreshCcwDot,
-  // Volume2,
-  // EllipsisVertical,
   MicIcon,
 } from "lucide-react";
 import React from "react";
@@ -468,11 +464,6 @@ const ConferenceControls = React.memo(
 
     const { buttonProps: disconnectButtonProps } = useDisconnectButton({});
     const router = useRouter();
-
-    // const handleScreenToggle = () => {
-    //   if (isScreenSharing) stopScreenShare();
-    //   else startScreenShare();
-    // };
 
     const handleEndCall = async (e: React.MouseEvent<HTMLButtonElement>) => {
       if (disconnectButtonProps.onClick) await disconnectButtonProps.onClick(e);
