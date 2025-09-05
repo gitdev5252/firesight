@@ -344,7 +344,7 @@ export default function Page() {
           )}
 
           <div className="w-full flex flex-wrap items-center gap-4 text-white mt-10">
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 not-sm:justify-center not-sm:w-full">
               <Image
                 src="/images/icons/pro-hub.svg"
                 alt="professional hub"
@@ -371,8 +371,8 @@ export default function Page() {
             <div className="text-[21px] mx-[20px] text-[#ffffff1a] sm:block hidden">
               |
             </div>
-            <div className="flex items-center gap-2 sm:w-auto w-full">
-              <div className="w-20 h-[1px] bg-[#ffffff1a] sm:hidden block" />
+            <div className="flex items-center gap-2 sm:w-auto w-full justify-around">
+              <div className="w-13 h-[1px] bg-[#ffffff1a] sm:hidden block" />
               <div className="flex items-center gap-2 lg:text-[28px] md:text-[17px] cursor-pointer sm:mx-auto">
                 <Image
                   src="/images/icons/area-chart.svg"
@@ -382,7 +382,7 @@ export default function Page() {
                 />
                 AI Impact Index
               </div>
-              <div className="w-20 h-[1px] bg-[#ffffff1a] sm:hidden block" />
+              <div className="w-13 h-[1px] bg-[#ffffff1a] sm:hidden block" />
             </div>
           </div>
 
