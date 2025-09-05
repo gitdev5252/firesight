@@ -6,7 +6,7 @@ import "./page.css";
 import { motion } from "framer-motion";
 import React, { useEffect, useRef, useState, createContext } from "react";
 import Link from "next/link";
-import AIImpactFooter from "@/layouts/AIImpactFooter";
+import FireSightFooter from "@/layouts/FireSightFooter";
 
 export const runtime = "edge";
 export const SearchContext = createContext<{
@@ -273,11 +273,11 @@ export default function Page({
       </div>
       <div className="shineBg_body_blue_circle lg:hidden md:block hidden bottom-[157px] left-[calc(50vw-314px)] w-[629px] h-[592px]"></div>
       <div className="shineBg_body_blue_circle lg:block hidden bottom-[6.8vw] right-[24.653vw] w-[min(602px,41.8vw)] h-[min(602px,41.8vw)]"></div>{" "}
-      <AIImpactFooter>
+      <FireSightFooter>
         <div className="circle-footer-mobile md:hidden block z-[-2342]"></div>
         <div className="shineBg_body_blue_circle lg:block hidden bottom-[-25vw] right-[-17.57vw] w-[min(602px,41.8vw)] h-[min(602px,41.8vw)]"></div>
         <div className="shineBg_body_blue_circle lg:block hidden bottom-[-32.85vw] left-[-16.666vw] w-[min(602px,41.8vw)] h-[min(602px,41.8vw)]"></div>
-      </AIImpactFooter>
+      </FireSightFooter>
     </SearchContext.Provider>
   );
 }

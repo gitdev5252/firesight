@@ -44,7 +44,7 @@ export const CustomVideoTiles = ({
   onToggleSideRail,
   isMobileFull = false,
   focusedIdentity,
-  setFocusedIdentity
+  setFocusedIdentity,
 }: {
   activeEmojis?: {
     [key: string]: { emoji: string; timestamp: number; username: string };
@@ -135,8 +135,9 @@ export const CustomVideoTiles = ({
     return (
       <div className="w-full h-full min-h-0 flex">
         <div
-          className={`w-full max-h-[${!showSideRail ? "98vh" : isMobileFull ? "85vh" : "98vh"
-            }] aspect-video mx-auto`}
+          className={`w-full max-h-[${
+            !showSideRail ? "98vh" : isMobileFull ? "85vh" : "98vh"
+          }] aspect-video mx-auto`}
         >
           <VideoSurface
             participant={p}
@@ -151,8 +152,7 @@ export const CustomVideoTiles = ({
   }
 
   /* multi participant */
-  // Always show the local participant as the main tile for themselves
-  // const localParticipant = participants.find((p) => p.isLocal);
+
   let mainParticipant: Participant | undefined = undefined;
   if (focusedIdentity) {
     mainParticipant =
@@ -162,16 +162,9 @@ export const CustomVideoTiles = ({
   } else {
     mainParticipant =
       participants.find((p) => !p.isLocal) ?? // prefer a remote
-      participants[0];                         // fallback to whoever exists
+      participants[0]; // fallback to whoever exists
   }
 
-  // const mainParticipant = focusedIdentity
-  //   ? participants.find((p) => p.identity === focusedIdentity) ??
-  //     participants[0]
-  //   : localParticipant ||
-  //     participants.find((p) => p.identity === mainId) ||
-  //     participants.find((p) => !p.isLocal) ||
-  //     participants[0];
   const others = participants.filter(
     (p) => p.identity !== mainParticipant.identity
   );
@@ -183,9 +176,7 @@ export const CustomVideoTiles = ({
     <>
       {/* Render remote audio tracks so you can hear other participants */}
       {audioTracks.map((t) => {
-        // Only render for remote participants
-        // if (t.participant.isLocal) return null;
-        if (t.participant.isLocal) return null;  // ✅ do not render local audio
+        if (t.participant.isLocal) return null; // ✅ do not render local audio
 
         return (
           <AudioTrackRenderer
@@ -293,13 +284,6 @@ const VideoSurface = ({
       setHasMedia(false);
     }
   }, [trackRef?.publication?.track]);
-  // const heightForTile = smallPiece
-  //   ? "h-full min-h-[180px]"
-  //   : isMobileFull
-  //   ? "h-[98vh]"
-  //   : sideRailOpen
-  //   ? "h-full min-h-[280px]"
-  //   : "h-full md:h-[84vh]"; // mobile 94vh, md+ 84vh
 
   return (
     <div className="relative w-full bg-transparent md:rounded-xl overflow-hidden md:h-[69vh] sm:h-[67vh] h-full">
@@ -312,16 +296,18 @@ const VideoSurface = ({
           (trackRef?.source === Track.Source.ScreenShare
             ? ""
             : "custom-video ") +
-          `${fillClass ??
-          `w-full object-cover p-0 sm:p-[2px] 
+          `${
+            fillClass ??
+            `w-full object-cover p-0 sm:p-[2px] 
                 bg-none sm:bg-[linear-gradient(90deg,#14FF00_55%,#00F0FF_62%)]`
           }`
         }
       />
 
       <div
-        className={`absolute inset-0 flex flex-col items-center justify-center transition-opacity duration-200 not-sm:-top-[160px] ${hasMedia ? "opacity-0 pointer-events-none" : "opacity-100"
-          }`}
+        className={`absolute inset-0 flex flex-col items-center justify-center transition-opacity duration-200 not-sm:-top-[160px] ${
+          hasMedia ? "opacity-0 pointer-events-none" : "opacity-100"
+        }`}
       >
         <div className={`${variant == "tiles" && "mb-15"}`}>
           <HexAvatar
@@ -474,8 +460,9 @@ const SmallVideoTile = ({
 
   return (
     <div
-      className={`w-full h-[148px] min-h-[128px] bg-[#141622] rounded-lg relative overflow-hidden cursor-pointer hover:ring-2 hover:ring-blue-500/50 transition-all border-[#FFFFFF1A] border mt-1 ${focusedIdentity === participant.identity ? "ring-2 ring-blue-500" : ""
-        }`}
+      className={`w-full h-[148px] min-h-[128px] bg-[#141622] rounded-lg relative overflow-hidden cursor-pointer hover:ring-2 hover:ring-blue-500/50 transition-all border-[#FFFFFF1A] border mt-1 ${
+        focusedIdentity === participant.identity ? "ring-2 ring-blue-500" : ""
+      }`}
       style={{ boxShadow: "0px 25px 85px 0px rgba(8, 11, 22, 0.35)" }}
       onClick={() => setFocusedIdentity(participant.identity)}
     >
