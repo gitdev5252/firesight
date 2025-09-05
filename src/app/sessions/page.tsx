@@ -299,16 +299,18 @@ export default function SessionPage() {
         <div className="session-bg h-[106.66vw] top-[calc(27vw+125px)] 2xl:top-[3000px] md:top-[3100px] md:h-[50vw]"></div>
       </div>
 
-      <div className="flex w-full sm:items-start items-center flex-col md:px-14 px-4">
+
+
+      <div className="flex w-full items-center flex-col md:px-14 px-4 ">
         <h3 className="text-[24px] bg-gradient-to-b from-[rgba(20,255,0,0.55)] to-[rgba(0,240,255,0.62)] bg-clip-text text-transparent font-bold md:mb-[50px] mb-[10px]">
           PLATFORM
         </h3>
-        <div className="flex sm:justify-between items-center flex-wrap ">
+        <div className="flex flex-row items-center w-full flex-wrap gap-6">
           <h1 className="uppercase text-white md:text-[80px] text-[28px] font-bold md:w-[55%] w-full sm:mt-[20px] sm:text-start text-center">
             explore firesight <br />
             sessions platform
           </h1>
-          <p className="text-white md:w-[40%] w-full sm:text-[16px] text-[14px] sm:text-start text-center sm:mt-auto mt-[10px]">
+          <p className="text-white md:w-[40%] w-full text-[16px] sm:text-[16px] text-[14px] sm:text-start text-center mt-[10px]">
             Sessions adapts to any setup—whether a one-on-one with an AI Agent
             or a team engaging multiple agents. AI enhances discussions in real
             time, transcribing, summarising, and analysing sentiment without

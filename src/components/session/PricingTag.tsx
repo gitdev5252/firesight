@@ -278,7 +278,7 @@ export default function PricingTag() {
         <h3 className="sm:text-[24px] text-[16px] bg-gradient-to-b from-[rgba(20,255,0,0.55)] to-[rgba(0,240,255,0.62)] bg-clip-text text-transparent font-bold md:mb-[50px] mb-[15px]">
           PRICING
         </h3>
-        <h1 className="uppercase text-white md:text-[80px] text-[28px] font-bold md:w-[55%] w-full sm:mt-[20px]">
+        <h1 className="uppercase text-white md:text-[80px] text-[28px] font-bold md:w-[55%] w-full sm:mt-[20px] md:mb-[50px] mb-[25px]">
           the perfect plan for your needs
         </h1>
         <div className="sm:hidden flex items-center justify-center md:gap-[30px] gap-5 my-[20px]">

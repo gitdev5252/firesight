@@ -1,8 +1,9 @@
 "use client";
 
-import { useState, useEffect, useContext } from "react";
 import { TabBar, SearchContext } from "./layout";
 import CategoryList from "@/components/impact/CategoryList";
+import { Loader2 } from "lucide-react";
+import { useState, useEffect, useContext } from "react";
 
 type Occupation = {
   id: string;
@@ -22,6 +23,7 @@ export default function Page() {
   // filterTabIndex: 0 = None, 1 = Most Impacted, 2 = Least Impacted, 3 = Alphabetical
   const [mainTabIndex, setMainTabIndex] = useState(0); // Default to All
   const [filterTabIndex, setFilterTabIndex] = useState(1); // Default to Most Impacted
+  const [loading, setLoading] = useState(true);
   const [categories, setCategories] = useState<string[]>(fallbackCategories);
   const [occupations, setOccupations] = useState<Occupation[]>([]);
   const { searchTerm } = useContext(SearchContext);
@@ -51,6 +53,8 @@ export default function Page() {
       } catch (err) {
         console.error(err);
         setCategories(fallbackCategories);
+      } finally {
+        setLoading(false);
       }
     };
     fetchData();
@@ -101,7 +105,22 @@ export default function Page() {
         />
       </div>
       {/* Component */}
-      <CategoryList categories={getSortedOccupationsOrCategories()} />
+      <div className="w-full ">
+        <div>
+          {/* Centered Loader */}
+          {loading ? (
+            <div className="flex flex-col items-center justify-center h-[300px]">
+              <Loader2 className="animate-spin text-[#E93249] w-12 h-12 mb-4" />
+              <p className="text-white text-lg font-semibold">Loading...</p>
+            </div>
+          ) : (
+            <>
+              {/* Actual category list */}
+              <CategoryList categories={getSortedOccupationsOrCategories()} />
+            </>
+          )}
+        </div>
+      </div>
     </>
   );
 }
