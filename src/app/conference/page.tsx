@@ -793,7 +793,7 @@ const MobileConferenceControls = React.memo(
                 <span
                   className={` ${classIf(
                     activeTab === tab,
-                    "text-white border-b-3 border-green-400 mt-1 pb-[9px]",
+                    "text-white border-b-3 border-green-400 mt-1 pb-[12px]",
                     "text-white/60 hover:text-white/80 mt-1"
                   )}`}
                 >
