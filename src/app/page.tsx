@@ -380,7 +380,7 @@ export default function Home() {
             background: 'url("/images/mobile/sessions-show-mobile.svg")',
             backgroundSize: "contain",
           }}
-          className="w-[100vw] h-[206.07vw] bg-no-repeat block md:hidden"
+          className="w-[75vw] h-[190vw] bg-no-repeat block md:hidden mt-[40px]"
         ></div>
 
         <div className="main-box text-white absolute md:mt-[-20.33vw] mt-[-87.4vw] md:!p-15 !px-[16px] !py-5">
@@ -400,9 +400,11 @@ export default function Home() {
                 task delegation and automated follow-ups, make every meeting
                 smarter, more productive with Sessions.
               </p>
-              <button className="cursor-pointer green-btn-bg text-[16px] mt-[10px] bg-transparent border-0 px-8 py-5 text-white font-bold">
-                Explore Sessions
-              </button>
+              <Link href="/sessions">
+                <button className="cursor-pointer green-btn-bg text-[16px] mt-[10px] bg-transparent border-0 px-8 py-5 text-white font-bold">
+                  Explore Sessions
+                </button>
+              </Link>
             </div>
             <div className="md:text-[18px] text-[12px] lg:flex-3 w-full hidden md:block">
               Sessions is a next-generation browser-based conferencing solution.
